@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referenciák — Duna Belsőépítészet Kft.</title>
+<meta name="description" content="Belsőépítészeti és hajóépítési referenciáink: szállodák, éttermek, kastélyok, lakóingatlanok és hajók. {{projektSzam}} projekt, {{kepSzam}} fotó.">
+<link rel="icon" href="img/brand/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="ugras" href="#tartalom">Ugrás a tartalomra</a>
+
+<header class="fejlec" id="fejlec">
+  <div class="sav">
+    <a class="logo" href="index.html" aria-label="Duna Enterior — főoldal">
+      <img src="img/brand/fejlec-logo.png" alt="Duna Enterior" width="160" height="40">
+    </a>
+    <button class="menu-gomb" id="menuGomb" aria-expanded="false" aria-controls="menu">Menü</button>
+    <nav class="menu" id="menu" aria-label="Főmenü">
+      <a href="index.html">Főoldal</a>
+      <a href="rolunk.html">Rólunk</a>
+      <a href="referenciak.html" aria-current="page">Referenciák</a>
+      <a href="design-manufaktura.html">Design manufaktúra</a>
+      <a href="https://dunahajok.hu/" target="_blank" rel="noopener">Hajóépítés ↗</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </nav>
+  </div>
+</header>
+
+<main id="tartalom">
+
+  <section class="oldal-fej">
+    <div class="belul">
+      <p class="felcim jon">Referenciák</p>
+      <h1 class="jon kesik-1">Belsőépítészeti és<br>hajóépítési munkáink.</h1>
+      <p class="eloszo jon kesik-2">Szállodák, éttermek, kastélyok, apátságok, lakóingatlanok és hajók — {{projektSzam}} projekt, {{kepSzam}} fotó. Kattints bármelyikre a teljes anyagért.</p>
+    </div>
+  </section>
+
+  <section class="szekcio">
+    <div class="belul">
+
+      <!-- A szűrő alapból mindent mutat: egy kategória sincs bekapcsolva. -->
+      <div class="szuro" role="group" aria-label="Szűrés kategóriára">
+        <button type="button" class="szuro-gomb" data-kat="mind" aria-pressed="true">Mind</button>
+        <!--SZURO-->
+      </div>
+
+      <p class="szuro-allas" id="szuroAllas" aria-live="polite"></p>
+
+      <div class="racs" id="racs">
+        <!--PROJEKTEK-->
+      </div>
+
+      <p class="ures" id="uresUzenet" hidden>Ebben a kategóriában még nincs feltöltött projekt.</p>
+    </div>
+  </section>
+
+</main>
+
+<!--LABLEC-->
+
+<script src="script.js"></script>
+<script src="szuro.js"></script>
+</body>
+</html>

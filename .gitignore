@@ -6,3 +6,7 @@ Thumbs.db
 .env
 .env.*
 .wrangler/
+
+# helyi ellenőrzés melléktermékei
+.playwright-mcp/
+*.png.tmp

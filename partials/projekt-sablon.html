@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{cim}} — Duna Belsőépítészet Kft.</title>
+<meta name="description" content="{{cim}} — {{kategoria}} referencia a Duna Belsőépítészet Kft. munkáiból, {{kepSzam}} fotóval.">
+<link rel="icon" href="img/brand/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="ugras" href="#tartalom">Ugrás a tartalomra</a>
+
+<header class="fejlec" id="fejlec">
+  <div class="sav">
+    <a class="logo" href="index.html" aria-label="Duna Enterior — főoldal">
+      <img src="img/brand/fejlec-logo.png" alt="Duna Enterior" width="160" height="40">
+    </a>
+    <button class="menu-gomb" id="menuGomb" aria-expanded="false" aria-controls="menu">Menü</button>
+    <nav class="menu" id="menu" aria-label="Főmenü">
+      <a href="index.html">Főoldal</a>
+      <a href="rolunk.html">Rólunk</a>
+      <a href="referenciak.html" aria-current="page">Referenciák</a>
+      <a href="design-manufaktura.html">Design manufaktúra</a>
+      <a href="https://dunahajok.hu/" target="_blank" rel="noopener">Hajóépítés ↗</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
+    </nav>
+  </div>
+</header>
+
+<main id="tartalom">
+
+  <article class="projekt">
+    <div class="projekt-fej">
+      <div class="projekt-cim">
+        <nav class="morzsa" aria-label="Hol jár">
+          <a href="referenciak.html">Referenciák</a>
+          <span aria-hidden="true">/</span>
+          <span>{{kategoria}}</span>
+        </nav>
+        <h1>{{cim}}</h1>
+        <dl class="projekt-adat">
+          <div><dt>Kategória</dt><dd>{{kategoria}}</dd></div>
+          <div><dt>Fotó</dt><dd>{{kepSzam}}</dd></div>
+        </dl>
+        <!--KULSO-LINK-->
+      </div>
+      <figure class="projekt-borito">
+        <img src="{{borito}}" alt="{{cim}}" loading="eager" decoding="async">
+      </figure>
+    </div>
+
+    <section class="szekcio">
+      <div class="belul projekt-leiras">
+        <p class="felcim">A projektről</p>
+        <div class="szoveg eloszo">{{leiras}}</div>
+      </div>
+    </section>
+
+    <section class="szekcio halvany">
+      <div class="belul">
+        <div class="szekcio-fej">
+          <div>
+            <p class="felcim">Galéria</p>
+            <h2>{{kepSzam}} fotó a munkáról.</h2>
+          </div>
+        </div>
+        <div class="galeria">
+          <!--GALERIA-->
+        </div>
+      </div>
+    </section>
+
+    <section class="szekcio">
+      <div class="belul">
+        <div class="szekcio-fej">
+          <div>
+            <p class="felcim">Hasonló munkák</p>
+            <h2>Ugyanebben a kategóriában.</h2>
+          </div>
+          <a class="link-nyil" href="referenciak.html">Összes referencia <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="racs">
+          <!--HASONLO-->
+        </div>
+      </div>
+    </section>
+  </article>
+
+</main>
+
+<!-- képnagyító -->
+<dialog class="nagyito" id="nagyito" aria-label="Kép nagyban">
+  <button class="nagyito-zar" id="nagyitoZar" aria-label="Bezárás">✕</button>
+  <button class="nagyito-lep elozo" id="nagyitoElozo" aria-label="Előző kép">‹</button>
+  <img id="nagyitoKep" alt="">
+  <button class="nagyito-lep kovetkezo" id="nagyitoKovetkezo" aria-label="Következő kép">›</button>
+  <p class="nagyito-szam" id="nagyitoSzam"></p>
+</dialog>
+
+<!--LABLEC-->
+
+<script src="script.js"></script>
+<script src="galeria.js"></script>
+</body>
+</html>
