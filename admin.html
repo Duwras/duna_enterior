@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referenciák kezelése — Duna Enterior</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/brand/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+
+<!-- ---------- belépés ---------- -->
+<section class="kapu" id="kapu">
+  <form class="kapu-doboz" id="kapuUrlap">
+    <img src="img/brand/fejlec-logo.png" alt="Duna Enterior" width="150" height="38">
+    <h1>Referenciák kezelése</h1>
+    <p class="kapu-magyarazat">
+      Illessze be a kulcsot. A kulcsot a GitHub ellenőrzi — nélküle semmi
+      nem menthető. A kulcs csak ebben a böngészőben marad, a weboldalra
+      soha nem kerül fel.
+    </p>
+
+    <label for="kapuKulcs">Mesterkulcs</label>
+    <input type="password" id="kapuKulcs" autocomplete="current-password" spellcheck="false" required>
+
+    <label class="jelolo">
+      <input type="checkbox" id="kapuJegyezd">
+      <span>Jegyezze meg ezen a gépen</span>
+    </label>
+
+    <button type="submit" class="gomb tolt" id="kapuGomb">Belépés</button>
+    <p class="uzenet" id="kapuUzenet" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+<!-- ---------- felület ---------- -->
+<div class="admin-app" id="app" hidden>
+
+  <header class="admin-fejlec">
+    <img src="img/brand/fejlec-logo.png" alt="Duna Enterior" width="130" height="33">
+    <span class="admin-cim">Referenciák</span>
+    <span class="allapot" id="globalAllapot" role="status" aria-live="polite"></span>
+    <a class="admin-link" href="index.html" target="_blank" rel="noopener">Weboldal ↗</a>
+    <button type="button" class="admin-link" id="kilep">Kilépés</button>
+  </header>
+
+  <div class="admin-torzs">
+
+    <!-- projektlista -->
+    <aside class="oldalsav">
+      <div class="oldalsav-fej">
+        <button type="button" class="gomb tolt teljes" id="ujProjekt">+ Új projekt</button>
+        <input type="search" id="kereso" placeholder="Keresés a projektek közt…" aria-label="Keresés">
+      </div>
+      <ul class="projekt-lista" id="projektLista"></ul>
+    </aside>
+
+    <!-- szerkesztő -->
+    <main class="szerkeszto" id="szerkeszto" hidden>
+
+      <div class="szerkeszto-fej">
+        <h2 id="szerkesztoCim">Projekt</h2>
+        <div class="szerkeszto-tett">
+          <button type="button" class="gomb" id="torolProjekt">Projekt törlése</button>
+          <button type="button" class="gomb tolt" id="mentGomb">Mentés</button>
+        </div>
+      </div>
+
+      <p class="uzenet" id="szerkesztoUzenet" role="status" aria-live="polite"></p>
+
+      <div class="urlap-racs">
+        <div class="mezo">
+          <label for="mCim">Projekt neve</label>
+          <input type="text" id="mCim" maxlength="120">
+        </div>
+
+        <div class="mezo">
+          <label for="mKategoria">Kategória</label>
+          <select id="mKategoria">
+            <option value="hotel">Hotel</option>
+            <option value="etterem">Étterem</option>
+            <option value="lakoingatlan">Lakóingatlan</option>
+            <option value="kastely">Kastély</option>
+            <option value="szakralis">Szakrális</option>
+            <option value="egyedi">Egyedi</option>
+            <option value="hajo">Hajó</option>
+          </select>
+        </div>
+
+        <div class="mezo">
+          <label for="mAllapot">Állapot</label>
+          <select id="mAllapot">
+            <option value="publikalt">Publikált — látszik a weboldalon</option>
+            <option value="vazlat">Vázlat — csak itt látszik</option>
+          </select>
+        </div>
+
+        <div class="mezo">
+          <label for="mLink">Külső link <span class="halk">(nem kötelező)</span></label>
+          <input type="url" id="mLink" placeholder="https://…">
+        </div>
+
+        <div class="mezo teljes-szel">
+          <label for="mLeiras">Leírás</label>
+          <textarea id="mLeiras" rows="7" placeholder="Mit érdemes tudni a projektről? Helyszín, terjedelem, anyagok, különlegességek."></textarea>
+        </div>
+      </div>
+
+      <!-- képek -->
+      <section class="kepek-blokk">
+        <div class="kepek-fej">
+          <h3>Képek <span class="halk" id="kepSzamlalo"></span></h3>
+          <p class="halk">Húzással átrendezhetők. Az első kép a borító, de bármelyik kijelölhető annak.</p>
+        </div>
+
+        <div class="feltolto" id="feltolto">
+          <input type="file" id="fajlBemenet" accept="image/*" multiple hidden>
+          <p><b>Húzza ide a képeket</b>, vagy <button type="button" class="szoveg-gomb" id="tallozGomb">tallózzon</button>.</p>
+          <p class="halk">Nincs darabszám-korlát. A képek feltöltés előtt automatikusan kisebbre méreteződnek.</p>
+        </div>
+
+        <ul class="kep-racs" id="kepRacs"></ul>
+      </section>
+
+    </main>
+
+    <div class="ures-allapot" id="uresAllapot">
+      <p>Válasszon egy projektet a bal oldali listából, vagy hozzon létre újat.</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

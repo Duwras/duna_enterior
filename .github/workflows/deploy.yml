@@ -1,0 +1,52 @@
+# Minden main-re küldött push után felépíti és élesíti az oldalt.
+name: Közzététel
+
+on:
+  push:
+    branches: [main]
+  # kézzel is indítható az Actions fülről, ha újra kell futtatni
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Egyszerre egy közzététel fusson. A futó nem szakad félbe, csak a
+# sorban állók közül marad a legutolsó.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # 371 forráskép, képenként két webes méret — ez a lépés viszi az
+      # időt, nagyjából 2-4 perc.
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: deploy
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kapcsolat — Duna Belsőépítészet Kft.</title>
+<meta name="description" content="Duna Belsőépítészet Kft., 9025 Győr, Ikrényi út 14. Telefon, e-mail, ajánlatkérő űrlap és térkép.">
+<link rel="icon" href="img/brand/favicon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--FEJLEC:kapcsolat-->
+
+<main id="tartalom">
+
+  <section class="oldal-fej">
+    <div class="belul">
+      <p class="felcim jon">Elérhetőségeink</p>
+      <h1 class="jon kesik-1">Beszéljük meg,<br>mire van szüksége.</h1>
+      <p class="eloszo jon kesik-2">Írjon vagy hívjon — az igényfelméréstől a helyszíni szerelésig mindent egy kézben intézünk.</p>
+    </div>
+  </section>
+
+  <section class="szekcio">
+    <div class="belul kapcsolat-racs">
+
+      <!-- ---------- adatok ---------- -->
+      <div class="kapcsolat-adat jon">
+        <div class="ceg-doboz">
+          <h2>{{cegNev}}</h2>
+          <dl>
+            <div><dt>Székhely</dt><dd>{{telephely}}</dd></div>
+            <div><dt>Adószám</dt><dd>{{adoszam}}</dd></div>
+            <div><dt>Cégjegyzékszám</dt><dd>{{cegjegyzekszam}}</dd></div>
+            <div><dt>E-mail</dt><dd><a href="mailto:{{email}}">{{email}}</a></dd></div>
+          </dl>
+        </div>
+
+        <div class="szemely-lista">
+          <!--KAPCSOLATOK-KARTYA-->
+        </div>
+      </div>
+
+      <!-- ---------- űrlap ---------- -->
+      <div class="urlap-doboz jon kesik-1">
+        <h2>Üzenjen nekünk most!</h2>
+
+        <form id="kapcsolatUrlap" novalidate>
+          <div class="mezo">
+            <label for="nev">Neve <span aria-hidden="true">*</span></label>
+            <input type="text" id="nev" name="nev" required autocomplete="name">
+          </div>
+
+          <div class="mezo">
+            <label for="email">E-mail címe <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+
+          <div class="mezo">
+            <label for="telefon">Telefonszáma <span aria-hidden="true">*</span></label>
+            <input type="tel" id="telefon" name="telefon" required autocomplete="tel">
+          </div>
+
+          <div class="mezo">
+            <label for="telepules">Település, ahol a munkát el kellene végezni <span aria-hidden="true">*</span></label>
+            <input type="text" id="telepules" name="telepules" required
+                   placeholder="esetleg pontos cím">
+          </div>
+
+          <div class="mezo">
+            <label for="uzenet">Miben lehetünk segítségére? <span aria-hidden="true">*</span></label>
+            <textarea id="uzenet" name="uzenet" rows="6" required></textarea>
+          </div>
+
+          <!-- Automata kitöltők csapdája. Ember sosem tölti ki, mert nem
+               látja; a robotok viszont minden mezőt megtöltenek. -->
+          <div class="csapda" aria-hidden="true">
+            <label for="honlap">Ezt hagyja üresen</label>
+            <input type="text" id="honlap" name="honlap" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="mezo jelolo">
+            <input type="checkbox" id="gdpr" name="gdpr" required>
+            <label for="gdpr">Elolvastam és elfogadom az <a href="adatkezelesi-tajekoztato.html">adatkezelési tájékoztatót</a>, és hozzájárulok, hogy megkeresésem kapcsán felvegyék velem a kapcsolatot. <span aria-hidden="true">*</span></label>
+          </div>
+
+          <p class="urlap-jog">A csillaggal jelölt mezők kitöltése kötelező.</p>
+
+          <button type="submit" class="gomb tolt" id="kuldGomb">
+            Üzenet küldése <span class="nyil">→</span>
+          </button>
+
+          <p class="urlap-uzenet" id="urlapUzenet" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ---------- térkép ---------- -->
+  <section class="terkep-blokk">
+    <h2 class="rejtett">Térkép</h2>
+    <iframe
+      title="A Duna Belsőépítészet Kft. telephelye a térképen — 9025 Győr, Ikrényi út 14."
+      src="https://www.openstreetmap.org/export/embed.html?bbox=17.5765%2C47.6825%2C17.5946%2C47.6901&amp;layer=mapnik&amp;marker=47.68631%2C17.58554"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <a class="terkep-link" href="https://www.google.com/maps/search/?api=1&amp;query=9025+Gy%C5%91r%2C+Ikr%C3%A9nyi+%C3%BAt+14"
+       target="_blank" rel="noopener">Megnyitás a Google Térképen ↗</a>
+  </section>
+
+</main>
+
+<!--LABLEC-->
+
+<script src="script.js"></script>
+<script src="urlap.js"></script>
+</body>
+</html>

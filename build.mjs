@@ -39,12 +39,14 @@ const KATEGORIAK = {
 
 /* ---------- 1. másolás ---------- */
 
+/* Csak ezek kerülnek fel. Ami nincs a listán, az nem publikus — a
+   partials/ és a scripts/ például szándékosan marad ki. */
 const ASSETS = [
   'index.html', 'rolunk.html', 'referenciak.html', 'design-manufaktura.html',
   'kapcsolat.html', 'palyazatok.html', 'admin.html', '404.html',
   'impresszum.html', 'adatkezelesi-tajekoztato.html', 'sutik.html',
   'style.css', 'admin.css', 'fonts.css',
-  'script.js', 'admin.js', 'consent.js', 'szuro.js', 'galeria.js',
+  'script.js', 'admin.js', 'consent.js', 'szuro.js', 'galeria.js', 'urlap.js',
   'fonts', 'img', 'data',
   'robots.txt', 'sitemap.xml'
 ].filter(existsSync);
@@ -53,8 +55,14 @@ rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 for (const a of ASSETS) cpSync(a, `${OUT}/${a}`, { recursive: true });
 
-writeFileSync(`${OUT}/CNAME`, `${CEG.domain}\n`);
+/* A .nojekyll kikapcsolja a Jekyll feldolgozást, ami különben eldobná az
+   aláhúzással kezdődő fájlokat és mappákat. */
 writeFileSync(`${OUT}/.nojekyll`, '');
+
+/* CNAME csak akkor, ha a domain tényleg a GitHubra mutat. Korábban kiírva
+   a duwras.github.io/duna_enterior/ cím egy még nem működő domainre
+   irányítana át — az oldal senkinek nem jönne be. */
+if (CEG.sajatDomainEl) writeFileSync(`${OUT}/CNAME`, `${CEG.domain}\n`);
 
 /* ---------- 2. ellenőrzés ---------- */
 
@@ -146,12 +154,49 @@ const kapcsolatLista = CEG.kapcsolatok.map((k) => `<div class="szemely">
             <a href="tel:${esc(k.telefonHivas)}">${esc(k.telefon)}</a>
           </div>`).join('\n          ');
 
+/* ugyanez a négy ember a Kapcsolat és az Impresszum oldalon, bővebben */
+const kapcsolatKartyak = CEG.kapcsolatok.map((k) => `<div class="szemely-kartya">
+            <b>${esc(k.nev)}</b>
+            <span class="beosztas">${esc(k.beosztas)}</span>
+            <a href="tel:${esc(k.telefonHivas)}">${esc(k.telefon)}</a>
+            <a href="mailto:${esc(k.email)}">${esc(k.email)}</a>
+          </div>`).join('\n          ');
+
+/* A pályázati adattartalom szó szerint a régi oldalról. A KTK 2020
+   szerint ez kötelező tájékoztatási elem — nem rövidíthető. */
+const palyazatTartalom = PALYAZATOK.map((p) => `<article class="palyazat jon" id="${esc(p.slug)}">
+        <div class="palyazat-fej">
+          <h2>${esc(p.azonosito)}</h2>
+          <p class="palyazat-cim">${esc(p.cim)}</p>
+        </div>
+        ${p.kep ? `<figure class="palyazat-kep"><img src="${esc(p.kep)}" alt="${esc(p.azonosito)} pályázati tájékoztató tábla" loading="lazy"></figure>` : ''}
+        <dl class="palyazat-adat">
+          ${p.adatok.map(([cimke, ertek]) =>
+            `<div><dt>${esc(cimke)}</dt><dd>${esc(ertek)}</dd></div>`).join('\n          ')}
+        </dl>
+        ${p.bekezdesek.length ? `<div class="palyazat-szoveg">
+          <h3>${esc(p.bekezdesekCim || 'A projekt tartalmának bemutatása:')}</h3>
+          ${p.bekezdesek.map((b) => `<p>${esc(b)}</p>`).join('\n          ')}
+        </div>` : ''}
+      </article>`).join('\n\n      ');
+
 const palyazatLinkek = PALYAZATOK.map((p) =>
   `<li><a href="palyazatok.html#${esc(p.slug)}">${esc(p.azonosito)}</a></li>`).join('\n            ');
 
 const LABLEC = readFileSync('partials/lablec.html', 'utf8')
   .replace('<!--KAPCSOLATOK-->', kapcsolatLista)
   .replace('<!--PALYAZAT-LINKEK-->', palyazatLinkek);
+
+/* A fejléc is egy helyen él. Az oldal a saját menüpontját
+   <!--FEJLEC:rolunk--> alakban kéri, és csak azon lesz aria-current. */
+const FEJLEC_SABLON = readFileSync('partials/fejlec.html', 'utf8');
+
+function fejlec(aktiv) {
+  return FEJLEC_SABLON.replace(
+    `data-oldal="${aktiv}"`,
+    `data-oldal="${aktiv}" aria-current="page"`
+  );
+}
 
 /* ---------- 5. projekt-aloldalak ---------- */
 
@@ -200,7 +245,7 @@ const OLDALAK = [];
    fájl tartalmából számolt bélyeg kerül a hivatkozás mögé. Ha a fájl
    változik, változik az URL is — a visszatérő látogató biztosan újat tölt. */
 const BELYEGZETT = ['style.css', 'admin.css', 'fonts.css', 'script.js', 'admin.js',
-  'consent.js', 'szuro.js', 'galeria.js']
+  'consent.js', 'szuro.js', 'galeria.js', 'urlap.js']
   .filter((f) => existsSync(`${OUT}/${f}`))
   .map((f) => [f, createHash('sha1').update(readFileSync(`${OUT}/${f}`)).digest('hex').slice(0, 8)]);
 
@@ -216,10 +261,15 @@ for (const oldal of OLDALAK) {
   const gyoker = '../'.repeat(melyseg);
 
   html = html
+    .replace(/<!--FEJLEC:([a-z]+)-->/, (_, aktiv) => fejlec(aktiv))
     .replace('<!--LABLEC-->', LABLEC)
     .replace('<!--KIEMELT-->', kiemeltek())
     .replace('<!--SZURO-->', szuroGombok())
-    .replace('<!--PROJEKTEK-->', ELO.map(kartya).join('\n        '));
+    .replace('<!--PROJEKTEK-->', ELO.map(kartya).join('\n        '))
+    .replace('<!--KAPCSOLATOK-KARTYA-->', kapcsolatKartyak)
+    .replace('<!--PALYAZAT-TARTALOM-->', palyazatTartalom)
+    .replace('<!--EGYEDIEK-->',
+      ELO.filter((p) => p.kategoria === 'egyedi').slice(0, 3).map(kartya).join('\n        '));
 
   for (const [kulcs, ertek] of Object.entries({ ...CEG, ...SZAMOK })) {
     if (kulcs.startsWith('_') || typeof ertek === 'object') continue;
