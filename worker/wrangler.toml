@@ -1,0 +1,19 @@
+name = "duna-urlap"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# Az üzenetek adatbázisa. A database_id-t a `wrangler d1 create duna-uzenetek`
+# írja ki — másold ide, mielőtt először telepítenél.
+[[d1_databases]]
+binding = "DB"
+database_name = "duna-uzenetek"
+database_id = "[KITÖLTENDŐ]"
+
+[vars]
+CIMZETT = "office@dunaenterior.hu"
+# A feladó domainjét igazolni kell a Resendben, különben a levél nem megy ki.
+FELADO = "Duna Enterior weboldal <urlap@dunaenterior.hu>"
+
+# Titkok — EZEKET NE ide írd, hanem paranccsal:
+#   wrangler secret put RESEND_KULCS
+#   wrangler secret put RECAPTCHA_SECRET
