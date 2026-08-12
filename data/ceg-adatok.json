@@ -1,0 +1,38 @@
+{
+  "_megjegyzes": "A cégadatok EGY helyen élnek. Innen kerülnek a {{kulcs}} helyekre minden oldalon — ne írd át külön a HTML-ekben.",
+
+  "cegNev": "Duna Belsőépítészet Kft.",
+  "cegNevHosszu": "Duna Belsőépítészet Kft. – Duna Enterior Asztalos és Hajóépítő Üzem",
+  "domain": "dunaenterior.hu",
+
+  "_szekhely": "FIGYELEM: a régi oldal két címet közöl. Az impresszum és az adatkezelési tájékoztató 'Ikrényi út 2.', a kapcsolat és a többi oldal 'Ikrényi út 14.' — az új oldal mindkettőt a régi helyén hozza, változtatás nélkül (megrendelői döntés).",
+  "szekhely": "9025 Győr, Ikrényi út 2.",
+  "telephely": "9025 Győr, Ikrényi út 14.",
+
+  "adoszam": "23159916-2-08",
+  "cegjegyzekszam": "08 09 021332",
+  "email": "office@dunaenterior.hu",
+  "emailUzem": "info@dunaenterior.hu",
+  "alapitas": "1991",
+  "uzemMeret": "1200 m²",
+
+  "terkepLat": 47.68631,
+  "terkepLng": 17.58554,
+
+  "gaId": "[KITÖLTENDŐ: Google Analytics 4 mérőazonosító, pl. G-XXXXXXXXXX]",
+  "recaptchaSiteKey": "[KITÖLTENDŐ: reCAPTCHA v3 site key]",
+  "urlapVegpont": "[KITÖLTENDŐ: a kapcsolati űrlap végpontja, pl. https://duna-form.<sajat>.workers.dev]",
+
+  "kapcsolatok": [
+    { "nev": "Győrffy Péter",            "beosztas": "ügyvezető",              "telefon": "+36 30 / 939-7598", "telefonHivas": "0036309397598", "email": "office@dunaenterior.hu" },
+    { "nev": "Győrffy-Domokos Szilvia",  "beosztas": "iroda-pénzügy",          "telefon": "+36 30 / 377-3180", "telefonHivas": "0036303773180", "email": "office@dunaenterior.hu" },
+    { "nev": "Lakasz Péter",             "beosztas": "hajóépítő üzemvezető",   "telefon": "+36 30 / 989-2042", "telefonHivas": "0036309892042", "email": "office@dunaenterior.hu" },
+    { "nev": "Dani Zoltán",              "beosztas": "üzemiroda vezető",       "telefon": "+36 30 / 319-7339", "telefonHivas": "0036303197339", "email": "info@dunaenterior.hu" }
+  ],
+
+  "adatvedelmiMegbizott": {
+    "nev": "Győrffy-Domokos Szilvia",
+    "telefon": "+36 30 377 3180",
+    "email": "office@dunaenterior.hu"
+  }
+}

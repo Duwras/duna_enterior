@@ -1,0 +1,1816 @@
+[
+  {
+    "slug": "garzon-plaza-hotel",
+    "cim": "Garzon Pláza Hotel",
+    "kategoria": "hotel",
+    "link": "https://garzonplaza.hu",
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "GPH recepció (2)"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "GPH recepció (1)"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "GPH recepció (3)"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Garzon Pláza Hotel"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "GPH reggeliző (2)"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "GPH reggeliző (4)"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "GPH reggeliző (3)"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "GPH reggeliző (5)"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "GPH reggeliző (1)"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "GPH felső szint (2)"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "GPH felső szint (1)"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "GPH külső látványtervek"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "GPH külső"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "GPH fotel (4)"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "GPH fotel (1)"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "GPH fotel (2)"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "GPH fotel (3)"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "GPH szoba (1)"
+      },
+      {
+        "file": "19.jpg",
+        "alt": "GPH szoba (2)"
+      },
+      {
+        "file": "20.jpg",
+        "alt": "GPH szoba (3)"
+      }
+    ]
+  },
+  {
+    "slug": "ottevenyi-kastely",
+    "cim": "Öttevényi kastély",
+    "kategoria": "kastely",
+    "link": "https://ottevenyikastely.hu/",
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Öttevényi kastély_belső5"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Öttevényi kastély_belső2"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Öttevényi kastély_belső1"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Öttevényi kastély_belső3"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Öttevényi kastély_belső4"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Öttevényi kastély_belső6"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Öttevényi kastély_bár1"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Öttevényi kastély_bár2"
+      }
+    ]
+  },
+  {
+    "slug": "vatikani-diszdoboz",
+    "cim": "Vatikáni díszdoboz",
+    "kategoria": "egyedi",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Vatikáni díszdoboz (1)"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Vatikáni díszdoboz (2)"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Vatikáni díszdoboz (3)"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Vatikáni díszdoboz (4)"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Vatikáni díszdoboz (5)"
+      }
+    ]
+  },
+  {
+    "slug": "mercedes-plato",
+    "cim": "Mercedes plató",
+    "kategoria": "egyedi",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "GM1"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "3-IMG_0799"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "57-IMG_0853"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "GM2 a"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "GM2 c"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "GM2 d"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "5-IMG_0801"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "GM2 e"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "GM2 f"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "GM3"
+      }
+    ]
+  },
+  {
+    "slug": "szent-laszlo-latogatokozpont-fa-kapuja",
+    "cim": "Szent László Látogatóközpont fa kapuja",
+    "kategoria": "szakralis",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Szent László Látogatóközpont fa kapuja"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Szent László Látogatóközpont fa kapuja"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "3a"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "3a2"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "3b"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "3c"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "3d"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "3e"
+      }
+    ]
+  },
+  {
+    "slug": "hotel-domus-collis",
+    "cim": "Hotel Domus Collis",
+    "kategoria": "hotel",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Hotel Domus Collis"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Hotel Domus Collis"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Hotel Domus Collis"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "332721968_1578885315912501_6210931307900864503_n"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "332724539_1284711235756991_6422370971573588399_n"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "332757409_5855314681255397_1775997292662134204_n"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "332774463_509411991406376_8318197446405052028_n"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "332862483_746760843513676_6326920290454964503_n"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "332881051_1206330440020608_584867018627112210_n"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "332908383_602967717942316_7012678094548995149_n"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "332929541_728321768891952_6851597394257838543_n"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "333022450_574225011313109_5002350849232984737_n"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "333032708_623491206284655_5327470858812089084_n"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "333113536_1570528936764820_2795746135406859281_n"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "333481373_232797785858902_8477199301502779618_n"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "333516611_6873650259317886_308071647313146365_n"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "333636646_3533398830385148_5000530724554839478_n"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "334290815_121904867363945_2112004490983650498_n"
+      },
+      {
+        "file": "19.jpg",
+        "alt": "334469299_242443634933179_507208904047291201_n"
+      },
+      {
+        "file": "20.jpg",
+        "alt": "334473556_1418199295383371_3708426444482368400_n"
+      }
+    ]
+  },
+  {
+    "slug": "bodajki-vadaszkastely",
+    "cim": "Bodajki Vadászkastély",
+    "kategoria": "kastely",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "galeria_kep_21"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "galeria_kep_23"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "galeria_kep_19"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "galeria_kep_12"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "galeria_kep_13"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "galeria_kep_18"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "galeria_kep_14"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "galeria_kep_20"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "galeria_kep_15"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "galeria_kep_17"
+      }
+    ]
+  },
+  {
+    "slug": "zirci-apatsag",
+    "cim": "Zirci Apátság",
+    "kategoria": "szakralis",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-010"
+      }
+    ]
+  },
+  {
+    "slug": "kristaly-etterem",
+    "cim": "Kristály Étterem",
+    "kategoria": "etterem",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-010"
+      }
+    ]
+  },
+  {
+    "slug": "domus-pellegrini-hotel-apartmanok",
+    "cim": "Domus Pellegrini Hotel – Apartmanok",
+    "kategoria": "hotel",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-006"
+      }
+    ]
+  },
+  {
+    "slug": "fuzio-a-tajjal",
+    "cim": "Fúzió a tájjal",
+    "kategoria": "lakoingatlan",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-004"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-005"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-006"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-010"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-011"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-012"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-013"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-014"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-015"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-016"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-017"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-019"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-020"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-021"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-022"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-023"
+      },
+      {
+        "file": "19.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-024"
+      },
+      {
+        "file": "20.jpg",
+        "alt": "dunaenterior-referencia-fuzio-a-tajjal-025"
+      }
+    ]
+  },
+  {
+    "slug": "csaladi-haz",
+    "cim": "Családi ház",
+    "kategoria": "lakoingatlan",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-011"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-012"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-013"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-014"
+      }
+    ]
+  },
+  {
+    "slug": "budai-haz",
+    "cim": "Budai ház",
+    "kategoria": "lakoingatlan",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-011"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-012"
+      }
+    ]
+  },
+  {
+    "slug": "belvarosban-nyugalomban",
+    "cim": "Belvárosban – nyugalomban",
+    "kategoria": "lakoingatlan",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-011"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-012"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-013"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-014"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-015"
+      }
+    ]
+  },
+  {
+    "slug": "fafaragasok",
+    "cim": "Fafaragások",
+    "kategoria": "egyedi",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Faragások 1"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Faragások 2"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Faragások 3"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Faragások 4"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Faragások 5"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Faragások 6"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Faragások7"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Faragások8"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Faragások9"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Faragások10"
+      }
+    ]
+  },
+  {
+    "slug": "duna-cruises-hableany",
+    "cim": "Duna Cruises HABLEÁNY",
+    "kategoria": "hajo",
+    "link": "https://dunacruises.com/",
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "NORMÁL hajó instára"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "19.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "20.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "21.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "22.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      },
+      {
+        "file": "23.jpg",
+        "alt": "Duna Cruises HABLEÁNY"
+      }
+    ]
+  },
+  {
+    "slug": "duna-hajok-6-1-kadet",
+    "cim": "Duna Hajók 6.1 KADÉT",
+    "kategoria": "hajo",
+    "link": "https://dunahajok.hu/",
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Kadét9"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Kadét11"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Kadét10"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Kadét1"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Kadét2"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Kadét3"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Kadét4"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Kadét5"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Kadét6"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Kadét7"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Kadét8"
+      }
+    ]
+  },
+  {
+    "slug": "duna-hajok-6-1-cabin",
+    "cim": "Duna Hajók 6.1 Cabin",
+    "kategoria": "hajo",
+    "link": "https://dunahajok.hu/",
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "CABIN-2048"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "belső3"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "0627c"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "0627a"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "0627b"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "CBN003 (9)"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "CBN003 (6)"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "CBN003 (7)"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "CBN003 (10b1920"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "CBN003 (8)"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "CBN003 (5)"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "CBN003 (11)b"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "CBN003 (1)"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "CBN003 (2)"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "CBN003 (3)"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "CBN003 (4)"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "Duna Hajók 6.1 Cabin"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "Duna Hajók 6.1 Cabin"
+      },
+      {
+        "file": "19.jpg",
+        "alt": "Duna Hajók 6.1 Cabin"
+      },
+      {
+        "file": "20.jpg",
+        "alt": "Duna Hajók 6.1 Cabin"
+      },
+      {
+        "file": "21.jpg",
+        "alt": "Duna Hajók 6.1 Cabin"
+      },
+      {
+        "file": "22.jpg",
+        "alt": "S1D effk"
+      },
+      {
+        "file": "23.jpg",
+        "alt": "S5"
+      },
+      {
+        "file": "24.jpg",
+        "alt": "S2j"
+      },
+      {
+        "file": "25.jpg",
+        "alt": "Duna Hajók 6.1 Cabin"
+      },
+      {
+        "file": "26.jpg",
+        "alt": "S3"
+      }
+    ]
+  },
+  {
+    "slug": "bojan-harcos",
+    "cim": "Bojan – Harcos",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Bojan – Harcos"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Bojan – Harcos"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Bojan-Harcos-referencia-003"
+      }
+    ]
+  },
+  {
+    "slug": "boesch-640-de-luxe",
+    "cim": "Boesch 640 De Luxe",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "Boesch 640 De Luxe"
+      },
+      {
+        "file": "19.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-019"
+      }
+    ]
+  },
+  {
+    "slug": "boesch-580",
+    "cim": "Boesch 580",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "Boesch 580"
+      },
+      {
+        "file": "18.jpg",
+        "alt": "Boesch 580"
+      }
+    ]
+  },
+  {
+    "slug": "jolle-25",
+    "cim": "Jolle 25",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-010"
+      }
+    ]
+  },
+  {
+    "slug": "arcangeli-super-jolly",
+    "cim": "Arcangeli Super Jolly",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Arcangeli Super Jolly"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Arcangeli Super Jolly"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Arcangeli Super Jolly"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Arcangeli Super Jolly"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-011"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Arcangeli Super Jolly"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "Arcangeli Super Jolly"
+      }
+    ]
+  },
+  {
+    "slug": "boesch-560-de-luxe",
+    "cim": "Boesch 560 De Luxe",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-008"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Boesch 560 De Luxe"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Boesch 560 De Luxe"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Boesch 560 De Luxe"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-012"
+      },
+      {
+        "file": "13.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-013"
+      },
+      {
+        "file": "14.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-014"
+      },
+      {
+        "file": "15.jpg",
+        "alt": "Boesch 560 De Luxe"
+      },
+      {
+        "file": "16.jpg",
+        "alt": "Boesch 560 De Luxe"
+      },
+      {
+        "file": "17.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-017"
+      }
+    ]
+  },
+  {
+    "slug": "rivalis-vitorlas-hajo",
+    "cim": "Rivális vitorlás hajó",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-008"
+      }
+    ]
+  },
+  {
+    "slug": "veteran-motorcsonak",
+    "cim": "Veterán motorcsónak",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Veterán motorcsónak"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Veterán motorcsónak"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Veterán motorcsónak"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Veterán motorcsónak"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Veterán motorcsónak"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Veterán motorcsónak"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Veteran-motorcsonak-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Veteran-motorcsonak-008"
+      }
+    ]
+  },
+  {
+    "slug": "volvo-penta-motorcsonak",
+    "cim": "Volvo Penta motorcsónak",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-007"
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Volvo Penta motorcsónak"
+      },
+      {
+        "file": "09.jpg",
+        "alt": "Volvo Penta motorcsónak"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-011"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "Volvo Penta motorcsónak"
+      }
+    ]
+  },
+  {
+    "slug": "jegvitorlas",
+    "cim": "Jégvitorlás",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "Jégvitorlás"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "Jégvitorlás"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "Jégvitorlás"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-006"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-007"
+      }
+    ]
+  },
+  {
+    "slug": "meyer-motorcsonak-1",
+    "cim": "Meyer motorcsónak 1.",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Meyer motorcsónak 1."
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Meyer motorcsónak 1."
+      },
+      {
+        "file": "08.jpg",
+        "alt": "Meyer motorcsónak 1."
+      },
+      {
+        "file": "09.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-009"
+      },
+      {
+        "file": "10.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-010"
+      },
+      {
+        "file": "11.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-011"
+      },
+      {
+        "file": "12.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-012"
+      }
+    ]
+  },
+  {
+    "slug": "meyer-motorcsonak-2",
+    "cim": "Meyer motorcsónak 2.",
+    "kategoria": "hajo",
+    "link": null,
+    "leiras": "",
+    "kiemelt": "01.jpg",
+    "allapot": "publikalt",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-001"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-002"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-003"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-004"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-005"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "Meyer motorcsónak 2."
+      },
+      {
+        "file": "07.jpg",
+        "alt": "Meyer motorcsónak 2."
+      }
+    ]
+  }
+]

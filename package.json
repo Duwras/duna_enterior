@@ -1,0 +1,15 @@
+{
+  "name": "duna-enterior-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Duna Belsőépítészet Kft. – asztalos és hajóépítő üzem, Győr. Statikus oldal, GitHub Pages.",
+  "scripts": {
+    "build": "node build.mjs",
+    "elonezet": "npx --yes http-server deploy -p 4190 -c-1",
+    "kepek": "node scripts/kepek-tomorit.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.4"
+  }
+}
