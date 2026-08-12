@@ -35,7 +35,11 @@ jobs:
       # időt, nagyjából 2-4 perc.
       - run: npm run build
 
+      # enablement: maga kapcsolja be a Pages-t a repón, ha még nincs —
+      # így nem kell kézzel a Settings → Pages alatt beállítani
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
