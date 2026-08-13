@@ -7,7 +7,7 @@ compatibility_date = "2026-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "duna-uzenetek"
-database_id = "[KITÖLTENDŐ]"
+database_id = "b6b530f4-2723-4eee-8aa1-d282122ac4ec"
 
 [vars]
 CIMZETT = "office@dunaenterior.hu"
