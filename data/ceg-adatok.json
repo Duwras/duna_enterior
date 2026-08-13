@@ -22,8 +22,10 @@
   "terkepLat": 47.68631,
   "terkepLng": 17.58554,
 
-  "gaId": "[KITÖLTENDŐ: Google Analytics 4 mérőazonosító, pl. G-XXXXXXXXXX]",
-  "recaptchaSiteKey": "[KITÖLTENDŐ: reCAPTCHA v3 site key]",
+  "gaId": "G-5HJ10XNWXD",
+
+  "_recaptchaSiteKey": "A NYILVÁNOS kulcs — ez benne van a weboldal forrásában, így helyes. A hozzá tartozó SECRET kulcs soha nem kerül ide, azt a Cloudflare tárolja (wrangler secret put RECAPTCHA_SECRET).",
+  "recaptchaSiteKey": "6Ldo2oMtAAAAAKCsT4KDSnfE6NSrdGTCFVMaeYWy",
   "urlapVegpont": "[KITÖLTENDŐ: a kapcsolati űrlap végpontja, pl. https://duna-form.<sajat>.workers.dev]",
 
   "kapcsolatok": [
