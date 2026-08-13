@@ -21,11 +21,18 @@ const CORS = (eredet) => ({
 });
 
 /* Csak a saját oldalról fogadunk küldést. A github.io cím addig kell,
-   amíg a domain nem áll át. */
+   amíg a domain nem áll át.
+
+   IDEIGLENES: az ertekpontpenzugyek.hu a Duwras.github.io felhasználói
+   Pages-oldal saját domainje, és a projektoldalak öröklik — a
+   duwras.github.io/duna_enterior/ cím 301-gyel oda irányít, tehát a
+   bongeszo ONNAN kuld, azt az Origin-t latjuk. Nelkule az urlap sajat
+   magunkat dobna vissza. A domainvaltas utan ez a sor TORLENDO. */
 const ENGEDETT = [
   'https://dunaenterior.hu',
   'https://www.dunaenterior.hu',
-  'https://duwras.github.io'
+  'https://duwras.github.io',
+  'https://ertekpontpenzugyek.hu'
 ];
 
 const MEZOK = ['nev', 'email', 'telefon', 'telepules', 'uzenet'];
