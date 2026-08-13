@@ -1,4 +1,9 @@
 # Minden main-re küldött push után felépíti és élesíti az oldalt.
+#
+# A közzététel Cloudflare Pages-re megy (duna-enterior.pages.dev), nem
+# GitHub Pages-re. Ok: a Duwras.github.io felhasználói Pages-oldalhoz az
+# ertekpontpenzugyek.hu saját domain van kötve, és a projektoldalak ezt
+# öröklik — az ügyfél oldala idegen domain alatt látszott volna.
 name: Közzététel
 
 on:
@@ -9,17 +14,15 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Egyszerre egy közzététel fusson. A futó nem szakad félbe, csak a
 # sorban állók közül marad a legutolsó.
 concurrency:
-  group: pages
+  group: kozzetetel
   cancel-in-progress: false
 
 jobs:
-  build:
+  kozzetetel:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,22 +38,11 @@ jobs:
       # időt, nagyjából 2-4 perc.
       - run: npm run build
 
-      # enablement: maga kapcsolja be a Pages-t a repón, ha még nincs —
-      # így nem kell kézzel a Settings → Pages alatt beállítani
-      - uses: actions/configure-pages@v5
+      # A két titok a repó Settings → Secrets and variables → Actions
+      # alatt kell hogy legyen. Ha hiányzik, ez a lépés pirosra vált —
+      # szándékosan, mert némán elmaradó közzététel rosszabb.
+      - uses: cloudflare/wrangler-action@v3
         with:
-          enablement: true
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: deploy
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy deploy --project-name duna-enterior --branch main

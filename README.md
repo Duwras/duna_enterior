@@ -3,13 +3,17 @@
 A **Duna Belsőépítészet Kft.** (Duna Enterior Asztalos és Hajóépítő Üzem, Győr)
 weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 
-**Élő cím:** <https://duwras.github.io/duna_enterior/>
+**Élő cím:** <https://duna-enterior.pages.dev/>
 
-> A cím jelenleg átirányít a `ertekpontpenzugyek.hu/duna_enterior/` alá, mert a
-> `Duwras.github.io` felhasználói Pages-oldalhoz az a saját domain van kötve, és
-> a projektoldalak ezt öröklik. Az oldal tartalmilag rendben van, csak a
-> címsorban látszik idegen domain. Amint a `dunaenterior.hu` a GitHubra mutat és
-> a `sajatDomainEl` átvált `true`-ra, ez megszűnik.
+> Ez a bemutató cím a `dunaenterior.hu` élesítéséig. Kereső nem indexeli: amíg
+> a `sajatDomainEl` `false`, a build kiír egy `_headers` fájlt
+> `X-Robots-Tag: noindex, nofollow` fejléccel, így az ideiglenes cím nem lesz
+> duplikált tartalom az éles domain mellett.
+>
+> Korábban GitHub Pages-en volt. Azért került át: a `Duwras.github.io`
+> felhasználói Pages-oldalhoz az `ertekpontpenzugyek.hu` saját domain van
+> kötve, a projektoldalak ezt öröklik, és a `duwras.github.io/duna_enterior/`
+> 301-gyel oda irányított — az ügyfél oldala idegen domain alatt látszott.
 
 ## Mi hol van
 
@@ -28,8 +32,23 @@ weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 
 Nincs kézi feltöltés. Minden `main`-re küldött push után a GitHub lefuttatja a
 [.github/workflows/deploy.yml](.github/workflows/deploy.yml) munkafolyamatot,
-ami buildel és élesít. Kb. **2-4 perc** (a 371 képből képenként két webes méret
-készül).
+ami buildel és feltölti a Cloudflare Pages `duna-enterior` projektbe. Kb.
+**2-4 perc** (a 371 képből képenként két webes méret készül).
+
+Ehhez két titok kell a repóban (*Settings* → *Secrets and variables* →
+*Actions* → *New repository secret*):
+
+| Titok | Érték |
+|---|---|
+| `CLOUDFLARE_ACCOUNT_ID` | `2c4bd69d5d235682acc4d491599182fe` |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare → *My Profile* → *API Tokens* → *Create Token* → **Edit Cloudflare Workers** sablon (a Pages-hez is ez kell), vagy egyedi token *Account* → *Cloudflare Pages: Edit* jogosultsággal |
+
+Amíg a token nincs beállítva, a munkafolyamat pirosra vált — ez szándékos, egy
+némán elmaradó közzététel rosszabb lenne. Addig kézzel is élesíthető:
+
+```bash
+npm run kozzetetel
+```
 
 Helyi ellenőrzés:
 
@@ -73,19 +92,29 @@ beállítva, nem tesz úgy, mintha elküldte volna az üzenetet.
 
 ## Domainváltás
 
-Amikor a `dunaenterior.hu` DNS-e a GitHubra mutat:
+1. Cloudflare → *Workers & Pages* → `duna-enterior` → *Custom domains* → **Set
+   up a domain**: `dunaenterior.hu`, majd ugyanígy `www.dunaenterior.hu`.
+2. DNS. Ha a domain a Cloudflare-en van, a fenti lépés magától felveszi a
+   rekordot. Ha máshol, ezt kell felvenni a szolgáltatónál:
 
-| Típus | Név | Érték |
-|---|---|---|
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-| CNAME | `www` | `duwras.github.io.` |
+   | Típus | Név | Érték |
+   |---|---|---|
+   | CNAME | `@` (vagy `dunaenterior.hu`) | `duna-enterior.pages.dev` |
+   | CNAME | `www` | `duna-enterior.pages.dev` |
 
-Utána a `data/ceg-adatok.json`-ban `"sajatDomainEl": true`, push — a build
-kiírja a CNAME fájlt. Végül a repó *Settings* → *Pages* → *Custom domain* alatt
-`dunaenterior.hu`, és **Enforce HTTPS**.
+   A tanúsítványt a Cloudflare adja, kézzel nincs teendő.
+3. `data/ceg-adatok.json`-ban `"sajatDomainEl": true`, push. Ettől marad el a
+   `_headers` noindex fejléce, tehát innentől indexelhet a kereső.
+4. `worker/src/index.js` — az `ENGEDETT` listából a három ideiglenes cím
+   (`pages.dev`, `duwras.github.io`, `ertekpontpenzugyek.hu`) törlendő, utána
+   `npx wrangler deploy` a `worker/` mappában.
+
+## A régi GitHub Pages cím
+
+A közzététel már nem a GitHub Pages-re megy, de a korábban kirakott változat
+addig kint marad, amíg le nem kapcsolod: repó *Settings* → *Pages* → *Unpublish
+site*. Amíg él, a `duwras.github.io/duna_enterior/` az `ertekpontpenzugyek.hu`
+alá irányít.
 
 ## Tartalommegőrzés
 

@@ -55,9 +55,11 @@ wrangler secret put RECAPTCHA_SECRET
   `dunaenterior.hu` domaint igazolni kell a Resendben (SPF és DKIM
   rekord a DNS-be), különben a levél nem megy ki.
 - **RECAPTCHA_SECRET** — [google.com/recaptcha/admin](https://www.google.com/recaptcha/admin)
-  → **reCAPTCHA v3**, a `dunaenterior.hu` és a `duwras.github.io`
-  domainnel. Két kulcsot ad: a *site key* a weboldalra megy (lásd lent),
-  a *secret key* ide.
+  → **reCAPTCHA v3**. A kulcsnál fel kell sorolni minden domaint, ahol az
+  oldal fut: `dunaenterior.hu`, és amíg a domain nem áll át,
+  `duna-enterior.pages.dev` is. Ami nincs a listán, arról a Google
+  eldobja a jegyet, és az űrlap hibát ad. Két kulcsot kapsz: a *site key*
+  a weboldalra megy (lásd lent), a *secret key* ide.
 
 ### 4. Telepítés
 
@@ -90,5 +92,7 @@ wrangler d1 execute duna-uzenetek --remote --command "SELECT mikor, nev, telefon
 ## Ha a domain átáll
 
 A Workerben az `ENGEDETT` lista tartalmazza, mely oldalakról fogadunk
-küldést. A `dunaenterior.hu` és a `duwras.github.io` is benne van, tehát
-átálláskor nincs teendő.
+küldést. A `dunaenterior.hu` és az ideiglenes `duna-enterior.pages.dev`
+is benne van, tehát átálláskor küldeni nincs teendő — utána viszont a
+három ideiglenes cím (`pages.dev`, `duwras.github.io`,
+`ertekpontpenzugyek.hu`) törölhető a listából, majd `wrangler deploy`.

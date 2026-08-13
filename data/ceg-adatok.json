@@ -5,7 +5,7 @@
   "cegNevHosszu": "Duna Belsőépítészet Kft. – Duna Enterior Asztalos és Hajóépítő Üzem",
   "domain": "dunaenterior.hu",
 
-  "_sajatDomainEl": "Addig maradjon false, amíg a dunaenterior.hu DNS-e nem mutat a GitHubra. A build csak true esetén ír CNAME fájlt — ha korábban írna, a duwras.github.io/duna_enterior/ cím egy még nem működő domainre irányítana át, és senki nem látná az oldalt.",
+  "_sajatDomainEl": "Addig maradjon false, amíg a dunaenterior.hu DNS-e nem mutat a Cloudflare Pages-re. Amíg false, a build kiírja a _headers fájlt noindex fejléccel, hogy az ideiglenes duna-enterior.pages.dev címet ne indexelje a kereső. True esetén a noindex elmarad (és CNAME fájl készül a GitHub Pages öröksége miatt).",
   "sajatDomainEl": false,
 
   "_szekhely": "FIGYELEM: a régi oldal két címet közöl. Az impresszum és az adatkezelési tájékoztató 'Ikrényi út 2.', a kapcsolat és a többi oldal 'Ikrényi út 14.' — az új oldal mindkettőt a régi helyén hozza, változtatás nélkül (megrendelői döntés).",

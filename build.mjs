@@ -64,6 +64,15 @@ writeFileSync(`${OUT}/.nojekyll`, '');
    irányítana át — az oldal senkinek nem jönne be. */
 if (CEG.sajatDomainEl) writeFileSync(`${OUT}/CNAME`, `${CEG.domain}\n`);
 
+/* Amíg az éles domain nincs bekötve, az oldal ideiglenes címeken (pages.dev,
+   github.io) látszik. Ezeket ne indexelje a kereső: a saját domain élesítése
+   után különben duplikált tartalomként versenyeznének vele. A _headers-t a
+   Cloudflare Pages veszi figyelembe, a GitHub Pages egyszerűen fájlként
+   szolgálja ki — ott nem árt. */
+if (!CEG.sajatDomainEl) {
+  writeFileSync(`${OUT}/_headers`, '/*\n  X-Robots-Tag: noindex, nofollow\n');
+}
+
 /* ---------- 2. ellenőrzés ---------- */
 
 /* Egy elgépelt fájlnév némán törött képet adna az éles oldalon. Inkább
