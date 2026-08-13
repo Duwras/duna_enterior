@@ -26,7 +26,7 @@
 
   "_recaptchaSiteKey": "A NYILVÁNOS kulcs — ez benne van a weboldal forrásában, így helyes. A hozzá tartozó SECRET kulcs soha nem kerül ide, azt a Cloudflare tárolja (wrangler secret put RECAPTCHA_SECRET).",
   "recaptchaSiteKey": "6Ldo2oMtAAAAAKCsT4KDSnfE6NSrdGTCFVMaeYWy",
-  "urlapVegpont": "[KITÖLTENDŐ: a kapcsolati űrlap végpontja, pl. https://duna-form.<sajat>.workers.dev]",
+  "urlapVegpont": "https://duna-urlap.dunaenterior.workers.dev",
 
   "kapcsolatok": [
     { "nev": "Győrffy Péter",            "beosztas": "ügyvezető",              "telefon": "+36 30 / 939-7598", "telefonHivas": "0036309397598", "email": "office@dunaenterior.hu" },

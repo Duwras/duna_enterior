@@ -2,6 +2,12 @@ name = "duna-urlap"
 main = "src/index.js"
 compatibility_date = "2026-01-01"
 
+# A workers.dev cím kell — erre küld a weboldal űrlapja.
+workers_dev = true
+# A verziónkénti előnézeti címek viszont nem: minden új telepítés újabb
+# nyilvános URL-t adna ugyanennek a végpontnak, fölöslegesen.
+preview_urls = false
+
 # Az üzenetek adatbázisa. A database_id-t a `wrangler d1 create duna-uzenetek`
 # írja ki — másold ide, mielőtt először telepítenél.
 [[d1_databases]]
