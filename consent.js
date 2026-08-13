@@ -31,7 +31,10 @@
   var elindult = false;
 
   function meresIndul() {
-    if (elindult || !MERO || MERO.indexOf('KITÖLTENDŐ') !== -1) return;
+    /* A {{...}} akkor marad bent, ha a build behelyettesítése elmaradt —
+       ilyenkor ne indítsuk el a mérést hibás azonosítóval. */
+    if (elindult || !MERO || MERO.indexOf('KITÖLTENDŐ') !== -1 ||
+        MERO.indexOf('{' + '{') !== -1) return;
     elindult = true;
 
     window.dataLayer = window.dataLayer || [];

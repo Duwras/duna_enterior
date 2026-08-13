@@ -241,6 +241,33 @@ const OLDALAK = [];
   }
 })(OUT);
 
+const SZAMOK = {
+  projektSzam: String(ELO.length),
+  kepSzam: String(ELO.reduce((n, p) => n + p.kepek.length, 0)),
+  ev: String(new Date().getFullYear())
+};
+
+const ERTEKEK = { ...CEG, ...SZAMOK };
+
+function behelyettesit(szoveg) {
+  for (const [kulcs, ertek] of Object.entries(ERTEKEK)) {
+    if (kulcs.startsWith('_') || typeof ertek === 'object') continue;
+    szoveg = szoveg.split(`{{${kulcs}}}`).join(String(ertek));
+  }
+  return szoveg;
+}
+
+/* A szkriptek ugyanúgy tartalmaznak {{kulcs}} helyeket, mint a lapok — az
+   űrlap végpontja, a reCAPTCHA kulcs és a mérőazonosító onnan kerül beléjük.
+   Ez a bélyegzés ELŐTT kell megtörténjen, különben az ujjlenyomat a
+   behelyettesítés előtti tartalomból számolódna, és a régi fájl ragadna
+   bent a látogatók gyorsítótárában. */
+const SZKRIPTEK = ASSETS.filter((a) => a.endsWith('.js'));
+for (const f of SZKRIPTEK) {
+  const ut = `${OUT}/${f}`;
+  writeFileSync(ut, behelyettesit(readFileSync(ut, 'utf8')));
+}
+
 /* Gyorsítótár-törés: a GitHub Pages fejléceit nem tudjuk átírni, ezért a
    fájl tartalmából számolt bélyeg kerül a hivatkozás mögé. Ha a fájl
    változik, változik az URL is — a visszatérő látogató biztosan újat tölt. */
@@ -248,12 +275,6 @@ const BELYEGZETT = ['style.css', 'admin.css', 'fonts.css', 'script.js', 'admin.j
   'consent.js', 'szuro.js', 'galeria.js', 'urlap.js']
   .filter((f) => existsSync(`${OUT}/${f}`))
   .map((f) => [f, createHash('sha1').update(readFileSync(`${OUT}/${f}`)).digest('hex').slice(0, 8)]);
-
-const SZAMOK = {
-  projektSzam: String(ELO.length),
-  kepSzam: String(ELO.reduce((n, p) => n + p.kepek.length, 0)),
-  ev: String(new Date().getFullYear())
-};
 
 for (const oldal of OLDALAK) {
   let html = readFileSync(oldal, 'utf8');
@@ -271,10 +292,7 @@ for (const oldal of OLDALAK) {
     .replace('<!--EGYEDIEK-->',
       ELO.filter((p) => p.kategoria === 'egyedi').slice(0, 3).map(kartya).join('\n        '));
 
-  for (const [kulcs, ertek] of Object.entries({ ...CEG, ...SZAMOK })) {
-    if (kulcs.startsWith('_') || typeof ertek === 'object') continue;
-    html = html.split(`{{${kulcs}}}`).join(String(ertek));
-  }
+  html = behelyettesit(html);
 
   for (const [fajl, b] of BELYEGZETT) {
     html = html.split(`"${fajl}"`).join(`"${gyoker}${fajl}?v=${b}"`);
@@ -286,6 +304,24 @@ for (const oldal of OLDALAK) {
   }
 
   writeFileSync(oldal, html);
+}
+
+/* ---------- 6/b. maradt-e behelyettesítetlen hely ---------- */
+
+/* Ez a lépés azért van, mert egyszer már megtörtént: a szkriptekben bent
+   maradt a {{urlapVegpont}}, és mivel a kód csak a 'KITÖLTENDŐ' szót
+   kereste, némán rossz címre küldött. Egy elgépelt vagy hiányzó kulcs
+   inkább itt bukjon el, mint az éles oldalon. */
+const MARADEK = [];
+for (const f of [...OLDALAK, ...SZKRIPTEK.map((s) => `${OUT}/${s}`)]) {
+  const talalat = readFileSync(f, 'utf8').match(/\{\{[a-zA-Z][a-zA-Z0-9]*\}\}/g);
+  if (talalat) MARADEK.push(`${f.slice(OUT.length + 1)}: ${[...new Set(talalat)].join(', ')}`);
+}
+if (MARADEK.length) {
+  console.error('\n!! HIBA — behelyettesítetlen hely maradt a kimenetben:\n  ' +
+    MARADEK.join('\n  ') +
+    '\n\n  Vagy hiányzik a kulcs a data/ceg-adatok.json-ból, vagy el van gépelve.\n');
+  process.exit(1);
 }
 
 /* ---------- 7. sitemap ---------- */

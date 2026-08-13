@@ -20,7 +20,14 @@
   var gomb = document.getElementById('kuldGomb');
   var uzenetHely = document.getElementById('urlapUzenet');
 
-  var beallitva = VEGPONT && VEGPONT.indexOf('KITÖLTENDŐ') === -1;
+  /* Kitöltetlennek számít az is, ha a build behelyettesítése elmaradt és
+     a {{...}} hely bent ragadt — különben egy nem létező relatív címre
+     küldenénk, és a látogató hibát kapna ok nélkül. */
+  function hianyzik(ertek) {
+    return !ertek || ertek.indexOf('KITÖLTENDŐ') !== -1 || ertek.indexOf('{' + '{') !== -1;
+  }
+
+  var beallitva = !hianyzik(VEGPONT);
 
   function uzenet(szoveg, tipus) {
     uzenetHely.className = 'urlap-uzenet' + (tipus ? ' ' + tipus : '');
@@ -32,7 +39,7 @@
   var recaptchaTolt = null;
 
   function recaptchaJegy() {
-    if (!RECAPTCHA || RECAPTCHA.indexOf('KITÖLTENDŐ') !== -1) return Promise.resolve('');
+    if (hianyzik(RECAPTCHA)) return Promise.resolve('');
 
     if (!recaptchaTolt) {
       recaptchaTolt = new Promise(function (kesz, hiba) {
