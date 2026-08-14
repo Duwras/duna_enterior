@@ -23,7 +23,10 @@
     </p>
 
     <label for="kapuKulcs">Mesterkulcs</label>
-    <input type="password" id="kapuKulcs" autocomplete="current-password" spellcheck="false" required>
+    <!-- autocomplete="off": ez nem jelszómező. A jelszókezelők különben
+         ráültek, és beillesztés után a mentett jelszóval írták felül a
+         kulcsot — a belépés 401-gyel szállt el, látszólag ok nélkül. -->
+    <input type="password" id="kapuKulcs" autocomplete="off" data-1p-ignore data-lpignore="true" spellcheck="false" required>
 
     <label class="jelolo">
       <input type="checkbox" id="kapuJegyezd">

@@ -216,7 +216,14 @@
       .catch(function (hiba) {
         gomb.disabled = false;
         felejt();
-        uzen($('#kapuUzenet'), hiba.message, 'hiba');
+        /* 401-nél a leggyakoribb ok nem a lejárt kulcs, hanem hogy nem az
+           került a mezőbe, amit beillesztettek (jelszókezelő írta felül,
+           vagy csonkán lett kimásolva). A hossz ezt azonnal megmutatja:
+           egy fine-grained kulcs 90-100 karakter. */
+        var uzenetek = hiba.status === 401
+          ? hiba.message + ' A mezőben ' + ertek.length + ' karakter volt (a GitHub kulcsa 90-100).'
+          : hiba.message;
+        uzen($('#kapuUzenet'), uzenetek, 'hiba');
       });
   });
 
