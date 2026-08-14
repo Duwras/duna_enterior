@@ -14,6 +14,7 @@ weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 > felhasználói Pages-oldalhoz az `ertekpontpenzugyek.hu` saját domain van
 > kötve, a projektoldalak ezt öröklik, és a `duwras.github.io/duna_enterior/`
 > 301-gyel oda irányított — az ügyfél oldala idegen domain alatt látszott.
+> A repó Pages-oldala azóta le van kapcsolva.
 
 ## Mi hol van
 
@@ -105,16 +106,16 @@ beállítva, nem tesz úgy, mintha elküldte volna az üzenetet.
    A tanúsítványt a Cloudflare adja, kézzel nincs teendő.
 3. `data/ceg-adatok.json`-ban `"sajatDomainEl": true`, push. Ettől marad el a
    `_headers` noindex fejléce, tehát innentől indexelhet a kereső.
-4. `worker/src/index.js` — az `ENGEDETT` listából a három ideiglenes cím
-   (`pages.dev`, `duwras.github.io`, `ertekpontpenzugyek.hu`) törlendő, utána
-   `npx wrangler deploy` a `worker/` mappában.
+4. `worker/src/index.js` — az `ENGEDETT` listából a `duna-enterior.pages.dev`
+   sor törlendő, utána `npx wrangler deploy` a `worker/` mappában.
 
 ## A régi GitHub Pages cím
 
-A közzététel már nem a GitHub Pages-re megy, de a korábban kirakott változat
-addig kint marad, amíg le nem kapcsolod: repó *Settings* → *Pages* → *Unpublish
-site*. Amíg él, a `duwras.github.io/duna_enterior/` az `ertekpontpenzugyek.hu`
-alá irányít.
+Megszűnt. A repó Pages-oldala le lett kapcsolva, így az
+`ertekpontpenzugyek.hu/duna_enterior/` és a `duwras.github.io/duna_enterior/`
+is 404 — az `ertekpontpenzugyek.hu` alatt csak a saját oldal marad. Ha valaha
+mégis kellene, a repó *Settings* → *Pages* alatt visszakapcsolható, de a
+munkafolyamat már nem oda tölt fel.
 
 ## Tartalommegőrzés
 

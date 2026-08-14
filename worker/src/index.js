@@ -23,19 +23,11 @@ const CORS = (eredet) => ({
 /* Csak a saját oldalról fogadunk küldést.
 
    A duna-enterior.pages.dev a bemutató cím: a domain élesítéséig ezen
-   nézhető az oldal. A github.io / ertekpontpenzugyek.hu párost azért
-   hagyjuk bent, mert a GitHub Pages közzététel is fut még — a
-   duwras.github.io/duna_enterior/ 301-gyel az ertekpontpenzugyek.hu alá
-   irányít (a felhasználói Pages-oldal saját domainje, a projektoldalak
-   öröklik), tehát a böngésző ONNAN küld, azt az Origin-t látjuk.
-
-   A domainváltás után a lenti három ideiglenes cím TÖRLENDŐ. */
+   nézhető az oldal. A domainváltás után ez a sor TÖRLENDŐ. */
 const ENGEDETT = [
   'https://dunaenterior.hu',
   'https://www.dunaenterior.hu',
-  'https://duna-enterior.pages.dev',
-  'https://duwras.github.io',
-  'https://ertekpontpenzugyek.hu'
+  'https://duna-enterior.pages.dev'
 ];
 
 const MEZOK = ['nev', 'email', 'telefon', 'telepules', 'uzenet'];

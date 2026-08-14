@@ -94,5 +94,4 @@ wrangler d1 execute duna-uzenetek --remote --command "SELECT mikor, nev, telefon
 A Workerben az `ENGEDETT` lista tartalmazza, mely oldalakról fogadunk
 küldést. A `dunaenterior.hu` és az ideiglenes `duna-enterior.pages.dev`
 is benne van, tehát átálláskor küldeni nincs teendő — utána viszont a
-három ideiglenes cím (`pages.dev`, `duwras.github.io`,
-`ertekpontpenzugyek.hu`) törölhető a listából, majd `wrangler deploy`.
+`duna-enterior.pages.dev` sor törölhető a listából, majd `wrangler deploy`.
