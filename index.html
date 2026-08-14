@@ -22,19 +22,23 @@
       <h1 class="jon kesik-1">Harminc év,<br>egy műhely,<br><em>több száz tér.</em></h1>
       <p class="eloszo jon kesik-2">A tervezéstől a kivitelezésig egy kézben: saját gyártókapacitás, szerelőcsapatok és belsőépítész-tervezői háttér.</p>
       <dl class="hero-adat jon kesik-2">
-        <div><dt>Alapítva</dt><dd>1991</dd></div>
-        <div><dt>Gyártóüzem</dt><dd>1200 <small>m²</small></dd></div>
-        <div><dt>Referencia</dt><dd>{{projektSzam}}</dd></div>
-        <div><dt>Fotó</dt><dd>{{kepSzam}}</dd></div>
+        <div><dt>Alapítva</dt><dd><span data-szam="1991">1991</span></dd></div>
+        <div><dt>Gyártóüzem</dt><dd><span data-szam="1200">1200</span> <small>m²</small></dd></div>
+        <div><dt>Referencia</dt><dd><span data-szam="{{projektSzam}}">{{projektSzam}}</span></dd></div>
+        <div><dt>Fotó</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
       </dl>
       <div class="hero-tett jon kesik-3">
         <a class="gomb tolt" href="referenciak.html">Referenciák <span class="nyil">→</span></a>
         <a class="gomb" href="kapcsolat.html">Ajánlatkérés</a>
       </div>
+
+      <p class="gorgetes-jel" aria-hidden="true">
+        <span class="vonal"></span> Görgessen
+      </p>
     </div>
 
     <div class="hero-jobb">
-      <div class="hero-sav" id="heroSav">
+      <div class="hero-sav" id="heroSav" data-parallax="0.14">
         <img src="img/projektek/kristaly-etterem/02.jpg" alt="Kristály Étterem faléces belső fala" loading="eager" decoding="async">
         <img src="img/projektek/hotel-domus-collis/01.jpg" alt="Hotel Domus Collis recepciója" loading="lazy" decoding="async">
         <img src="img/projektek/fuzio-a-tajjal/01.jpg" alt="Fúzió a tájjal — nappali és konyha" loading="lazy" decoding="async">
@@ -48,24 +52,24 @@
     <div class="belul">
       <div class="szekcio-fej">
         <div>
-          <p class="felcim jon">Tevékenység</p>
+          <p class="felcim jon bal">Tevékenység</p>
           <h2 class="jon kesik-1">Komplett kivitelezés,<br>egy kézből.</h2>
         </div>
-        <a class="link-nyil jon kesik-2" href="rolunk.html">Rólunk bővebben <span aria-hidden="true">→</span></a>
+        <a class="link-nyil jon jobb kesik-2" href="rolunk.html">Rólunk bővebben <span aria-hidden="true">→</span></a>
       </div>
 
       <div class="harom">
-        <article class="jon">
+        <article class="jon bal">
           <p class="sorszam">Asztalosipar</p>
           <h3>Egyedi bútor</h3>
           <p>Bútorasztalos és épületasztalos termékek tervezése és gyártása, felületkezeléssel, saját üzemben.</p>
         </article>
-        <article class="jon kesik-1">
+        <article class="jon bal kesik-1">
           <p class="sorszam">Belsőépítészet</p>
           <h3>Teljes berendezés</h3>
           <p>Létesítmények komplett berendezése: kiviteli tervdokumentáció, gyártás, helyszínre szállítás és szakszerű szerelés.</p>
         </article>
-        <article class="jon kesik-2">
+        <article class="jon bal kesik-2">
           <p class="sorszam">Hajógyártás</p>
           <h3>Hajó és hajóbelső</h3>
           <p>Szabadidős és sporthajók tervezése és gyártása, hajók javítása, felújítása és átalakítása.</p>
@@ -74,15 +78,72 @@
     </div>
   </section>
 
+  <!-- ---------- futó szalag ----------
+       Magától sodródik, a görgetés meglöki. A szöveg díszítés, ezért
+       a másolatait a szkript aria-hidden-nel teszi ki. -->
+  <div class="szalag" data-szalag="0.5">
+    <div class="szalag-sor">
+      <div class="szalag-elem">
+        <span>Egyedi bútor</span><span><b>◆</b></span>
+        <span><em>Belsőépítészet</em></span><span><b>◆</b></span>
+        <span>Hajóépítés</span><span><b>◆</b></span>
+        <span>Saját üzem</span><span><b>◆</b></span>
+        <span><em>Győr, 1991 óta</em></span><span><b>◆</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- a folyamat, vízszintesen ----------
+       A .kezi alapállapot: szkript nélkül és mobilon marad az ujjal
+       húzható vízszintes görgetés. A szkript veszi át, ha van hely. -->
+  <section class="vizszintes kezi" data-vizszintes>
+    <div class="vizszintes-ragad">
+      <div class="fej">
+        <p class="felcim">A folyamat</p>
+        <h2>Az első vázlattól<br>a helyszíni szerelésig.</h2>
+      </div>
+
+      <div class="vonat">
+        <article class="lepes">
+          <p class="szam">01 — Igényfelmérés</p>
+          <h3>Bejárás, mérés</h3>
+          <p>Felmérjük a helyszínt és az elképzelést. Innen indul minden méret, ami később a gépre kerül.</p>
+        </article>
+        <article class="lepes">
+          <p class="szam">02 — Tervezés</p>
+          <h3>Kiviteli terv</h3>
+          <p>Belsőépítész-tervezői háttérrel készül a teljes kiviteli tervdokumentáció, látványtervvel együtt.</p>
+        </article>
+        <article class="lepes">
+          <p class="szam">03 — Gyártás</p>
+          <h3>1200 m², saját gépek</h3>
+          <p>Győri üzemünkben gyalulás, kontaktcsiszolás, korszerű gépsor — a bútor nálunk születik meg.</p>
+        </article>
+        <article class="lepes">
+          <p class="szam">04 — Felület</p>
+          <h3>Felületkezelés</h3>
+          <p>A fa akkor lesz kész, amikor a felülete is: pácolás, lakkozás, saját felületkezelő részlegben.</p>
+        </article>
+        <article class="lepes">
+          <p class="szam">05 — Szerelés</p>
+          <h3>Helyszínre, a helyére</h3>
+          <p>Szállítás és szakszerű szerelés saját csapatokkal. Az átadás nem a vég, hanem a kapcsolat kezdete.</p>
+        </article>
+      </div>
+
+      <div class="vizszintes-halad" aria-hidden="true"></div>
+    </div>
+  </section>
+
   <!-- ---------- kiemelt referenciák ---------- -->
   <section class="szekcio halvany">
     <div class="belul">
       <div class="szekcio-fej">
         <div>
-          <p class="felcim jon">Referenciák</p>
+          <p class="felcim jon bal">Referenciák</p>
           <h2 class="jon kesik-1">Ahol már jártunk.</h2>
         </div>
-        <a class="link-nyil jon kesik-2" href="referenciak.html">Mind a {{projektSzam}} projekt <span aria-hidden="true">→</span></a>
+        <a class="link-nyil jon jobb kesik-2" href="referenciak.html">Mind a {{projektSzam}} projekt <span aria-hidden="true">→</span></a>
       </div>
       <div class="racs">
         <!--KIEMELT-->
@@ -94,11 +155,11 @@
   <section class="szekcio sotet">
     <div class="belul szekcio-fej">
       <div>
-        <p class="felcim jon">Duna Design Manufaktúra</p>
+        <p class="felcim jon bal">Duna Design Manufaktúra</p>
         <h2 class="jon kesik-1">Ahol a fa nem alapanyag,<br>hanem inspiráció.</h2>
-        <p class="eloszo jon kesik-2" style="color:#c6b9a7">Különleges bútorok, egyedi használati tárgyak, hajóátalakítások — ott, ahol a hagyományos asztalosipar véget ér.</p>
+        <p class="eloszo jon bal kesik-2" style="color:#c6b9a7">Különleges bútorok, egyedi használati tárgyak, hajóátalakítások — ott, ahol a hagyományos asztalosipar véget ér.</p>
       </div>
-      <a class="gomb jon kesik-3" href="design-manufaktura.html">A manufaktúráról <span class="nyil">→</span></a>
+      <a class="gomb jon jobb kesik-3" href="design-manufaktura.html">A manufaktúráról <span class="nyil">→</span></a>
     </div>
   </section>
 

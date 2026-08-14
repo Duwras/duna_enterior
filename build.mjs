@@ -123,11 +123,14 @@ const esc = (s) => String(s)
 const kep = (slug, file, meret) =>
   `img/projektek/${slug}/${file.replace(/\.[^.]+$/, '')}${meret}.jpg`;
 
-function kartya(p) {
+/* A --k a rácsban elfoglalt hely: ettől nem egyszerre, hanem egymás
+   után tárulnak fel a kártyák. Hatnál tovább nem érdemes késleltetni,
+   mert a sor végét már senki nem várná ki. */
+function kartya(p, i = 0) {
   const elso = p.kiemelt || p.kepek[0].file;
   const alt = p.kepek.find((k) => k.file === elso)?.alt || p.cim;
-  return `<a class="kartya jon" href="referenciak/${p.slug}/" data-kat="${esc(p.kategoria)}">
-          <div class="keret"><img src="${kep(p.slug, elso, '-800')}" alt="${esc(alt)}" loading="lazy" decoding="async" width="800" height="600"></div>
+  return `<a class="kartya jon" style="--k:${i % 6}" href="referenciak/${p.slug}/" data-kat="${esc(p.kategoria)}">
+          <div class="keret"><img src="${kep(p.slug, elso, '-800')}" alt="${esc(alt)}" loading="lazy" decoding="async" width="800" height="600"><span class="jel" aria-hidden="true">→</span></div>
           <div class="alatt"><span class="nev">${esc(p.cim)}</span><span class="kat">${esc(KATEGORIAK[p.kategoria] || p.kategoria)}</span></div>
         </a>`;
 }
@@ -215,7 +218,7 @@ for (const p of ELO) {
   const dir = `${OUT}/referenciak/${p.slug}`;
   mkdirSync(dir, { recursive: true });
 
-  const galeria = p.kepek.map((k, i) => `<figure class="galeria-elem jon">
+  const galeria = p.kepek.map((k, i) => `<figure class="galeria-elem jon" style="--k:${i % 4}">
         <a href="../../${kep(p.slug, k.file, '-1400')}" data-nagyit>
           <img src="../../${kep(p.slug, k.file, '-800')}" alt="${esc(k.alt)}" loading="${i < 3 ? 'eager' : 'lazy'}" decoding="async">
         </a>

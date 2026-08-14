@@ -210,6 +210,12 @@ p { margin: 0; }
   gap: 1px; background: var(--line);
   border: 1px solid var(--line); max-width: 640px;
 }
+/* Négy 112 px-es oszlop legkisebb mérete kiszélesíti a hero bal
+   hasábját, és telefonon az egész lap oldalra csúszik. Keskenyen
+   ezért két hasáb, és a sáv szabadon szűkülhet (minmax 0). */
+@media (max-width: 600px) {
+  .hero-adat { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .hero-adat > div { background: var(--paper); padding: 13px 16px; }
 .hero-adat dt {
   font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke);
@@ -285,6 +291,10 @@ p { margin: 0; }
   gap: clamp(18px, 2.2vw, 34px);
 }
 .kartya { display: grid; gap: 0; text-decoration: none; color: inherit; }
+/* A szűrő a hidden attribútummal rejt. A böngésző erre display:none-t
+   adna, de azt a fenti .kartya szabály felülírná — a kiszűrt kártyák
+   ottmaradnának a rácsban. */
+.kartya[hidden] { display: none; }
 .kartya .keret {
   position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: var(--paper-2);
 }
@@ -359,12 +369,22 @@ p { margin: 0; }
   opacity: 1; transform: none;
   transition: opacity .8s cubic-bezier(.2,.75,.3,1), transform .8s cubic-bezier(.2,.75,.3,1);
 }
+
+/* Oldalirányú belépők. A raszteres, mérnöki hangot az vitte volna el, ha
+   minden alulról úszik be — a vízszintes mozgás adja a lapozás érzetét. */
+.jon.bal  { transform: translate3d(-52px, 0, 0); }
+.jon.jobb { transform: translate3d(52px, 0, 0); }
+.jon.bal.itt, .jon.jobb.itt { transform: none; }
+
+/* Sorrendi késleltetés: a --k a rácsban elfoglalt hely, a build írja ki. */
+.jon.itt { transition-delay: calc(var(--k, 0) * 70ms); }
 .jon.kesik-1.itt { transition-delay: .08s; }
 .jon.kesik-2.itt { transition-delay: .16s; }
 .jon.kesik-3.itt { transition-delay: .24s; }
 
 @media (prefers-reduced-motion: reduce) {
   .jon { opacity: 1; transform: none; }
+  .jon.bal, .jon.jobb { transform: none; }
   .kartya .keret img, .gomb, .menu a::after { transition: none; }
 }
 
@@ -694,4 +714,261 @@ p { margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .suti-banner { transition: none; }
+}
+
+/* ============================================================
+   MOZGÁS — görgetéshez kötött réteg
+
+   Minden, ami itt van, díszítés: a script.js kapcsolja rá az
+   osztályokat, és a lap nélküle is teljes értékű. Ezért van külön
+   blokkban, a végén — így egyben kivehető, ha valaha sok lenne.
+
+   Szabály: mozgás csak transform/opacity mentén, mert csak ez a
+   kettő fut a fő szálon kívül. Minden effekt kikapcsol, ha a
+   látogató rendszerszinten csendet kért.
+   ============================================================ */
+
+/* ---------- oldal-áttűnés ---------- */
+
+/* Az osztályt a szkript teszi fel, tehát ha a JS nem fut le, a lap
+   sosem marad átlátszón. */
+html.atmenet body { opacity: 0; }
+html.atmenet.betoltve body { opacity: 1; transition: opacity .42s ease; }
+html.atmenet.tavozik body { opacity: 0; transition: opacity .24s ease; }
+
+/* ---------- fejléc: haladásjelző és elrejtés ---------- */
+
+.fejlec {
+  transition: border-color .3s ease, background .3s ease,
+              transform .42s cubic-bezier(.4, 0, .2, 1);
+}
+/* lefelé görgetve elhúzódik az útból, felfelé azonnal visszajön */
+.fejlec.bujik { transform: translateY(-101%); }
+
+.halado {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: linear-gradient(90deg, var(--brass), var(--oak));
+  transform: scaleX(0); transform-origin: left;
+  pointer-events: none;
+}
+
+/* ---------- címek szavankénti feltárása ---------- */
+
+/* A szavak külön dobozban ülnek, a doboz vág — így a szó alulról
+   „felfordul” a sorba. A padding/margó pár azért kell, hogy a g, y
+   szárát ne nyisszantsa le a túlcsordulás. */
+.szo {
+  display: inline-block; overflow: hidden; vertical-align: bottom;
+  padding: 0 .06em .14em; margin: 0 -.06em -.14em;
+}
+.szo-b { display: inline-block; transform: translateY(115%); }
+.tordelt.itt .szo-b {
+  transform: none;
+  transition: transform .9s cubic-bezier(.16, .84, .34, 1);
+}
+/* a cím maga nem úszik be, a szavai mozognak helyette */
+.jon.tordelt { opacity: 1; transform: none; }
+
+/* ---------- parallax ---------- */
+
+/* Egy közös transzformáció, három csatornával: a szkript csak a
+   változókat írja, a böngésző mindig ugyanazt a szabályt számolja. */
+[data-parallax] {
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(var(--pnag, 1));
+  will-change: transform;
+}
+
+/* ---------- görgetésjel a hero alján ---------- */
+
+.hero-bal > .gorgetes-jel {
+  position: absolute; left: var(--gut); bottom: clamp(18px, 3vh, 34px);
+  z-index: 2; display: flex; align-items: center; gap: 14px;
+  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--smoke);
+}
+.gorgetes-jel .vonal {
+  display: block; width: 64px; height: 1px; background: var(--line);
+  position: relative; overflow: hidden;
+}
+.gorgetes-jel .vonal::after {
+  content: ""; position: absolute; inset: 0; background: var(--brass);
+  transform-origin: left; animation: futovonal 2.6s cubic-bezier(.65, 0, .35, 1) infinite;
+}
+@keyframes futovonal {
+  0%   { transform: scaleX(0); transform-origin: left; }
+  46%  { transform: scaleX(1); transform-origin: left; }
+  54%  { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+/* ---------- végtelen szalag ---------- */
+
+.szalag {
+  overflow: hidden; padding: clamp(16px, 2.8vh, 30px) 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: var(--paper-2);
+}
+.szalag.sotet { background: var(--ink); border-color: rgba(251, 248, 243, .13); }
+.szalag-sor { display: flex; width: max-content; will-change: transform; }
+.szalag-elem {
+  display: flex; align-items: center; flex: 0 0 auto;
+  gap: clamp(20px, 3.4vw, 48px); padding-right: clamp(20px, 3.4vw, 48px);
+}
+.szalag-elem span {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(1.7rem, 4vw, 3.4rem); line-height: 1.12;
+  color: var(--ink); white-space: nowrap;
+}
+.szalag-elem em { font-style: italic; color: var(--brass); }
+.szalag-elem b {
+  font-weight: 400; color: var(--oak); font-size: .5em; opacity: .8;
+}
+.szalag.sotet .szalag-elem span { color: var(--paper); }
+.szalag.sotet .szalag-elem em { color: var(--oak); }
+
+/* ---------- vízszintes szakasz ---------- */
+
+/* Függőleges görgetés vízszintes mozgássá váltva: a szakasz magas, a
+   belseje kitapad, és a vonat annyit csúszik oldalra, amennyit a
+   látogató lefelé haladt. Szkript nélkül (.kezi) marad a szokásos
+   vízszintes görgetés — ujjal is így kényelmes. */
+.vizszintes { position: relative; background: var(--ink); color: #cbbfae; }
+.vizszintes-ragad {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: grid; grid-template-rows: auto 1fr auto; align-content: center;
+  gap: clamp(20px, 4vh, 46px); padding: clamp(74px, 11vh, 120px) 0 clamp(28px, 5vh, 54px);
+}
+.vizszintes .fej { padding: 0 var(--gut); display: grid; gap: 14px; }
+.vizszintes .fej h2 { color: var(--paper); }
+.vizszintes .felcim { color: var(--oak); }
+
+.vonat {
+  display: flex; align-items: start; align-self: center;
+  gap: clamp(16px, 2vw, 30px);
+  padding: 0 var(--gut); will-change: transform;
+}
+.lepes {
+  flex: 0 0 clamp(252px, 27vw, 380px);
+  border: 1px solid rgba(251, 248, 243, .17);
+  background: rgba(251, 248, 243, .035);
+  padding: clamp(20px, 2.4vw, 32px);
+  display: grid; gap: 12px; align-content: start;
+}
+.lepes:nth-child(even) { margin-top: clamp(18px, 5vh, 58px); }
+.lepes .szam {
+  font-family: var(--mono); font-size: .7rem; color: var(--oak);
+  padding-bottom: 12px; border-bottom: 1px solid rgba(251, 248, 243, .17);
+  font-variant-numeric: tabular-nums;
+}
+.lepes h3 { color: var(--paper); }
+.lepes p { font-size: .95rem; }
+
+.vizszintes-halad {
+  margin: 0 var(--gut); height: 1px; background: rgba(251, 248, 243, .17);
+  position: relative;
+}
+.vizszintes-halad::after {
+  content: ""; position: absolute; inset: 0; background: var(--oak);
+  transform: scaleX(var(--p, 0)); transform-origin: left;
+}
+
+/* szkript nélkül, mobilon, csendes módban: sima ujjas görgetés */
+.vizszintes.kezi { height: auto !important; }
+.vizszintes.kezi .vizszintes-ragad {
+  position: static; height: auto; padding: var(--blokk) 0;
+}
+.vizszintes.kezi .vonat {
+  overflow-x: auto; transform: none !important;
+  scroll-snap-type: x mandatory; padding-bottom: 20px;
+  scrollbar-width: thin;
+}
+.vizszintes.kezi .lepes { scroll-snap-align: center; }
+.vizszintes.kezi .lepes:nth-child(even) { margin-top: 0; }
+.vizszintes.kezi .vizszintes-halad { display: none; }
+
+/* ---------- kártya: maszkos feltárás, fény, aláhúzás ---------- */
+
+.kartya .keret img {
+  transition: transform .9s cubic-bezier(.16, .84, .34, 1),
+              clip-path 1.1s cubic-bezier(.16, .84, .34, 1),
+              filter .5s ease;
+}
+.kartya.jon .keret img { clip-path: inset(0 0 100% 0); transform: scale(1.12); }
+.kartya.jon.itt .keret img { clip-path: inset(0 0 0 0); transform: none; }
+.kartya.jon.itt:hover .keret img,
+.kartya.jon.itt:focus-visible .keret img { transform: scale(1.045); }
+
+/* a kurzort követő fényfolt — csak jelzés, hogy a kártya él */
+.kartya .keret::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(240px circle at var(--hx, 50%) var(--hy, 50%),
+    rgba(251, 248, 243, .2), transparent 62%);
+  opacity: 0; transition: opacity .35s ease;
+}
+.kartya:hover .keret::before { opacity: 1; }
+
+.kartya .jel {
+  position: absolute; right: 12px; bottom: 12px; z-index: 2;
+  width: 38px; height: 38px; display: grid; place-items: center;
+  background: var(--paper); color: var(--ink); font-size: .9rem;
+  opacity: 0; transform: translate3d(10px, 10px, 0);
+  transition: opacity .4s ease, transform .5s cubic-bezier(.16, .84, .34, 1);
+}
+.kartya:hover .jel, .kartya:focus-visible .jel { opacity: 1; transform: none; }
+
+.kartya .nev {
+  background-image: linear-gradient(var(--brass), var(--brass));
+  background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px;
+  transition: background-size .55s cubic-bezier(.16, .84, .34, 1);
+}
+.kartya:hover .nev, .kartya:focus-visible .nev { background-size: 100% 1px; }
+
+/* ---------- galéria: enyhén elcsúsztatott sorok ---------- */
+
+@media (min-width: 901px) {
+  .galeria-elem:nth-child(3n + 2) { margin-top: clamp(14px, 2.6vw, 42px); }
+}
+
+/* ---------- mágneses gombok ---------- */
+
+/* A .jon-os gombok csak megérkezés után válnak mágnesessé, különben a
+   belépő mozgás és a kurzorkövetés ugyanazt a transformot vitatná. */
+.gomb:not(.jon), .gomb.itt,
+.link-nyil:not(.jon), .link-nyil.itt {
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+}
+.gomb {
+  transition: background .22s ease, color .22s ease, border-color .22s ease,
+              transform .3s cubic-bezier(.16, .84, .34, 1);
+}
+.link-nyil {
+  transition: color .22s, border-color .22s,
+              transform .3s cubic-bezier(.16, .84, .34, 1);
+}
+
+/* ---------- lábléc mögüle előbukkanó rétege ---------- */
+
+/* A tartalom fedi a láblécet, és lecsúszva engedi elő. Csak akkor
+   kapcsol be, ha a szkript kimérte a lábléc magasságát. */
+@media (min-width: 901px) {
+  body.lablec-fedes main {
+    position: relative; z-index: 1; background: var(--paper);
+  }
+  body.lablec-fedes .lablec {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 0;
+  }
+}
+
+/* ---------- csend ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html.atmenet body,
+  html.atmenet.tavozik body { opacity: 1; transition: none; }
+  .fejlec.bujik { transform: none; }
+  .szo-b { transform: none; }
+  .szalag-sor, .vonat { transform: none !important; }
+  .gorgetes-jel .vonal::after { animation: none; transform: scaleX(1); }
+  .kartya.jon .keret img { clip-path: none; transform: none; }
+  [data-parallax] { transform: none; }
+  .kartya .jel { transform: none; transition: none; }
 }

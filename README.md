@@ -29,6 +29,25 @@ weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 | `build.mjs` | A `deploy/` mappát állítja elő: aloldalak, képméretek, cache-törés. |
 | `worker/` | A kapcsolati űrlap végpontja (Cloudflare Worker) — lásd [worker/OLVASSEL.md](worker/OLVASSEL.md). |
 
+## Mozgás az oldalon
+
+A [script.js](script.js) két rétegre bomlik: működés (menü, fejléc, évszám) és
+mozgás. A mozgásréteg végig díszítés — ha kimarad, az oldal teljes értékű. A
+hozzá tartozó stílusok a [style.css](style.css) végén, egy blokkban ülnek.
+
+| Effekt | Hogyan kérhető |
+|---|---|
+| Belépő mozgás | `class="jon"`, oldalirányhoz `bal` / `jobb`, késleltetéshez `kesik-1…3` vagy `--k` |
+| Címek szavankénti feltárása | Magától, minden `main`-en belüli `h1`/`h2`-re. Kivétel: `data-tordel="nem"` |
+| Parallax | `data-parallax="0.12"` (negatív = ellenirány), oldalsó sodrás `data-parallax-x`, nagyítás `--pnag` |
+| Számláló | `<span data-szam="1991">1991</span>` |
+| Végtelen szalag | `.szalag` + `data-szalag="0.5"` (alapsebesség); a másolatokat a szkript teszi ki |
+| Vízszintes szakasz | `.vizszintes.kezi` + `data-vizszintes`; a `kezi` az alapállapot, a szkript veszi le, ha van hely |
+| Oldal-áttűnés, mágneses gombok, lábléc-feltárás | Magától |
+
+Minden effekt kikapcsol `prefers-reduced-motion: reduce` mellett, és a
+vízszintes szakasz keskeny kijelzőn natív, ujjal húzható görgetésre vált.
+
 ## Közzététel
 
 Nincs kézi feltöltés. Minden `main`-re küldött push után a GitHub lefuttatja a

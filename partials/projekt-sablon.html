@@ -18,27 +18,30 @@
   <article class="projekt">
     <div class="projekt-fej">
       <div class="projekt-cim">
-        <nav class="morzsa" aria-label="Hol jár">
+        <nav class="morzsa jon bal" aria-label="Hol jár">
           <a href="referenciak.html">Referenciák</a>
           <span aria-hidden="true">/</span>
           <span>{{kategoria}}</span>
         </nav>
         <h1>{{cim}}</h1>
-        <dl class="projekt-adat">
+        <dl class="projekt-adat jon bal kesik-2">
           <div><dt>Kategória</dt><dd>{{kategoria}}</dd></div>
-          <div><dt>Fotó</dt><dd>{{kepSzam}}</dd></div>
+          <div><dt>Fotó</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
         </dl>
         <!--KULSO-LINK-->
       </div>
+      <!-- A borító lassabban úszik, mint a lap: a kép nagyítva ül a
+           keretben, hogy az elmozdulás ne csupasz szélt mutasson. -->
       <figure class="projekt-borito">
-        <img src="{{borito}}" alt="{{cim}}" loading="eager" decoding="async">
+        <img src="{{borito}}" alt="{{cim}}" loading="eager" decoding="async"
+             data-parallax="-0.05" style="--pnag:1.12">
       </figure>
     </div>
 
     <section class="szekcio">
       <div class="belul projekt-leiras">
-        <p class="felcim">A projektről</p>
-        <div class="szoveg eloszo">{{leiras}}</div>
+        <p class="felcim jon bal">A projektről</p>
+        <div class="szoveg eloszo jon kesik-1">{{leiras}}</div>
       </div>
     </section>
 
@@ -46,7 +49,7 @@
       <div class="belul">
         <div class="szekcio-fej">
           <div>
-            <p class="felcim">Galéria</p>
+            <p class="felcim jon bal">Galéria</p>
             <h2>{{kepSzam}} fotó a munkáról.</h2>
           </div>
         </div>
@@ -60,10 +63,10 @@
       <div class="belul">
         <div class="szekcio-fej">
           <div>
-            <p class="felcim">Hasonló munkák</p>
+            <p class="felcim jon bal">Hasonló munkák</p>
             <h2>Ugyanebben a kategóriában.</h2>
           </div>
-          <a class="link-nyil" href="referenciak.html">Összes referencia <span aria-hidden="true">→</span></a>
+          <a class="link-nyil jon jobb kesik-2" href="referenciak.html">Összes referencia <span aria-hidden="true">→</span></a>
         </div>
         <div class="racs">
           <!--HASONLO-->
