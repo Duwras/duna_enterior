@@ -52,6 +52,7 @@
   var aktiv = null;        /* a szerkesztett projekt */
   var fejSha = '';         /* a legutóbbi commit — a képek ezzel hivatkozódnak */
   var piszkos = false;     /* van-e mentetlen változás */
+  var irasKetes = false;   /* belépéskor nem látszott írási jog */
 
   /* ============================================================
      GitHub API
@@ -90,9 +91,9 @@
   /* A GitHub angolul és fejlesztőknek válaszol. Amit tényleg látni lehet,
      azt lefordítjuk használható mondatra. */
   function hibaSzoveg(kod, d) {
-    if (kod === 401) return 'A kulcs érvénytelen vagy lejárt. Készítsen újat a GitHubon.';
-    if (kod === 403) return 'Ennek a kulcsnak nincs írási joga ehhez a repóhoz (Contents: Read and write kell).';
-    if (kod === 404) return 'Nem található a repó vagy a fájl. Jó kulcsot adott meg?';
+    if (kod === 401) return 'A kulcs érvénytelen vagy lejárt. Készítsen újat a GitHubon. (401)';
+    if (kod === 403) return 'Ennek a kulcsnak nincs írási joga ehhez a repóhoz (Contents: Read and write kell). (403)';
+    if (kod === 404) return 'A kulcs nem látja a repót. Finomhangolt kulcsnál: Repository access → Only select repositories → duna_enterior, és Permissions → Metadata: Read-only. (404)';
     if (kod === 409 || kod === 422) return 'Időközben más is módosított valamit. Töltse újra az oldalt, és próbálja meg újra.';
     if (kod === 413) return 'Túl nagy a küldemény. Töltsön fel kevesebb képet egyszerre.';
     return (d && d.message ? d.message : 'Hiba') + ' (' + kod + ')';
@@ -176,17 +177,19 @@
   }
 
   /* A tárolt kulcsot a GitHubbal ellenőriztetjük, mielőtt a felület
-     megjelenne — és nem csak azt, hogy létezik, hanem hogy van-e vele
-     írási jog. Enélkül a felhasználó a mentés végén szembesülne azzal,
-     hogy a kulcs csak olvasni tud. */
+     megjelenne: a repó lekérése 401-gyel száll el rossz kulcsra és
+     404-gyel olyanra, amelyik nem látja ezt a repót.
+
+     Az írási jogot NEM tesszük a belépés feltételévé. A válasz
+     `permissions` mezője a felhasználó repóbeli jogát tükrözi, és
+     finomhangolt kulcsnál hiányozhat vagy hamis lehet akkor is, amikor
+     a Contents: Read and write megvan — ilyenkor a szigorú ellenőrzés
+     kizárta a jogosult tulajdonost is. Ha nem látszik írási jog, csak
+     figyelmeztetünk; a mentés úgyis megmondja a GitHub 403-mal, ha
+     tényleg hiányzik. */
   function ellenoriz() {
     return gh('').then(function (repo) {
-      if (!repo.permissions || !repo.permissions.push) {
-        var e = new Error('Ennek a kulcsnak nincs írási joga. A GitHubon állítsa be: Contents → Read and write.');
-        e.status = 403;
-        throw e;
-      }
-      return true;
+      return !!(repo.permissions && repo.permissions.push);
     });
   }
 
@@ -203,10 +206,11 @@
     ($('#kapuJegyezd').checked ? localStorage : sessionStorage).setItem(KULCS, ertek);
 
     ellenoriz()
-      .then(function () {
+      .then(function (irhat) {
         gomb.disabled = false;
         $('#kapuUrlap').reset();
         uzen($('#kapuUzenet'), '');
+        irasKetes = !irhat;
         appMutat();
       })
       .catch(function (hiba) {
@@ -243,7 +247,9 @@
       .then(function (szoveg) {
         projektek = JSON.parse(szoveg);
         listaRajzol();
-        allapot(projektek.length + ' projekt betöltve');
+        allapot(projektek.length + ' projekt betöltve' + (irasKetes
+          ? ' — az írási jogot nem sikerült előre ellenőrizni. Ha a mentés 403-mal elszáll, a kulcsnál a Contents: Read and write hiányzik.'
+          : ''));
       })
       .catch(function (hiba) {
         if (hiba.status === 401) return kaputMutat('Lejárt a kulcs, adja meg újra.');
@@ -745,7 +751,9 @@
   /* ---------- indulás ---------- */
   (function start() {
     if (!kulcs()) return kaputMutat();
-    ellenoriz().then(appMutat).catch(function (hiba) { kaputMutat(hiba.message); });
+    ellenoriz()
+      .then(function (irhat) { irasKetes = !irhat; appMutat(); })
+      .catch(function (hiba) { kaputMutat(hiba.message); });
   })();
 
 })();
