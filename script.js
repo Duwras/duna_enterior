@@ -465,13 +465,23 @@
 
   if (lablec && fotartalom && !lassit) {
     var lablecMeret = function () {
-      if (keskeny()) {
-        document.body.classList.remove('lablec-fedes');
-        fotartalom.style.marginBottom = '';
-        return;
-      }
+      /* Előbb mindig vissza a rendes folyamba: a magasságot csak így
+         lehet megmérni (rögzítve a saját margónk hamisítaná meg), és ez
+         a biztonságos alapállapot, ha a hatás nem fér bele. */
+      document.body.classList.remove('lablec-fedes');
+      fotartalom.style.marginBottom = '';
+      if (keskeny()) return;
+
+      /* A hatás lényege, hogy a lábléc a képernyő aljához rögzül. Ha
+         magasabb a képernyőnél, a teteje kilóg a látómezőből, és a lap
+         aljára érve sem lehet leolvasni — a cégadatok és a kötelező
+         pályázati blokk pont ott van. Ilyenkor marad a rendes folyam:
+         a lábléc egyben végiggörgethető. */
+      var magas = lablec.offsetHeight;
+      if (magas > window.innerHeight - 8) return;
+
       document.body.classList.add('lablec-fedes');
-      fotartalom.style.marginBottom = lablec.offsetHeight + 'px';
+      fotartalom.style.marginBottom = magas + 'px';
     };
     lablecMeret();
     meretre(lablecMeret);

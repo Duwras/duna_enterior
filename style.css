@@ -360,7 +360,18 @@ p { margin: 0; }
   display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
   padding-top: 26px; font-size: .78rem; color: var(--smoke);
 }
-.zaro nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.zaro nav { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+
+/* A belépés a lábléc jogi sorába kerül, de nem versenyez vele: halkabb,
+   és a keret elválasztja a látogatónak szóló hivatkozásoktól. */
+.admin-belepes {
+  color: var(--smoke) !important;
+  border: 1px solid rgba(251,248,243,.16);
+  padding: 3px 11px;
+  font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+  transition: color .18s, border-color .18s;
+}
+.admin-belepes:hover { color: var(--oak) !important; border-color: var(--oak); }
 
 /* ---------- belépő mozgás ---------- */
 
