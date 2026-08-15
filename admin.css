@@ -75,10 +75,34 @@ h1, h2, h3 { font-family: var(--display); font-weight: 300; color: var(--ink); m
 .kapu-doboz h1 { font-size: 1.7rem; }
 .kapu-magyarazat { margin: 0 0 6px; font-size: .86rem; color: var(--smoke); }
 .kapu-doboz label { font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--smoke); }
-.kapu-doboz input[type="password"] {
+
+.gh-doboz { display: grid; gap: 8px; }
+.gh-doboz .halk { text-align: center; }
+.valaszto {
+  display: flex; align-items: center; gap: 12px; margin: 6px 0 0;
+  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--smoke);
+}
+.valaszto::before, .valaszto::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+
+.kulcs-sor { display: grid; gap: 6px; justify-items: end; }
+.kulcs-mezo {
+  width: 100%;
   font-family: var(--mono); font-size: .9rem;
   padding: 11px 13px; border: 1px solid var(--line); background: #fff; color: var(--ink);
 }
+/* A takarás CSS-ből jön, nem type="password"-ből — lásd az admin.html
+   magyarázatát a jelszókezelőkről. */
+.kulcs-mezo.takart { -webkit-text-security: disc; text-security: disc; }
+.kulcs-mutat { font-size: .74rem; }
+
+.kapu-sugo {
+  margin: 4px 0 0; font-size: .78rem; line-height: 1.55; color: var(--smoke);
+  border-top: 1px solid var(--line); padding-top: 12px;
+}
+.kapu-sugo a { color: var(--brass); }
+.kapu-sugo b { color: var(--ink-2); font-weight: 500; }
 .jelolo { display: flex !important; align-items: center; gap: 9px;
   text-transform: none !important; letter-spacing: 0 !important; font-size: .85rem !important;
   color: var(--ink-2) !important; }

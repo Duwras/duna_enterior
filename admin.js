@@ -1,10 +1,11 @@
 /* ============================================================
    Duna Enterior — referenciák kezelése.
 
-   Az oldal GitHub Pages-en fut, ahol nincs szerveroldali kód: nincs
+   Az oldal statikus (Cloudflare Pages), nincs szerveroldali kód: nincs
    tehát mit jelszóval védeni, és nincs hova feltölteni. Helyette ez a
    felület KÖZVETLENÜL a GitHub API-val dolgozik — a böngésző készít egy
-   commitot, a commit elindítja a közzétételt, és 2-4 perc múlva kint van.
+   commitot, a commit elindítja a GitHub Actions közzétételét, és 2-4
+   perc múlva kint van.
 
    Amit ez a védelemre nézve jelent:
 
@@ -34,6 +35,9 @@
   var KEPMAPPA = 'img/projektek';
 
   var KULCS = 'dunaEnteriorGithubKulcs';
+  var GH_ALLAPOT = 'dunaEnteriorGhAllapot';   /* az egyszeri belépési azonosító */
+  var FORRAS = 'dunaEnteriorKulcsForras';     /* 'gh' = gombbal, 'kezi' = beillesztve */
+  var VEGPONT = '{{urlapVegpont}}';           /* a Worker címe — a build írja be */
   var MAX_EL = 1800;          /* a feltöltött kép hosszabb oldala */
   var MINOSEG = 0.82;
   var ADAGONKENT = 10;        /* ennyi kép megy egy commitban */
@@ -75,28 +79,119 @@
       init.body = JSON.stringify(opciok.torzs);
     }
 
-    return fetch(API + ut, init).then(function (v) {
-      if (opciok.nyers && v.ok) return v.text();
-      return v.json().catch(function () { return {}; }).then(function (d) {
-        if (!v.ok) {
-          var e = new Error(hibaSzoveg(v.status, d));
-          e.status = v.status;
-          throw e;
-        }
-        return d;
+    return fetch(API + ut, init)
+      /* Ha maga a kérés nem indul el, a fetch nyers TypeError-t dob
+         ("Failed to fetch"), amiből a felhasználó nem ért semmit. A
+         leggyakoribb ok nem a hálózat, hanem egy reklámszűrő vagy céges
+         proxy, ami az api.github.com-ot tiltja. */
+      .catch(function () {
+        var e = new Error('Nem sikerült elérni a GitHubot (api.github.com). ' +
+          'Ellenőrizze az internetkapcsolatot, illetve hogy egy bővítmény ' +
+          '(reklámszűrő, VPN) vagy a hálózat nem tiltja-e ezt a címet.');
+        e.status = 0;
+        throw e;
+      })
+      .then(function (v) {
+        if (opciok.nyers && v.ok) return v.text();
+        return v.json().catch(function () { return {}; }).then(function (d) {
+          if (!v.ok) {
+            var e = new Error(hibaSzoveg(v.status, d));
+            e.status = v.status;
+            e.sso = !!v.headers.get('x-github-sso');
+            throw e;
+          }
+          return d;
+        });
       });
-    });
   }
 
   /* A GitHub angolul és fejlesztőknek válaszol. Amit tényleg látni lehet,
      azt lefordítjuk használható mondatra. */
   function hibaSzoveg(kod, d) {
-    if (kod === 401) return 'A kulcs érvénytelen vagy lejárt. Készítsen újat a GitHubon. (401)';
+    if (kod === 401) return 'A kulcs érvénytelen, visszavont vagy lejárt. Készítsen újat a GitHubon. (401)';
     if (kod === 403) return 'Ennek a kulcsnak nincs írási joga ehhez a repóhoz (Contents: Read and write kell). (403)';
-    if (kod === 404) return 'A kulcs nem látja a repót. Finomhangolt kulcsnál: Repository access → Only select repositories → duna_enterior, és Permissions → Metadata: Read-only. (404)';
+    if (kod === 404) return 'A kulcs nem látja a ' + TULAJ + '/' + REPO + ' repót. Finomhangolt kulcsnál: Repository access → Only select repositories → ' + REPO + ', és Permissions → Metadata: Read-only. (404)';
     if (kod === 409 || kod === 422) return 'Időközben más is módosított valamit. Töltse újra az oldalt, és próbálja meg újra.';
     if (kod === 413) return 'Túl nagy a küldemény. Töltsön fel kevesebb képet egyszerre.';
     return (d && d.message ? d.message : 'Hiba') + ' (' + kod + ')';
+  }
+
+  /* ---------- a kulcs alakja ----------
+
+     Beillesztéskor a leggyakoribb baj nem az, hogy a kulcs rossz, hanem
+     hogy nem a kulcs került a mezőbe: sortörés vagy szóköz ragadt bele
+     (levélből, PDF-ből másolva), esetleg a kulcs NEVE lett kimásolva a
+     kulcs helyett. Mindkettőt itt szűrjük ki, még a hálózat előtt. */
+
+  function tisztitKulcs(s) {
+    /* minden whitespace ki, a láthatatlan vezérlők (BOM, zero-width) is —
+       a GitHub kulcsában ilyen soha nincs, másoláskor viszont belekerül */
+    return String(s || '')
+      .replace(/\s+/g, '')
+      .replace(/[\u200B-\u200F\u2060\uFEFF]/g, '');
+  }
+
+  function kulcsAlak(t) {
+    if (/^github_pat_[A-Za-z0-9_]{50,}$/.test(t)) return 'finomhangolt';
+    if (/^gh[posur]_[A-Za-z0-9]{30,}$/.test(t)) return 'klasszikus';
+    return '';
+  }
+
+  /* Amit a hibaüzenet végére teszünk: ennyi támpont kell ahhoz, hogy el
+     lehessen dönteni, a kulccsal vagy a jogosultsággal van-e baj. */
+  function kulcsJelzo(t) {
+    var alak = kulcsAlak(t);
+    return ' [a mezőben ' + t.length + ' karakter, ' +
+      (alak ? alak + ' kulcs alakja' : 'nem GitHub-kulcs alakja: „' + t.slice(0, 8) + '…”') + ']';
+  }
+
+  /* A repó lekérése 401/403/404-gyel is elszállhat, és a három nagyon
+     mást jelent. A /user végpont eldönti, melyikről van szó: azt MINDEN
+     érvényes kulcs eléri, jogosultságtól függetlenül. Így a hibaüzenet
+     megmondja, hogy a kulcsot kell újracsinálni, vagy csak a repó
+     hozzáférését kell beállítani nála. */
+  function diagnosztika(hiba, ertek) {
+    var jelzo = kulcsJelzo(ertek);
+    if ([401, 403, 404].indexOf(hiba.status) === -1) return Promise.resolve(hiba.message);
+
+    return fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': 'Bearer ' + ertek,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }).then(function (v) {
+      if (v.status === 401) {
+        /* A tanács attól függ, hogyan lépett be: a gombbal szerzett
+           kulcsot nincs mit „beilleszteni”. */
+        return ghBelepett()
+          ? 'A GitHub visszavonta ezt a hozzáférést. Lépjen be újra a ' +
+            '„Belépés GitHub-fiókkal” gombbal.'
+          : 'A GitHub magát a kulcsot nem fogadja el: érvénytelen, visszavont ' +
+            'vagy lejárt. (A finomhangolt kulcsok alapból 30 nap után járnak le.) ' +
+            'Készítsen újat, és a teljes kulcsot illessze be — a „Megmutat” gombbal ' +
+            'ellenőrizheti, tényleg az került-e a mezőbe.' + jelzo;
+      }
+      return v.json().catch(function () { return {}; }).then(function (d) {
+        var ki = d && d.login ? ' (' + d.login + ' néven)' : '';
+
+        if (hiba.status === 404) {
+          return 'A kulcs érvényes' + ki + ', de nem látja a ' + TULAJ + '/' + REPO +
+            ' repót. A kulcs beállításánál: Resource owner → ' + TULAJ +
+            ', Repository access → Only select repositories → ' + REPO +
+            ', Permissions → Metadata: Read-only és Contents: Read and write.' + jelzo;
+        }
+        if (hiba.status === 403) {
+          return 'A kulcs érvényes' + ki + ', de a GitHub megtagadta a hozzáférést' +
+            (hiba.sso ? ' — a kulcsot a szervezet SSO-jához is engedélyezni kell.' : '.') +
+            ' Ellenőrizze a Permissions résznél a Metadata: Read-only és a ' +
+            'Contents: Read and write beállítást.' + jelzo;
+        }
+        return hiba.message + jelzo;
+      });
+    }).catch(function () {
+      return hiba.message + jelzo;
+    });
   }
 
   /* ---------- base64 ---------- */
@@ -166,7 +261,10 @@
   function felejt() {
     sessionStorage.removeItem(KULCS);
     localStorage.removeItem(KULCS);
+    localStorage.removeItem(FORRAS);
   }
+
+  function ghBelepett() { return localStorage.getItem(FORRAS) === 'gh'; }
 
   function kaputMutat(szoveg) {
     felejt();
@@ -193,9 +291,119 @@
     });
   }
 
+  /* ============================================================
+     belépés GitHub-fiókkal
+     ============================================================
+
+     A kézzel készített kulcs két okból rossz megoldás a tulajdonosnak:
+     lejár (a finomhangolt kulcs alapból 30 nap múlva), és 90-100
+     karaktert kell hibátlanul beilleszteni. Ha a Workerben be van
+     állítva a GitHub-alkalmazás, ez az egész elmarad: egy kattintás, a
+     GitHubon egy rábólintás, és kész. Az így kapott kulcs nem jár le.
+
+     A Worker beállítása: worker/OLVASSEL.md. Amíg nincs beállítva, ez a
+     rész nem is látszik — a kulcsmező változatlanul működik. */
+
+  function veletlen() {
+    var t = new Uint8Array(16);
+    window.crypto.getRandomValues(t);
+    var s = '';
+    for (var i = 0; i < t.length; i++) s += (t[i] + 256).toString(16).slice(1);
+    return s;
+  }
+
+  function b64url(s) {
+    return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function workerCim(ut) {
+    return String(VEGPONT).replace(/\/+$/, '') + ut;
+  }
+
+  function ghBelepesIndit(clientId) {
+    var n = veletlen();
+    sessionStorage.setItem(GH_ALLAPOT, n);
+
+    /* A visszatérési cím a state-ben utazik, mert a GitHub egyetlen
+       visszatérési címet enged az alkalmazásnál — az a Worker. */
+    var allapot = b64url(JSON.stringify({ n: n, vissza: location.origin + location.pathname }));
+
+    /* public_repo: a repó nyilvános, ennél többre nincs szükség. A
+       felhasználó privát repóihoz ez a kulcs nem fér hozzá. */
+    location.href = 'https://github.com/login/oauth/authorize' +
+      '?client_id=' + encodeURIComponent(clientId) +
+      '&scope=public_repo' +
+      '&state=' + encodeURIComponent(allapot);
+  }
+
+  /* A GitHubtól visszaérve a kulcs a cím kettőskereszt utáni részében
+     van. Azt a böngésző nem küldi el szervernek — mi pedig azonnal ki is
+     töröljük a címsorból, hogy ne maradjon az előzményekben. */
+  function ghVisszaKezel() {
+    if (!location.hash || location.hash.length < 2) return '';
+
+    var p = new URLSearchParams(location.hash.slice(1));
+    var kapott = p.get('gh');
+    var ghHiba = p.get('ghHiba');
+    if (!kapott && !ghHiba) return '';
+
+    var vart = sessionStorage.getItem(GH_ALLAPOT);
+    sessionStorage.removeItem(GH_ALLAPOT);
+    history.replaceState(null, '', location.pathname + location.search);
+
+    if (!vart || p.get('n') !== vart) {
+      kaputMutat('A belépés nem ebből az ablakból indult. Biztonsági okból ' +
+        'eldobtuk — indítsa újra a Belépés GitHub-fiókkal gombbal.');
+      return 'hiba';
+    }
+    if (ghHiba) {
+      kaputMutat('A GitHub-belépés nem sikerült: ' + ghHiba);
+      return 'hiba';
+    }
+
+    /* Az OAuth-kulcs nem jár le, ezért tartósan tároljuk: a tulajdonosnak
+       ezen a gépen soha többé nem kell belépnie. */
+    felejt();
+    localStorage.setItem(KULCS, kapott);
+    localStorage.setItem(FORRAS, 'gh');
+    return 'ok';
+  }
+
+  /* A gomb csak akkor jelenik meg, ha a Worker azt mondja, be van
+     állítva. Így egy félkész beállítás nem visz zsákutcába. */
+  function ghGombKeszit() {
+    if (!/^https?:\/\//.test(VEGPONT)) return;
+
+    fetch(workerCim('/gh-beallitas'), { headers: { Accept: 'application/json' } })
+      .then(function (v) { return v.ok ? v.json() : null; })
+      .then(function (d) {
+        if (!d || !d.van || !d.clientId) return;
+        $('#ghDoboz').hidden = false;
+        $('#ghGomb').addEventListener('click', function () { ghBelepesIndit(d.clientId); });
+      })
+      .catch(function () { /* nincs beállítva vagy nem elérhető — marad a kulcsmező */ });
+  }
+
+  /* A takarás levehető: beillesztés után így ellenőrizhető, hogy tényleg
+     a kulcs került a mezőbe, és nem egy jelszókezelő írta felül. */
+  $('#kulcsMutat').addEventListener('click', function () {
+    var mezo = $('#kapuKulcs');
+    var takart = mezo.classList.toggle('takart');
+    this.textContent = takart ? 'Megmutat' : 'Elrejt';
+    this.setAttribute('aria-pressed', takart ? 'false' : 'true');
+    mezo.focus();
+  });
+
+  /* Beillesztéskor azonnal takarítunk, hogy a mezőben pontosan az legyen,
+     ami a GitHubhoz megy — így a "Megmutat" is a valóságot mutatja. */
+  $('#kapuKulcs').addEventListener('input', function () {
+    var tiszta = tisztitKulcs(this.value);
+    if (tiszta !== this.value) this.value = tiszta;
+  });
+
   $('#kapuUrlap').addEventListener('submit', function (e) {
     e.preventDefault();
-    var ertek = $('#kapuKulcs').value.trim();   /* beillesztéskor gyakran marad szóköz */
+    var ertek = tisztitKulcs($('#kapuKulcs').value);
     if (!ertek) return;
 
     var gomb = $('#kapuGomb');
@@ -204,6 +412,7 @@
 
     felejt();
     ($('#kapuJegyezd').checked ? localStorage : sessionStorage).setItem(KULCS, ertek);
+    localStorage.setItem(FORRAS, 'kezi');
 
     ellenoriz()
       .then(function (irhat) {
@@ -214,16 +423,14 @@
         appMutat();
       })
       .catch(function (hiba) {
-        gomb.disabled = false;
         felejt();
-        /* 401-nél a leggyakoribb ok nem a lejárt kulcs, hanem hogy nem az
-           került a mezőbe, amit beillesztettek (jelszókezelő írta felül,
-           vagy csonkán lett kimásolva). A hossz ezt azonnal megmutatja:
-           egy fine-grained kulcs 90-100 karakter. */
-        var uzenetek = hiba.status === 401
-          ? hiba.message + ' A mezőben ' + ertek.length + ' karakter volt (a GitHub kulcsa 90-100).'
-          : hiba.message;
-        uzen($('#kapuUzenet'), uzenetek, 'hiba');
+        /* A GitHub válasza önmagában félrevisz: 401/403/404 mindegyike
+           jöhet jó kulcstól rossz beállítással és rossz kulcstól is.
+           A diagnosztika ezt bontja szét, mielőtt üzenetet írnánk ki. */
+        diagnosztika(hiba, ertek).then(function (szoveg) {
+          gomb.disabled = false;
+          uzen($('#kapuUzenet'), szoveg, 'hiba');
+        });
       });
   });
 
@@ -757,10 +964,19 @@
 
   /* ---------- indulás ---------- */
   (function start() {
-    if (!kulcs()) return kaputMutat();
+    ghGombKeszit();
+
+    /* Ha most jöttünk vissza a GitHubtól, a kulcs ezzel kerül a helyére —
+       ezért kell a tárolt kulcs kiolvasása ELŐTT lefutnia. */
+    if (ghVisszaKezel() === 'hiba') return;
+
+    var tarolt = kulcs();
+    if (!tarolt) return kaputMutat();
     ellenoriz()
       .then(function (irhat) { irasKetes = !irhat; appMutat(); })
-      .catch(function (hiba) { kaputMutat(hiba.message); });
+      .catch(function (hiba) {
+        diagnosztika(hiba, tarolt).then(function (szoveg) { kaputMutat(szoveg); });
+      });
   })();
 
 })();

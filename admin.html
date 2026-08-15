@@ -17,16 +17,38 @@
     <img src="img/brand/fejlec-logo.png" alt="Duna Enterior" width="150" height="38">
     <h1>Referenciák kezelése</h1>
     <p class="kapu-magyarazat">
-      Illessze be a kulcsot. A kulcsot a GitHub ellenőrzi — nélküle semmi
-      nem menthető. A kulcs csak ebben a böngészőben marad, a weboldalra
-      soha nem kerül fel.
+      A belépést a GitHub végzi — nélküle semmi nem menthető. Ami itt
+      keletkezik, az csak ebben a böngészőben marad, a weboldalra soha
+      nem kerül fel.
     </p>
 
+    <!-- Csak akkor látszik, ha a Workerben be van állítva a GitHub-
+         alkalmazás. Ha nincs, marad a kulcs beillesztése. -->
+    <div class="gh-doboz" id="ghDoboz" hidden>
+      <button type="button" class="gomb tolt teljes" id="ghGomb">
+        <span aria-hidden="true">⌥</span> Belépés GitHub-fiókkal
+      </button>
+      <p class="halk">Egy kattintás, és nem jár le. Ez az ajánlott mód.</p>
+      <p class="valaszto"><span>vagy kulccsal</span></p>
+    </div>
+
     <label for="kapuKulcs">Mesterkulcs</label>
-    <!-- autocomplete="off": ez nem jelszómező. A jelszókezelők különben
-         ráültek, és beillesztés után a mentett jelszóval írták felül a
-         kulcsot — a belépés 401-gyel szállt el, látszólag ok nélkül. -->
-    <input type="password" id="kapuKulcs" autocomplete="off" data-1p-ignore data-lpignore="true" spellcheck="false" required>
+    <!-- Szándékosan type="text" + CSS-takarás, nem type="password".
+         A jelszókezelők (és a Chrome sajátja, ami a data-1p-ignore-t
+         figyelmen kívül hagyja) a jelszómezőre ráültek, és beillesztés
+         után a mentett jelszóval írták felül a kulcsot — a belépés
+         401-gyel szállt el, látszólag ok nélkül. Szövegmezőre nem
+         kínálnak jelszót. A takarás a "Megmutat" gombbal levehető, hogy
+         beillesztés után látni lehessen, tényleg a kulcs került-e be. -->
+    <div class="kulcs-sor">
+      <input type="text" id="kapuKulcs" class="kulcs-mezo takart"
+             autocomplete="off" autocapitalize="off" autocorrect="off"
+             data-1p-ignore data-lpignore="true" data-bwignore
+             spellcheck="false" required
+             placeholder="github_pat_… vagy ghp_…">
+      <button type="button" class="szoveg-gomb kulcs-mutat" id="kulcsMutat"
+              aria-pressed="false">Megmutat</button>
+    </div>
 
     <label class="jelolo">
       <input type="checkbox" id="kapuJegyezd">
@@ -35,6 +57,17 @@
 
     <button type="submit" class="gomb tolt" id="kapuGomb">Belépés</button>
     <p class="uzenet" id="kapuUzenet" role="status" aria-live="polite"></p>
+
+    <p class="kapu-sugo">
+      Nincs kulcsa, vagy lejárt?
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Új kulcs a GitHubon ↗</a><br>
+      <b>Expiration</b> → No expiration (különben 30 nap múlva újra kell csinálni) ·
+      <b>Resource owner</b> → Duwras · <b>Repository access</b> →
+      Only select repositories → <b>duna_enterior</b> ·
+      <b>Permissions</b> → Metadata: Read-only és Contents: Read and write.<br>
+      Utána pipálja be a „Jegyezze meg ezen a gépen” jelölőt — így többé
+      nem kell belépnie.
+    </p>
   </form>
 </section>
 
