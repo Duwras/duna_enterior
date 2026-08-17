@@ -45,13 +45,12 @@ jobs:
 
       # Innen jön a base_path. Projektoldalnál "/duna_enterior",
       # saját domain esetén üres.
+      # A `enablement: true` itt szándékosan NINCS. Kipróbáltuk: a
+      # munkafolyamat tokenje nem hozhatja létre a Pages-oldalt
+      # ("Resource not accessible by integration"), tehát csak egy
+      # félrevezető hibával bukna el. A bekapcsolás a fenti kézi lépés.
       - id: pages
         uses: actions/configure-pages@v5
-        with:
-          # Megpróbálja magától bekapcsolni a Pages-t a repón. Ha a
-          # jogosultság nem elég hozzá, ez a lépés bukik — akkor kell a
-          # fenti kézi beállítás.
-          enablement: true
 
       # 371 forráskép, képenként két webes méret — ez a lépés viszi az
       # időt, nagyjából 2-4 perc.
