@@ -1,0 +1,280 @@
+/* ============================================================
+   DUNA — THE LIVING INTERIOR
+   terv.css — AZ ALAPRAJZ
+
+   Nem portfóliórács. Építészeti index: hajszálvonal, felirat,
+   koordináta, üres hely. Ami egy rajzon is elférne, annyi.
+
+   Három helyen jelenik meg ugyanez a jelölés:
+     data-hely="lap"    — az /alaprajz saját lapja (rendes dokumentum)
+     data-hely="folyam" — a főoldal végén, a folyamban (a feltárulás)
+     data-hely="fedo"   — fedőrétegként bármelyik térből (Esc)
+
+   A harmadikat a terv.js kapcsolja be. A szerkezet mindhárom
+   esetben ugyanaz — egy lapnak nem lehet két igazsága.
+
+   Az alaprajz MINDIG papír, éjjel is. Ugyanaz az érv, mint az
+   adatlapnál: a dokumentum nem hangulat, hanem olvasnivaló.
+   ============================================================ */
+
+.alaprajz {
+  background: var(--paper);
+  color: var(--ink-2);
+  /* rajzasztali raszter — itt teljes erővel, egyedüli helyként */
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+.alaprajz-lap {
+  max-width: var(--szeles);
+  margin: 0 auto;
+  padding: var(--space-8) var(--margo) var(--space-9);
+}
+
+/* ---------- fej ---------- */
+
+.alaprajz-fej {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: var(--space-5); flex-wrap: wrap;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--line);
+}
+.alaprajz-fej .tipo-cim-2 { margin: var(--space-2) 0 var(--space-3); }
+.alaprajz-fej em { font-style: italic; }
+.alaprajz-osszeg { color: var(--smoke); }
+
+.alaprajz-zar {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  background: transparent; border: 1px solid var(--line); color: var(--ink);
+  padding: 11px 16px; cursor: pointer; flex: none;
+  transition: border-color var(--motion-gyors) linear, color var(--motion-gyors) linear;
+}
+.alaprajz-zar:hover { border-color: var(--brass); color: var(--brass); }
+.alaprajz-zar kbd { font: inherit; font-size: .62rem; opacity: .55; border: 0; background: none; }
+
+/* ---------- szűrő ---------- */
+
+.alaprajz-szuro {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-4); flex-wrap: wrap;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+.terv-gombok { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.terv-gomb {
+  background: transparent; border: 1px solid var(--line); color: var(--ink-2);
+  padding: 9px 14px; cursor: pointer;
+  transition: border-color var(--motion-gyors) linear,
+              color var(--motion-gyors) linear;
+}
+.terv-gomb:hover { border-color: var(--smoke); color: var(--ink); }
+.terv-gomb[aria-pressed="true"] { border-color: var(--brass); color: var(--brass); }
+.terv-allas { color: var(--smoke); }
+
+/* ---------- a térkép ---------- */
+
+.alaprajz-terkep { display: grid; gap: var(--space-8); padding-top: var(--space-7); }
+
+.szarny[hidden] { display: none; }
+
+.szarny-fej {
+  display: flex; align-items: baseline; gap: var(--space-4);
+  margin: 0 0 var(--space-4); font-weight: 400;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: var(--space-2);
+}
+.szarny-fej .tipo-muszaki { color: var(--ink); }
+.szarny-fej .tipo-adat { margin-left: auto; color: var(--smoke); }
+
+/* A szárny kivezető hivatkozása („A flotta →”) a szedés magasságán,
+   12 px-en állt. Önálló vezérlő, nem mondat közbeni link. Mérve a
+   8. fázisban; a jel nem nő, csak a megfogható terület. */
+@media (pointer: coarse) {
+  .szarny-ki { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* A cella szélessége a fotószámból jön (--sz): nagyobb anyag, nagyobb
+   szoba. Ettől lesz a rajzból alaprajz, és nem egyenrácsos katalógus. */
+.cellak {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-flow: dense;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.cella { grid-column: span var(--sz, 1); }
+.cella[hidden] { display: none; }
+
+.cella > a {
+  position: relative; display: grid; align-content: space-between;
+  gap: var(--space-6);
+  min-height: 148px; height: 100%;
+  padding: var(--space-4);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none; color: inherit;
+  overflow: hidden;
+  transition: background-color var(--motion-normal) var(--ease-lagy);
+}
+.cella > a:hover { background: var(--paper-2); }
+
+/* A borító nem kártyakép: a cellán BELÜL dereng fel, a szöveg mögött.
+   Nem kap saját keretet, nem nagyítódik, nem billen. */
+.cella .hatter {
+  position: absolute; inset: 0; z-index: 0;
+  opacity: 0;
+  transition: opacity var(--motion-terv) var(--ease-lagy);
+}
+.cella .hatter img { width: 100%; height: 100%; object-fit: cover; }
+.cella > a:hover .hatter,
+.cella > a:focus-visible .hatter { opacity: .22; }
+
+.cella .jel,
+.cella .cim,
+.cella .mod { position: relative; z-index: 1; }
+
+.cella .jel { color: var(--smoke); }
+.cella .cim {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(1.1rem, 1.5vw, 1.34rem); line-height: 1.2;
+  color: var(--ink);
+}
+.cella .mod {
+  display: flex; align-items: center; gap: var(--space-2);
+  color: var(--smoke);
+}
+
+/* A forma jele: hajszálvonal, három hosszban. Nem rangsor — a hossz
+   azt mondja meg, mennyi anyag áll rendelkezésre. */
+.mod-jel {
+  display: inline-block; height: 1px; flex: none;
+  background: var(--smoke);
+}
+.cella[data-mod="ter"] .mod-jel,
+.mod-jel[data-mod="ter"] { width: 26px; background: var(--brass); }
+.cella[data-mod="mozgokep"] .mod-jel,
+.mod-jel[data-mod="mozgokep"] { width: 16px; }
+.cella[data-mod="tortenet"] .mod-jel,
+.mod-jel[data-mod="tortenet"] { width: 8px; }
+
+/* Ahol állunk: a cella pereme tölgyre vált, és a koordináta is. */
+.cella > a[aria-current="page"] { background: var(--paper-2); }
+.cella > a[aria-current="page"]::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--brass); z-index: 2;
+}
+.cella > a[aria-current="page"] .jel { color: var(--brass); }
+
+/* ---------- jelmagyarázat ---------- */
+
+.alaprajz-jelmagyarazat {
+  margin-top: var(--space-8); padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+  display: grid; gap: var(--space-2);
+  color: var(--smoke);
+}
+.alaprajz-jelmagyarazat b { color: var(--ink-2); font-weight: 500; }
+.alaprajz-jelmagyarazat .mod-jel { margin-right: var(--space-2); vertical-align: middle; }
+.alaprajz-jelmagyarazat .halk { font-style: italic; }
+
+/* ---------- fedőréteg: KAPU ----------
+
+   Az alaprajz nem modális ablakként úszik be. A KAPU nyílásából
+   tárul fel — ugyanaz a mozdulat, mint minden más helyváltás,
+   csak a cél nem egy másik tér, hanem a szerkezet maga.
+
+   A nyílás helyét a terv.js veszi át az éppen látott képkockától,
+   és a --terv-* változókba írja. A maszkot vivő elem nő; a benne
+   lévő lap ellentétesen kicsinyül, tehát a LAP áll, a LYUK tágul. */
+
+.alaprajz[data-hely="fedo"] {
+  position: fixed; inset: 0; z-index: 80;
+  overflow-y: auto; overscroll-behavior: contain;
+  -webkit-mask-image: radial-gradient(ellipse var(--terv-rx, 20%) var(--terv-ry, 22%)
+                       at var(--terv-x, 50%) var(--terv-y, 50%),
+                       #000 0%, #000 78%, transparent 100%);
+          mask-image: radial-gradient(ellipse var(--terv-rx, 20%) var(--terv-ry, 22%)
+                       at var(--terv-x, 50%) var(--terv-y, 50%),
+                       #000 0%, #000 78%, transparent 100%);
+}
+.alaprajz[data-hely="fedo"][hidden] { display: none; }
+/* nyitás után (és csökkentett mozgásnál) nincs maszk: teljes lap */
+.alaprajz[data-hely="fedo"][data-maszk="nincs"] {
+  -webkit-mask-image: none; mask-image: none;
+}
+.alaprajz-belso { min-height: 100%; }
+
+/* Nyitott fedőréteg alatt a fejléc NEM látszik.
+
+   A terv.js a testvéreket inertté teszi, tehát a nyolc navigációs
+   hivatkozás már nem működik — a fejléc viszont a <body> gyereke,
+   az alaprajz meg a <main>-en belül él, így a rétegsorrend szerint
+   a fejléc a papír FÖLÉ rajzolódik. Élőnek látszó, halott sáv a lap
+   legfontosabb navigációs felületén. Nem a z-indexet emeljük (az a
+   következő szerkezeti változásnál újra elromlana), hanem kimondjuk,
+   amit az inert már eldöntött: az alaprajz alatt nincs fejléc. A
+   kilépés az alaprajz saját BEZÁR / Esc gombja.
+
+   Kifelé gyorsan tűnik (a kapu 620 ms-a alatt már nem lehet ott),
+   visszafelé nincs mit várni: a data-terv csak a zárás VÉGÉN kerül
+   le, addigra a papír elment. 8. fázis. */
+[data-terv] .fejlec {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-normal) var(--ease-lagy);
+}
+
+/* A főoldalon a folyamban áll: ott ez a jelenet maga. A bezáró gomb
+   csak akkor van ott, amikor tényleg van mit bezárni. */
+.alaprajz[data-hely="folyam"] { position: relative; }
+.alaprajz:not([data-hely="fedo"]) .alaprajz-zar { display: none; }
+
+@media (max-width: 900px) {
+  .cellak { grid-template-columns: repeat(2, 1fr); }
+  .cella { grid-column: span min(var(--sz, 1), 2); }
+}
+@media (max-width: 560px) {
+  .cellak { grid-template-columns: 1fr; }
+  .cella { grid-column: span 1; }
+  .cella > a { min-height: 112px; }
+  .alaprajz-lap { padding: var(--space-6) var(--margo) var(--space-8); }
+  /* érintésre minden kapcsoló legalább 44 px magas */
+  .terv-gomb { padding: 13px 16px; }
+  .alaprajz-zar { padding: 14px 18px; }
+}
+
+/* ---------- az alaprajz saját lapja ---------- */
+
+.alaprajz-oldal main > .alaprajz { border-bottom: 1px solid var(--line); }
+
+/* ---------- a térbeli vezérlők ----------
+   (a ter.css felületén ülnek, de az alaprajzhoz tartoznak) */
+
+.ter-vezerlok {
+  grid-column: 2; grid-row: 1; align-self: start;
+  display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: flex-end;
+}
+.ter-masodlagos {
+  background: transparent; cursor: pointer; color: var(--ejjel-szov);
+  border: 1px solid rgba(232, 223, 209, .2);
+  padding: 10px 16px;
+  transition: border-color var(--motion-gyors) linear, color var(--motion-gyors) linear;
+}
+.ter-masodlagos:hover { border-color: var(--oak); color: var(--oak); }
+
+@media (max-width: 720px) {
+  .ter-vezerlok {
+    grid-column: 1; grid-row: 4;
+    display: grid; grid-template-columns: 1fr auto; gap: var(--space-2);
+  }
+  .ter-vezerlok .ter-terv { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cella .hatter { transition: none; }
+}

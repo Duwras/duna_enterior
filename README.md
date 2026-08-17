@@ -3,18 +3,24 @@
 A **Duna Belsőépítészet Kft.** (Duna Enterior Asztalos és Hajóépítő Üzem, Győr)
 weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 
-**Élő cím:** <https://duna-enterior.pages.dev/>
+**Élő címek** (mindkettő ugyanabból a pushból épül):
 
-> Ez a bemutató cím a `dunaenterior.hu` élesítéséig. Kereső nem indexeli: amíg
-> a `sajatDomainEl` `false`, a build kiír egy `_headers` fájlt
-> `X-Robots-Tag: noindex, nofollow` fejléccel, így az ideiglenes cím nem lesz
-> duplikált tartalom az éles domain mellett.
+| Cím | Munkafolyamat |
+|---|---|
+| <https://duna-enterior.pages.dev/> | [deploy.yml](.github/workflows/deploy.yml) — Cloudflare Pages |
+| <https://ertekpontpenzugyek.hu/duna_enterior/> | [pages.yml](.github/workflows/pages.yml) — GitHub Pages |
+
+> Mindkettő bemutató cím a `dunaenterior.hu` élesítéséig. A kanonikus cím
+> minden lapon az éles domainre mutat, ezért a két ideiglenes cím nem lesz
+> duplikált tartalom. A Cloudflare-en ezen felül `_headers` fájl is tiltja az
+> indexelést (`X-Robots-Tag: noindex, nofollow`) — a GitHub Pages a `_headers`
+> fájlt nem értelmezi, ott a kanonikus cím dolgozik egyedül.
 >
-> Korábban GitHub Pages-en volt. Azért került át: a `Duwras.github.io`
-> felhasználói Pages-oldalhoz az `ertekpontpenzugyek.hu` saját domain van
-> kötve, a projektoldalak ezt öröklik, és a `duwras.github.io/duna_enterior/`
-> 301-gyel oda irányított — az ügyfél oldala idegen domain alatt látszott.
-> A repó Pages-oldala azóta le van kapcsolva.
+> A GitHub Pages cím azért NEM `duwras.github.io/duna_enterior/`: a
+> `Duwras.github.io` felhasználói Pages-oldalhoz az `ertekpontpenzugyek.hu`
+> saját domain van kötve, és a projektoldalak ezt öröklik — a `github.io` cím
+> 301-gyel odairányít. Amíg a `dunaenterior.hu` DNS-e nincs bekötve, ezen nincs
+> mit tenni.
 
 ## Mi hol van
 
@@ -69,6 +75,26 @@ némán elmaradó közzététel rosszabb lenne. Addig kézzel is élesíthető:
 ```bash
 npm run kozzetetel
 ```
+
+### GitHub Pages — alkönyvtárból
+
+A [pages.yml](.github/workflows/pages.yml) ugyanerre a pushra a GitHub Pages-re
+is kirakja az oldalt. Titok nem kell hozzá, de **egyszer, kézzel** be kell
+kapcsolni: *Settings* → *Pages* → *Build and deployment* → *Source*:
+**GitHub Actions**.
+
+A lapok gyökér-abszolút hivatkozásokat használnak (`/img/…`,
+`/referenciak/…`), a projektoldal viszont alkönyvtárból szolgál ki. Ezért a
+build `ALAP_UT` előtaggal fut; a munkafolyamat ezt a `configure-pages`
+lépéstől kapja, tehát ha később saját domain kerül a repóra, az előtag magától
+üresre vált. Helyben így nézhető meg ugyanez:
+
+```bash
+ALAP_UT=/duna_enterior npm run build
+```
+
+`ALAP_UT` nélkül a kimenet bájtra ugyanaz, mint eddig — a Cloudflare-re menő
+build változatlan.
 
 Helyi ellenőrzés:
 

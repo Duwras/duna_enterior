@@ -1,0 +1,190 @@
+{
+  "$sema": {
+    "_mire": "A KÉSZÜLÉS fejezet adata. Stúdiótulajdon — az admin soha nem írja. Ugyanaz az elv, mint a terek.json és a flotta.json esetében: az admin.js tisztit() függvénye a projektek.json minden mezőjét újraépíti mentéskor, tehát bármi, amit oda tennénk, a következő ügyféloldali szerkesztésnél némán eltűnne.",
+    "_ha_nincs": "Ha ez a fájl nincs meg, a /keszules.html egyszerűen nem épül meg, és minden más változatlan marad.",
+
+    "_nyitas": "Három képkocka, egyetlen ragadós színpadon — ugyanaz a szerkezet, amit a ter.js a szobákban és a flottában is vezényel. A küszöb itt MINDIG kapu: a flottában minden ablak, mert ott minden mozog; itt minden kapu, mert minden képkocka szerkezeti réteget vált. Lépték, nem hely.",
+    "_sorozatok": "Egy sorozat egy valódi tárgy útja. Az állomások az ANYAG → KÉZ → TÁRGY → TÉR → ÉLMÉNY gerincen ülnek, de EGYIK SOROZATBAN SEM KELL MIND AZ ÖT. Ami hiányzik, arról nincs fénykép — és a `hianyzo` mező ezt ki is mondja. Üres állomás nem készül.",
+
+    "_szakasz": "anyag | kez | targy | ter | elmeny — a gerinc öt helye. Egy helyen több lemez is állhat (a készülés java része `kez`). A build megköveteli, hogy a sorrend ne menjen visszafelé.",
+    "_lepte": "reszlet | targy | ter — a LÉPTÉK, és ez a fejezet egyetlen mozgásötlete. A lemez fizikai mérete a lapon ebből jön: a részlet közel van és kicsi kivágás, a tér széles. Végiggörgetve a néző hátralép.",
+    "_szabaly": "Minden sorozatban legalább két KÜLÖNBÖZŐ lépték kell — különben nincs mit felfedni, és a sorozat nem sorozat, csak képsor. A build megáll, ha nincs.",
+
+    "_nincs_latvanyterv": "A készülés lapján egyetlen látványterv sincs. Ez szerkesztői szabály, nem véletlen: a metszet azt mutatja, ami elkészült, nem azt, amit rajzoltunk. Az archívum render–valóság párja a főoldal metszetében szerepel, ott megjelölve."
+  },
+
+  "nyitas": {
+    "_mire": "RÉSZLET → TÁRGY → TÉR. Ugyanaz a mesterség, ugyanaz a projekt, három léptékben. A látogató előbb lát egy felületet, mint hogy tudná, mihez tartozik.",
+    "keretek": [
+      {
+        "slug": "fafaragasok",
+        "kep": "09.jpg",
+        "nev": "Szárnyas fej, nyers fapanelen",
+        "hol": "Fafaragások · a faragvány",
+        "allomas": "A részlet",
+        "nyilas": [0.38, 0.44, 0.20, 0.24],
+        "kuszob": { "fajta": "kapu", "el": "A tárgy" }
+      },
+      {
+        "slug": "fafaragasok",
+        "kep": "10.jpg",
+        "nev": "Faragott ágyvég és széksor a győri üzemben",
+        "hol": "Fafaragások · az üzemben",
+        "allomas": "A tárgy",
+        "nyilas": [0.86, 0.28, 0.13, 0.26],
+        "kuszob": { "fajta": "kapu", "el": "A tér" }
+      },
+      {
+        "slug": "fafaragasok",
+        "kep": "03.jpg",
+        "nev": "Faragott lépcsőkorlát a beépített térben",
+        "hol": "Fafaragások · beépítve",
+        "allomas": "A tér",
+        "nyilas": [0.24, 0.62, 0.16, 0.22]
+      }
+    ]
+  },
+
+  "sorozatok": [
+    {
+      "id": "a-hajotest",
+      "felcim": "A hajótest",
+      "nev": "Egy test,", "nevDolt": "tizenkilenc fényképen.",
+      "bevezeto": "Az archívum egyetlen munkája, amit elejétől a végéig lefényképeztek. Ugyanaz a hajótest: szétbontva, bordákra csupaszítva, újrapalánkolva, csiszolva, lakkozva, kárpitozva.",
+      "projekt": "boesch-640-de-luxe",
+      "flotta": true,
+      "anyagok": ["mahagóni", "fenyő", "lakk", "króm"],
+      "hianyzo": "Nincs fénykép a hajóról a vízen. A test elkészültéig minden állomás megvan; utána az archívum abbahagyja.",
+      "allomasok": [
+        {
+          "szakasz": "anyag", "lepes": "A palánk", "lepte": "reszlet",
+          "slug": "boesch-640-de-luxe", "kep": "10.jpg",
+          "cimke": "Két rétegben ragasztott, nyers mahagóni palánkél, közelről. Ennyi a hajó fala."
+        },
+        {
+          "szakasz": "kez", "lepes": "A borda", "lepte": "targy",
+          "slug": "boesch-640-de-luxe", "kep": "03.jpg",
+          "cimke": "Az orr alulnézetből: szabadon álló bordák és a régi palánkok maradéka."
+        },
+        {
+          "szakasz": "kez", "lepes": "A szorító", "lepte": "targy",
+          "slug": "boesch-640-de-luxe", "kep": "04.jpg",
+          "cimke": "Frissen ragasztott palánkok, tucatnyi szorítóval leszorítva. Annyi szorító, amennyi a műhelyben van."
+        },
+        {
+          "szakasz": "kez", "lepes": "A felület", "lepte": "reszlet",
+          "slug": "boesch-640-de-luxe", "kep": "12.jpg",
+          "cimke": "A hajóorr csiszolt, még lakkozatlan mahagóni felülete."
+        },
+        {
+          "szakasz": "targy", "lepes": "A fényező", "lepte": "targy",
+          "slug": "boesch-640-de-luxe", "kep": "13.jpg",
+          "cimke": "A kilakkozott test fehér vízvonallal, a fényezőfülkében. Ugyanaz a pácolás és lakkozás, ami a szállodai bútoron."
+        },
+        {
+          "szakasz": "ter", "lepes": "Bent", "lepte": "ter",
+          "slug": "boesch-640-de-luxe", "kep": "19.jpg",
+          "cimke": "Tat felőli nézet: kárpitozott ülés, léces fedélzet, króm korlát. Innentől ez belsőépítészet."
+        }
+      ]
+    },
+
+    {
+      "id": "a-kapu",
+      "felcim": "A kapu",
+      "nev": "Amit nyolc ember", "nevDolt": "emel be.",
+      "bevezeto": "Az archívum egyetlen olyan sorozata, amelyen a beépítés is rajta van. Egy kétszárnyú tömörfa kapu érkezése, daruzása és beemelése a látogatóközpont homlokzatába.",
+      "projekt": "szent-laszlo-latogatokozpont-fa-kapuja",
+      "anyagok": ["tömörfa", "pác"],
+      "hianyzo": "A műhelyben készülésről nincs fénykép. A sorozat ott kezdődik, ahol a kapu leszáll a teherautóról.",
+      "allomasok": [
+        {
+          "szakasz": "kez", "lepes": "A szállítás", "lepte": "targy",
+          "slug": "szent-laszlo-latogatokozpont-fa-kapuja", "kep": "06.jpg",
+          "cimke": "A becsomagolt kapuszárny a szállítójármű mellett, hevederben, két ember kezében."
+        },
+        {
+          "szakasz": "kez", "lepes": "Az emelés", "lepte": "targy",
+          "slug": "szent-laszlo-latogatokozpont-fa-kapuja", "kep": "08.jpg",
+          "cimke": "A szárny megemelése a helyszínen. Ez a fejezet egyetlen fényképe, amelyen több kéz is a tárgyon van."
+        },
+        {
+          "szakasz": "targy", "lepes": "A helyén", "lepte": "targy",
+          "slug": "szent-laszlo-latogatokozpont-fa-kapuja", "kep": "02.jpg",
+          "cimke": "A zárt kapu a sárga homlokzatban, beépítve."
+        },
+        {
+          "szakasz": "ter", "lepes": "Nyitva", "lepte": "ter",
+          "slug": "szent-laszlo-latogatokozpont-fa-kapuja", "kep": "01.jpg",
+          "cimke": "Mindkét szárny nyitva, mögötte a látogatóközpont udvara. A kapu innentől átjáró."
+        }
+      ]
+    },
+
+    {
+      "id": "a-szek",
+      "felcim": "A szék",
+      "nev": "Vázlattól", "nevDolt": "a kárpitig.",
+      "bevezeto": "Egy szállodai fotel útja: kézírásos vázlat és anyagminták, majd ugyanaz a darab készen, fehér háttér előtt.",
+      "projekt": "garzon-plaza-hotel",
+      "anyagok": ["bőr", "bouclé", "réz"],
+      "hianyzo": "A fotelről nincs fénykép a megépült térben. A záró lemez azt a teret mutatja, amelyhez a berendezés készült — nem a széket benne.",
+      "allomasok": [
+        {
+          "szakasz": "anyag", "lepes": "A minta", "lepte": "reszlet",
+          "slug": "garzon-plaza-hotel", "kep": "14.jpg",
+          "cimke": "Fotelvázlat papíron, mellette szövet- és bőrminta, kézírásos jegyzettel."
+        },
+        {
+          "szakasz": "targy", "lepes": "A darab", "lepte": "targy",
+          "slug": "garzon-plaza-hotel", "kep": "15.jpg",
+          "cimke": "A kész fotel: hajlított váz, bőr és sötétszürke bouclé."
+        },
+        {
+          "szakasz": "targy", "lepes": "A karfa", "lepte": "reszlet",
+          "slug": "garzon-plaza-hotel", "kep": "16.jpg",
+          "cimke": "A karfa részlete: rézszínű hajlított cső és bouclé kárpit, ahol a kettő találkozik."
+        },
+        {
+          "szakasz": "ter", "lepes": "A tér", "lepte": "ter",
+          "slug": "garzon-plaza-hotel", "kep": "02.jpg",
+          "cimke": "A megépült recepciópult és a mögötte induló folyosó — a szálloda, amelyhez a bútorozás készült."
+        }
+      ]
+    },
+
+    {
+      "id": "a-doboz",
+      "felcim": "A doboz",
+      "nev": "Két állomás, és a harmadik", "nevDolt": "nincs meg.",
+      "bevezeto": "Egy egyedi tömörfa díszdoboz. Az archívum a fába vésett feliratot és a kész tárgyat őrzi — teret nem.",
+      "projekt": "vatikani-diszdoboz",
+      "anyagok": ["tölgy", "aranyozás"],
+      "hianyzo": "Ehhez a munkához nem tartozik tér. Nem is tartozhat: a doboz maga a végtermék, és az archívumban nincs fénykép arról, hol áll ma.",
+      "allomasok": [
+        {
+          "szakasz": "anyag", "lepes": "A véset", "lepte": "reszlet",
+          "slug": "vatikani-diszdoboz", "kep": "05.jpg",
+          "cimke": "A fába vésett felirat közelről, a tölgy évgyűrűivel. A fejezet legélesebb anyagfényképe."
+        },
+        {
+          "szakasz": "targy", "lepes": "A tárgy", "lepte": "targy",
+          "slug": "vatikani-diszdoboz", "kep": "03.jpg",
+          "cimke": "A nyitott doboz, aranyozott alapon a töviskorona-kereszttel."
+        },
+        {
+          "szakasz": "targy", "lepes": "A tok", "lepte": "targy",
+          "slug": "vatikani-diszdoboz", "kep": "04.jpg",
+          "cimke": "A doboz tolható fedelével, állítva. Egyetlen darabból dolgozott tömörfa tok."
+        }
+      ]
+    }
+  ],
+
+  "muhely": {
+    "_mire": "A fejezet zárása. Egyetlen fénykép, ami magát a műhelyt mutatja — és a kimondott hiány, ami a jövőbeli fotózás megrendelésének alapja. Nem pótoljuk semmivel.",
+    "slug": "meyer-motorcsonak-2",
+    "kep": "05.jpg",
+    "cimke": "A műhely belseje több hajóval és csónakmotorral. 2004, 0,75 megapixel, beégetett dátumbélyeggel."
+  }
+}

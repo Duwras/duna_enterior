@@ -1,0 +1,582 @@
+/* ============================================================
+   DUNA — THE LIVING INTERIOR
+   ter.css — a térbeli réteg
+
+   Csak azok az oldalak töltik be, amelyeken tér van (ma: a labor).
+   A hagyományos lapok stílusát nem érinti.
+
+   Két dolgot ír le:
+     A) MÉLYSÉG — hogyan lesz egy fotóból három rétegű tér
+     B) TÉRBELI FELÜLET — hogyan ül a szöveg a téren belül
+
+   Az alapelv a felületre: a felirat a szoba PEREMÉHEZ tapad, nem
+   lebeg kártyaként a közepén. Vonal, felirat, koordináta — annyi,
+   amennyi egy építészeti rajzon is elférne.
+   ============================================================ */
+
+/* ============================================================
+   A) MÉLYSÉG — 2.5D fotó
+   ============================================================
+
+   Egy fotóból három réteg lesz. A vágást nem gépi mélységbecslés
+   adja, hanem a felvétel saját szerkezete: az egypontos perspektívájú
+   belső tereken a KÖZELI dolgok a képmező szélén vannak (ajtótok,
+   oszlop, ablakkeret, mennyezetív), a TÁVOLI pedig a nyílásban, a
+   kép belsejében. A nyílás helyét és méretét kézzel rögzítjük
+   képkockánként a data/terek.json-ban — az adat a fényképből
+   származik, nem becslésből.
+
+   A rétegek maszkja és a küszöb feltárása UGYANABBÓL a nyílásból
+   számolódik. Ezért olvasható a küszöb áthaladásnak: a következő tér
+   pontosan ott jelenik meg először, ahol az előzőben a nyílás volt.
+
+   Későbbi bővítés: ha készül valódi mélységtérkép, csak a maszk
+   forrása cserélődik (gradiens helyett kép) — a rétegszerkezet,
+   az időzítés és a küszöb változatlan marad. */
+
+.ter {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--ejjel);   /* ami a kép mögött van, sose világítson be */
+  --nyx: 50%;  --nyy: 50%;    /* a nyílás közepe */
+  --nyrx: 20%; --nyry: 22%;   /* a nyílás sugarai */
+}
+
+/* A `will-change: transform` NEM állandó.
+
+   Állandóan kiírva a böngésző a réteget saját kompozit síkra teszi, és
+   a raszterét EGY léptékben tartja, mert azt hiszi, mindjárt mozdulni
+   fog. A rétegek viszont állandó nagyításban állnak (a KÖZELI 1.055-ön),
+   tehát a rögzített raszter fölnagyítva kerül a képernyőre — pont az a
+   lágyság, amit keresünk, és ott a legerősebb, ahol a nagyítás a
+   legnagyobb.
+
+   A küszöb ideje alatt a kuszob.js teszi ki, és a takarításkor leveszi;
+   a Web Animations API amúgy is magától kompozitálja azt a transformot,
+   amit épp animál. Ami marad: nyugalomban a böngésző a VALÓDI léptéken
+   raszterizál. */
+.ter-reteg {
+  position: absolute; inset: 0;
+}
+.ter-reteg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Körülnézés: a KÉP mozdul, nem a réteg — a réteg saját nagyítását a
+   küszöb használja, és a kettő így nem üti egymást.
+
+   A három réteg EGYFORMÁN mozdul. Korábban rétegenként más mértékben
+   követték a mutatót, és ez volt a „duplán látok” hiba mozgás közben:
+   a három réteg ugyanannak a fényképnek a másolata, a maszkjaik pedig
+   széles, lágy gyűrűkben mennek át egymásba — a képmező nagy részén
+   EGYSZERRE két réteg látszik. Eltérő elmozdulásnál ugyanaz a korlát,
+   ugyanaz az ablakkeret kétszer jelent meg, 10–15 px-re elcsúszva, a
+   lágy átmenettől elkenve. Ugyanaz a hiba, mint amit az azonos
+   alapnagyítás nyugalomban megszüntetett (lásd rendszer.css), csak
+   mozgás közben. Egy fényképből rétegenkénti eltolással nem lesz
+   valódi mélység, csak szellemkép.
+
+   Ami maradt: a színpad úgy pásztáz, mint egy kameramozgás, és a
+   rétegek ott válnak szét, ahol tényleg mélységet adnak — a küszöbnél,
+   ahol a kuszob.js a saját kameragörbéje szerint nagyítja őket.
+
+   A csillapítást az átmenet adja: minden mutatómozdulat újraindítja,
+   ezért a kép mindig lemaradva, lassulva ér a helyére. Ez a
+   „vízgörbe” legolcsóbb megvalósítása — nincs hozzá képkocka-hurok. */
+.ter-reteg img {
+  transition: transform 720ms var(--ease-water);
+  transform: translate3d(calc(var(--mx, 0) * var(--reteg-mozog)),
+                         calc(var(--my, 0) * var(--reteg-mozog)), 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ter-reteg img { transition: none; }
+}
+
+/* TÁVOLI: a teljes kép, maszk nélkül. Ez az alap. */
+.ter-reteg.tav   { transform: scale(var(--reteg-tav-nagy)); }
+
+/* KÖZÉP: a nyílás magját kihagyja, hogy a távoli réteg átlásson rajta */
+.ter-reteg.koz {
+  transform: scale(var(--reteg-koz-nagy));
+  -webkit-mask-image: radial-gradient(ellipse calc(var(--nyrx) * 2.2) calc(var(--nyry) * 2.2) at var(--nyx) var(--nyy), transparent 0%, transparent 30%, #000 100%);
+          mask-image: radial-gradient(ellipse calc(var(--nyrx) * 2.2) calc(var(--nyry) * 2.2) at var(--nyx) var(--nyy), transparent 0%, transparent 30%, #000 100%);
+}
+
+/* KÖZELI: csak a képmező pereme — ez megy el a kamera mellett */
+.ter-reteg.kozel {
+  transform: scale(var(--reteg-kozel-nagy));
+  -webkit-mask-image: radial-gradient(ellipse calc(var(--nyrx) * 3.6) calc(var(--nyry) * 3.6) at var(--nyx) var(--nyy), transparent 0%, transparent 62%, #000 100%);
+          mask-image: radial-gradient(ellipse calc(var(--nyrx) * 3.6) calc(var(--nyry) * 3.6) at var(--nyx) var(--nyy), transparent 0%, transparent 62%, #000 100%);
+}
+
+/* Lapos tartalék: ha nincs nyílás megadva (külső felvétel, tárgyfotó),
+   a tér egyetlen rétegből áll. Ettől semmi nem törik el. */
+.ter[data-lapos] .ter-reteg.koz,
+.ter[data-lapos] .ter-reteg.kozel { display: none; }
+
+/* A NYÍLÁS: a küszöb ezen keresztül tárja fel a következő teret.
+   A wrapper nagyítása tágítja a maszkot; a benne lévő .ter ezzel
+   pontosan ellentétesen skálázódik, így a KÉP áll, csak a LYUK nő. */
+/* A lágyulás szándékosan szűk (78–100%): a nyílásnak ÉLE van. Ha
+   szélesre lágyítjuk, a következő tér nem egy nyíláson át jelenik meg,
+   hanem szétdereng — és pontosan azt az áttűnést kapjuk vissza, amit
+   ez az egész el akar kerülni. */
+.nyilas {
+  position: absolute; inset: 0;
+  -webkit-mask-image: radial-gradient(ellipse var(--nyrx) var(--nyry) at var(--nyx) var(--nyy), #000 0%, #000 78%, transparent 100%);
+          mask-image: radial-gradient(ellipse var(--nyrx) var(--nyry) at var(--nyx) var(--nyy), #000 0%, #000 78%, transparent 100%);
+}
+/* nyílás nélkül (csökkentett mozgás, tartalék) a maszk teljes */
+.nyilas[data-maszk="nincs"] {
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+
+/* ---------- AZ ALAPLAP: ami sose engedi ki alóla a hátteret ----------
+
+   Mérve (VISUAL-CLARITY, 2. rész): a küszöb feltáró maszkja a BELÉPŐ
+   burkon ül, és a burok a saját DOBOZKÖZEPE körül nagyítódik. Ha a
+   nyílás nem a képmező közepén van — márpedig szinte soha nincs ott —,
+   az ellipszis középpontja a nagyítással kifelé sodródik, és a maszk a
+   képmezőt SOHA nem tudja befedni. A főoldal első küszöbén (nyílás
+   66% / 46%) a t=820 ms-nál készült felvételen a bal oldali 35% csupasz
+   --ejjel volt. Nem látszott folyton feketének csak azért, mert a
+   kilépő kép még ott halványodott alatta 0.144-en — a 846. ms után
+   viszont az is elfogyott.
+
+   A geometriát nem lehet ráhangolni: a fedéshez az ajtónál 4,75-szörös
+   nagyítás kellene, a fizika 3,42-t ad. A maszk sugarát képkockánként
+   újrarajzolni teljes képmezőn drága. Marad a szerkezeti megoldás — és
+   ez az, amit a feladat is leír: a belépő kép MÁR OTT VAN a maszk
+   alatt. Egy maszk nélküli, nyugalmi helyzetű másolata a legalsó
+   síkon áll, ugyanabból a dekódolt bitképből (nincs új kérés), és a
+   küszöb végén nyomtalanul eltűnik. Amit a maszk nem fed, azt ez fedi.
+
+   Nem effekt és nem áttűnés: nem mozdul, nem halványodik, csak van. */
+.nyilas[data-alap] {
+  z-index: 0;
+  -webkit-mask-image: none;
+          mask-image: none;
+  transform: none;
+  opacity: 1;
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   B) TÉRBELI FELÜLET
+   ============================================================ */
+
+/* Az enfilád: valódi magasságú görgetőszakasz, benne ragadós színpad.
+   Nem vesszük el a görgetést — a görgetősáv igazat mond, a lendület
+   natív marad, érintésen semmit nem kapunk el a rendszertől. A
+   nézőpontváltás a görgetés KÖVETKEZMÉNYE, nem a helyettesítője. */
+.enfilad { position: relative; }
+
+/* A szoba görgetőszakasza valódi magasságú: nézőpontonként egy
+   képernyő. A --db-t a build írja ki a nézőpontok számából, a lépés
+   hosszát pedig itt szabjuk — telefonon rövidebb, mert ott a görgetés
+   drágább mozdulat. A főoldal enfiládja (.aktus) nem ilyen: ott a
+   szedés hossza adja a tempót. */
+.enfilad.szoba { height: calc(var(--db, 1) * var(--ter-lepes, 100svh)); }
+:root { --ter-lepes: 100svh; }
+@media (max-width: 720px) { :root { --ter-lepes: 88svh; } }
+
+/* A fejléc a téren ÜL, nem tolja lejjebb: enélkül a ragadós színpad
+   a fejléc magasságával lecsúszna, és az alsó vezérlősáv a hajtás alá
+   kerülne. A menü sosem tűnik el — csak fölé kerül. */
+.ter-oldal .fejlec,
+.fooldal .fejlec { position: fixed; top: 0; left: 0; right: 0; }
+/* A belépő mozgás (.jon.jobb) jobbról érkezik: a hajtás alatt álló
+   elemek ilyenkor kilógnának, és a téren egy vízszintes görgetősáv
+   különösen hazug volna. A clip — a hiddennel ellentétben — nem
+   csinál görgetődobozt, tehát a ragadós színpad marad ragadós. */
+.ter-oldal, .fooldal { --fejlec-h: 69px; overflow-x: clip; }
+
+/* Amíg a színpad tölti ki a képmezőt, a fejléc a sötét regiszterben
+   van. Nem „sötét mód”: ugyanaz a menü, csak azon a felületen, ami
+   épp mögötte áll. A jelzést a ter.js teszi ki. */
+body[data-terben] .fejlec {
+  background: linear-gradient(to bottom, rgba(14, 11, 7, .6), transparent);
+  backdrop-filter: none;
+  border-bottom: 0;
+}
+body[data-terben] .fejlec .menu a,
+body[data-terben] .fejlec .menu-gomb { color: var(--ejjel-szov); }
+body[data-terben] .fejlec .menu a[aria-current="page"] { color: var(--oak); }
+body[data-terben] .fejlec .menu-gomb { border-color: rgba(232, 223, 209, .3); }
+body[data-terben] .fejlec .logo img { filter: invert(1) brightness(1.7); }
+body[data-terben] .fejlec .halado { opacity: .5; }
+
+@media (max-width: 900px) {
+  body[data-terben] .fejlec .menu { background: var(--ejjel); border-bottom-color: var(--ejjel-vonal); }
+  body[data-terben] .fejlec .menu a { border-bottom-color: rgba(232, 223, 209, .16); }
+}
+
+.szinpad {
+  position: sticky; top: 0;
+  width: 100%; height: 100svh;
+  overflow: hidden;
+  background: var(--ejjel);
+  color: var(--ejjel-szov);
+}
+
+/* átmenet közben a kapuk félreállnak — a mozdulat alatt nincs mire
+   kattintani, és a skálázódó gomb amúgy is hazudna a helyéről */
+.szinpad[data-atmenet] .ter-kapu { opacity: 0; pointer-events: none; }
+.ter-kapu { transition: opacity var(--motion-normal) var(--ease-lagy); }
+
+/* A felület jelölése szkript nélkül is helyes: a build az ELSŐ
+   nézőpont adataival írja ki. Ezért nem rejtjük el indulásig. */
+
+/* A felületréteg a kép fölött ül, de nem fogja el az egeret —
+   csak azok az elemek, amikre tényleg kattintani lehet. */
+.felulet {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  padding: var(--keret);
+  /* a fejléc a téren ül, tehát a felső feliratsáv alatta kezdődik */
+  padding-top: calc(var(--keret) + var(--fejlec-h, 0px));
+  gap: var(--space-4);
+  pointer-events: none;
+  z-index: 3;
+}
+.felulet > * { pointer-events: auto; }
+
+/* Fátyol. A szöveg olvashatósága soha nem múlhat azon, mi van épp a
+   képen: a HABLEÁNY mennyezete fehér, a padlója világos tölgy — a
+   felirat mindkettőn el tudna veszni. Két keskeny sáv, a kép közepe
+   érintetlen marad. */
+.szinpad::after {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      rgba(14, 11, 7, .58) 0%,
+      rgba(14, 11, 7, .22) 12%,
+      transparent 26%,
+      transparent 60%,
+      rgba(14, 11, 7, .34) 78%,
+      rgba(14, 11, 7, .74) 100%);
+}
+
+/* ---------- felirat: a tér neve, a bal felső peremen ---------- */
+
+.ter-felirat { grid-column: 1; grid-row: 1; align-self: start; }
+.ter-felirat .nev {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.5rem, 3.2vw, 2.6rem); line-height: 1.1;
+  letter-spacing: var(--betuk-display);
+  color: var(--ejjel-szov); margin: 0;
+  text-shadow: 0 1px 24px rgba(0, 0, 0, .45);
+}
+/* A kísérőfelirat ugyanazon a fátylon áll, mint a tér neve, de fele
+   akkora és tömörebb szedésű — világos képkockán (híd, víz, ég) ez az
+   a sor, ami elsőként elveszik. Ugyanaz az árnyék, mint a néven: nem
+   új eszköz, csak a meglévő kiterjesztése arra a sorra, amelyik jobban
+   rá van szorulva. A fátylat NEM erősítjük: az minden képkockát
+   sötétítene. 8. fázis. */
+.ter-felirat .honnan {
+  display: flex; align-items: center; gap: var(--space-3);
+  margin: 0 0 var(--space-2);
+  color: var(--oak);
+  text-shadow: 0 1px 18px rgba(0, 0, 0, .6);
+}
+.ter-felirat .honnan::after {
+  content: ""; height: 1px; width: 46px; background: currentColor; opacity: .5;
+}
+
+/* ---------- alaprajz-gomb: jobb felül, mindig ott van ---------- */
+
+.ter-terv {
+  grid-column: 2; grid-row: 1; align-self: start;
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  background: transparent; cursor: pointer;
+  color: var(--ejjel-szov);
+  border: 1px solid rgba(232, 223, 209, .34);
+  padding: 10px 16px;
+  transition: border-color var(--motion-gyors) linear, color var(--motion-gyors) linear;
+}
+.ter-terv:hover { border-color: var(--oak); color: var(--oak); }
+.ter-terv kbd {
+  font: inherit; font-size: .62rem; letter-spacing: .08em;
+  opacity: .6; border: 0; background: none;
+}
+
+/* ---------- lábsáv: műszaki adat balra, a következő küszöb jobbra ---------- */
+
+.ter-lab {
+  grid-column: 1 / -1; grid-row: 3;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-5); flex-wrap: wrap;
+}
+
+.ter-adat { display: flex; gap: var(--space-5); flex-wrap: wrap; color: var(--ejjel-szov2); }
+.ter-adat div { display: grid; gap: 2px; }
+.ter-adat dt { color: var(--ejjel-szov2); }
+.ter-adat dd { margin: 0; color: var(--ejjel-szov); }
+
+/* minden, ami fotón ül, kap egy halk vetett árnyékot — nem díszítés,
+   olvashatóság */
+.felulet .tipo-muszaki,
+.felulet .tipo-adat,
+.felulet .tipo-ui,
+.ter-felirat .nev { text-shadow: 0 1px 12px rgba(0, 0, 0, .55); }
+
+/* a következő küszöb: mit nyitunk, és milyen fajtát */
+.ter-tovabb {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--ejjel-szov); text-align: right;
+  padding: var(--space-2) 0;
+}
+.ter-tovabb .fajta { color: var(--oak); }
+.ter-tovabb .nyil {
+  display: inline-block; width: 34px; height: 1px; background: currentColor;
+  transition: width var(--motion-normal) var(--ease-water);
+}
+.ter-tovabb:hover .nyil { width: 52px; }
+.ter-tovabb[disabled] { opacity: .35; cursor: default; }
+
+/* ---------- enfilád-jelző: a bal peremen, hajszálvonal ----------
+   Nem százalék és nem folyamatjelző: azt mutatja, hány tér van
+   egymás mögött, és melyikben állunk. */
+
+.ter-jelzo {
+  position: absolute; left: var(--keret); top: 50%; translate: 0 -50%;
+  display: grid; gap: 10px; z-index: 4;
+}
+.ter-jelzo button {
+  width: 26px; height: 20px; padding: 0;
+  justify-items: start;
+  background: none; border: 0; cursor: pointer;
+  display: grid; place-items: center;
+}
+/* A hajszálvonalnak sötét képen és világos képen is látszania kell,
+   ezért kap egy fél pixeles sötét kíséretet. Ez a legolcsóbb módja
+   annak, hogy egy 1 px-es jel bármilyen fotón olvasható maradjon. */
+.ter-jelzo button::before {
+  content: ""; width: 16px; height: 1px;
+  background: rgba(232, 223, 209, .8);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .85));
+  transition: width var(--motion-normal) var(--ease-water),
+              background-color var(--motion-normal) linear;
+}
+.ter-jelzo button[aria-current="true"]::before { width: 26px; background: var(--oak); }
+.ter-jelzo button:hover::before { background: var(--ejjel-szov); }
+
+/* ---------- kapuk: valódi gombok a kép fölött ----------
+   Nem pulzáló pont: hajszálnégyzet és egy szó. */
+
+.ter-kapu {
+  position: absolute; z-index: 4;
+  translate: -50% -50%;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--ejjel-szov); padding: 6px;
+}
+.ter-kapu .jel {
+  width: 13px; height: 13px; flex: none;
+  border: 1px solid rgba(232, 223, 209, .8);
+  transition: border-color var(--motion-gyors) linear,
+              transform var(--motion-normal) var(--ease-water);
+}
+.ter-kapu .cimke {
+  opacity: 0; translate: -6px 0;
+  transition: opacity var(--motion-normal) var(--ease-lagy),
+              translate var(--motion-normal) var(--ease-water);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, .6);
+}
+.ter-kapu:hover .cimke,
+.ter-kapu:focus-visible .cimke { opacity: 1; translate: 0 0; }
+.ter-kapu:hover .jel,
+.ter-kapu:focus-visible .jel { border-color: var(--oak); transform: rotate(45deg); }
+
+/* ---------- mutató: műszer, nem dísz ----------
+   Csak egérrel, csak a színpadon belül. */
+
+@media (hover: hover) and (pointer: fine) {
+  .szinpad[data-mutato] { cursor: none; }
+  .szinpad[data-mutato] .ter-terv,
+  .szinpad[data-mutato] .ter-tovabb,
+  .szinpad[data-mutato] .ter-kapu,
+  .szinpad[data-mutato] .ter-jelzo button { cursor: none; }
+
+  .mutato {
+    position: fixed; top: 0; left: 0; z-index: 60;
+    width: 16px; height: 16px; translate: -50% -50%;
+    border: 1px solid rgba(232, 223, 209, .85);
+    pointer-events: none;
+    transition: width var(--motion-normal) var(--ease-water),
+                height var(--motion-normal) var(--ease-water),
+                border-color var(--motion-gyors) linear,
+                rotate var(--motion-normal) var(--ease-water),
+                opacity var(--motion-normal) linear;
+  }
+  .mutato[data-allapot="kapu"]  { width: 26px; height: 26px; border-color: var(--oak); rotate: 45deg; }
+  .mutato[data-allapot="tovabb"]{ width: 30px; height: 30px; border-color: var(--oak); }
+  .mutato[data-allapot="rejt"]  { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mutato { transition: none; }
+}
+
+/* ---------- adatlap: a tér írott ikertestvére ----------
+
+   Nem „egyszerűsített változat”: ez a projekt építészeti dokumentuma.
+   Mindig papír alapon, éjszaka is — a dokumentum nem hangulat, hanem
+   olvasnivaló. Szkript nélkül is teljes: alapból nyitva van, és a
+   szkript csúsztatja félre. */
+
+.adatlap {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 70;
+  width: min(560px, 100%);
+  background: var(--paper);
+  color: var(--ink-2);
+  overflow-y: auto;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+  border-left: 1px solid var(--line);
+  transition: translate var(--motion-terv) var(--ease-water);
+}
+.adatlap[hidden] { display: block; translate: 100% 0; visibility: hidden; }
+.adatlap-fej { display: flex; justify-content: space-between; gap: var(--space-4); align-items: start; }
+.adatlap h1 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.1;
+  letter-spacing: var(--betuk-display);
+  color: var(--ink); margin: 0 0 var(--space-5);
+}
+.adatlap-zar {
+  background: none; border: 1px solid var(--line); color: var(--ink);
+  width: 40px; height: 40px; flex: none; cursor: pointer;
+  transition: border-color var(--motion-gyors) linear, color var(--motion-gyors) linear;
+}
+.adatlap-zar:hover { border-color: var(--brass); color: var(--brass); }
+
+.adatlap dl.tenyek {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-5);
+  margin: var(--space-6) 0;
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.adatlap dl.tenyek dt { color: var(--smoke); margin-bottom: 2px; }
+.adatlap dl.tenyek dd { margin: 0; color: var(--ink); font-size: .95rem; }
+/* Ami nincs, azt nem találjuk ki: a hiányzó adat hiányzó adat. */
+.adatlap dl.tenyek dd.nincs { color: var(--smoke); font-style: italic; }
+
+.adatlap .anyagok { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.adatlap .anyagok li {
+  border: 1px solid var(--line); padding: 5px 11px;
+  color: var(--ink-2);
+}
+
+.adatlap .kepsor {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-2); margin-top: var(--space-5);
+  align-items: start;    /* különben a rács kifeszítené a képeket */
+}
+.adatlap .kepsor img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* ---------- áttűnés a fedőréteghez ---------- */
+
+.homaly {
+  position: fixed; inset: 0; z-index: 65;
+  background: rgba(14, 11, 7, .5);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--motion-normal) var(--ease-lagy);
+}
+.homaly[data-lathato] { opacity: 1; pointer-events: auto; }
+
+/* ---------- mobil ----------
+
+   Nem kicsinyített asztali nézet. A kép teljes szélességben áll, a
+   feliratok a hüvelykujj útjából félreállnak, az alaprajz-gomb pedig
+   lentre kerül, ahol elérhető. */
+
+@media (max-width: 720px) {
+  /* Egy oszlop, és minden kezelőelem a hüvelykujj sávjába, alulra.
+     A sorrend alulról fölfelé: gombok · adatok · jelző · név. */
+  .felulet { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto auto; }
+
+  .ter-felirat { grid-column: 1; grid-row: 1; }
+  .ter-felirat .nev { font-size: clamp(1.4rem, 6vw, 2rem); }
+
+  /* A jelző a cím alá kerül: „hol vagyok” a névhez tartozik, és így
+     nem áll bele az alsó gombsávba. */
+  /* A sor a KÉPMEZŐ SZÉLESSÉGÉT osztja fel, nem 44+10 px-es lépésekben
+     nő. Mérve (8. fázis): a főoldal tizenhárom keretével a rögzített
+     lépés 692 px-t adott egy 375 px-es készüléken — hat jel a
+     képmezőn kívülre esett, érintéssel elérhetetlenül, és a
+     billentyűs fókusz is oda vándorolt, ahol nincs mit látni. Léptékké
+     válik: minden keret ugyanakkora szeletet kap, akárhány van. */
+  .ter-jelzo {
+    position: static; translate: 0 0;
+    grid-column: 1; grid-row: 2; align-self: start; justify-self: stretch;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-top: var(--space-4);
+  }
+
+  .ter-lab {
+    grid-column: 1; grid-row: 3;
+    flex-direction: column; align-items: stretch; gap: var(--space-4);
+  }
+  .ter-adat { gap: var(--space-4); }
+  .ter-tovabb { text-align: left; justify-content: space-between; }
+
+  .ter-terv { grid-column: 1; grid-row: 4; justify-self: stretch; justify-content: center; }
+
+  /* Érintőcél. Mérve: a PHASE-3 ≥44px-et állított, de a térbeli
+     vezérlők ténylegesen 33 / 24 / 20 px-esek voltak — a szedés
+     magassága, nem a gombé. Itt jön helyre, egyszerre a főoldalon, a
+     szobákban és a flottában. A JELÜK nem nő: csak a megfogható
+     terület. */
+  .ter-terv,
+  .ter-masodlagos,
+  .ter-projekt,
+  .ter-tovabb { min-height: 44px; align-items: center; }
+
+  /* A kivezetés neve EGY sor marad, és a SAJÁT HASÁBJÁBA fér. Hosszú
+     projektnéven („Hotel Domus Collis · apartman”) 320 px-en négy sorba
+     tört, és a lábsáv 47 px helyett 90-nél is magasabb lett — a szedés
+     szabad sávja pont ennyivel lett kevesebb, mint amennyi a
+     nyitószedésnek kell.
+
+     A `min-width: 0` nem díszítés: rugalmas elemként a név alapból nem
+     megy a saját min-content mérete alá, tehát a flottán 74 px-rel
+     kilógott a hasábjából, RÁ az alaprajz-gombra. Ami nem fér ki, azt a
+     hármaspont mondja el; a hivatkozás célja változatlan. */
+  .ter-projekt { max-width: 100%; }
+  .ter-projekt .cel {
+    min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  /* 44 px magas érintőcél (6. fázis). A szélesség a 8. fázistól a
+     szeletből jön: tizenhárom keretnél ~25 px, ötnél ~66 px — mindig
+     a képmezőn belül. A LÁTHATÓ jel ehhez zsugorodik, hogy a
+     szomszédok ne érjenek össze. */
+  .ter-jelzo button { height: 44px; width: 100%; }
+  .ter-jelzo button::before { width: 12px; }
+  .ter-jelzo button[aria-current="true"]::before { width: 20px; }
+
+  .adatlap { padding: var(--space-6) var(--space-5) var(--space-8); }
+  .adatlap dl.tenyek { grid-template-columns: 1fr; }
+}
+
+/* Érintésre nincs lebegés: a kapu felirata mindig látszik, különben
+   érintőképernyőn soha nem derülne ki, mi van mögötte. */
+@media (hover: none) {
+  .ter-kapu .cimke { opacity: 1; translate: 0 0; }
+}

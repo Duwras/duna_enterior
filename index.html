@@ -6,160 +6,292 @@
 <title>Duna Belsőépítészet Kft. — asztalos és hajóépítő üzem, Győr</title>
 <meta name="description" content="Egyedi bútor, teljes belsőépítészet és hajóépítés Győrben, 1991 óta. Tervezéstől a helyszíni szerelésig, saját 1200 m²-es üzemből.">
 <link rel="icon" href="img/brand/favicon.png">
+<!-- A hajtás fölött ténylegesen használt két betűváltozat előre kérve.
+     A többi maradhat a CSS feldolgozása utánra. -->
+<link rel="preload" href="fonts/cormorant-garamond-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="rendszer.css">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ter.css">
+<link rel="stylesheet" href="terv.css">
+<link rel="stylesheet" href="fooldal.css">
 </head>
-<body>
+<body class="fooldal">
 
 <!--FEJLEC:index-->
 
 <main id="tartalom">
 
-  <!-- ---------- hero ---------- -->
-  <section class="hero">
-    <div class="hero-bal">
-      <p class="felcim jon">Asztalos és hajóépítő üzem · Győr</p>
-      <h1 class="jon kesik-1">Harminc év,<br>egy műhely,<br><em>több száz tér.</em></h1>
-      <p class="eloszo jon kesik-2">A tervezéstől a kivitelezésig egy kézben: saját gyártókapacitás, szerelőcsapatok és belsőépítész-tervezői háttér.</p>
-      <dl class="hero-adat jon kesik-2">
-        <div><dt>Alapítva</dt><dd><span data-szam="1991">1991</span></dd></div>
-        <div><dt>Gyártóüzem</dt><dd><span data-szam="1200">1200</span> <small>m²</small></dd></div>
-        <div><dt>Referencia</dt><dd><span data-szam="{{projektSzam}}">{{projektSzam}}</span></dd></div>
-        <div><dt>Fotó</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
-      </dl>
-      <div class="hero-tett jon kesik-3">
-        <a class="gomb tolt" href="referenciak.html">Referenciák <span class="nyil">→</span></a>
-        <a class="gomb" href="kapcsolat.html">Ajánlatkérés</a>
-      </div>
+  <!-- ============================================================
+       ELSŐ AKTUS — 01–06. jelenet
 
-      <p class="gorgetes-jel" aria-hidden="true">
-        <span class="vonal"></span> Görgessen
-      </p>
-    </div>
+       Nem hat szakasz egymás alatt: EGY tér, amin végigmegyünk. A
+       színpad ragadós, a szöveg fölötte gördül, a képkocka pedig
+       küszöbön át vált. A görgetés végig natív marad — a görgetősáv
+       igazat mond, és a lendületet nem vesszük el.
+       ============================================================ -->
+  <section class="enfilad aktus" id="aktus" data-horgony="nem"
+           aria-label="A DUNA belső tere — tizenhárom képkocka">
 
-    <div class="hero-jobb">
-      <div class="hero-sav" id="heroSav" data-parallax="0.14">
-        <img src="img/projektek/kristaly-etterem/02.jpg" alt="Kristály Étterem faléces belső fala" loading="eager" decoding="async">
-        <img src="img/projektek/hotel-domus-collis/01.jpg" alt="Hotel Domus Collis recepciója" loading="lazy" decoding="async">
-        <img src="img/projektek/fuzio-a-tajjal/01.jpg" alt="Fúzió a tájjal — nappali és konyha" loading="lazy" decoding="async">
-      </div>
-      <p class="hero-cimke">Bútor · Belsőépítészet · Hajó</p>
-    </div>
-  </section>
+    <div class="szinpad" id="szinpad" data-hangulat="nappal">
 
-  <!-- ---------- mit vállalunk ---------- -->
-  <section class="szekcio">
-    <div class="belul">
-      <div class="szekcio-fej">
-        <div>
-          <p class="felcim jon bal">Tevékenység</p>
-          <h2 class="jon kesik-1">Komplett kivitelezés,<br>egy kézből.</h2>
+      <!--JELENET-KERETEK-->
+
+      <div class="felulet">
+        <nav class="ter-jelzo" aria-label="Terek">
+          <!--JELENET-JELZO-->
+        </nav>
+
+        <div class="ter-felirat">
+          <p class="honnan tipo-muszaki"><span>Hotel Domus Collis · apartman</span></p>
+          <p class="nev">Nyitott ajtó a nappali felé</p>
         </div>
-        <a class="link-nyil jon jobb kesik-2" href="rolunk.html">Rólunk bővebben <span aria-hidden="true">→</span></a>
-      </div>
 
-      <div class="harom">
-        <article class="jon bal">
-          <p class="sorszam">Asztalosipar</p>
-          <h3>Egyedi bútor</h3>
-          <p>Bútorasztalos és épületasztalos termékek tervezése és gyártása, felületkezeléssel, saját üzemben.</p>
-        </article>
-        <article class="jon bal kesik-1">
-          <p class="sorszam">Belsőépítészet</p>
-          <h3>Teljes berendezés</h3>
-          <p>Létesítmények komplett berendezése: kiviteli tervdokumentáció, gyártás, helyszínre szállítás és szakszerű szerelés.</p>
-        </article>
-        <article class="jon bal kesik-2">
-          <p class="sorszam">Hajógyártás</p>
-          <h3>Hajó és hajóbelső</h3>
-          <p>Szabadidős és sporthajók tervezése és gyártása, hajók javítása, felújítása és átalakítása.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- futó szalag ----------
-       Magától sodródik, a görgetés meglöki. A szöveg díszítés, ezért
-       a másolatait a szkript aria-hidden-nel teszi ki. -->
-  <div class="szalag" data-szalag="0.5">
-    <div class="szalag-sor">
-      <div class="szalag-elem">
-        <span>Egyedi bútor</span><span><b>◆</b></span>
-        <span><em>Belsőépítészet</em></span><span><b>◆</b></span>
-        <span>Hajóépítés</span><span><b>◆</b></span>
-        <span>Saját üzem</span><span><b>◆</b></span>
-        <span><em>Győr, 1991 óta</em></span><span><b>◆</b></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ---------- a folyamat, vízszintesen ----------
-       A .kezi alapállapot: szkript nélkül és mobilon marad az ujjal
-       húzható vízszintes görgetés. A szkript veszi át, ha van hely. -->
-  <section class="vizszintes kezi" data-vizszintes>
-    <div class="vizszintes-ragad">
-      <div class="fej">
-        <p class="felcim">A folyamat</p>
-        <h2>Az első vázlattól<br>a helyszíni szerelésig.</h2>
-      </div>
-
-      <div class="vonat">
-        <article class="lepes">
-          <p class="szam">01 — Igényfelmérés</p>
-          <h3>Bejárás, mérés</h3>
-          <p>Felmérjük a helyszínt és az elképzelést. Innen indul minden méret, ami később a gépre kerül.</p>
-        </article>
-        <article class="lepes">
-          <p class="szam">02 — Tervezés</p>
-          <h3>Kiviteli terv</h3>
-          <p>Belsőépítész-tervezői háttérrel készül a teljes kiviteli tervdokumentáció, látványtervvel együtt.</p>
-        </article>
-        <article class="lepes">
-          <p class="szam">03 — Gyártás</p>
-          <h3>1200 m², saját gépek</h3>
-          <p>Győri üzemünkben gyalulás, kontaktcsiszolás, korszerű gépsor — a bútor nálunk születik meg.</p>
-        </article>
-        <article class="lepes">
-          <p class="szam">04 — Felület</p>
-          <h3>Felületkezelés</h3>
-          <p>A fa akkor lesz kész, amikor a felülete is: pácolás, lakkozás, saját felületkezelő részlegben.</p>
-        </article>
-        <article class="lepes">
-          <p class="szam">05 — Szerelés</p>
-          <h3>Helyszínre, a helyére</h3>
-          <p>Szállítás és szakszerű szerelés saját csapatokkal. Az átadás nem a vég, hanem a kapcsolat kezdete.</p>
-        </article>
-      </div>
-
-      <div class="vizszintes-halad" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <!-- ---------- kiemelt referenciák ---------- -->
-  <section class="szekcio halvany">
-    <div class="belul">
-      <div class="szekcio-fej">
-        <div>
-          <p class="felcim jon bal">Referenciák</p>
-          <h2 class="jon kesik-1">Ahol már jártunk.</h2>
+        <div class="ter-vezerlok">
+          <button type="button" class="ter-terv tipo-ui" data-terv="nyit">
+            Alaprajz <kbd>Esc</kbd>
+          </button>
         </div>
-        <a class="link-nyil jon jobb kesik-2" href="referenciak.html">Mind a {{projektSzam}} projekt <span aria-hidden="true">→</span></a>
+
+        <div class="ter-lab">
+          <dl class="ter-adat tipo-adat">
+            <div><dt>Tér</dt><dd data-mezo="sorszam">01 / 13</dd></div>
+            <div><dt>Idő</dt><dd data-mezo="hangulat">Nappal</dd></div>
+          </dl>
+
+          <a class="ter-projekt tipo-ui" href="referenciak/hotel-domus-collis/">
+            <span class="cel">Hotel Domus Collis</span>
+            <span class="nyil" aria-hidden="true"></span>
+          </a>
+        </div>
       </div>
-      <div class="racs">
-        <!--KIEMELT-->
+    </div>
+
+    <!-- A szedés a téren BELÜL van, nem kártyán fölötte. Ezért gördül
+         a képkocka fölött, és ezért nem fogja el az egeret. -->
+    <div class="aktus-szoveg">
+
+      <!-- ---------- 01. MÁR BENT VAGYUNK ---------- -->
+      <article class="jelenet" data-keret="1" style="--h: 120">
+        <div class="jelenet-belul jelenet-nyito">
+          <p class="felcim">Asztalos és hajóépítő üzem · Győr</p>
+          <h1>Harminc év,<br>egy műhely,<br><em>több száz tér.</em></h1>
+          <p class="eloszo">A tervezéstől a kivitelezésig egy kézben: saját gyártókapacitás, szerelőcsapatok és belsőépítész-tervezői háttér.</p>
+          <dl class="hero-adat">
+            <div><dt>Alapítva</dt><dd><span data-szam="1991">1991</span></dd></div>
+            <div><dt>Gyártóüzem</dt><dd><span data-szam="1200">1200</span> <small>m²</small></dd></div>
+            <div><dt>Referencia</dt><dd><span data-szam="{{projektSzam}}">{{projektSzam}}</span></dd></div>
+            <div><dt>Kép</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
+          </dl>
+          <div class="hero-tett">
+            <a class="gomb tolt" href="alaprajz.html">Alaprajz <span class="nyil">→</span></a>
+            <a class="gomb" href="kapcsolat.html">Ajánlatkérés</a>
+          </div>
+          <p class="gorgetes-jel" aria-hidden="true"><span class="vonal"></span> Görgessen</p>
+        </div>
+      </article>
+
+      <!-- ---------- 02. AZ ELSŐ KÜSZÖB ----------
+           Itt nem magyarázunk semmit. Az első görgetés átvisz egy
+           ajtón, és ettől kezdve a látogató tudja, mit csinál a lap. -->
+      <article class="jelenet" data-keret="2" style="--h: 64">
+        <div class="jelenet-belul">
+          <p class="tipo-vezeto">A tervezéstől a kivitelezésig egy kézben.</p>
+        </div>
+      </article>
+
+      <!-- ---------- 03. HÁROM TÉR, HÁROM SZAKMA ---------- -->
+      <article class="jelenet" data-keret="3" style="--h: 64">
+        <div class="jelenet-belul jelenet-szak">
+          <p class="felcim">Asztalosipar</p>
+          <h2>Egyedi bútor</h2>
+          <p class="tipo-folyo">Bútorasztalos és épületasztalos termékek tervezése és gyártása, felületkezeléssel, saját üzemben.</p>
+          <a class="link-nyil" href="alaprajz.html#egyedi">Egyedi munkák <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="jelenet" data-keret="4" style="--h: 64">
+        <div class="jelenet-belul jelenet-szak">
+          <p class="felcim">Belsőépítészet</p>
+          <h2>Teljes berendezés</h2>
+          <p class="tipo-folyo">Létesítmények komplett berendezése: kiviteli tervdokumentáció, gyártás, helyszínre szállítás és szakszerű szerelés.</p>
+          <a class="link-nyil" href="alaprajz.html#hotel+etterem+kastely">Létesítmények <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="jelenet" data-keret="5" style="--h: 64">
+        <div class="jelenet-belul jelenet-szak">
+          <p class="felcim">Hajógyártás</p>
+          <h2>Hajó és hajóbelső</h2>
+          <p class="tipo-folyo">Szabadidős és sporthajók tervezése és gyártása, hajók javítása, felújítása és átalakítása.</p>
+          <a class="link-nyil" href="alaprajz.html#hajo">Hajók <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- ---------- 04. AZ ENFILÁD ----------
+           Egy tér a másikon át. A nyilat nem mi rajzoljuk oda: a
+           mélység mondja meg, merre van előre. -->
+      <article class="jelenet" data-keret="6" style="--h: 58">
+        <div class="jelenet-belul">
+          <p class="tipo-vezeto">Egyik tér a másikon át. Ahogy a házban is.</p>
+        </div>
+      </article>
+
+      <!-- Ez a keret sokáig néma volt: a szünet a ritmus miatt kellett.
+           A ritmus viszont csak annak szünet, aki tudja, mit néz — aki
+           először jár itt, egy magyarázat nélküli fotót lát. Marad a
+           halk regiszter (két sor, link nélkül), de a kép megmondja,
+           mit mutat. -->
+      <article class="jelenet" data-keret="7" style="--h: 58">
+        <div class="jelenet-belul jelenet-halk">
+          <p class="tipo-muszaki">Hotel Domus Collis · reggeliző</p>
+          <p class="tipo-folyo">Lécvázas térelválasztók és beépített padok — egy térben, mégis külön asztaloknál.</p>
+        </div>
+      </article>
+
+      <article class="jelenet" data-keret="8" style="--h: 58">
+        <div class="jelenet-belul">
+          <p class="tipo-muszaki">Hotel Domus Collis</p>
+          <p class="tipo-folyo">Recepció, apartmanok, reggeliző — húsz fotó egy házról.</p>
+          <a class="link-nyil" href="referenciak/hotel-domus-collis/">A tér bejárása <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- ---------- 05. HABLEÁNY ---------- -->
+      <article class="jelenet" data-keret="9" style="--h: 72">
+        <div class="jelenet-belul">
+          <p class="felcim">Duna Cruises HABLEÁNY</p>
+          <h2>Egy szalon,<br><em>végig fából.</em></h2>
+        </div>
+      </article>
+
+      <article class="jelenet" data-keret="10" style="--h: 64">
+        <div class="jelenet-belul jelenet-halk">
+          <p class="tipo-muszaki">Duna Cruises HABLEÁNY · zárt szalon</p>
+          <p class="tipo-folyo">Mahagóni burkolat, hajlított mennyezetív, beépített pult és padok — mind a győri üzemben készült.</p>
+        </div>
+      </article>
+
+      <article class="jelenet" data-keret="11" style="--h: 72">
+        <div class="jelenet-belul">
+          <p class="tipo-vezeto">Este ugyanez a tér. Ugyanaz a mennyezet, más fény.</p>
+          <a class="link-nyil" href="referenciak/duna-cruises-hableany/">A HABLEÁNY bejárása <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- ---------- 06. A HAJÓ ----------
+           A szoba, amiben eddig álltunk, úszik. Ehhez nem kell
+           vízeffekt: elég, hogy tényleg így van. -->
+      <article class="jelenet" data-keret="12" style="--h: 72">
+        <div class="jelenet-belul jelenet-mondat">
+          <h2>Tereket építünk.<br><em>Néhány közülük elindul.</em></h2>
+        </div>
+      </article>
+
+      <article class="jelenet" data-keret="13" style="--h: 64">
+        <div class="jelenet-belul">
+          <p class="tipo-muszaki">Harminc munkából tizenöt hajó</p>
+          <p class="tipo-folyo">Sporthajó, motorcsónak, kirándulóhajó — és a beépített belsejük. Mindegyik ugyanabban a műhelyben készült.</p>
+          <a class="link-nyil" href="flotta.html">A flotta <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!--JELENET-NOJS-->
+
+  <!-- ============================================================
+       MÁSODIK AKTUS — 07. jelenet: A METSZET
+
+       Itt megszűnik a fénykép mint tér, és lappá válik. Nem küszöb
+       választja el az állomásokat, hanem lépték: egyszerre egy áll a
+       képmezőben, és a méret változik, nem a hely.
+       ============================================================ -->
+  <section class="metszet" id="metszet" aria-labelledby="metszetCim">
+    <!-- A ragadós színpad SAJÁT dobozban áll, nem közvetlenül a
+         szakaszban. A ragadás a befoglaló doboz aljáig tart: ha ez a
+         doboz maga a szakasz volna, a színpad a folyamat-lista alatt is
+         ragadna, és a lista egy teljes képernyőn át rácsúszna a fejre. -->
+    <div class="metszet-szinpad">
+      <div class="metszet-ragad">
+        <div class="metszet-fej">
+          <p class="felcim">A metszet</p>
+          <h2 id="metszetCim">Nyersanyagtól<br><em>a térig.</em></h2>
+          <p class="tipo-vezeto">Egy szék útja a fától a szállodáig — csak abból, ami tényleg megvan az archívumban.</p>
+        </div>
+
+        <ol class="lemezek">
+          <!--METSZET-->
+        </ol>
+      </div>
+
+      <!-- A görgetőhossz: állomásonként egy üres jelölő. Ettől valódi a
+           szakasz magassága, tehát a görgetősáv itt sem hazudik. -->
+      <div class="metszet-jelolok" aria-hidden="true">
+        <div class="metszet-jelolo" data-lemez="1"></div>
+        <div class="metszet-jelolo" data-lemez="2"></div>
+        <div class="metszet-jelolo" data-lemez="3"></div>
+        <div class="metszet-jelolo" data-lemez="4"></div>
+        <div class="metszet-jelolo" data-lemez="5"></div>
+        <div class="metszet-jelolo" data-lemez="6"></div>
+        <div class="metszet-jelolo" data-lemez="7"></div>
+      </div>
+    </div>
+
+    <div class="metszet-lepesek belul">
+      <p class="felcim">A folyamat</p>
+      <ol class="lepessor">
+        <li><span class="tipo-adat">01</span><b>Igényfelmérés</b><span class="tipo-folyo">Felmérjük a helyszínt és az elképzelést. Innen indul minden méret, ami később a gépre kerül.</span></li>
+        <li><span class="tipo-adat">02</span><b>Tervezés</b><span class="tipo-folyo">Belsőépítész-tervezői háttérrel készül a teljes kiviteli tervdokumentáció, látványtervvel együtt.</span></li>
+        <li><span class="tipo-adat">03</span><b>Gyártás</b><span class="tipo-folyo">Győri üzemünkben gyalulás, kontaktcsiszolás, korszerű gépsor — a bútor nálunk születik meg.</span></li>
+        <li><span class="tipo-adat">04</span><b>Felület</b><span class="tipo-folyo">A fa akkor lesz kész, amikor a felülete is: pácolás, lakkozás, saját felületkezelő részlegben.</span></li>
+        <li><span class="tipo-adat">05</span><b>Szerelés</b><span class="tipo-folyo">Szállítás és szakszerű szerelés saját csapatokkal. Az átadás nem a vég, hanem a kapcsolat kezdete.</span></li>
+      </ol>
+      <!-- A metszet itt hét lemezben mondja el a folyamatot. Aki
+           többet akar belőle, a készülés fejezetében négy teljes
+           sorozatot talál — ugyanabból az archívumból. -->
+      <div class="metszet-tovabb">
+        <!--KESZ-GOMB-->
+        <a class="gomb" href="design-manufaktura.html">A manufaktúráról <span class="nyil">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ---------- design manufaktúra ---------- -->
-  <section class="szekcio sotet">
-    <div class="belul szekcio-fej">
-      <div>
-        <p class="felcim jon bal">Duna Design Manufaktúra</p>
-        <h2 class="jon kesik-1">Ahol a fa nem alapanyag,<br>hanem inspiráció.</h2>
-        <p class="eloszo jon bal kesik-2" style="color:#c6b9a7">Különleges bútorok, egyedi használati tárgyak, hajóátalakítások — ott, ahol a hagyományos asztalosipar véget ér.</p>
+  <!-- ============================================================
+       AZ ALAPRAJZ — a szerkezet, ami az élmény alatt van.
+       Ugyanez a lap nyílik Esc-re bárhonnan; itt a helyén áll.
+       ============================================================ -->
+  <aside class="alaprajz" id="alaprajz" data-hely="folyam" aria-label="Alaprajz — minden projekt">
+    <!--ALAPRAJZ-->
+  </aside>
+
+  <!-- ============================================================
+       AZ UTOLSÓ AJTÓ — és mögötte négy ember.
+       ============================================================ -->
+  <section class="ajto" id="ajto" data-hangulat="ejjel" aria-labelledby="ajtoCim">
+    <div class="ajto-kep">
+      <!--AJTO-->
+    </div>
+
+    <div class="ajto-szoveg">
+      <p class="tipo-muszaki">Szent László Látogatóközpont · a kapu</p>
+      <h2 id="ajtoCim">Az ajtó mögött<br><em>négy ember van.</em></h2>
+
+      <blockquote class="ajto-idezet">
+        <p class="tipo-vezeto">Számunkra egy munka nem az átadással ér véget – ekkor kezdődik az a bizalmi kapcsolat, amelyre hosszú távon építünk.</p>
+        <footer class="tipo-adat">Győrffy Péter · ügyvezető</footer>
+      </blockquote>
+
+      <ul class="ajto-emberek">
+        <!--EMBEREK-->
+      </ul>
+
+      <div class="ajto-tett">
+        <a class="gomb tolt" href="kapcsolat.html">Ajánlatkérés <span class="nyil">→</span></a>
+        <p class="tipo-adat">A műhely Győrben van, az Ikrényi úton.</p>
       </div>
-      <a class="gomb jon jobb kesik-3" href="design-manufaktura.html">A manufaktúráról <span class="nyil">→</span></a>
     </div>
   </section>
 
@@ -168,5 +300,9 @@
 <!--LABLEC-->
 
 <script src="script.js"></script>
+<script src="kuszob.js"></script>
+<script src="terv.js"></script>
+<script src="ter.js"></script>
+<script src="fooldal.js"></script>
 </body>
 </html>

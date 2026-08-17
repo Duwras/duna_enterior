@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{cim}} — Duna Belsőépítészet Kft.</title>
+<meta name="description" content="{{cim}} — {{kategoria}} referencia a Duna Belsőépítészet Kft. munkáiból, {{kepMeta}}. Bejárható tér: {{terDb}} valódi kameraállás.">
+<link rel="icon" href="img/brand/favicon.png">
+<!-- A hajtás fölött ténylegesen használt két betűváltozat előre kérve. -->
+<link rel="preload" href="fonts/cormorant-garamond-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="rendszer.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ter.css">
+<link rel="stylesheet" href="terv.css">
+</head>
+<body class="ter-oldal">
+
+<!--FEJLEC:referenciak-->
+
+<main id="tartalom">
+
+  <!-- A görgetőszakasz valódi magasságú: nézőpontonként egy képernyő.
+       A színpad ragadós, tehát a görgetősáv igazat mond, a lendület
+       natív marad, és érintésen semmit nem veszünk el a rendszertől. -->
+  <section class="enfilad szoba" id="enfilad" style="--db: {{terLepes}}" aria-label="{{cim}} — bejárható nézőpontok">
+
+    <div class="szinpad" id="szinpad" data-hangulat="{{terHangulat}}">
+
+      <!--TER-SZOBAK-->
+
+      <div class="felulet">
+
+        <!-- Enfilád-jelző: hány tér van egymás mögött, és melyikben
+             állunk. Asztali gépen a bal peremen, telefonon a cím alatt. -->
+        <nav class="ter-jelzo" id="terJelzo" aria-label="Nézőpontok">
+          <!--TER-JELZO-->
+        </nav>
+
+        <div class="ter-felirat" id="terFelirat">
+          <p class="honnan tipo-muszaki"><span>{{terHonnan}}</span></p>
+          <p class="nev">{{terNev}}</p>
+        </div>
+
+        <!-- Az alaprajz az elsődleges kivezetés, és az Esc az övé.
+             Az adatlap mellette másodlagos vezérlő. -->
+        <div class="ter-vezerlok">
+          <button type="button" class="ter-terv tipo-ui" id="terTerv" data-terv="nyit">
+            Alaprajz <kbd>Esc</kbd>
+          </button>
+          <button type="button" class="ter-masodlagos tipo-ui" data-adatlap="nyit">Adatlap</button>
+        </div>
+
+        <div class="ter-lab">
+          <dl class="ter-adat tipo-adat" id="terAdat">
+            <div><dt>Nézőpont</dt><dd data-mezo="sorszam">01 / {{terDb}}</dd></div>
+            <div><dt>Idő</dt><dd data-mezo="hangulat">Nappal</dd></div>
+            <div><dt>Anyag</dt><dd data-mezo="anyag">{{terAnyag}}</dd></div>
+          </dl>
+
+          <button type="button" class="ter-tovabb" id="terTovabb">
+            <span>
+              <span class="fajta tipo-muszaki">{{terFajta}}</span><br>
+              <span class="cel tipo-ui">{{terKovetkezo}}</span>
+            </span>
+            <span class="nyil" aria-hidden="true"></span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!--NOJS-KERETEK-->
+
+  <!-- A képernyőolvasó ebből tudja meg, hogy teret váltottunk. A térbeli
+       állapotot nem mondjuk fel: az díszítés, nem tartalom. -->
+  <p class="rejtett" id="terElo" aria-live="polite" aria-atomic="true"></p>
+
+  <!-- A DOKUMENTUM. Az enfilád alatt ugyanaz a projektlap folytatódik,
+       amit eddig is kiszolgáltunk ezen a címen: morzsa, cím, adatok,
+       teljes galéria, hasonló munkák. A tér nem lép a helyébe — fölé
+       kerül. Szkript nélkül a nyitókép és ez a dokumentum marad. -->
+  <article class="projekt projekt-dokumentum" id="dokumentum">
+    <div class="belul">
+      <nav class="morzsa jon bal" aria-label="Hol jár">
+        <a href="referenciak.html">Referenciák</a>
+        <span aria-hidden="true">/</span>
+        <span>{{kategoria}}</span>
+      </nav>
+      <h1>{{cim}}</h1>
+      <dl class="projekt-adat jon bal kesik-2">
+        <div><dt>Kategória</dt><dd>{{kategoria}}</dd></div>
+        <div><dt>{{kepCimke}}</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
+        <div><dt>Nézőpont</dt><dd>{{terDb}}</dd></div>
+      </dl>
+      <!--KULSO-LINK-->
+    </div>
+
+    <section class="szekcio halvany">
+      <div class="belul">
+        <div class="szekcio-fej">
+          <div>
+            <p class="felcim jon bal">Galéria</p>
+            <h2>{{kepMondat}}</h2>
+          </div>
+          <a class="link-nyil jon jobb kesik-2" href="#enfilad">Vissza a térbe <span aria-hidden="true">↑</span></a>
+        </div>
+        <div class="galeria">
+          <!--GALERIA-->
+        </div>
+      </div>
+    </section>
+
+    <section class="szekcio">
+      <div class="belul">
+        <div class="szekcio-fej">
+          <div>
+            <p class="felcim jon bal">Hasonló munkák</p>
+            <h2>Ugyanebben a kategóriában.</h2>
+          </div>
+          <a class="link-nyil jon jobb kesik-2" href="alaprajz.html">Az alaprajz <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="racs">
+          <!--HASONLO-->
+        </div>
+      </div>
+    </section>
+  </article>
+
+</main>
+
+<div class="homaly" id="homaly" aria-hidden="true"></div>
+
+<!-- AZ ADATLAP — a tér írott ikertestvére. A teljes galéria nem itt
+     van, hanem a dokumentumban: kétszer kiírva minden fotó jelölése
+     duplán utazna. -->
+<aside class="adatlap" id="adatlap" aria-label="{{cim}} adatlapja">
+  <!--TER-ADATLAP-->
+</aside>
+
+<!-- AZ ALAPRAJZ — a szerkezet, ami az élmény alatt van. Minden térből
+     egy Esc, és mindig ugyanaz a lap. -->
+<aside class="alaprajz" id="alaprajz" data-hely="fedo" aria-label="Alaprajz — minden projekt" hidden>
+  <!--ALAPRAJZ-->
+</aside>
+
+<!-- képnagyító -->
+<dialog class="nagyito" id="nagyito" aria-label="Kép nagyban">
+  <button class="nagyito-zar" id="nagyitoZar" aria-label="Bezárás">✕</button>
+  <button class="nagyito-lep elozo" id="nagyitoElozo" aria-label="Előző kép">‹</button>
+  <img id="nagyitoKep" alt="">
+  <button class="nagyito-lep kovetkezo" id="nagyitoKovetkezo" aria-label="Következő kép">›</button>
+  <p class="nagyito-szam" id="nagyitoSzam"></p>
+</dialog>
+
+<!--LABLEC-->
+
+<script src="script.js"></script>
+<script src="galeria.js"></script>
+<script src="kuszob.js"></script>
+<script src="terv.js"></script>
+<script src="ter.js"></script>
+</body>
+</html>

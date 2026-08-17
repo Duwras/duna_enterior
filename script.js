@@ -489,46 +489,269 @@
   }
 
   /* ============================================================
-     10. oldal-áttűnés
-     ============================================================ */
+     9/b. A SZÍNPAD MŰSZAKI SÁVJAI — mérve, nem becsülve
+     ============================================================
 
-  /* Az oldalak közti váltás ne villanjon: a régi lap elhalványul, az új
-     felúszik. Csak saját, sima linkeken — a nagyítót, a letöltést, az
-     új lapra nyílót és a módosítóbillentyűs kattintást békén hagyjuk. */
-  if (!lassit) {
-    doc.classList.add('atmenet');
-    /* Az időzítő biztosíték: a képkocka-kérés nem fut le olyan lapon,
-       amit a böngésző nem rajzol (háttérfül, beágyazott előnézet) — a
-       lap addig átlátszó maradna. */
-    var betoltve = function () { doc.classList.add('betoltve'); };
-    requestAnimationFrame(betoltve);
-    setTimeout(betoltve, 80);
+     A három görgetős fejezetben (főoldal, flotta, készülés) a szedés a
+     fénykép fölött gördül, a fényképen viszont ott ül a színpad saját
+     szedése is: fent a képkocka neve és a jelzősor, lent a műszaki adat
+     és a kivezetések. Ezek a sávok nem mozdulnak.
 
-    document.addEventListener('click', function (e) {
-      if (e.defaultPrevented || e.button !== 0) return;
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+     Telefonon a szedés alulra igazodik, közvetlenül az alsó sáv fölé —
+     és eddig egy TALÁLT szám tartotta ott a helyét (104 px). Az alsó
+     sáv viszont a tartalomtól függ: a flottán a lábsáv két sorba törik,
+     tehát 113 px magas, és a mondat utolsó sora ráült a műszaki adatra.
+     Ilyet nem lehet állandóval eltalálni, mert nem állandó.
 
-      var a = e.target.closest && e.target.closest('a[href]');
+     Itt megmérjük, és a fejezetek stíluslapjai ebből számolnak. A mérés
+     ára egyetlen elrendezés-olvasás átméretezésenként. */
+
+  var szinpadFelulet = document.querySelector('.szinpad .felulet');
+  var savok = { fej: 0, lab: 0 };
+
+  if (szinpadFelulet) {
+    var savokMer = function () {
+      var vh = window.innerHeight;
+      var kozep = vh / 2;
+      var fent = 0;
+      var lent = 0;
+      var elemek = szinpadFelulet.querySelectorAll(
+        '.ter-felirat, .ter-jelzo, .ter-lab, .ter-vezerlok');
+
+      for (var i = 0; i < elemek.length; i++) {
+        var r = elemek[i].getBoundingClientRect();
+        if (!r.height) continue;
+        /* Ami átéri a képmező közepét — asztali nézetben a függőleges
+           jelzősor —, az nem vízszintes sáv: nem szab felső vagy alsó
+           határt, mert nem a szedés oszlopában áll. */
+        if (r.bottom <= kozep) fent = Math.max(fent, r.bottom);
+        else if (r.top >= kozep) lent = Math.max(lent, vh - r.top);
+      }
+
+      /* Itt a TARTÓK dobozát mérjük, nem a szedésükét — és ez szándékos:
+         ebből a két számból a stíluslap a nyitójelenet függőleges
+         helyét számolja, telefonon, ahol egy hasáb van. A halkítás
+         (9/c) ezzel szemben a szedés VALÓDI dobozait nézi, mert ott az
+         számít, hogy egy hasábban áll-e a mondattal. A kettő nem
+         vonható össze. */
+      savok.fej = Math.round(fent);
+      savok.lab = Math.round(lent);
+      var gy = document.documentElement.style;
+      gy.setProperty('--szinpad-fej', savok.fej + 'px');
+      gy.setProperty('--szinpad-lab', savok.lab + 'px');
+    };
+    savokMer();
+    meretre(savokMer);
+    window.addEventListener('load', savokMer);
+    /* A lábsáv tartalma képkockánként változik (más hajónév, más
+       szakasz), tehát a magassága is. */
+    if (window.ResizeObserver) new ResizeObserver(savokMer).observe(szinpadFelulet);
+  }
+
+  /* ============================================================
+     9/c. EGYSZERRE EGY MONDAT — a három fejezet közös halkítása
+     ============================================================
+
+     A főoldal, a flotta és a készülés nyitása ugyanaz a szerkezet:
+     ragadós fénykép, fölötte gördülő szedés. Mind a három ugyanazt a
+     halkítást használta — HÁROM MÁSOLATBAN. A másolatokban ugyanaz a
+     két szám állt, és ugyanaz a két hiba volt bennük, csak külön-külön
+     kellett megtalálni. Ezért került ide, egy helyre.
+
+     Két szabály szorozódik össze:
+
+     1. TÁVOLSÁG A KÖZÉPTŐL. Ez adja az olvasás ritmusát: ami a
+        képmező közepén áll, az szól. A korábbi 0,34 / 0,62-es sáv két
+        szomszédos jelenetet EGYSZERRE tudott teljes erővel mutatni —
+        a jelenetek középpontjai legfeljebb 58svh-ra állnak egymástól,
+        tehát félúton mindkettő a teljes sávon belül volt. Két mondat
+        egyszerre, egymáson: pontosan az, amit ez a szerkezet el akar
+        kerülni. Az új sáv fele a legkisebb jelenetköznek.
+
+     2. A SZÍNPAD SZEDÉSE. A fényképen ott ül a színpad saját szedése
+        is: fent a képkocka neve és a jelzősor, lent a műszaki adat és
+        a kivezetések. Ezek nem mozdulnak, tehát a gördülő mondat
+        előbb-utóbb áthalad rajtuk. A középtől mért távolság ezt nem
+        tudja megfogni: telefonon a felső sáv alja 0,26
+        képernyőmagasságra van a középtől, ahol a mondat még 0,64-en
+        áll. Ezért a mondat ADDIG halkul, amíg ki nem fér mellőlük.
+
+        Nem sávot nézünk, hanem DOBOZOKAT, és csak azokat, amelyek a
+        mondattal egy hasábban állnak. Sávval mérve a főoldal
+        nyitóképe betöltéskor 0,46-on állt: a lábsáv doboza a teljes
+        képmezőt átéri, pedig a szedése — a mérés óta — a jobb
+        oldalon van, a mondat meg a balon. Egymás mellett vannak, nem
+        egymáson.
+
+     A kettő szorzata: asztali nézetben a szedés és a színpad más
+     hasábban áll, tehát a ritmust az első szabály adja; telefonon egy
+     hasáb van, tehát a másodiké a szó. */
+
+  var Szedes = {
+    LAGY: 64,   /* ennyivel a szedés mellett már nem látszik semmi */
+    /* Hajszálnyi ráhagyás, nem esztétikai köz: azt az elrendezés adja
+       (rendszer.css, „A NYITÓJELENET HELYE”). Ha ez a szám nagy, a
+       320 px-es képernyőn a nyitószedés — ami ott éppen csak befér —
+       már betöltéskor halványan állna, pedig nem takar semmit. */
+    KOZ: 4,
+
+    /* A színpad saját szedésének dobozai. A tartókat (.ter-lab,
+       .ter-felirat, .ter-vezerlok) SZÁNDÉKOSAN nem soroljuk ide: azok
+       a rács cellái, és a cella szélesebb, mint ami benne áll. */
+    BUTOR: '.ter-felirat .honnan, .ter-felirat .nev, .ter-adat,' +
+           '.ter-projekt, .ter-terv, .ter-tovabb, .ter-masodlagos, .ter-jelzo',
+
+    /* A színpad szedése a lap életében nem cserélődik, csak mozog és
+       átméreteződik — a listát elég egyszer összeszedni, a dobozokat
+       kell képkockánként újraolvasni. */
+    butorok: null,
+
+    dobozok: function () {
+      if (!szinpadFelulet) return [];
+      if (!this.butorok) this.butorok = szinpadFelulet.querySelectorAll(this.BUTOR);
+      var vh = window.innerHeight;
+      var kozep = vh / 2;
+      var elemek = this.butorok;
+      var ki = [];
+      for (var i = 0; i < elemek.length; i++) {
+        var r = elemek[i].getBoundingClientRect();
+        if (!r.width || !r.height) continue;
+        /* Ami átéri a képmező közepét — asztali nézetben a függőleges
+           jelzősor — nem fent vagy lent van, hanem oldalt: azt a
+           szedés oszlopa amúgy sem éri el. */
+        if (r.bottom <= kozep) ki.push({ f: 1, e: r.bottom, b: r.left, j: r.right });
+        else if (r.top >= kozep) ki.push({ f: 0, e: r.top, b: r.left, j: r.right });
+      }
+      return ki;
+    },
+
+    /* egyetlen blokk fedettsége */
+    ero: function (d, dobozok) {
+      var vh = window.innerHeight;
+
+      var tav = Math.abs((d.top + d.height / 2) - vh / 2) / vh;
+      var e = tav <= 0.18 ? 1 : tav >= 0.40 ? 0 : 1 - (tav - 0.18) / 0.22;
+      if (e <= 0) return 0;
+
+      var fent = 0, lent = vh;
+      for (var i = 0; i < dobozok.length; i++) {
+        var b = dobozok[i];
+        if (d.right <= b.b || d.left >= b.j) continue;   /* más hasáb */
+        if (b.f) fent = Math.max(fent, b.e);
+        else lent = Math.min(lent, b.e);
+      }
+      if (!fent && lent === vh) return e;
+
+      var teteje = fent + this.KOZ;
+      var alja = lent - this.KOZ;
+
+      /* Ami magasabb a szabad résznél, az SEHOGY sem fér bele: ott nem
+         a halkítás dolga dönteni. Az elrendezés már elhelyezte a
+         mondatot, és ha ilyenkor is büntetnénk, egy 320 px széles
+         készüléken a nyitócím nullára halkulna — mérve pontosan ez
+         történt a készülés nyitásán. A sávszabály a GÖRDÜLŐ szedést
+         tartja távol a színpad szedésétől; amit el sem lehet tartani,
+         azt nem tünteti el. */
+      if (d.height > alja - teteje) return e;
+
+      var kilog = Math.max(teteje - d.top, d.bottom - alja, 0);
+      if (kilog > 0) e *= Math.max(0, 1 - kilog / this.LAGY);
+      return e;
+    },
+
+    /* a fejezet nyitószedése: felirat, görgetés, átméretezés */
+    indit: function (szedesek) {
+      if (!szedesek.length) return;
+
+      /* Innentől a szkript szabja a tempót: a jelenetek rövidebbek
+         lehetnek egy teljes képernyőnél. Enélkül minden jelenet egy
+         képernyő — akkor is olvasható, csak hosszabb a lap. */
+      document.body.setAttribute('data-mozgas', '');
+
+      var kesz = true;
+      var lepes = function () {
+        kesz = true;
+        var dobozok = Szedes.dobozok();
+        for (var i = 0; i < szedesek.length; i++) {
+          var e = Szedes.ero(szedesek[i].getBoundingClientRect(), dobozok);
+          szedesek[i].style.opacity = e.toFixed(2);
+          szedesek[i].style.pointerEvents = e > 0.5 ? 'auto' : 'none';
+        }
+      };
+
+      window.addEventListener('scroll', function () {
+        if (!kesz) return;
+        kesz = false;
+        requestAnimationFrame(lepes);
+      }, { passive: true });
+      window.addEventListener('resize', lepes, { passive: true });
+      window.addEventListener('load', lepes);
+      lepes();
+    }
+  };
+
+  window.Szedes = Szedes;
+
+  /* ============================================================
+     10. oldalak közötti váltás — ELŐKÉSZÍTÉS, nem áttűnés
+     ============================================================
+
+     Eddig itt egy kétirányú lapáttűnés állt: kattintásra a body 240 ms
+     alatt nullára halványult, aztán indult a navigáció, és az új lap
+     nulláról jött fel. A két tér közé így SZERKEZETBŐL került legalább
+     240 ms üres felület — az a fekete villanás, amit ki kellett
+     javítani. A stíluslapban meg is van írva, mi tűnt el és miért.
+
+     Ami a helyére jött, nem effekt, hanem előkészítés. A böngésző a
+     régi lapot addig festi, amíg az újnak nincs mit; a mi dolgunk
+     annyi, hogy az „amíg” rövid legyen. Ezért szándékra — rámutatás,
+     billentyűs fókusz, ujj érintése — előhozzuk a célt.
+
+     Miért nem töltünk le mindent előre: mert a küszöb szabálya itt is
+     áll. A KÖVETKEZŐ, ténylegesen szükséges dolgot készítjük elő, és
+     semmi mást. Egy hivatkozás egyszer.
+
+     A `prefetch` a dokumentumot hozza le, a legalacsonyabb
+     elsőbbséggel. Ebből a böngésző előolvasója már ki tudja szedni a
+     célképkocka URL-jét, tehát a belépő kép is melegen érkezik.
+     Adattakarékos módban és lassú kapcsolaton nem csinálunk semmit:
+     ott a néhány kilobájt többet árt, mint használ. */
+
+  (function () {
+    var proba = document.createElement('link');
+    if (!proba.relList || !proba.relList.supports || !proba.relList.supports('prefetch')) return;
+
+    var halo = navigator.connection;
+    if (halo && (halo.saveData || /(^|-)2g$/.test(halo.effectiveType || ''))) return;
+
+    var voltak = {};
+    var szamlalo = 0;
+
+    function elohoz(a) {
       if (!a || a.target || a.hasAttribute('download') || a.hasAttribute('data-nagyit')) return;
       if (a.origin !== location.origin) return;
-
       var cel = a.getAttribute('href');
       if (!cel || cel.charAt(0) === '#') return;
       if (a.pathname === location.pathname && a.search === location.search) return;
+      if (voltak[a.href] || szamlalo > 12) return;   /* egy lap, egyszer */
+      voltak[a.href] = true;
+      szamlalo++;
+      var l = document.createElement('link');
+      l.rel = 'prefetch';
+      l.as = 'document';
+      l.href = a.href;
+      document.head.appendChild(l);
+    }
 
-      e.preventDefault();
-      doc.classList.add('tavozik');
-      setTimeout(function () { location.href = a.href; }, 230);
-      /* ha a navigáció mégsem indulna el, ne maradjon üres a lap */
-      setTimeout(function () { doc.classList.remove('tavozik'); }, 2500);
-    });
+    function esemeny(e) {
+      var a = e.target && e.target.closest && e.target.closest('a[href]');
+      if (a) elohoz(a);
+    }
 
-    /* visszalépéskor a böngésző a gyorsítótárból veszi elő a lapot —
-       az „elmegyünk” állapot különben rajta ragadna */
-    window.addEventListener('pageshow', function () {
-      doc.classList.remove('tavozik');
-    });
-  }
+    document.addEventListener('pointerenter', esemeny, true);
+    document.addEventListener('focusin', esemeny);
+    document.addEventListener('touchstart', esemeny, { passive: true });
+  })();
 
   /* ============================================================
      11. évszám a láblécben

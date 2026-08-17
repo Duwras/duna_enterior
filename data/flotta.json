@@ -1,0 +1,216 @@
+{
+  "$sema": {
+    "mire": "A FLOTTA — a hajós anyag saját rétege. Slug szerint kapcsolódik a data/projektek.json-hoz, ugyanúgy, mint a data/terek.json.",
+    "miert-kulon-fajl": "Ugyanaz az ok, mint a terek.json-nál: az admin mentéskor fix mezőlistára tisztítja a projekteket (admin.js tisztit()), tehát bármit, amit a projektek.json-ba tennénk, a következő ügyféloldali mentés némán eldobná. Külön fájlba viszont a stúdió írhat, és az admin változatlanul működik tovább. Ha ez a fájl nincs meg, a /flotta.html útvonal egyszerűen nem épül meg, és minden más pontosan úgy áll össze, mint eddig.",
+    "kapcsolat": "A build slug szerint összeköti a kettőt, és megáll, ha itt olyan projekt vagy képfájl szerepel, ami ott nincs.",
+    "mezok": {
+      "nyitas.keretek[]": "A nyitó enfilád képkockái. Ugyanaz a szerkezet, mint a terek.json $fooldal.keretek tömbjében: a KÉP és a GEOMETRIA itt van, a SZÖVEG a flotta.html-ben, mert az tartalom.",
+      "nyilas": "[x, y, rx, ry] 0–1 között — hol van a képen az a nyílás, amin át a következő képkocka feltárul. Kézzel, a fényképről rögzítve.",
+      "lapos": "true = a felvételnek nincs valódi egypontos perspektívája (dokumentumfotó, tárgyfotó, külső felvétel), tehát nem bontjuk három rétegre. A nyílás ilyenkor is kell: a KÜSZÖB abból tárja fel a következő képkockát.",
+      "kuszob": "A flottában MINDEN küszöb ABLAK. Nem díszítés: a PHASE-1 §12.4 szerint az ajtó másik szobába vezet, az ablak valamihez, ami mozog. Egy flotta ezért ablakok sora.",
+      "hajok[]": "A vízvonal-index sorai. Kizárólag ellenőrizhető adat.",
+      "rang": "zaszlohajo | sorozat | archivum. NEM minőségi rangsor: azt mondja meg, milyen anyag áll rendelkezésre. zaszlohajo = a terek.json-ban szint 1, tehát bejárható tér. sorozat = a DUNA saját, ma is gyártott típusa (dunahajok.hu), 1,6 MP fölötti felvételekkel. archivum = 0,27–0,96 MP-es dokumentumfotó.",
+      "tipus": "Csak ott áll, ahol a projekt NEVE kimondja, vagy a fénykép egyértelmű. Nincs kitalálva.",
+      "allomasok": "Melyik állomásait dokumentálja az archívum ENNEK a hajónak. Ez állítás a KÉPANYAGRÓL, nem a hajóról: vaz = látszik a bordázat vagy a szerkezet · felulet = felületkezelés, lakkozás, palánkrészlet · belso = a hajó belső tere mint tér · vizen = a hajó a vízen · studio = semleges háttér előtt, tárgyként fényképezve. Ami nincs a listán, arról nincs fotó — nem az, hogy nem történt meg.",
+      "borito": "A vízvonal-index sorának képe. Ahol lehet, a hajót azonosító felvétel; a készülés története az állomásoszlopban áll.",
+      "sorrend": "NINCS ilyen mező. A sorrendet a build számolja: rang, majd az állomások száma, majd a fotószám. Így nem lehet kézzel felülrangsorolni."
+    }
+  },
+  "nyitas": {
+    "mire": "Hat képkocka, hat állomás. A HABLEÁNY-tól — ahol a főoldal abbahagyta — a bordákig, és onnan vissza a mozgásig. Minden váltás ABLAK.",
+    "keretek": [
+      {
+        "allomas": "A hajó",
+        "slug": "duna-cruises-hableany",
+        "kep": "01.jpg",
+        "nev": "A HABLEÁNY a Dunán, menet közben",
+        "hol": "Duna Cruises HABLEÁNY · a folyón",
+        "hangulat": "nappal",
+        "lapos": true,
+        "nyilas": [0.55, 0.3, 0.16, 0.16],
+        "kuszob": {
+          "fajta": "ablak",
+          "el": null
+        },
+        "miert": "A főoldal 17.jpg-vel zárta a hajós fordulatot, de az a felvétel 16:10-re vágva városkép: a hajó egy pont az alján. Ez ugyanaz a hajó ugyanazon a folyón, teljes képmezőben — és menet közben, ami éppen a flotta állítása. A nyílás a felépítményen van: onnan megyünk BE."
+      },
+      {
+        "allomas": "A borda",
+        "slug": "boesch-640-de-luxe",
+        "kep": "05.jpg",
+        "nev": "Bordák és palánkok, szorítók alatt",
+        "hol": "Boesch 640 De Luxe · a győri műhely",
+        "hangulat": "nappal",
+        "lapos": true,
+        "nyilas": [0.54, 0.44, 0.15, 0.19],
+        "kuszob": {
+          "fajta": "ablak",
+          "el": null
+        }
+      },
+      {
+        "allomas": "A váz",
+        "slug": "jegvitorlas",
+        "kep": "05.jpg",
+        "nev": "A test váza felülről",
+        "hol": "Jégvitorlás · a győri műhely",
+        "hangulat": "nappal",
+        "lapos": true,
+        "nyilas": [0.5, 0.52, 0.14, 0.22],
+        "kuszob": {
+          "fajta": "ablak",
+          "el": null
+        }
+      },
+      {
+        "allomas": "A felület",
+        "slug": "boesch-640-de-luxe",
+        "kep": "13.jpg",
+        "nev": "A kilakkozott test a fényezőben",
+        "hol": "Boesch 640 De Luxe · felületkezelés",
+        "hangulat": "nappal",
+        "lapos": true,
+        "nyilas": [0.42, 0.42, 0.16, 0.18],
+        "kuszob": {
+          "fajta": "ablak",
+          "el": null
+        },
+        "miert": "UGYANAZ a test, ami a 2. képkockán bordákból állt. Ez a párosítás az egyetlen teljes elejétől-végéig lánc a hajós archívumban, és ingyen van: nem kellett hozzá fotózni. A korábban választott 560/06 fedélzeti lécezés-közeli helyett azért ez, mert azon a felvételen a vízjel a kép közepén, világos felületen ül, és teljes képmezőben elviszi a képkockát."
+      },
+      {
+        "allomas": "A szoba",
+        "slug": "rivalis-vitorlas-hajo",
+        "kep": "06.jpg",
+        "nev": "Kabin a hajótestben",
+        "hol": "Rivális vitorlás hajó",
+        "hangulat": "nappal",
+        "nyilas": [0.34, 0.5, 0.17, 0.26],
+        "kuszob": {
+          "fajta": "ablak",
+          "el": "mahagóni válaszfal"
+        }
+      },
+      {
+        "allomas": "A mozgás",
+        "slug": "duna-hajok-6-1-cabin",
+        "kep": "03.jpg",
+        "nev": "A 6.1 Cabin menet közben",
+        "hol": "Duna Hajók · a vízen",
+        "hangulat": "nappal",
+        "lapos": true,
+        "nyilas": [0.5, 0.46, 0.16, 0.14],
+        "kuszob": {
+          "fajta": "ablak",
+          "el": null
+        }
+      }
+    ]
+  },
+  "hajok": [
+    {
+      "slug": "duna-cruises-hableany",
+      "rang": "zaszlohajo",
+      "tipus": "kirándulóhajó",
+      "borito": "01.jpg",
+      "allomasok": ["belso", "vizen"]
+    },
+    {
+      "slug": "duna-hajok-6-1-cabin",
+      "rang": "sorozat",
+      "tipus": "kabinos motorcsónak",
+      "borito": "03.jpg",
+      "allomasok": ["belso", "vizen", "studio"]
+    },
+    {
+      "slug": "duna-hajok-6-1-kadet",
+      "rang": "sorozat",
+      "tipus": "nyitott motorcsónak",
+      "borito": "01.jpg",
+      "allomasok": ["belso", "vizen"]
+    },
+    {
+      "slug": "boesch-580",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "02.jpg",
+      "allomasok": ["vaz", "felulet", "belso", "vizen"]
+    },
+    {
+      "slug": "boesch-640-de-luxe",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "16.jpg",
+      "allomasok": ["vaz", "felulet", "belso"]
+    },
+    {
+      "slug": "boesch-560-de-luxe",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "03.jpg",
+      "allomasok": ["vaz", "felulet", "belso"]
+    },
+    {
+      "slug": "arcangeli-super-jolly",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "05.jpg",
+      "allomasok": ["vaz", "felulet", "belso"]
+    },
+    {
+      "slug": "volvo-penta-motorcsonak",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "12.jpg",
+      "allomasok": ["vaz", "belso", "vizen"]
+    },
+    {
+      "slug": "meyer-motorcsonak-1",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "06.jpg",
+      "allomasok": ["felulet", "belso"]
+    },
+    {
+      "slug": "veteran-motorcsonak",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "01.jpg",
+      "allomasok": ["felulet", "belso"]
+    },
+    {
+      "slug": "meyer-motorcsonak-2",
+      "rang": "archivum",
+      "tipus": "motorcsónak",
+      "borito": "06.jpg",
+      "allomasok": ["vaz", "belso"]
+    },
+    {
+      "slug": "jegvitorlas",
+      "rang": "archivum",
+      "tipus": "jégvitorlás",
+      "borito": "07.jpg",
+      "allomasok": ["vaz", "felulet"]
+    },
+    {
+      "slug": "jolle-25",
+      "rang": "archivum",
+      "tipus": "vitorlás",
+      "borito": "09.jpg",
+      "allomasok": ["vizen"]
+    },
+    {
+      "slug": "rivalis-vitorlas-hajo",
+      "rang": "archivum",
+      "tipus": "vitorlás",
+      "borito": "06.jpg",
+      "allomasok": ["belso"]
+    },
+    {
+      "slug": "bojan-harcos",
+      "rang": "archivum",
+      "tipus": "kabinos fahajó",
+      "borito": "02.jpg",
+      "allomasok": []
+    }
+  ]
+}

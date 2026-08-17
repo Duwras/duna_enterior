@@ -161,6 +161,11 @@ p { margin: 0; }
 .menu-gomb {
   display: none; margin-left: auto;
   background: none; border: 1px solid var(--line); cursor: pointer;
+  /* 44 px magas érintőcél (6. fázis). A gomb 34 px volt: a szedés
+     magassága, nem célpontméret — és ez épp a MOBIL menü gombja,
+     vagyis pontosan az az elem, amit ujjal kell eltalálni. A keret
+     látható mérete nem változik, csak a belső térköz igazodik. */
+  min-height: 44px; align-items: center; justify-content: center;
   padding: 10px 14px; font-family: var(--sans); font-size: .72rem;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink);
 }
@@ -277,6 +282,13 @@ p { margin: 0; }
   gap: clamp(26px, 3.4vw, 54px);
 }
 .harom article { display: grid; gap: 12px; align-content: start; }
+/* A kártyacím MÉRETE mindig a harmadik szint, akkor is, ha a
+   címrendben h2 (6. fázis). A design-manufaktúra lapján a három
+   kártya közvetlenül a h1 alatt áll, tehát szemantikailag h2 — a
+   rólunk lapon van fölöttük szakaszcím, tehát ott h3. A látvány
+   mindkét helyen ugyanaz; a szintet a szerkezet dönti el, nem a
+   betűméret. */
+.harom article h2 { font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.25; }
 .harom .sorszam {
   font-family: var(--mono); font-size: .7rem; color: var(--smoke);
   padding-bottom: 12px; border-bottom: 1px solid var(--line);
@@ -343,6 +355,26 @@ p { margin: 0; }
   margin-bottom: 16px;
 }
 .lablec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: .93rem; }
+/* A lábléc hivatkozásai 16 px magasak voltak — a betűméret, nem
+   célpontméret. Érintőképernyőn a sor teljes magassága kattintható
+   lesz. Egérrel semmi nem változik: az a `pointer: fine` ág. A
+   `gap` azért csökken, hogy a magasabb sorok ne tolják szét a
+   láblécet — a köz így is nő, csak a hivatkozáson belülre kerül.
+   6. fázis. */
+@media (pointer: coarse) {
+  .lablec ul { gap: 2px; }
+  .lablec ul a, .zaro nav a { display: inline-flex; align-items: center; min-height: 44px; }
+
+  /* A 6. fázis a listákat vitte 44 px-re, a NÉVJEGYEKET nem: a
+     lábléc és a kapcsolatlap telefonszámai a szedés magasságán,
+     12–16 px-en maradtak. Mérve a 8. fázisban. Telefonon éppen ez a
+     legfontosabb célpont a lapon — egy tel: hivatkozás, amit fel
+     lehetne hívni. Ugyanaz a kezelés, ugyanaz az érv: a LÁTHATÓ
+     szedés nem nő, csak a megfogható terület. */
+  .lablec .szemely a,
+  .szemely-kartya a { display: inline-flex; align-items: center; min-height: 44px; }
+  .lablec .szemely { gap: 0; }
+}
 .lablec .szemely { display: grid; gap: 2px; margin-bottom: 16px; font-size: .9rem; }
 .lablec .szemely b { color: var(--paper); font-weight: 500; }
 .lablec .szemely span { color: var(--smoke); font-size: .78rem; }
@@ -374,6 +406,24 @@ p { margin: 0; }
 .admin-belepes:hover { color: var(--oak) !important; border-color: var(--oak); }
 
 /* ---------- belépő mozgás ---------- */
+
+/* A `.jon.jobb` 52 px-el jobbra áll, amíg a görgetés fel nem tárja.
+   A ter.css ezt a `.ter-oldal` és a `.fooldal` esetében levágja; a
+   közönséges lapokon viszont nem volt semmi, és a kapcsolat lapja
+   375 px-en 407 px-nyi görgethető szélességet adott — vízszintes
+   görgetősáv egy olyan lapon, ahol nincs mit oldalra nézni. Mérve a
+   8. fázisban.
+
+   `clip`, nem `hidden`: a clip nem csinál görgetődobozt, tehát a
+   ragadós elemek (metszet, lemezek) ragadósak maradnak, és a `position:
+   fixed` fejléc sem kap új tartalmazó blokkot. Ugyanaz a döntés, mint a
+   ter.css 154. sorában — most a lap egészére.
+
+   A `main`-en és nem a `body`-n: a body túlcsordulása a NÉZŐABLAKRA
+   propagálódik (a body maga ilyenkor `visible`-ként viselkedik), tehát
+   ott a szabály nem vág semmit — mérve. A fejléc és a lábléc kívül
+   marad, azoknak nincs oldalirányú belépőjük. */
+main { overflow-x: clip; }
 
 .jon { opacity: 0; transform: translateY(18px); }
 .jon.itt {
@@ -450,6 +500,11 @@ p { margin: 0; }
 }
 .morzsa a { color: var(--brass); text-decoration: none; }
 .morzsa a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* A morzsa a projektlap egyetlen felfelé vezető útja, és 18 px magas
+   volt — a szedés magassága. Mérve a 8. fázisban. */
+@media (pointer: coarse) {
+  .morzsa a { display: inline-flex; align-items: center; min-height: 44px; }
+}
 
 .projekt-adat {
   display: flex; gap: 1px; background: var(--line);
@@ -589,6 +644,11 @@ p { margin: 0; }
 .ceg-doboz dt { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke); }
 .ceg-doboz dd { margin: 3px 0 0; color: var(--ink); }
 .ceg-doboz a { color: var(--brass); text-underline-offset: 3px; }
+/* Az e-mail cím a cégdobozban önálló vezérlő, nem mondat közbeni
+   hivatkozás — 18 px magas volt. 8. fázis. */
+@media (pointer: coarse) {
+  .ceg-doboz dd a { display: inline-flex; align-items: center; min-height: 44px; }
+}
 
 .szemely-lista {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -627,7 +687,17 @@ p { margin: 0; }
 .csapda { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 .mezo.jelolo { grid-template-columns: auto 1fr; align-items: start; gap: 12px; }
-.mezo.jelolo input { width: 18px; height: 18px; margin-top: 3px; padding: 0; }
+/* A négyzet MARAD 18 px — az a jel. Ami nő, a megfogható terület:
+   24 px érintőcél, negatív margóval, hogy a sor magassága és a szedés
+   igazítása ne mozduljon. A `for="gdpr"` címke amúgy is kattintható, de
+   magára a négyzetre célozni a természetesebb mozdulat. 8. fázis. */
+.mezo.jelolo input {
+  width: 18px; height: 18px; margin-top: 3px; padding: 0;
+  outline-offset: 3px;
+}
+@media (pointer: coarse) {
+  .mezo.jelolo input { width: 24px; height: 24px; margin-top: 0; }
+}
 .mezo.jelolo label {
   font-size: .86rem; letter-spacing: 0; text-transform: none;
   color: var(--ink-2); line-height: 1.55;
@@ -739,13 +809,36 @@ p { margin: 0; }
    látogató rendszerszinten csendet kért.
    ============================================================ */
 
-/* ---------- oldal-áttűnés ---------- */
+/* ---------- oldal-áttűnés: MEGSZŰNT ----------
 
-/* Az osztályt a szkript teszi fel, tehát ha a JS nem fut le, a lap
-   sosem marad átlátszón. */
-html.atmenet body { opacity: 0; }
-html.atmenet.betoltve body { opacity: 1; transition: opacity .42s ease; }
-html.atmenet.tavozik body { opacity: 0; transition: opacity .24s ease; }
+   Volt itt három szabály:
+
+     html.atmenet body          { opacity: 0 }
+     html.atmenet.betoltve body { opacity: 1; transition: .42s }
+     html.atmenet.tavozik body  { opacity: 0; transition: .24s }
+
+   Ezek adták a lapok közti mozdulatot — és ezek adták a fekete
+   villanást is, amit ki kellett javítani. A menete ez volt:
+
+     TÉR A  →  a body 240 ms alatt nullára halványul (a képmezőn ekkor
+               a csupasz lapszín áll, semmi más)
+           →  navigáció
+           →  TÉR B body-ja nulláról indul, és 420 ms alatt jön fel
+
+   Vagyis a két tér közé beékelődött legalább 240 ms üres felület,
+   szerkezetből, minden hálózaton. Ez nem hiba volt a kódban: pontosan
+   ezt csinálta, amit leírtak róla. Csak épp ez az, amit a küszöb
+   koncepciója tagad — a látogató nem lapok között ugrál, hanem tereken
+   megy át, és két tér közé nem kerülhet üresség.
+
+   A helyére nem jött másik effekt. A böngésző a régi lapot addig
+   festi, amíg az újnak nincs mit festenie; a szkript pedig szándékra
+   (rámutatás, fókusz, ujj) előmelegíti a célt, hogy ez az „amíg”
+   rövid legyen. A tartalom saját belépő mozdulata (.jon) megmaradt:
+   az a SZEDÉSRE megy, nem az egész lapra, és nem hagy üres képmezőt.
+
+   Ha valaha visszakerül lapszintű áttűnés, annak a szabálya ugyanaz,
+   mint a küszöbé: előbb legyen mit mutatni, utána mozduljon. */
 
 /* ---------- fejléc: haladásjelző és elrejtés ---------- */
 
@@ -973,8 +1066,7 @@ html.atmenet.tavozik body { opacity: 0; transition: opacity .24s ease; }
 /* ---------- csend ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  html.atmenet body,
-  html.atmenet.tavozik body { opacity: 1; transition: none; }
+  /* az oldal-áttűnés kivezetésével ez a mentesítés is tárgytalan lett */
   .fejlec.bujik { transform: none; }
   .szo-b { transform: none; }
   .szalag-sor, .vonat { transform: none !important; }

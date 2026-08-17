@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A küszöb — labor · {{terCim}}</title>
+<meta name="description" content="Fejlesztői próba: a küszöb-átmenet és a mélységréteg egyetlen projekten.">
+<!-- Fejlesztői útvonal: nem az éles oldal része, nem indexelhető. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/brand/favicon.png">
+
+<!-- A két hajtás fölötti betűváltozat előre kérve: a szedés így nem
+     a CSS feldolgozása után derül ki. -->
+<link rel="preload" href="fonts/cormorant-garamond-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="rendszer.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ter.css">
+</head>
+<body>
+
+<!-- Szkript nélkül az adatlap nyitva van, tehát a horgony elvisz oda.
+     Szkripttel félre van csúsztatva, ezért a link ki is nyitja. -->
+<a class="ugras" href="#adatlap" data-adatlap="nyit">Ugrás a projekt adatlapjára</a>
+
+<!-- A görgetőszakasz valódi magasságú: nézőpontonként egy képernyő.
+     A színpad ragadós, tehát a görgetősáv igazat mond, a lendület
+     natív marad, és érintésen semmit nem veszünk el a rendszertől. -->
+<section class="enfilad" id="enfilad" style="height: {{terMagas}}" aria-label="{{terCim}} — bejárható nézőpontok">
+
+  <div class="szinpad" id="szinpad" data-hangulat="{{terHangulat}}">
+
+    <!--TER-SZOBAK-->
+
+    <div class="felulet">
+
+      <!-- Enfilád-jelző: hány tér van egymás mögött, és melyikben
+           állunk. Asztali gépen a bal peremen, telefonon a cím alatt —
+           ezért a felületrácson belül él. -->
+      <nav class="ter-jelzo" id="terJelzo" aria-label="Nézőpontok">
+        <!--TER-JELZO-->
+      </nav>
+
+      <div class="ter-felirat" id="terFelirat">
+        <p class="honnan tipo-muszaki"><span>{{terHonnan}}</span></p>
+        <p class="nev">{{terNev}}</p>
+      </div>
+
+      <button type="button" class="ter-terv tipo-ui" id="terTerv" data-adatlap="nyit">
+        Adatlap <kbd>Esc</kbd>
+      </button>
+
+      <div class="ter-lab">
+        <dl class="ter-adat tipo-adat" id="terAdat">
+          <div><dt>Nézőpont</dt><dd data-mezo="sorszam">01 / {{terDb}}</dd></div>
+          <div><dt>Idő</dt><dd data-mezo="hangulat">Nappal</dd></div>
+          <div><dt>Anyag</dt><dd data-mezo="anyag">{{terAnyag}}</dd></div>
+        </dl>
+
+        <button type="button" class="ter-tovabb" id="terTovabb">
+          <span>
+            <span class="fajta tipo-muszaki">{{terFajta}}</span><br>
+            <span class="cel tipo-ui">{{terKovetkezo}}</span>
+          </span>
+          <span class="nyil" aria-hidden="true"></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- A képernyőolvasó ebből tudja meg, hogy teret váltottunk. A térbeli
+     állapotot nem mondjuk fel: az díszítés, nem tartalom. -->
+<p class="rejtett" id="terElo" aria-live="polite" aria-atomic="true"></p>
+
+<div class="homaly" id="homaly" aria-hidden="true"></div>
+
+<!-- AZ ADATLAP — a tér írott ikertestvére.
+     Szkript nélkül nyitva van és teljes: cím, adatok, anyagok, a teljes
+     galéria és a kivezető linkek. A szkript csak félrecsúsztatja. -->
+<aside class="adatlap" id="adatlap" aria-label="{{terCim}} adatlapja">
+  <!--TER-ADATLAP-->
+</aside>
+
+<script src="kuszob.js"></script>
+<script src="ter.js"></script>
+</body>
+</html>

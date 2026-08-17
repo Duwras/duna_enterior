@@ -1,0 +1,74 @@
+# Közzététel GitHub Pages-re.
+#
+# Az oldal a repó nevével megegyező ALKÖNYVTÁRBÓL szolgál ki, mert a
+# Duwras.github.io felhasználói Pages-oldalhoz saját domain (ertekpontpenzugyek.hu)
+# van kötve, és a projektoldalak ezt öröklik. Végleges cím:
+#   https://ertekpontpenzugyek.hu/duna_enterior/
+#
+# A lapok gyökér-abszolút hivatkozásokat használnak (/img/…, /referenciak/…),
+# ezért a build ALAP_UT előtaggal fut. Az előtagot nem írjuk be kézzel:
+# a configure-pages lépés adja (base_path), így ha később saját domain kerül
+# a repóra, az előtag magától üresre vált, és semmit nem kell átírni.
+#
+# ELŐFELTÉTEL — egyszer, kézzel: Settings → Pages → Build and deployment →
+# Source: "GitHub Actions". E nélkül a deploy lépés 404-gyel áll meg.
+name: GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Egyszerre egy közzététel fusson. A futó nem szakad félbe, csak a
+# sorban állók közül marad a legutolsó.
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  epites:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Innen jön a base_path. Projektoldalnál "/duna_enterior",
+      # saját domain esetén üres.
+      - id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # Megpróbálja magától bekapcsolni a Pages-t a repón. Ha a
+          # jogosultság nem elég hozzá, ez a lépés bukik — akkor kell a
+          # fenti kézi beállítás.
+          enablement: true
+
+      # 371 forráskép, képenként két webes méret — ez a lépés viszi az
+      # időt, nagyjából 2-4 perc.
+      - run: npm run build
+        env:
+          ALAP_UT: ${{ steps.pages.outputs.base_path }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: deploy
+
+  kozzetetel:
+    needs: epites
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.kozzetetel.outputs.page_url }}
+    steps:
+      - id: kozzetetel
+        uses: actions/deploy-pages@v4

@@ -10,3 +10,18 @@ Thumbs.db
 # helyi ellenőrzés melléktermékei
 .playwright-mcp/
 *.png.tmp
+
+# A gyökérbe mentett QA-képernyőképek. Az oldal SAJÁT képei az img/ alatt
+# élnek, azokat ez nem érinti (a minta csak a legfelső szintre illik).
+/*.png
+scratch-block.txt
+
+# helyi szerkesztő-beállítás, nem a projekté
+.claude/
+
+# kepek szarmazek-gyorstara (helyi es CI, nem verziokovetett)
+.kepgyorstar/
+
+# fotos-leadasok atmeneti helye (6. fazis). A mesterek a --bemasol
+# utan az img/projektek/ ala kerulnek, es ONNAN verziokovetettek.
+atvetel/

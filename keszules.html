@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A készülés — Duna Belsőépítészet Kft.</title>
+<meta name="description" content="Anyag, kéz, tárgy, tér. Négy valódi munka útja a győri asztalos- és hajóépítő üzemből, kizárólag olyan fényképekből, amelyek tényleg megvannak az archívumban.">
+<link rel="canonical" href="https://{{domain}}/keszules.html">
+<link rel="icon" href="img/brand/favicon.png">
+<!-- A hajtás fölött ténylegesen használt két betűváltozat előre kérve. -->
+<link rel="preload" href="fonts/cormorant-garamond-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="rendszer.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ter.css">
+<link rel="stylesheet" href="terv.css">
+<link rel="stylesheet" href="keszules.css">
+</head>
+<body class="ter-oldal keszules-oldal">
+
+<!--FEJLEC:keszules-->
+
+<main id="tartalom">
+
+  <!-- ============================================================
+       A NYITÁS — három lépték
+
+       Ugyanaz a szerkezet, mint egy szobában vagy a flottában:
+       ragadós színpad, valódi magasságú görgetőszakasz, a szöveg
+       fölötte gördül, a ter.js vezényli. Nincs itt egyetlen új
+       mozgás sem.
+
+       Egyetlen dolog más, és az jelent valamit: itt MINDEN küszöb
+       KAPU. Az ajtó másik szobába vezet; az ablak valamihez, ami
+       mozog; a kapu szerkezeti réteget vált. Ez a fejezet háromszor
+       vált réteget — részlet, tárgy, tér —, tehát háromszor kapu.
+       (A flottában ugyanez a szabály ablakkal: egy fejezet, egy
+       küszöbfajta.)
+
+       A látogató előbb lát egy tenyérnyi felületet, mint hogy tudná,
+       mihez tartozik. Mind a három képkocka ugyanabból a munkából
+       való — nem vágunk össze két projektet, hogy szebb legyen.
+       ============================================================ -->
+  <section class="enfilad keszules-nyitas" id="keszulesNyitas" data-horgony="nem"
+           aria-label="A készülés — három lépték a részlettől a térig">
+
+    <div class="szinpad" id="szinpad" data-hangulat="nappal">
+
+      <!--KESZ-KERETEK-->
+
+      <div class="felulet">
+        <nav class="ter-jelzo" aria-label="Léptékek">
+          <!--KESZ-JELZO-->
+        </nav>
+
+        <div class="ter-felirat">
+          <p class="honnan tipo-muszaki"><span>Fafaragások · a faragvány</span></p>
+          <p class="nev">Szárnyas fej, nyers fapanelen</p>
+        </div>
+
+        <div class="ter-vezerlok">
+          <button type="button" class="ter-terv tipo-ui" data-terv="nyit">
+            Alaprajz <kbd>Esc</kbd>
+          </button>
+        </div>
+
+        <div class="ter-lab">
+          <dl class="ter-adat tipo-adat">
+            <div><dt>Lépték</dt><dd data-mezo="sorszam">01 / 03</dd></div>
+            <div><dt>Idő</dt><dd data-mezo="hangulat">Nappal</dd></div>
+            <div><dt>Állomás</dt><dd data-mezo="anyag">A részlet</dd></div>
+          </dl>
+
+          <a class="ter-projekt tipo-ui" href="referenciak/fafaragasok/">
+            <span class="cel">Fafaragások</span>
+            <span class="nyil" aria-hidden="true"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="keszules-szoveg">
+
+      <!-- ---------- 01. A RÉSZLET ---------- -->
+      <article class="jelenet" data-keret="1" style="--h: 96">
+        <div class="jelenet-belul jelenet-nyito">
+          <p class="felcim">A készülés</p>
+          <h1>Anyag és tér között<br><em>van egy kéz.</em></h1>
+          <p class="eloszo">A harminc munka fényképeinek java a kész teret mutatja. Ez a fejezet arról szól, ami előtte történt — kizárólag olyan felvételekből, amelyek tényleg megvannak az archívumban.</p>
+          <p class="kesz-osszeg tipo-adat"><!--KESZ-OSSZEG--></p>
+          <p class="gorgetes-jel" aria-hidden="true"><span class="vonal"></span> Görgessen</p>
+        </div>
+      </article>
+
+      <!-- ---------- 02. A TÁRGY ---------- -->
+      <article class="jelenet" data-keret="2" style="--h: 76">
+        <div class="jelenet-belul">
+          <p class="felcim">A tárgy</p>
+          <h2>Ugyanaz a faragás,<br><em>egy lépéssel hátrébb.</em></h2>
+          <p class="tipo-folyo">Kész ágyvég és öt szék, a győri üzem padlóján. A háttérben az, amiről a legkevesebb fényképünk van: maga a műhely — állványok, ipari ablakok, beton.</p>
+        </div>
+      </article>
+
+      <!-- ---------- 03. A TÉR ---------- -->
+      <article class="jelenet" data-keret="3" style="--h: 84">
+        <div class="jelenet-belul jelenet-mondat">
+          <p class="felcim">A tér</p>
+          <h2>És ez lett<br><em>belőle.</em></h2>
+          <p class="tipo-folyo">Faragott korlát egy lépcsőfordulóban, sötét diófa burkolat között. Egy tenyérnyi felület, egy tárgy, egy tér — három fénykép ugyanarról a mesterségről.</p>
+          <a class="link-nyil" href="#gerinc">A gerinc <span aria-hidden="true">↓</span></a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!--KESZ-NOJS-->
+
+  <!-- A képernyőolvasó ebből tudja meg, hogy léptéket vagy lemezt váltottunk. -->
+  <p class="rejtett" id="terElo" aria-live="polite" aria-atomic="true"></p>
+
+  <!-- ============================================================
+       A GERINC
+
+       Öt hely, és az, hogy hány sorozat ér el odáig. Ez a lap
+       őszinteségi szerződése: nem minden munkából van meg mind az öt
+       állomás, és ezt előre kimondjuk, nem utólag magyarázzuk.
+       ============================================================ -->
+  <section class="gerinc" id="gerinc" aria-labelledby="gerincCim">
+    <div class="belul">
+      <header class="gerinc-fej">
+        <div>
+          <p class="felcim">A gerinc</p>
+          <h2 id="gerincCim" class="tipo-cim-2">Öt állomás,<br><em>és a hiányuk.</em></h2>
+        </div>
+        <p class="tipo-vezeto">Minden sorozat ezen az öt helyen halad végig — de egyik sem éri el mindet. Ahol nincs jel, ott <b>fénykép</b> nincs; nem az, hogy a munka nem történt meg. Üres állomást nem gyártunk.</p>
+      </header>
+
+      <ol class="gerinc-sor">
+        <!--KESZ-GERINC-->
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       A SOROZATOK
+
+       A metszet rendszere, sorozatonként egyszer. A lemez MÉRETE a
+       léptékből jön: részlet → tárgy → tér. Aki végiggörget, hátralép.
+       Nincs küszöb: itt a fénykép már nem tér, hanem lap.
+       ============================================================ -->
+  <!--KESZ-SOROZATOK-->
+
+  <!-- ============================================================
+       AZ ANYAG
+
+       Nem kitalált DUNA-anyagpaletta: pontosan az, ami a fenti
+       sorozatok fényképein látszik, és amit a cég saját
+       szolgáltatáslistája is nevesít.
+       ============================================================ -->
+  <section class="kesz-anyag" id="anyag" aria-labelledby="anyagCim">
+    <div class="belul">
+      <header class="kesz-anyag-fej">
+        <div>
+          <p class="felcim">Az anyag</p>
+          <h2 id="anyagCim" class="tipo-cim-2">Amiből<br><em>ezek készültek.</em></h2>
+        </div>
+        <p class="tipo-vezeto">Csak az szerepel itt, ami a fenti fényképeken tényleg látszik. A műveletek neve a cég saját szolgáltatáslistájáról való: gyalulás, kontaktcsiszolás, pácolás, lakkozás.</p>
+      </header>
+
+      <ul class="anyag-lista">
+        <!--KESZ-ANYAGOK-->
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       A MŰHELY, AMIT NEM FÉNYKÉPEZTEK LE
+
+       Ez a lap legfontosabb szakasza, és szándékosan nincs
+       feldíszítve. Az archívum a munkát dokumentálja, a munkahelyet
+       nem. Egyetlen felvétel van róla. Nem pótoljuk semmivel —
+       se látványtervvel, se vásárolt fotóval, se generált képpel.
+       ============================================================ -->
+  <section class="kesz-muhely" id="muhely" aria-labelledby="muhelyCim">
+    <div class="belul">
+      <div class="kesz-muhely-kep">
+        <figure>
+          <!--KESZ-MUHELY-->
+          <figcaption class="tipo-adat"><!--KESZ-MUHELY-CIMKE--></figcaption>
+        </figure>
+      </div>
+
+      <div class="kesz-muhely-szoveg">
+        <p class="felcim">A műhely</p>
+        <h2 id="muhelyCim" class="tipo-cim-2">Egy fénykép<br><em>az egész üzemről.</em></h2>
+        <p class="tipo-folyo">Az archívumban 371 fénykép van. Pontosan egy mutatja magát a csarnokot — és az is huszonkét éves, 0,75 megapixeles, beégetett dátumbélyeggel. A többi mind a munkáról szól, nem a munkahelyről.</p>
+        <p class="tipo-folyo">Ezért nincs ezen a lapon műhelyfotó-hangulat. Nincs vásárolt kép, nincs generált kép, nincs kölcsönvett asztalosműhely. Ami hiányzik, az hiányzik — és a következő oldalon fel van sorolva, mit kellene lefényképezni ahhoz, hogy ne hiányozzon.</p>
+        <p class="tipo-adat halk">A telephely Győrben van, az Ikrényi úton; a gyártóüzem {{uzemMeret}}. Ezek a cég saját adatai — fénykép nem tartozik hozzájuk.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       KIVEZETÉSEK
+
+       A készülés nem külön kis oldal: ugyanannak a világnak a része.
+       Minden út visszavezet a terekbe.
+       ============================================================ -->
+  <section class="kesz-vissza" aria-labelledby="visszaCim">
+    <div class="belul">
+      <h2 id="visszaCim" class="tipo-cim-2">A kész szoba<br><em>a folyamat látható vége.</em></h2>
+
+      <ul class="kesz-kijaratok">
+        <li>
+          <p class="tipo-muszaki">Ahol tovább épül</p>
+          <a class="link-nyil" href="flotta.html">A flotta <span aria-hidden="true">→</span></a>
+          <p class="tipo-folyo">Tizenöt hajó, és köztük hét olyan, amiről a bordázat is megvan. A készülés leghosszabb sorozata ott folytatódik.</p>
+        </li>
+        <li>
+          <p class="tipo-muszaki">Ahová megérkezik</p>
+          <a class="link-nyil" href="referenciak/duna-cruises-hableany/">A HABLEÁNY szalonja <span aria-hidden="true">→</span></a>
+          <p class="tipo-folyo">Öt kameraállás egy bejárható térben — az, amivé a fenti folyamatok lesznek.</p>
+        </li>
+        <li>
+          <p class="tipo-muszaki">A teljes munka</p>
+          <a class="link-nyil" href="alaprajz.html">Az alaprajz <span aria-hidden="true">→</span></a>
+          <p class="tipo-folyo">Harminc projekt, hét szárny, egy lapon. Innen minden munka elérhető.</p>
+        </li>
+        <li>
+          <p class="tipo-muszaki">Amit vállalunk</p>
+          <a class="link-nyil" href="kapcsolat.html">Ajánlatkérés <span aria-hidden="true">→</span></a>
+          <p class="tipo-folyo">Igényfelméréstől a helyszíni szerelésig, egy kézben. A műhely {{telephely}}.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- AZ ALAPRAJZ — a szerkezet, ami az élmény alatt van. Innen is
+     egy Esc, és ugyanaz a lap. -->
+<aside class="alaprajz" id="alaprajz" data-hely="fedo" aria-label="Alaprajz — minden projekt" hidden>
+  <!--ALAPRAJZ-->
+</aside>
+
+<!--LABLEC-->
+
+<script src="script.js"></script>
+<script src="kuszob.js"></script>
+<script src="terv.js"></script>
+<script src="ter.js"></script>
+<script src="keszules.js"></script>
+</body>
+</html>

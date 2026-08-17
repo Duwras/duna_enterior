@@ -1,0 +1,432 @@
+/* ============================================================
+   DUNA — THE LIVING INTERIOR
+   fooldal.css — a hét jelenet
+
+   Csak a főoldal tölti be. Két aktus szerkezetét írja le:
+
+     ELSŐ AKTUS  — a fényképezett tér (01–06). A színpad ragadós, a
+                   szedés fölötte gördül, a képkocka küszöbön át vált.
+                   A mélységet és a küszöböt a ter.css adja; itt csak
+                   a szöveg és a tempó van.
+
+     MÁSODIK     — A METSZET (07). Itt a fénykép lappá válik: papír
+                   alap, egyszerre egy állomás, és nem a hely
+                   változik, hanem a lépték.
+
+   Utána az alaprajz és az utolsó ajtó — mindkettő rendes,
+   végiggörgethető dokumentum.
+   ============================================================ */
+
+/* ============================================================
+   ELSŐ AKTUS
+   ============================================================ */
+
+.aktus { position: relative; }
+
+/* A szedés a képmező bal oldalán ül, végig. Kap tehát egy harmadik
+   sávot a meglévő két fátyol mellé — ugyanabból az okból, és ugyanúgy
+   szerkezetből: a kontraszt nem múlhat azon, mi van épp a képen. A
+   kép közepe és jobb oldala érintetlen marad. */
+.aktus .szinpad::before {
+  content: ""; position: absolute; inset: 0; z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to right,
+    rgba(14, 11, 7, .66) 0%,
+    rgba(14, 11, 7, .40) 26%,
+    rgba(14, 11, 7, .12) 48%,
+    transparent 64%);
+}
+@media (max-width: 720px) {
+  /* Telefonon a fotó a teljes képmező, és a szedés benne áll — nem
+     mellette. Ezért itt nem sáv, hanem egyenletes halkítás, alul
+     erősebben, ahol a vezérlők vannak. */
+  .aktus .szinpad::before {
+    background: linear-gradient(to bottom,
+      rgba(14, 11, 7, .46) 0%,
+      rgba(14, 11, 7, .30) 28%,
+      rgba(14, 11, 7, .40) 62%,
+      rgba(14, 11, 7, .80) 100%);
+  }
+}
+
+/* A szedés a képkocka fölött gördül. Negatív felső margóval ül rá a
+   ragadós színpadra, tehát a szakasz teljes magasságát a SZÖVEG
+   szabja — a tempót a mondat hossza adja, nem egy kitalált szám. */
+.aktus-szoveg {
+  position: relative; z-index: 3;
+  margin-top: -100svh;
+  pointer-events: none;
+}
+.aktus .felulet { z-index: 4; }
+
+/* A főoldalon a szedés a bal peremen áll, tehát az enfilád-jelző a
+   jobb oldalra megy. Ugyanaz a jel, a másik oldalon — a szobában
+   marad balra, mert ott a felirat rövid. */
+.aktus .ter-jelzo { left: auto; right: var(--keret); justify-items: end; }
+.aktus .ter-jelzo button { justify-self: end; }
+
+/* Ugyanez a lábsávra. A műszaki adat alapból a BAL alsó sarokban áll —
+   pont ott, ahol a szedés lefelé kifut a képmezőből, és a kettő
+   egymásra írt. A szakasz jele nem a hely, hanem az, hogy a szedéssel
+   szemközti oldalon van minden, ami a színpadhoz tartozik: itt tehát a
+   lábsáv két eleme is jobbra ül, egymás mellé.
+
+   A határ 721 px, nem 901: a ter.css 720 px alatt rakja egy hasábba a
+   színpadot, tehát a „szemközti oldal” eddig értelmezhető. A 834 px-es
+   táblagépen a szabály korábban nem élt, és a műszaki adat pontosan
+   ugyanúgy a mondatra írt, mint eredetileg az asztalin. */
+@media (min-width: 721px) {
+  .aktus .ter-lab { justify-content: flex-end; }
+}
+
+/* A JELENET közös szedése a rendszer.css „A JELENET” szakaszában áll
+   (6. fázis) — ott van a .jelenet, a .jelenet-belul, a címrend, a
+   .jelenet-nyito és a .jelenet-mondat alapja. Itt CSAK az van, ami a
+   főoldalé:
+
+     - a jelenetek balra igazodnak (a flotta jobbra), ezért a
+       justify-content alapértéken marad, és nem írjuk felül;
+     - a nyitószedés szélesebb (40rem a 38 helyett) és a mondat is
+       (44rem a 40 helyett): a főoldal első jelenete négy tényt is
+       hordoz, a fejezeteké nem;
+     - a .tipo-muszaki itt akcentszínű. */
+
+/* A főoldalon a keret nevét nem írjuk ki külön a bal felső sarokba:
+   ott a történet szedése áll. A tér neve a lábsáv kivezető
+   hivatkozásában szerepel, ahol tényleg jelent is valamit. */
+.aktus .ter-felirat { display: none; }
+
+.jelenet-belul .tipo-muszaki { color: var(--oak); }
+
+/* a nyitókép szedése kap egy kis extra levegőt */
+.jelenet-nyito { max-width: 40rem; }
+/* A négy tény nem doboz a fotón: négy hasáb, hajszálvonallal
+   elválasztva. A lapon dobozos, mert ott papíron ül — itt nem. */
+.jelenet-nyito .hero-adat {
+  display: flex; flex-wrap: wrap; gap: 0;
+  background: transparent; border: 0; max-width: none; margin: 0;
+}
+.jelenet-nyito .hero-adat > div {
+  background: transparent; padding: 0 var(--space-5) 0 0; margin-right: var(--space-5);
+  border-right: 1px solid rgba(232, 223, 209, .22);
+}
+.jelenet-nyito .hero-adat > div:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.jelenet-nyito .hero-adat dt { color: var(--oak); }
+.jelenet-nyito .hero-adat dd {
+  margin: 5px 0 0; font-family: var(--display); font-size: 1.7rem;
+  color: var(--ejjel-szov); line-height: 1;
+}
+.jelenet-nyito .hero-adat dd small { color: var(--ejjel-halk); }
+.jelenet-nyito .hero-adat small { font-size: .8rem; }
+.jelenet-nyito .hero-tett { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.jelenet-nyito .gomb { border-color: rgba(232, 223, 209, .4); color: var(--ejjel-szov); }
+.jelenet-nyito .gomb.tolt { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+/* A három szakma: mindegyik ugyanolyan súllyal, ugyanabban a sarokban. */
+.jelenet-szak { max-width: 30rem; }
+
+/* A HALK JELENET — ami korábban néma keret volt.
+
+   Két keret (07. és 10.) szándékosan szünet az enfiládban: nem
+   állomás, csak levegő két mondat között. Szöveg nélkül viszont a
+   látogató egy fényképet lát, amiről semmit nem tud — a lábsáv
+   sorszáma („10 / 13”) meg pont azt mondja neki, hogy valamit
+   lemaradt. A szünet marad, de nem némán: két sor, cím nélkül, link
+   nélkül, keskenyebb hasábban, mint a valódi jelenetek. Így a ritmus
+   is megvan, és nincs magyarázat nélküli képkocka. */
+.jelenet-halk { max-width: 26rem; gap: var(--space-3); }
+
+/* Az egyetlen mondat, ami nagyban áll: a hajós fordulat. */
+.jelenet-mondat { max-width: 44rem; }
+
+/* a kifelé vezető hivatkozás a lábsávban */
+.ter-projekt {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  color: var(--ejjel-szov); text-decoration: none;
+}
+.ter-projekt .nyil {
+  display: inline-block; width: 34px; height: 1px; background: currentColor;
+  transition: width var(--motion-normal) var(--ease-water);
+}
+.ter-projekt:hover .nyil { width: 52px; }
+
+/* ============================================================
+   MÁSODIK AKTUS — A METSZET
+   ============================================================ */
+
+.metszet {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink-2);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+/* ---------- SZKRIPT NÉLKÜL: EGYMÁS ALATT ----------
+
+   6. fázis, az 5. fázis §22.9 ajánlása szerint. Korábban az
+   alapállapot volt a ragadós, egyszerre-egy-lemez elrendezés, és
+   szkript nélkül EGYETLEN lemez látszott — a másik öt ott volt a
+   jelölésben, csak opacity: 0 alatt. A dokumentum teljes, a lap
+   mégis hazudott arról, mennyi van rajta.
+
+   Most fordítva: az alapállapot egy közönséges, függőleges lista,
+   minden lemez teljes felirattal; a ragadós viselkedést a fooldal.js
+   kapcsolja be a body[data-lemezek] jelzővel — tehát csak akkor, ha
+   tényleg le is tudja vezényelni. Ugyanaz a minta, mint a
+   keszules.css-ben. */
+
+/* A ragadós színpad befoglaló doboza. A `position: sticky` a BEFOGLALÓ
+   DOBOZ aljáig tart — ha ez a szakasz volna, a színpad a folyamat-lista
+   alatt is ragadna, és a lista egy teljes képernyőn át rácsúszna a
+   fejre. A doboz ezért csak a színpadot és a jelölőket fogja körül. */
+.metszet-szinpad { position: relative; }
+
+.metszet-ragad {
+  display: grid; gap: var(--space-7);
+  padding: var(--ritmus) var(--margo);
+}
+.metszet-jelolok { display: none; }
+
+body[data-lemezek] .metszet-ragad {
+  position: sticky; top: 0;
+  height: 100svh; overflow: hidden;
+  grid-template-columns: minmax(15rem, 26%) 1fr;
+  gap: var(--koz);
+  padding: calc(var(--space-9)) var(--margo) var(--space-7);
+  align-items: center;
+}
+body[data-lemezek] .metszet-jelolok { display: block; }
+
+.metszet-fej { align-self: center; display: grid; gap: var(--space-3); }
+.metszet-fej h2 {
+  font-family: var(--display); font-weight: 300;
+  font-size: var(--fok-display-2); line-height: var(--sork-display-2);
+  color: var(--ink); margin: 0;
+}
+.metszet-fej em { font-style: italic; }
+
+/* Egyszerre egy lemez áll a képmezőben. Ami elmúlt, kicsit hátrébb
+   kerül és elhalványul; ami jön, előbbre. Nincs csúszás oldalra: a
+   lépték változik, nem a hely. Szkript nélkül mindez elmarad, és a
+   lemezek egyszerű listaként állnak — lásd fentebb. */
+.lemezek {
+  position: relative; list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--space-9);
+}
+.lemez { display: grid; place-items: center; }
+
+body[data-lemezek] .lemezek { height: 100%; display: block; }
+body[data-lemezek] .lemez {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: scale(.94);
+  transition: opacity var(--motion-terv) var(--ease-lagy),
+              transform var(--motion-terv) var(--ease-water);
+  pointer-events: none;
+}
+body[data-lemezek] .lemez[data-aktiv] { opacity: 1; transform: none; pointer-events: auto; }
+body[data-lemezek] .lemez[data-elmult] { opacity: 0; transform: scale(1.08); }
+
+.lemez figure { margin: 0; display: grid; gap: var(--space-4); max-height: 100%; }
+.lemez img {
+  width: 100%; height: auto; max-height: 62svh; object-fit: contain;
+  justify-self: center;
+}
+.lemez figcaption { display: grid; gap: var(--space-2); max-width: 46ch; }
+.lemez figcaption .szam { color: var(--brass); margin-right: var(--space-2); }
+.lemez figcaption a { color: var(--brass); text-decoration: none; }
+.lemez figcaption a:hover { text-decoration: underline; }
+
+/* a görgetőhossz: állomásonként egy jelölő, semmi más.
+
+   A záró 45svh nem díszítés: a fooldal.js akkor lépteti a lemezt,
+   amikor a jelölő teteje a képmező 55%-áig ér — az utolsó jelölőnél
+   tehát 55svh-val korábban, mint ahogy a jelölősor véget ér. E nélkül a
+   futópálya nélkül a színpad ugyanabban a pillanatban engedne el,
+   amikor az utolsó lemez megjelenik. 100svh − 55svh = 45svh. */
+.metszet-jelolok { position: relative; margin-top: -100svh; pointer-events: none; }
+.metszet-jelolo { height: 48svh; }
+body[data-lemezek] .metszet-jelolok { padding-bottom: 45svh; }
+
+.metszet-lepesek {
+  position: relative;
+  padding-top: var(--ritmus); padding-bottom: var(--ritmus);
+  display: grid; gap: var(--space-5); justify-items: start;
+}
+/* Két kivezetés a folyamatból: a teljes készülés fejezet és a
+   meglévő manufaktúra-lap. Telefonon egymás alá esnek. */
+.metszet-tovabb { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.lepessor {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 0; width: 100%;
+  border-top: 1px solid var(--line);
+}
+.lepessor li {
+  display: grid; grid-template-columns: 3rem 10rem 1fr; gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-4) 0; border-bottom: 1px solid var(--line);
+}
+.lepessor b { font-family: var(--display); font-weight: 400; font-size: 1.2rem; color: var(--ink); }
+
+/* ============================================================
+   AZ UTOLSÓ AJTÓ
+   ============================================================ */
+
+.ajto {
+  position: relative;
+  background: var(--ejjel);
+  color: var(--ejjel-szov);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  min-height: 96svh;
+}
+.ajto-kep { position: relative; overflow: hidden; }
+.ajto-kep img {
+  width: 100%; height: 100%; object-fit: cover;
+  /* a vágás a kapuszárnyakra és az udvarra megy, nem az égre */
+  object-position: 50% 64%;
+  /* Halkítás, nem színkorrekció: a felvétel nappali, és az is marad —
+     csak annyival kevesebb fény, hogy a szedés megálljon rajta. Éjjelt
+     nem hazudunk bele; a sötétet a lap alapszíne adja. */
+  filter: brightness(.62) saturate(.86);
+}
+.ajto-kep::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 40%, var(--ejjel) 100%);
+}
+.ajto-szoveg {
+  display: grid; align-content: center; gap: var(--space-5);
+  padding: var(--space-9) var(--margo);
+}
+.ajto-szoveg h2 {
+  font-family: var(--display); font-weight: 300;
+  font-size: var(--fok-display-2); line-height: var(--sork-display-2);
+  color: var(--ejjel-szov); margin: 0;
+}
+.ajto-szoveg em { font-style: italic; }
+.ajto-idezet { margin: 0; border-left: 1px solid var(--oak); padding-left: var(--space-5); }
+.ajto-idezet .tipo-vezeto { color: var(--ejjel-szov2); }
+.ajto-idezet footer { color: var(--oak); margin-top: var(--space-3); }
+
+.ajto-emberek {
+  list-style: none; margin: 0; padding: var(--space-5) 0 0;
+  border-top: 1px solid var(--ejjel-vonal);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5);
+}
+.ajto-emberek li { display: grid; gap: 3px; }
+.ajto-emberek .nev {
+  font-family: var(--display); font-weight: 400; font-size: 1.22rem;
+  color: var(--ejjel-szov);
+}
+.ajto-emberek .tipo-adat { color: var(--ejjel-halk); }
+.ajto-emberek a { color: var(--oak); text-decoration: none; }
+.ajto-emberek a:hover { text-decoration: underline; }
+
+.ajto-tett { display: grid; gap: var(--space-3); justify-items: start; }
+.ajto-tett .gomb { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.ajto-tett .tipo-adat { color: var(--ejjel-halk); }
+
+/* ============================================================
+   MOBIL — nem kicsinyített asztali nézet
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .metszet-ragad {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: var(--space-4);
+    padding: var(--space-8) var(--margo) var(--space-6);
+    align-items: start;
+  }
+  .metszet-fej h2 { font-size: var(--fok-display-3); }
+  .metszet-fej .tipo-vezeto { display: none; }
+  .lemez img { max-height: 46svh; }
+  .lepessor li { grid-template-columns: 2.4rem 1fr; }
+  .lepessor li .tipo-folyo { grid-column: 2; }
+
+  .ajto { grid-template-columns: 1fr; }
+  .ajto-kep { min-height: 46svh; }
+  .ajto-kep::after { background: linear-gradient(to bottom, transparent 40%, var(--ejjel) 100%); }
+  .ajto-szoveg { padding: var(--space-7) var(--margo) var(--space-8); }
+}
+
+@media (max-width: 720px) {
+  /* A szedés a hüvelykujj fölött, a kép alsó harmadában. A jelenetek
+     rövidebbek: telefonon a görgetés drágább mozdulat. */
+  /* a színpad MÉRT alsó sávja fölött — lásd script.js, „9/b. A SZÍNPAD
+     MŰSZAKI SÁVJAI”; itt a műszaki adat rejtve van, tehát a sáv
+     alacsonyabb, mint a másik két fejezetben */
+  .jelenet {
+    align-items: flex-end;
+    padding-bottom: calc(var(--szinpad-lab, 7rem) + var(--space-4));
+  }
+  body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * .82svh); }
+
+  /* A nyitókép szedése nem fér a kép alsó harmadába: ott az egész
+     képmező az övé — a helyét a rendszer.css „A NYITÓJELENET HELYE”
+     szakasza adja, mind a három fejezetnek ugyanúgy. */
+  .jelenet-nyito { gap: var(--space-4); }
+  .jelenet-nyito h1 { font-size: clamp(2.1rem, 9.6vw, 3rem); }
+  .jelenet-nyito .eloszo { font-size: 1rem; }
+  .jelenet-nyito .hero-adat > div {
+    flex: 0 0 auto; padding-right: var(--space-4); margin-right: var(--space-4);
+  }
+  .jelenet-nyito .hero-adat dd { font-size: 1.34rem; }
+
+  /* A vezérlők a hüvelykujj sávjában, egymás mellett: bal oldalt a
+     kivezető hivatkozás, jobb oldalt az alaprajz. A műszaki sáv itt
+     nem fér el, és a főoldalon nem is hordoz döntést. */
+  .aktus .ter-adat { display: none; }
+  /* minmax(0, 1fr) — lásd a flotta.css azonos helyén: az `1fr` nem
+     megy a min-content alá, és a jobb oszlop kilóg a képmezőből. */
+  .aktus .felulet { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr auto; }
+  /* Nyújtva, nem tartalomra méretezve: a tizenhárom keret így a
+     képmező szélességét osztja fel (ter.css, 8. fázis). Tartalomra
+     méretezve a sor 260 px-en állt meg, és minden jel 20 px széles
+     lett — a 24 px-es minimum alatt. */
+  .aktus .ter-jelzo { grid-row: 1; grid-column: 1 / -1; justify-self: stretch; }
+  .aktus .ter-lab { grid-column: 1; grid-row: 3; align-self: end; }
+  .aktus .ter-vezerlok {
+    grid-column: 2; grid-row: 3; align-self: end; justify-self: end;
+    display: flex;
+  }
+
+  .ajto-emberek { grid-template-columns: 1fr; }
+}
+
+/* ---------- érintőcél: két magára maradt hivatkozásforma ----------
+
+   Mérve a 8. fázisban, 375 px-en, érintőképernyőn:
+
+     · a metszet lemezeinek aláírásában a projekthivatkozás — 81 × 13 px
+     · az utolsó ajtó négy telefonszáma — 335 × 12 px
+
+   Mindkettő ÖNÁLLÓ vezérlő a saját sorában, nem mondat közbeni
+   hivatkozás, tehát nem esik a WCAG 2.5.8 kivétele alá. A telefonszám
+   ráadásul a lap legvégső tette: az egyetlen dolog, amit egy telefonon
+   álló látogatótól kérünk. A LÁTHATÓ szedés egyik helyen sem változik,
+   csak a megfogható terület. Ugyanaz a kezelés, mint a láblécben. */
+@media (pointer: coarse) {
+  .metszet figcaption a,
+  .ajto-emberek a { display: inline-flex; align-items: center; min-height: 44px; }
+  .ajto-emberek li { gap: 0; }
+}
+
+/* ============================================================
+   CSÖKKENTETT MOZGÁS
+   ============================================================
+   A történet nem esik szét: a jelenetek rövidebbek, a lemezek
+   egyszerűen kicserélődnek, a küszöb pedig (a kuszob.js-ben) 200 ms-os
+   áttűnésre rövidül. Amit a látogató elveszít, az a kameramozgás —
+   nem az információ. */
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * .8svh); }
+  .jelenet-belul { transition: none; }
+  .lemez { transition: opacity 200ms linear; transform: none; }
+  .lemez[data-aktiv] { transform: none; }
+  .lemez[data-elmult] { transform: none; }
+}

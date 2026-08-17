@@ -1,0 +1,485 @@
+{
+  "$sema": {
+    "mire": "THE LIVING INTERIOR — térbeli réteg. Slug szerint kapcsolódik a data/projektek.json-hoz.",
+    "miert-kulon-fajl": "Az admin mentéskor fix mezőlistára tisztítja a projekteket (admin.js tisztit()), tehát minden ismeretlen mezőt némán eldobna. Ez a fájl stúdióoldali, az admin soha nem nyúl hozzá — a projektek.json pedig maradhat az ügyfél szerkeszthető felülete.",
+    "kapcsolat": "A build slug szerint összeköti a kettőt, és megáll, ha itt olyan projekt vagy képfájl szerepel, ami ott nincs. Amelyik projekthez nincs bejegyzés, az pontosan úgy jelenik meg, mint eddig.",
+    "mezok": {
+      "szint": "1 = tér (mélységgel bejárható) · 2 = mozgókép · 3 = történet. A PHASE-1 §5.1 ellenőrzőlistájából jön, nem ízlésből.",
+      "tipus": "belso | targy | jarmu",
+      "sorrend": "hely a kurált enfiládban",
+      "hangulat": "alap: melyik időállapotban nyílik; allapotok: mi létezik hozzá képanyagban",
+      "anyagok": "a tér domináns anyagai — később anyag szerinti navigáció alapja",
+      "anyagszin": "a tér saját akcentje, a domináns anyagból véve",
+      "szobak[].nezopontok[]": "egy valódi kameraállás. kep = a projektek.json-ban is szereplő fájlnév.",
+      "nyilas": "[x, y, rx, ry] 0–1 között — HOL van a képen az a nyílás, amin átlátunk a következő térbe. Kézzel, a fényképről rögzítve; ebből számol a rétegmaszk ÉS a küszöb feltárása is.",
+      "kuszob": "fajta: ajto | ablak | kapu — mit jelent az átmenet. el: mi megy el a kamera mellett (a közeli réteg tartalma), az adatlapon is olvasható.",
+      "lapos": "true = nincs értelmes közeli réteg (külső felvétel, tárgyfotó): egyrétegű, sík kép",
+      "kapuk": "0–3 megjelölt pont. cel: adatlap | nezopont:<id> | projekt:<slug>",
+      "hangulat-keszlet": "IDŐÁLLAPOT (6. fázis, I. rész): nappal | aranyora | ejjel. Az aranyora ma EGYETLEN felvételen sincs meg; a szótár azért létezik, hogy amikor egy azonos állványról készült nappal/aranyóra/éjjel sorozat megjön, ne kelljen sem kódot, sem szerkezetet változtatni. A build (2/f) elutasít minden más értéket, a ter.js pedig már tudja a nevét.",
+
+      "melyseg": "SZERZŐI MÉLYSÉG (6. fázis, E. rész). Mind opcionális; ha hiányzik, a nyilas négy száma és a rendszer.css globális rétegtokenjei adják a mélységet — EZ A MAI ÉRVÉNYES ÁLLAPOT, nem átmeneti megoldás. { z: { kozel, koz, tav } — SZORZÓ a globális parallaxisra, 1 = átlagos, 2 = kétszer mélyebb; bizalom: szerzoi | mert | becsult; terkep: fájlnév az img/melyseg/<slug>/ alatt — ma nincs ilyen fájl és nincs megjelenítő sem; fokusz: [x, y] 0–1, a képkocka éles pontja }. A build ellenőrzi az alakot, ha ott van, de MA EGYIKET SEM RENDERELI. A z szorzót korábban a ter.css olvasta, a mutatókövetés rétegenkénti erejéhez; az a szétválasztás megszűnt, mert egy fénykép három másolatát eltolni nem mélység, hanem szellemkép (ter.css, .ter-reteg img). A z, a terkep és a fokusz feldolgozása így együtt a 7. fázisé.",
+
+      "kameraallas": "VALÓDI KAMERAADAT (6. fázis, F. rész), mind opcionális. sorrend: szám, a bejárás sorrendje; atmenet: kuszob | vagas | uszas — MILYEN mozgással érkezünk ide; szomszed: [nézőpont-azonosítók] — melyik állásból lehet ide lépni; vagas: { mobil: [x,y,w,h], asztali: [x,y,w,h] } 0–1 — eltérő vágás a két képarányra; allas: { x, y, z } méter a szoba origójától; irany: { azimut 0–360, emelkedes -90–90 } fok. Egyetlen teret sem írunk le velük ma: a HABLEÁNY meglévő öt állása marad a mérvadó, és egy fényképről a kamera helyét MEGMÉRNI kell, nem becsülni. A build elutasítja a rossz alakot, tehát rosszul felvenni nem lehet.",
+      "adatok": "mind nullable. Amit nem tudunk, azt nem találjuk ki — a felület a hiányt hiányként mutatja.",
+      "szoveg": "100–200 szó. Ma minden projekt leirasa üres a projektek.json-ban, ezért itt is null."
+    },
+    "szint-1-kovetkezmenye": "Ahol szint = 1 ÉS legalább két nézőpont van megírva, ott a /referenciak/<slug>/ cím MAGA a bejárható tér lesz — az URL nem változik, a lap alatt pedig ott marad a teljes projektdokumentum (adatlap, galéria, hasonló munkák). Kevesebb nézőpontnál a projekt pontosan úgy jelenik meg, mint eddig."
+  },
+
+  "$fooldal": {
+    "mire": "A FŐOLDAL hét jelenete — csak a képek és a geometria. A szöveg az index.html-ben él, mert az tartalom; ez itt térbeli adat.",
+    "hogyan": "A keretek egyetlen folyamatos enfiládot alkotnak: minden váltás küszöb. A jelenet mező csak azt mondja meg, melyik jelenethez tartozik a keret — a görgetés nem szakaszokra, hanem terekre bomlik.",
+
+    "keretek": [
+      {
+        "jelenet": "01", "slug": "hotel-domus-collis", "kep": "04.jpg",
+        "nev": "Nyitott ajtó a nappali felé", "hol": "Hotel Domus Collis · apartman",
+        "hangulat": "nappal", "nyilas": [0.66, 0.46, 0.20, 0.32],
+        "kuszob": { "fajta": "ajto", "el": "ajtószárny" }
+      },
+      {
+        "jelenet": "02", "slug": "hotel-domus-collis", "kep": "07.jpg",
+        "nev": "A nappali, az étkező felé", "hol": "Hotel Domus Collis · apartman",
+        "hangulat": "nappal", "nyilas": [0.62, 0.44, 0.15, 0.20],
+        "kuszob": { "fajta": "kapu", "el": "ívlámpa és kanapé" }
+      },
+      {
+        "jelenet": "03", "slug": "fafaragasok", "kep": "10.jpg",
+        "nev": "Faragott ágyvég a győri üzemben", "hol": "Egyedi bútor · műhely",
+        "szak": "Bútor",
+        "hangulat": "nappal", "nyilas": [0.68, 0.28, 0.15, 0.15],
+        "kuszob": { "fajta": "ajto", "el": "faragott ágyvég" }
+      },
+      {
+        "jelenet": "03", "slug": "bodajki-vadaszkastely", "kep": "02.jpg",
+        "nev": "Trófeaterem, tárlókkal", "hol": "Bodajki Vadászkastély",
+        "szak": "Belsőépítészet",
+        "hangulat": "nappal", "nyilas": [0.42, 0.54, 0.16, 0.16],
+        "kuszob": { "fajta": "ajto", "el": "sötét faoszlop" }
+      },
+      {
+        "jelenet": "03", "slug": "duna-hajok-6-1-cabin", "kep": "02.jpg",
+        "nev": "A 6.1 Cabin kormányállása", "hol": "Duna Hajók · 6.1 Cabin",
+        "szak": "Hajó",
+        "hangulat": "nappal", "nyilas": [0.74, 0.24, 0.18, 0.18],
+        "kuszob": { "fajta": "kapu", "el": "kormánykerék" }
+      },
+      {
+        "jelenet": "04", "slug": "hotel-domus-collis", "kep": "14.jpg",
+        "nev": "Konyha, átjáróval a zöld szoba felé", "hol": "Hotel Domus Collis · apartman",
+        "hangulat": "nappal", "nyilas": [0.86, 0.50, 0.14, 0.32],
+        "kuszob": { "fajta": "ajto", "el": "konyhapult" }
+      },
+      {
+        "jelenet": "04", "slug": "hotel-domus-collis", "kep": "20.jpg",
+        "nev": "Reggeliző, lécvázas térelválasztókkal", "hol": "Hotel Domus Collis · földszint",
+        "hangulat": "nappal", "nyilas": [0.39, 0.51, 0.08, 0.24],
+        "kuszob": { "fajta": "ajto", "el": "lécvázas térelválasztó" }
+      },
+      {
+        "jelenet": "04", "slug": "hotel-domus-collis", "kep": "02.jpg",
+        "nev": "Emeleti folyosó", "hol": "Hotel Domus Collis · emelet",
+        "hangulat": "nappal", "nyilas": [0.17, 0.50, 0.10, 0.26],
+        "kuszob": { "fajta": "kapu", "el": "tükrös fal" }
+      },
+      {
+        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "05.jpg",
+        "nev": "Fedélzeti szalon, orr felől", "hol": "Duna Cruises HABLEÁNY",
+        "hangulat": "nappal", "nyilas": [0.66, 0.42, 0.19, 0.25],
+        "kuszob": { "fajta": "ajto", "el": "mahagóni oszlop" }
+      },
+      {
+        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "03.jpg",
+        "nev": "Zárt szalon, tat felé", "hol": "Duna Cruises HABLEÁNY",
+        "hangulat": "nappal", "nyilas": [0.47, 0.52, 0.18, 0.22],
+        "kuszob": { "fajta": "kapu", "el": "oszlop és mennyezetív" }
+      },
+      {
+        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "20.jpg",
+        "nev": "Zárt szalon, éjjel", "hol": "Duna Cruises HABLEÁNY",
+        "hangulat": "ejjel", "nyilas": [0.50, 0.50, 0.19, 0.20],
+        "kuszob": { "fajta": "ablak", "el": "ablakkeret" }
+      },
+      {
+        "jelenet": "06", "slug": "duna-cruises-hableany", "kep": "17.jpg",
+        "nev": "A HABLEÁNY éjjel, a rakparton", "hol": "Duna Cruises HABLEÁNY · a folyón",
+        "hangulat": "ejjel", "lapos": true, "nyilas": [0.55, 0.62, 0.18, 0.16],
+        "kuszob": { "fajta": "kapu", "el": null }
+      },
+      {
+        "jelenet": "06", "slug": "duna-hajok-6-1-cabin", "kep": "23.jpg",
+        "nev": "A 6.1 Cabin, tárgyként", "hol": "Duna Hajók · stúdió",
+        "hangulat": "nappal", "lapos": true, "nyilas": [0.50, 0.50, 0.16, 0.18],
+        "kuszob": { "fajta": "kapu", "el": null }
+      }
+    ],
+
+    "metszet": [
+      { "lepes": "Nyersanyag", "slug": "fafaragasok", "kep": "08.jpg",
+        "cimke": "A faragvány, mielőtt felületet kapna. Nyers, csiszolatlan fa a műhely padlóján." },
+      { "lepes": "Kéz", "slug": "fafaragasok", "kep": "09.jpg",
+        "cimke": "Kézi faragás: szárnyas fej, akantuszlevél, egy darab fából." },
+      { "lepes": "Rajz", "slug": "garzon-plaza-hotel", "kep": "14.jpg",
+        "cimke": "Vázlat és anyagminták — szövet, bőr, szín, kézírásos jegyzettel." },
+      { "lepes": "Terv", "slug": "garzon-plaza-hotel", "kep": "05.jpg",
+        "cimke": "Látványterv a reggeliző pultjáról. Ez még nem fénykép.", "cgi": true },
+      { "lepes": "Tárgy", "slug": "garzon-plaza-hotel", "kep": "15.jpg",
+        "cimke": "A kész fotel: hajlított váz, bőr és bouclé." },
+      { "lepes": "Tér", "slug": "garzon-plaza-hotel", "kep": "02.jpg",
+        "cimke": "A megépült recepció, a hozzá tartozó folyosóval." },
+      { "lepes": "Élmény", "slug": "garzon-plaza-hotel", "kep": "09.jpg",
+        "cimke": "Ugyanaz a pult, reggel, használatban." }
+    ],
+
+    "ajto": {
+      "slug": "szent-laszlo-latogatokozpont-fa-kapuja", "kep": "01.jpg",
+      "nev": "A Szent László Látogatóközpont fa kapuja"
+    }
+  },
+
+  "duna-cruises-hableany": {
+    "szint": 1,
+    "tipus": "jarmu",
+    "sorrend": 10,
+    "hangulat": { "alap": "nappal", "allapotok": ["nappal", "ejjel"] },
+    "anyagok": ["mahagóni", "lakkozott fa", "sárgaréz", "üveg"],
+    "anyagszin": "#c2884a",
+
+    "szobak": [
+      {
+        "id": "nyitott-szalon",
+        "nev": "Fedélzeti szalon",
+        "nezopontok": [
+          {
+            "id": "orr",
+            "nev": "Fedélzeti szalon, orr felől",
+            "kep": "05.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.66, 0.42, 0.19, 0.25],
+            "kuszob": { "fajta": "ajto", "el": "mahagóni oszlop" },
+            "kapuk": [
+              { "cimke": "Adatlap", "pozicio": [0.19, 0.74], "cel": "adatlap" }
+            ]
+          },
+          {
+            "id": "atjaro",
+            "nev": "Átjáró a felépítmény felé",
+            "kep": "13.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.44, 0.40, 0.13, 0.30],
+            "kuszob": { "fajta": "ajto", "el": "ajtótok" },
+            "kapuk": [
+              { "cimke": "Vissza a szalonba", "pozicio": [0.12, 0.52], "cel": "nezopont:orr" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "zart-szalon",
+        "nev": "Zárt szalon",
+        "nezopontok": [
+          {
+            "id": "tat",
+            "nev": "Zárt szalon, tat felé",
+            "kep": "03.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.47, 0.52, 0.18, 0.22],
+            "kuszob": { "fajta": "kapu", "el": "oszlop és mennyezetív" },
+            "kapuk": []
+          },
+          {
+            "id": "tat-ejjel",
+            "nev": "Zárt szalon, éjjel",
+            "kep": "20.jpg",
+            "hangulat": "ejjel",
+            "nyilas": [0.50, 0.50, 0.19, 0.20],
+            "kuszob": { "fajta": "ablak", "el": "ablakkeret" },
+            "kapuk": [
+              { "cimke": "Adatlap", "pozicio": [0.16, 0.70], "cel": "adatlap" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "kivul",
+        "nev": "A folyón",
+        "nezopontok": [
+          {
+            "id": "hajo",
+            "nev": "A HABLEÁNY a Dunán",
+            "kep": "17.jpg",
+            "hangulat": "ejjel",
+            "lapos": true,
+            "nyilas": [0.55, 0.80, 0.16, 0.14],
+            "kuszob": { "fajta": "ablak", "el": null },
+            "kapuk": []
+          }
+        ]
+      }
+    ],
+
+    "reszletek": ["08.jpg", "12.jpg"],
+
+    "adatok": {
+      "helyszin": null,
+      "ev": null,
+      "megbizo": null,
+      "terulet": null,
+      "hatokor": null,
+      "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "hotel-domus-collis": {
+    "szint": 1,
+    "tipus": "belso",
+    "sorrend": 20,
+    "hangulat": { "alap": "nappal", "allapotok": ["nappal"] },
+    "anyagok": ["tölgy halszálka", "márvány", "festett fa", "sárgaréz"],
+    "anyagszin": "#b08a5a",
+
+    "szobak": [
+      {
+        "id": "emelet",
+        "nev": "Emeleti folyosó és apartman",
+        "nezopontok": [
+          {
+            "id": "folyoso",
+            "nev": "Emeleti folyosó",
+            "kep": "02.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.17, 0.50, 0.10, 0.26],
+            "kuszob": { "fajta": "ajto", "el": "tükrös fal" },
+            "kapuk": [
+              { "cimke": "Adatlap", "pozicio": [0.78, 0.80], "cel": "adatlap" }
+            ]
+          },
+          {
+            "id": "ajto",
+            "nev": "Nyitott ajtó a nappali felé",
+            "kep": "04.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.66, 0.46, 0.20, 0.32],
+            "kuszob": { "fajta": "ajto", "el": "ajtószárny" },
+            "kapuk": []
+          },
+          {
+            "id": "nappali",
+            "nev": "A nappali, az étkező felé",
+            "kep": "07.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.62, 0.44, 0.15, 0.20],
+            "kuszob": { "fajta": "ajto", "el": "ívlámpa és kanapé" },
+            "kapuk": [
+              { "cimke": "Vissza a folyosóra", "pozicio": [0.13, 0.60], "cel": "nezopont:folyoso" }
+            ]
+          },
+          {
+            "id": "konyha",
+            "nev": "Konyha, átjáróval a zöld szoba felé",
+            "kep": "14.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.86, 0.50, 0.14, 0.32],
+            "kuszob": { "fajta": "kapu", "el": "konyhapult" },
+            "kapuk": []
+          }
+        ]
+      },
+      {
+        "id": "foldszint",
+        "nev": "Reggeliző",
+        "nezopontok": [
+          {
+            "id": "reggelizo",
+            "nev": "Reggeliző, lécvázas térelválasztókkal",
+            "kep": "20.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.39, 0.51, 0.08, 0.24],
+            "kuszob": { "fajta": "ajto", "el": "lécvázas térelválasztó" },
+            "kapuk": [
+              { "cimke": "Adatlap", "pozicio": [0.80, 0.78], "cel": "adatlap" }
+            ]
+          }
+        ]
+      }
+    ],
+
+    "reszletek": ["16.jpg", "17.jpg"],
+
+    "adatok": {
+      "helyszin": null,
+      "ev": null,
+      "megbizo": null,
+      "terulet": null,
+      "hatokor": null,
+      "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "bodajki-vadaszkastely": {
+    "szint": 1,
+    "tipus": "belso",
+    "sorrend": 30,
+    "hangulat": { "alap": "nappal", "allapotok": ["nappal"] },
+    "anyagok": ["dió", "üveg", "sárgaréz", "festett acél"],
+    "anyagszin": "#c08a4e",
+
+    "szobak": [
+      {
+        "id": "kiallitas",
+        "nev": "Kiállítótér",
+        "nezopontok": [
+          {
+            "id": "trofeaterem",
+            "nev": "Trófeaterem, tárlókkal",
+            "kep": "02.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.42, 0.54, 0.16, 0.16],
+            "kuszob": { "fajta": "kapu", "el": "sötét faoszlop" },
+            "kapuk": [
+              { "cimke": "Adatlap", "pozicio": [0.18, 0.80], "cel": "adatlap" }
+            ]
+          },
+          {
+            "id": "szavanna",
+            "nev": "Szavannaterem",
+            "kep": "05.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.47, 0.28, 0.15, 0.17],
+            "kuszob": { "fajta": "ajto", "el": "fűszálinstalláció" },
+            "kapuk": []
+          },
+          {
+            "id": "bambusz",
+            "nev": "Bambuszerdő",
+            "kep": "10.jpg",
+            "hangulat": "nappal",
+            "nyilas": [0.55, 0.42, 0.15, 0.20],
+            "kuszob": { "fajta": "ajto", "el": "fényrudak" },
+            "kapuk": [
+              { "cimke": "Vissza a trófeaterembe", "pozicio": [0.14, 0.62], "cel": "nezopont:trofeaterem" }
+            ]
+          }
+        ]
+      }
+    ],
+
+    "reszletek": ["03.jpg", "07.jpg"],
+
+    "adatok": {
+      "helyszin": null,
+      "ev": null,
+      "megbizo": null,
+      "terulet": null,
+      "hatokor": null,
+      "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "garzon-plaza-hotel": {
+    "szint": 2,
+    "tipus": "belso",
+    "sorrend": 40,
+    "anyagok": ["tölgy", "bőr", "bouclé", "réz"],
+    "anyagszin": "#a9714a",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "fafaragasok": {
+    "szint": 2,
+    "tipus": "targy",
+    "sorrend": 50,
+    "anyagok": ["tömörfa", "faragás", "festett felület"],
+    "anyagszin": "#b3854f",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "duna-hajok-6-1-cabin": {
+    "szint": 2,
+    "tipus": "jarmu",
+    "sorrend": 60,
+    "anyagok": ["tikfa", "lakkozott kompozit", "rozsdamentes acél"],
+    "anyagszin": "#b8814d",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "szent-laszlo-latogatokozpont-fa-kapuja": {
+    "szint": 2,
+    "tipus": "targy",
+    "sorrend": 70,
+    "anyagok": ["tömör tölgy", "kovácsoltvas"],
+    "anyagszin": "#8d5b3a",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "kristaly-etterem": {
+    "szint": 2,
+    "tipus": "belso",
+    "sorrend": 80,
+    "anyagok": ["faléc", "üveg", "bársony"],
+    "anyagszin": "#a8804a",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "ottevenyi-kastely": {
+    "szint": 2,
+    "tipus": "belso",
+    "sorrend": 90,
+    "anyagok": ["tölgyparketta", "festett stukkó", "kristály"],
+    "anyagszin": "#a67f4e",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "fuzio-a-tajjal": {
+    "szint": 2,
+    "tipus": "belso",
+    "sorrend": 100,
+    "anyagok": ["tölgy", "üveg", "beton"],
+    "anyagszin": "#9d7a4c",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  },
+
+  "duna-hajok-6-1-kadet": {
+    "szint": 2,
+    "tipus": "jarmu",
+    "sorrend": 110,
+    "anyagok": ["tikfa", "lakkozott kompozit"],
+    "anyagszin": "#b8814d",
+    "adatok": {
+      "helyszin": null, "ev": null, "megbizo": null,
+      "terulet": null, "hatokor": null, "fotos": null
+    },
+    "szoveg": null
+  }
+}

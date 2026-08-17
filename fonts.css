@@ -2,18 +2,50 @@
    nincs mitől villanjon a szedés, és a sütibanner sem érinti.
 
    Cormorant Garamond: finom vonalú Garamond-újraértelmezés. A címekben
-   300-as (Light) fokozatban fut — vékony, magas kontrasztú, elegáns.
+   300-as (Light) fokozatban fut — vékony, magas kontrasztú, elegáns;
+   a szerkesztői szedés 400-as.
    Archivo: a kezelőfelület és a folyószöveg betűje, semleges groteszk.
+   Folyószöveg 400, műszaki/UI 500.
 
    Mindkettő saját fájlból jön, nem rendszerbetűre bízva: így a szedés
    Windowson, Macen és telefonon is ugyanaz. A latin-ext készlet hozza
    az ő/ű betűket (U+0151, U+0171); a böngésző az unicode-range alapján
-   csak azt tölti le, amire tényleg szükség van. */
+   csak azt tölti le, amire tényleg szükség van.
 
+   ---- MIÉRT NINCS KÜLÖN FÁJL MINDEN FOKOZATHOZ (6. fázis) ----
+
+   Mert nem is volt. A Google Fonts VÁLTOZÓ (variable) woff2-t szolgál
+   ki mindkét családhoz: a fájlban ott a teljes `fvar` / `gvar` / `avar`
+   / `STAT` tengelykészlet, és a szolgáltató UGYANAZT a fájlt adja
+   vissza a család minden fokozatához. A 6. fázis mérése szerint
+
+     archivo-400-latin.woff2            == archivo-500-latin.woff2
+     cormorant-garamond-300-latin.woff2 == cormorant-garamond-400-latin.woff2
+
+   BÁJTRA azonosak voltak (md5 egyezés a metszés előtt és után is).
+   A böngésző URL szerint gyorsítótáraz, tehát mind a tíz szeletet
+   letöltötte: 125,8 KB, amiből 54,5 KB ugyanannak a fájlnak a második
+   példánya volt. Nulla tipográfiai haszonért.
+
+   A megoldás nem fokozat elhagyása — mind az öt szerep megmarad, és
+   pontosan úgy néz ki, mint eddig. A @font-face fokozattartományt kap
+   (`font-weight: 400 500`), a böngésző pedig a változó betű wght
+   tengelyét állítja a kívánt értékre. EGY fájl, KÉT fokozat, azonos
+   rajzolat. A készlet így 125,8 KB → 71,3 KB.
+
+   A fájlnevek szándékosan NEM változtak: tizenhat lap `<link rel=
+   "preload">` sora hivatkozik rájuk, és egy átnevezés csak kockázatot
+   adna hozzá. A névben szereplő szám a tartomány alsó vége.
+
+   A build (7/f. lépés) elbukik, ha a fonts/ mappába visszakerül két
+   azonos tartalmú fájl — ez a hiba magától visszajönne a metsző
+   szkript naiv újrafuttatásával. */
+
+/* ---- Cormorant Garamond, álló — 300 (display) és 400 (szerkesztői) ---- */
 @font-face {
   font-family: 'Cormorant Garamond';
   font-style: normal;
-  font-weight: 300;
+  font-weight: 300 400;
   font-display: swap;
   src: url('fonts/cormorant-garamond-300-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -23,7 +55,7 @@
 @font-face {
   font-family: 'Cormorant Garamond';
   font-style: normal;
-  font-weight: 300;
+  font-weight: 300 400;
   font-display: swap;
   src: url('fonts/cormorant-garamond-300-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
@@ -31,6 +63,7 @@
     U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* ---- Cormorant Garamond, dőlt — csak 300 ---- */
 @font-face {
   font-family: 'Cormorant Garamond';
   font-style: italic;
@@ -52,31 +85,11 @@
     U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-@font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/cormorant-garamond-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/cormorant-garamond-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
-    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
-    U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
+/* ---- Archivo — 400 (folyószöveg) és 500 (műszaki, UI) ---- */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 500;
   font-display: swap;
   src: url('fonts/archivo-400-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -86,29 +99,9 @@
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 500;
   font-display: swap;
   src: url('fonts/archivo-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
-    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
-    U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('fonts/archivo-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('fonts/archivo-500-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
     U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
     U+2113, U+2C60-2C7F, U+A720-A7FF;

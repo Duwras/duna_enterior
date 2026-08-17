@@ -8,7 +8,11 @@
     "build": "node build.mjs",
     "kozzetetel": "node build.mjs && npx --yes wrangler pages deploy deploy --project-name duna-enterior --branch main --commit-dirty=true",
     "elonezet": "npx --yes http-server deploy -p 4190 -c-1",
-    "kepek": "node scripts/kepek-tomorit.mjs"
+    "kepek": "node scripts/kepek-tomorit.mjs",
+    "tartalom": "node scripts/tartalom-matrix.mjs",
+    "muhely": "node scripts/muhely-atvetel.mjs",
+    "betuk": "node scripts/betuk-metszes.mjs",
+    "ellenorzes": "node scripts/ellenorzes.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.4"

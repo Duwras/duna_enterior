@@ -1,0 +1,238 @@
+{
+  "$sema": {
+    "mire": "A FORRÁS — mesterképek szabálya, jogi állapota és minőségi kivételei. A 6. fázisban készült.",
+
+    "miert-kulon-fajl": "Ugyanaz az ok, mint a terek.json-nál: az admin mentéskor fix mezőlistára tisztítja a projekteket (admin.js tisztit()), tehát minden ismeretlen mezőt némán eldobna. Ez a fájl stúdióoldali, az admin soha nem nyúl hozzá.",
+
+    "miert-nem-assets-json": "A PHASE-6 D. része felvetette a data/assets.json-t. Nem készült el, mert nem oldott volna meg valódi kettőzést: a KÉP-lista már megvan a projektek.json-ban, a SZEREPEK pedig a terek/flotta/keszules fájlokból SZÁMÍTHATÓK. Egy harmadik, kézzel vezetett képlista azonnal elavulna. Itt csak az van, ami sehonnan nem vezethető le: jog, vízjel, dátumbélyeg, eredet, és a névre szóló minőségi felmentés.",
+
+    "hol-a-mester": "img/projektek/<slug>/<fájl> — ez a MESTER. A deploy/img/projektek/<slug>/<fájl>-400|-800|-1400.(jpg|webp|avif) SZÁRMAZÉK, és minden buildnél újra előáll. A .kepgyorstar/ csak gyorsítótár. A build (2/d) megáll, ha a mesterek közé származék kerül.",
+
+    "mezok": {
+      "mester": "A minőségi küszöbök. A 'kritikus' szerepű képekre a build HIBÁVAL áll meg, a többire figyelmeztet.",
+      "szerepek": "Melyik felhasználás számít kritikusnak. A szerepeket a build SZÁMÍTJA a terek.json / flotta.json / keszules.json alapján — itt csak a küszöb és a szigor van.",
+      "projektek": "Projektszintű tények, amiket a fájlból nem lehet kiolvasni. Csak az szerepel, amiről a PHASE-0 / PHASE-4 / PHASE-5 audit tényt állít.",
+      "kepek": "Képre szóló kivétel: felmentés (mentesseg) vagy projektszintű érték felülírása.",
+      "mentesseg": "Névre szóló, indokolt felmentés a minőségi küszöb alól. Enélkül egy kritikus szerepű, küszöb alatti kép MEGÁLLÍTJA a buildet. Ez a lényeg: ami ma hiányzik, az le van írva; ami holnap kerül be hiányosan, az elbukik."
+    },
+
+    "allapotok": [
+      "READY — megvan, elég jó, mehet",
+      "NEEDS_MASTER — a szerepéhez képest kis felbontású; kell a kamerából jövő eredeti vagy új fotó",
+      "NEEDS_RIGHTS — a felhasználási jog nincs írásban tisztázva",
+      "NEEDS_COPY — hiányzik a szöveg (leiras) vagy a képleírás (alt)",
+      "NEEDS_PHOTOGRAPHY — nincs ilyen kép, fotózni kell",
+      "NEEDS_DEPTH — kellene mélységadat (nyílás vagy mélységtérkép), és nincs",
+      "ARCHIVE_ONLY — megmarad a galériában, de teljes szélességben nem állhat"
+    ]
+  },
+
+  "mester": {
+    "_megjegyzes": "A számok a TÉNYLEGES fogyasztáshoz vannak szabva, nem eszményhez. A build 1400 px-ig méretez; egy 1400 px-es mester tehát pont elég a MAI kimenethez, de nulla vágási és nagyítási tartaléka van. Az 'ajanlott' az, amit egy új fotózástól kérni kell (PHASE-5 §15.1: 2400 px minimum, 3000-4000 px eszmény).",
+
+    "minimum":        { "megapixel": 1.5, "hosszabbOldal": 1400 },
+    "ajanlott":       { "megapixel": 3.0, "hosszabbOldal": 2400 },
+    "melysegKritikus": { "megapixel": 6.0, "hosszabbOldal": 3000 },
+
+    "_vagasTartalek": "Mennyit szabad levágni a mesterből úgy, hogy a maradék még átmenjen a minimumon. 12% = a hosszabb oldal 88%-a. Efölött új mester kell, nem vágás.",
+    "vagasTartalek": 0.12,
+
+    "_oldalarany": "Nem egyetlen arányt írunk elő — a jelenetek fekvő és álló képkockát is használnak. Ami TILOS: a szélsőség. 2.2-nél szélesebb panoráma és 0.42-nél magasabb álló kép a mai elrendezésben vagy szétesik, vagy a felét levágja a rács.",
+    "oldalarany": { "min": 0.42, "max": 2.2 },
+
+    "formatum":  ["jpg", "jpeg", "png", "tif", "tiff"],
+    "_formatum": "A fotóstól JPEG q90+ vagy 16 bites TIFF. AVIF/WebP MESTERKÉNT tilos: azok a mi kimeneti formátumaink, és ha bejönnek forrásként, az kétszeres veszteséges kódolás.",
+
+    "szinter": "srgb",
+    "_szinter": "sRGB, beágyazott profillal. A sharp minden mást sRGB-re konvertál, tehát egy AdobeRGB mester némán fakóbb lesz — ezért ellenőrizzük.",
+
+    "_vizjel": "Vízjel nélkül. A meglévő archívumból nem távolítunk el vízjelet (az ügyfél saját származási jegye), de ÚJ mester nem jöhet vízjellel.",
+    "_datumbelyeg": "Beégetett dátum nélkül. A gépóra nem visszavonható, és nem is ügyfél által megerősített tény.",
+    "_retus": "Por és szenzorfolt. Nincs égcsere, nincs montázs, nincs oda nem tett szerszám.",
+
+    "_szarmazeklanc": "A build (2/d) gyanús forrásláncot keres: -400/-800/-1400 utótagot a mester nevében, pontosan a származékméretekkel egyező szélességet, AVIF/WebP mestert, és feltűnően alacsony bájt/képpont arányt. Ezek együtt azt jelentik, hogy valaki a deploy/ mappából emelt vissza képet forrásnak.",
+    "szarmazekSzelessegek": [400, 800, 1400],
+    "gyanusBajtPerKeppont": 0.09
+  },
+
+  "szerepek": {
+    "_megjegyzes": "A kulcsokat a build számítja. 'kritikus: true' = küszöb alatt HIBA, ha nincs névre szóló felmentés. 'kritikus: false' = csak figyelmeztetés.",
+
+    "szint1-nezopont":  { "kritikus": true,  "kuszob": "minimum", "leiras": "Bejárható tér (szint 1) valódi kameraállása — teljes szélességben, mélységréteggel" },
+    "fooldal-jelenet":  { "kritikus": true,  "kuszob": "minimum", "leiras": "A főoldal filmes jelenetének képkockája" },
+    "fooldal-metszet":  { "kritikus": false, "kuszob": "minimum", "leiras": "A főoldali metszet lemeze — méretezett, nem teljes szélességű" },
+    "flotta-nyitas":    { "kritikus": true,  "kuszob": "minimum", "leiras": "A flotta nyitó képkockája — teljes szélességben" },
+    "keszules-nyitas":  { "kritikus": true,  "kuszob": "minimum", "leiras": "A készülés nyitó képkockája — teljes szélességben" },
+    "keszules-muhely":  { "kritikus": true,  "kuszob": "minimum", "leiras": "A készülés záró műhelyképe — teljes szélességben" },
+    "keszules-lemez":   { "kritikus": false, "kuszob": "minimum", "leiras": "Sorozatlemez — 62/82/100% szélességen" },
+    "flotta-borito":    { "kritikus": false, "kuszob": "minimum", "leiras": "Vízvonal-borító — 400 px" },
+    "projekt-borito":   { "kritikus": false, "kuszob": "minimum", "leiras": "Rácsborító — 288-330 px" }
+  },
+
+  "projektek": {
+    "_megjegyzes": "Csak az szerepel, amiről a PHASE-0 / PHASE-4 / PHASE-5 audit ÁLLÍT valamit. Ami nincs itt, arra a jogok: 'sajat-archivum' alapérték érvényes — az ügyfél saját közzétett portfóliójából származik, és a fázisok egyike sem talált ezzel ellenkező jelet.",
+
+    "hotel-domus-collis": {
+      "jogok": "tisztazando",
+      "eredet": "kulso-fotos",
+      "megjegyzes": "A húsz alt szöveg Facebook CDN fájlnév volt (PHASE-0 §6). Ez közösségi médiából való átvételt és korábbi újratömörítést valószínűsít. A fotós személye és a felhasználási jog írásban NINCS tisztázva — a főoldal egy jelenetét és egy szint-1 termet is ez a projekt hordoz.",
+      "allapot": "NEEDS_RIGHTS"
+    },
+
+    "fuzio-a-tajjal": {
+      "jogok": "sajat-archivum",
+      "vizjel": "Duna Enterior",
+      "megjegyzes": "A legtöbb képkockán látszik a 'Duna Enterior' vízjel (PHASE-0 §329). 0.69 MP átlag. Teljes szélességben nem állhat.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "zirci-apatsag": {
+      "jogok": "sajat-archivum",
+      "eredet": "latvanyterv",
+      "vizjel": "Duna Enterior",
+      "vagott": true,
+      "megjegyzes": "100% látványterv, vízjellel, 800x800-as vágásban. Nem fénykép — a készülés lapján ezért nem szerepelhet (PHASE-5 §1.5). A 'vagott' azt jelenti: a 800 px szélesség az ARCHÍVUM vágása, nem a mi származékunk.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "kristaly-etterem": {
+      "jogok": "sajat-archivum",
+      "eredet": "latvanyterv",
+      "megjegyzes": "100% látványterv, nem fénykép. Szint-1 bejegyzése van a terek.json-ban, de nem bejárható térként.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "csaladi-haz": {
+      "jogok": "sajat-archivum",
+      "eredet": "latvanyterv",
+      "vizjel": "Duna Enterior",
+      "megjegyzes": "PHASE-7-ben mind a 14 kép megnézve: 100% látványterv, nem fénykép. A vízjelen felül MINDEGYIKEN ott a beégetett felirat is: „A látványterven megjelenített termékek nem minden esetben egyeznek meg a költségvetésben szereplő termékekkel.” A PHASE-6 §1.4 CGI-listája ezt a projektet nem tartalmazta.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "budai-haz": {
+      "jogok": "sajat-archivum",
+      "eredet": "latvanyterv",
+      "vizjel": "Duna Enterior",
+      "megjegyzes": "PHASE-7-ben mind a 12 kép megnézve: 100% látványterv, nem fénykép, vízjellel. A PHASE-6 §1.4 CGI-listája ezt a projektet nem tartalmazta.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "belvarosban-nyugalomban": {
+      "jogok": "sajat-archivum",
+      "vizjel": "Duna Enterior",
+      "megjegyzes": "PHASE-7: mind a 15 fényképen látszik a 'Duna Enterior' vízjel. Korábban nem volt rögzítve.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "domus-pellegrini-hotel-apartmanok": {
+      "jogok": "sajat-archivum",
+      "vizjel": "Duna Enterior",
+      "megjegyzes": "PHASE-7: mind az 5 fényképen látszik a 'Duna Enterior' vízjel. Korábban nem volt rögzítve.",
+      "allapot": "ARCHIVE_ONLY"
+    },
+
+    "garzon-plaza-hotel": {
+      "jogok": "sajat-archivum",
+      "megjegyzes": "Vegyes: fotó + kézi vázlat + anyagtábla + látványterv. A 01, 05, 07, 12, 19 LÁTVÁNYTERV (PHASE-5 §1.3) — ezért nem kerültek a készülés lapjára, csak a főoldal metszetébe.",
+      "allapot": "READY"
+    },
+
+    "szent-laszlo-latogatokozpont-fa-kapuja": {
+      "jogok": "sajat-archivum",
+      "szemely": "engedelyre-var",
+      "megjegyzes": "A 06 és 08 felismerhető embereket mutat munka közben, névtelenül, a saját beépítésükről. A tulajdonos megerősítése hiányzik (PHASE-5 §22.5). Új fotózásnál minden felismerhető személyre modellszerződés kell.",
+      "allapot": "NEEDS_RIGHTS"
+    },
+
+    "vatikani-diszdoboz": {
+      "jogok": "sajat-archivum",
+      "szemely": "engedelyre-var",
+      "megjegyzes": "A 01 és 02 az átadásról készült csoportkép, felismerhető emberekkel. Szerkesztői okból kizárva a készülés lapjáról (PHASE-5 §1.6) — visszavonható döntés.",
+      "allapot": "READY"
+    },
+
+    "boesch-640-de-luxe":      { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "megjegyzes": "0.31-0.85 MP. A hajóépítés legjobb folyamatdokumentációja, és a leggyengébb felbontása.", "allapot": "NEEDS_MASTER" },
+    "boesch-580":              { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "boesch-560-de-luxe":      { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "datumbelyeg": "'03 4 23", "allapot": "NEEDS_MASTER" },
+    "meyer-motorcsonak-1":     { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "meyer-motorcsonak-2":     { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "datumbelyeg": "'04 3.22", "megjegyzes": "Az 05 az EGYETLEN műhelyfotó az archívumban: 0.75 MP, 2004, beégetett dátummal. A készülés lapjának záróképe, és a site legnagyobb tartalmi hiánya.", "allapot": "NEEDS_MASTER" },
+    "volvo-penta-motorcsonak": { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "datumbelyeg": "'03 12 18", "vagott": true, "allapot": "NEEDS_MASTER" },
+    "jolle-25":                { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "arcangeli-super-jolly":   { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "jegvitorlas":             { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "rivalis-vitorlas-hajo":   { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "veteran-motorcsonak":     { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
+    "bojan-harcos":            { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "megjegyzes": "Három fénykép, nulla állomás. A flottában van, mert egy valódi DUNA hajó kihagyása a szebb index kedvéért volna a torzítás.", "allapot": "NEEDS_MASTER" },
+    "mercedes-plato": {
+      "jogok": "sajat-archivum",
+      "megjegyzes": "PHASE-7 helyesbítés: a korábbi 'Duna HAJÓK' vízjel-bejegyzés téves volt. Az 1600 px-es mesterek nagyításban megnézve: a 05-ön a felirat az ÜZEM saját táblája, a hátsó ablakon át fényképezve, a 07-en pedig az épület homlokzatán van. Nem ráhelyezett vízjel — ellentétben a boesch-640/13-mal, ahol a féláttetsző rátét egyértelmű. Ezek 1.71–2.05 MP-es, újabb felvételek, nem a 2000-es évek hajóarchívumából valók.",
+      "allapot": "READY"
+    },
+
+    "duna-cruises-hableany": {
+      "jogok": "sajat-archivum",
+      "megjegyzes": "A portfólió legerősebb tércsoportja: ugyanaz a szalon ~15 állásból, nappal ÉS éjjel. Ez az egyetlen projekt, ami ma nappal-éjjel KAPU-t tud. A 01 (a hajó a Dunán) a flotta LCP képkockája, 1.81 MP, q36 AVIF-ként is 197 KB.",
+      "allapot": "READY"
+    },
+
+    "fafaragasok": {
+      "jogok": "sajat-archivum",
+      "megjegyzes": "A portfólió legjobb kézműves közelijei. Vízjel és dátumbélyeg nélkül, egyenletes 1.57 MP. A készülés nyitása mind a három képkockát innen veszi.",
+      "allapot": "READY"
+    },
+
+    "bodajki-vadaszkastely": { "jogok": "sajat-archivum", "allapot": "READY" },
+    "ottevenyi-kastely":     { "jogok": "sajat-archivum", "allapot": "READY" },
+    "duna-hajok-6-1-cabin":  { "jogok": "sajat-archivum", "allapot": "READY" },
+    "duna-hajok-6-1-kadet":  { "jogok": "sajat-archivum", "allapot": "READY" }
+  },
+
+  "kepek": {
+    "_megjegyzes": "Névre szóló felmentések. MINDEGYIK egy le nem fényképezett dolog helye. Ha egy sor eltűnik innen, az azt jelenti, hogy megjött a jobb mester — nem azt, hogy elnézőbbek lettünk.",
+
+    "jegvitorlas/05.jpg": {
+      "mentesseg": {
+        "ok": "0.48 MP, a minimum harmada. A flotta nyitásának 2. képkockája: bordák a sólyán. Az archívumban NINCS jobb felbontású kép hajóépítésről — a teljes hajós anyag 0.31-0.85 MP között van (PHASE-4 §19).",
+        "allapot": "NEEDS_MASTER",
+        "feloldja": "Két épülő hajótest újrafotózása, 3000 px, vízjel nélkül (PHASE-5 §15.2, 8. felvétel)."
+      }
+    },
+    "rivalis-vitorlas-hajo/06.jpg": {
+      "mentesseg": {
+        "ok": "0.54 MP, teljes szélességben látványosan lágy. A flotta nyitásának fordulópontja, és az EGYETLEN archív kép, ami egy hajóbelsőt szobaként mutat a HABLEÁNY és a 6.1 Cabin mellett (PHASE-4 §19.4).",
+        "allapot": "NEEDS_MASTER",
+        "feloldja": "Bármelyik másik hajóbelső újrafotózása, 2400 px."
+      }
+    },
+    "boesch-640-de-luxe/05.jpg": {
+      "mentesseg": {
+        "ok": "0.79 MP. A flotta nyitásának egyik képkockája.",
+        "allapot": "NEEDS_MASTER",
+        "feloldja": "A befejező üzem újrafotózása munka közben (PHASE-5 §14.1)."
+      }
+    },
+    "boesch-640-de-luxe/13.jpg": {
+      "mentesseg": {
+        "ok": "0.85 MP, ráadásul a 'Duna HAJÓK' vízjel a sötét lakkon jól látszik (PHASE-4 §5). A flotta nyitásának festőkabinos képkockája.",
+        "allapot": "NEEDS_MASTER",
+        "feloldja": "Ugyanaz — a befejező üzem munka közben."
+      }
+    },
+    "meyer-motorcsonak-2/05.jpg": {
+      "mentesseg": {
+        "ok": "0.75 MP, 2004, beégetett dátumbélyeggel. AZ EGYETLEN MŰHELYFOTÓ AZ ARCHÍVUMBAN. A készülés lapja ezt ki is mondja, nem kerüli meg. Ez a 6. fázis 1. számú tartalmi hiánya.",
+        "allapot": "NEEDS_MASTER",
+        "feloldja": "PHASE-5 §15.2, 1. felvétel: a műhely teljes szélességben, 3000 px, emberekkel, mélységgel. Ez a site legnagyobb egyetlen nyeresége."
+      }
+    }
+  },
+
+  "kozossegi": {
+    "_megjegyzes": "A közösségi megosztás képe (og:image). A build 1200x630-ra vágja a fokusz köré, és a deploy/img/brand/kozossegi.jpg helyre teszi. MEGLÉVŐ mesterből készül — nem új fotó, nem montázs. Az alt szöveg a projektek.json-ból jön, nem íródik ide külön.",
+    "_miert-ez": "Négy feltételnek kellett egyszerre teljesülnie: tisztázott jog (tehát nem a Domus Collis), vízjel és dátumbélyeg nélkül, 2 MP fölött, és egyetlen képen mutassa a belsőépítészetet ÉS az asztalosmunkát. A bodajki trófeaterem az egyetlen, ami mind a négyet hozza — és ez a főoldal 3. jelenete is, tehát nem mond mást, mint amit a lap.",
+    "slug": "bodajki-vadaszkastely",
+    "kep": "02.jpg",
+    "fokusz": [0.5, 0.48]
+  }
+}

@@ -4,9 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{cim}} — Duna Belsőépítészet Kft.</title>
-<meta name="description" content="{{cim}} — {{kategoria}} referencia a Duna Belsőépítészet Kft. munkáiból, {{kepSzam}} fotóval.">
+<meta name="description" content="{{cim}} — {{kategoria}} referencia a Duna Belsőépítészet Kft. munkáiból, {{kepMeta}}.">
 <link rel="icon" href="img/brand/favicon.png">
+<!-- A hajtás fölött ténylegesen használt két betűváltozat előre kérve.
+     A többi maradhat a CSS feldolgozása utánra. -->
+<link rel="preload" href="fonts/cormorant-garamond-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="rendszer.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,7 +31,7 @@
         <h1>{{cim}}</h1>
         <dl class="projekt-adat jon bal kesik-2">
           <div><dt>Kategória</dt><dd>{{kategoria}}</dd></div>
-          <div><dt>Fotó</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
+          <div><dt>{{kepCimke}}</dt><dd><span data-szam="{{kepSzam}}">{{kepSzam}}</span></dd></div>
         </dl>
         <!--KULSO-LINK-->
       </div>
@@ -50,7 +55,7 @@
         <div class="szekcio-fej">
           <div>
             <p class="felcim jon bal">Galéria</p>
-            <h2>{{kepSzam}} fotó a munkáról.</h2>
+            <h2>{{kepMondat}}</h2>
           </div>
         </div>
         <div class="galeria">

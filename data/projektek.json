@@ -4,89 +4,89 @@
     "cim": "Garzon Pláza Hotel",
     "kategoria": "hotel",
     "link": "https://garzonplaza.hu",
-    "leiras": "",
+    "leiras": "Szálloda belsőépítészete: recepciópult, a reggeliző büfépultja, tetőtéri folyosó, üvegkorlátos lépcsőház, szobabelsők és egy egyedi fotel. Az anyag azért különleges, mert végigmutatja a saját útját: kézi vázlatok és látványtervek állnak ugyanannak a pultnak a fényképe mellett, a fotelnél pedig a rajz, a szövet- és bőrminták és a kész darab is megvan. A kivitelezés köztes állapotairól nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "GPH recepció (2)"
+        "alt": "Kézi vázlat és látványterv a recepciópultról, réz és sötét kő anyagokkal"
       },
       {
         "file": "02.jpg",
-        "alt": "GPH recepció (1)"
+        "alt": "A megépült recepciópult, mögötte a hosszú folyosó és a függesztett világítótest"
       },
       {
         "file": "03.jpg",
-        "alt": "GPH recepció (3)"
+        "alt": "Recepciópult festményekkel a világos falon"
       },
       {
         "file": "04.jpg",
-        "alt": "Garzon Pláza Hotel"
+        "alt": "Recepciópult világos fa fronttal, mögötte kőburkolat és üvegfal"
       },
       {
         "file": "05.jpg",
-        "alt": "GPH reggeliző (2)"
+        "alt": "Látványterv a reggeliző büfépultjáról, világos fa fronttal"
       },
       {
         "file": "06.jpg",
-        "alt": "GPH reggeliző (4)"
+        "alt": "A megépült büfépult reggelire tálalva, mögötte polcok és téglafal"
       },
       {
         "file": "07.jpg",
-        "alt": "GPH reggeliző (3)"
+        "alt": "Látványterv a hosszú büfépultról, fehér alapon, kézi rajzos háttérrel"
       },
       {
         "file": "08.jpg",
-        "alt": "GPH reggeliző (5)"
+        "alt": "A reggeliző a pulttal és az étkezőrésszel, a végén kávégéppel"
       },
       {
         "file": "09.jpg",
-        "alt": "GPH reggeliző (1)"
+        "alt": "A megépült büfépult reggelire terítve, mögötte az étkező"
       },
       {
         "file": "10.jpg",
-        "alt": "GPH felső szint (2)"
+        "alt": "Tetőtéri folyosó tetőablakokkal, képekkel és konzolasztallal"
       },
       {
         "file": "11.jpg",
-        "alt": "GPH felső szint (1)"
+        "alt": "Lépcsőház üveg mellvéddel, rajta a szálloda maratott jelével"
       },
       {
         "file": "12.jpg",
-        "alt": "GPH külső látványtervek"
+        "alt": "Két külső látványterv egy lapon: a főbejárat és az utcai homlokzat"
       },
       {
         "file": "13.jpg",
-        "alt": "GPH külső"
+        "alt": "A szálloda megépült főbejárata és belső udvara"
       },
       {
         "file": "14.jpg",
-        "alt": "GPH fotel (4)"
+        "alt": "Fotelvázlat papíron, mellette szövet- és bőrminták, kézírásos jegyzettel"
       },
       {
         "file": "15.jpg",
-        "alt": "GPH fotel (1)"
+        "alt": "A kész fotel fehér háttér előtt: hajlított váz, bőr és sötétszürke bouclé"
       },
       {
         "file": "16.jpg",
-        "alt": "GPH fotel (2)"
+        "alt": "A fotel karfájának részlete: rézszínű hajlított cső és bouclé kárpit"
       },
       {
         "file": "17.jpg",
-        "alt": "GPH fotel (3)"
+        "alt": "A fotel háromnegyedes nézetből, fehér háttér előtt"
       },
       {
         "file": "18.jpg",
-        "alt": "GPH szoba (1)"
+        "alt": "Sötét falpanel részlete rézszínű, mértani világítótesttel"
       },
       {
         "file": "19.jpg",
-        "alt": "GPH szoba (2)"
+        "alt": "Két szobalátványterv egy lapon: ágy szekrénnyel, illetve íróasztal és televízió"
       },
       {
         "file": "20.jpg",
-        "alt": "GPH szoba (3)"
+        "alt": "Kétágyas szoba sötét tapétával, világos fa szekrénysorral és fejtámlával"
       }
     ]
   },
@@ -95,41 +95,41 @@
     "cim": "Öttevényi kastély",
     "kategoria": "kastely",
     "link": "https://ottevenyikastely.hu/",
-    "leiras": "",
+    "leiras": "Kastélybelsők: dísztermek kazettás lambériával, csillárokkal és mintás parkettával — terítve és üresen is —, egy címeres pulpitus, egy tálalópult a felszolgálásra kész fogásokkal, és a pincebár mahagóni pultja íves, világított italpolcokkal. A nyolc fénykép a kész, használatban lévő tereket mutatja. A famunkák készítéséről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Öttevényi kastély_belső5"
+        "alt": "Díszterem terített kerek asztalokkal, fehér székekkel és két csillárral"
       },
       {
         "file": "02.jpg",
-        "alt": "Öttevényi kastély_belső2"
+        "alt": "Ugyanaz a terem üresen, drapériás ablakokkal és mintás parkettával"
       },
       {
         "file": "03.jpg",
-        "alt": "Öttevényi kastély_belső1"
+        "alt": "Terem festményekkel a tapétázott falon, kazettás lambériával és csillárral"
       },
       {
         "file": "04.jpg",
-        "alt": "Öttevényi kastély_belső3"
+        "alt": "Címeres pulpitus két ablak között, drapériás függönyökkel"
       },
       {
         "file": "05.jpg",
-        "alt": "Öttevényi kastély_belső4"
+        "alt": "A pulpitus, mögötte a terített elnöki asztal és egy vadászjelenetes festmény"
       },
       {
         "file": "06.jpg",
-        "alt": "Öttevényi kastély_belső6"
+        "alt": "Tálalópult hidegtálakkal és gyümölcsemeletessel, fölötte üveg védőtető"
       },
       {
         "file": "07.jpg",
-        "alt": "Öttevényi kastély_bár1"
+        "alt": "A pincebár mahagóni pultja, mögötte íves, világított italpolcok és csillár"
       },
       {
         "file": "08.jpg",
-        "alt": "Öttevényi kastély_bár2"
+        "alt": "A bár teljes hosszában, bárszékekkel és mintás falburkolattal"
       }
     ]
   },
@@ -138,29 +138,29 @@
     "cim": "Vatikáni díszdoboz",
     "kategoria": "egyedi",
     "link": null,
-    "leiras": "",
+    "leiras": "Tömörfa díszdoboz tolható fedéllel; a nyitott dobozban aranyozott alapon fekete töviskorona-kereszt, a fedélbe felirat vésve. Öt fénykép maradt: három magáról a tárgyról, kettő az átadásáról egy vatikáni teremben. A készítés folyamatáról — az anyagról, a kézről, a doboz saját teréről — nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Vatikáni díszdoboz (1)"
+        "alt": "A díszdoboz átadása egy vatikáni teremben, állványon a nyitott dobozzal"
       },
       {
         "file": "02.jpg",
-        "alt": "Vatikáni díszdoboz (2)"
+        "alt": "Csoportkép a díszdoboz átadásán, mögöttük az állványon a tárggyal"
       },
       {
         "file": "03.jpg",
-        "alt": "Vatikáni díszdoboz (3)"
+        "alt": "A nyitott doboz felülről: aranyozott alapon fekete töviskorona-kereszt"
       },
       {
         "file": "04.jpg",
-        "alt": "Vatikáni díszdoboz (4)"
+        "alt": "A doboz állítva, tolható fedéllel, mögötte a kereszt az aranyozott alapon"
       },
       {
         "file": "05.jpg",
-        "alt": "Vatikáni díszdoboz (5)"
+        "alt": "A tömörfa fedélbe vésett felirat közelről, a tölgy évgyűrűivel"
       }
     ]
   },
@@ -169,49 +169,49 @@
     "cim": "Mercedes plató",
     "kategoria": "egyedi",
     "link": null,
-    "leiras": "",
+    "leiras": "Klasszikus Mercedes személyautóból átalakított platós jármű fa rakfelülete. A tíz felvétel az elkészült platót mutatja: a hosszanti deszkázatot, a sötét szegélylécet, a kerékdob íves takarását, a rozsdamentes rögzítéseket, a sodronnyal tartott lehajtható hátfalat, és a felszerelt járművet több nézetből. Az első lap két nézetet állít egymás mellé egy bemutató táblán. Az átalakítás munkafolyamata nincs dokumentálva.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "GM1"
+        "alt": "Bemutató lap két nézettel: a plató felülről, és a lehajtott hátfal a rakfelülettel"
       },
       {
         "file": "02.jpg",
-        "alt": "3-IMG_0799"
+        "alt": "A kész jármű hátulról, fekete karosszériával és fa rakfelülettel"
       },
       {
         "file": "03.jpg",
-        "alt": "57-IMG_0853"
+        "alt": "A rakfelület felülről: hosszanti deszkázat, íves kerékdobtakarás és sötét szegélyléc"
       },
       {
         "file": "04.jpg",
-        "alt": "GM2 a"
+        "alt": "A szegélyléc és a hátfal sarka közelről, a tartósodronnyal"
       },
       {
         "file": "05.jpg",
-        "alt": "GM2 c"
+        "alt": "A rakfelület sarka: íves kerékdobtakarás, a hátfal csuklója és a sodrony"
       },
       {
         "file": "06.jpg",
-        "alt": "GM2 d"
+        "alt": "Az oldalfal és a padló találkozása közelről, rozsdamentes csavarokkal"
       },
       {
         "file": "07.jpg",
-        "alt": "5-IMG_0801"
+        "alt": "A jármű ferdén hátulról, lehajtott hátfallal, az üzem épülete előtt"
       },
       {
         "file": "08.jpg",
-        "alt": "GM2 e"
+        "alt": "A lehajtott hátfal felülről, a padlódeszkázattal és a rozsdamentes szegéllyel"
       },
       {
         "file": "09.jpg",
-        "alt": "GM2 f"
+        "alt": "A lehajtott hátfal és a rakfelület ferdén hátulról, a feszítősodronnyal"
       },
       {
         "file": "10.jpg",
-        "alt": "GM3"
+        "alt": "A jármű hátulról, a teljes rakfelülettel, az épület üvegfala előtt"
       }
     ]
   },
@@ -220,41 +220,41 @@
     "cim": "Szent László Látogatóközpont fa kapuja",
     "kategoria": "szakralis",
     "link": null,
-    "leiras": "",
+    "leiras": "Kétszárnyú tömörfa kapu egy látogatóközpont homlokzatában. A nyolc fénykép a helyszíni beépítést dokumentálja: a darus tehergépkocsi érkezését, a becsomagolt szárnyak leemelését, a kézi mozgatást a lépcsőn, végül a kész, nyitott kaput. A műhelyben töltött időről — az anyagról és a faragásról — nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Szent László Látogatóközpont fa kapuja"
+        "alt": "A kétszárnyú tömörfa kapu nyitva, mögötte a látogatóközpont udvara"
       },
       {
         "file": "02.jpg",
-        "alt": "Szent László Látogatóközpont fa kapuja"
+        "alt": "A zárt tömörfa kapu a látogatóközpont sárga homlokzatában"
       },
       {
         "file": "03.jpg",
-        "alt": "3a"
+        "alt": "Darus tehergépkocsi a kapu érkezésekor, a látogatóközpont előtti köves téren"
       },
       {
         "file": "04.jpg",
-        "alt": "3a2"
+        "alt": "A becsomagolt kapuszárny hevederben a daru horgán, több emberrel körülötte"
       },
       {
         "file": "05.jpg",
-        "alt": "3b"
+        "alt": "A daru leengedi a szárnyat, a szerelők hevederrel irányítják"
       },
       {
         "file": "06.jpg",
-        "alt": "3c"
+        "alt": "A becsomagolt kapuszárny állítva a szállítójármű mellett, két ember tartja"
       },
       {
         "file": "07.jpg",
-        "alt": "3d"
+        "alt": "A szárny beemelése a homlokzat elé, a szerelők a hevedereket fogják"
       },
       {
         "file": "08.jpg",
-        "alt": "3e"
+        "alt": "Több ember együtt emeli a becsomagolt kapuszárnyat a lépcsőn"
       }
     ]
   },
@@ -263,89 +263,89 @@
     "cim": "Hotel Domus Collis",
     "kategoria": "hotel",
     "link": null,
-    "leiras": "",
+    "leiras": "Szálloda és apartmanok belsőépítészete: recepciótér bordázott térelválasztóval, emeleti folyosó, apartmanbelsők konyhával és nappalival, fürdőszobák, és a földszinti reggeliző fa lécvázas térelválasztókkal. A húsz fénykép a kész, berendezett állapotot mutatja; a kivitelezésről és a beépítésről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Hotel Domus Collis"
+        "alt": "Recepció sárga fotellel, narancssárga kanapéval és mintás padlóval"
       },
       {
         "file": "02.jpg",
-        "alt": "Hotel Domus Collis"
+        "alt": "Emeleti folyosó tükrös fallal és mozaikpadlóval"
       },
       {
         "file": "03.jpg",
-        "alt": "Hotel Domus Collis"
+        "alt": "Apartman konyha-étkezője márványfallal és halszálkás parkettával"
       },
       {
         "file": "04.jpg",
-        "alt": "332721968_1578885315912501_6210931307900864503_n"
+        "alt": "Nyitott ajtó a nappali felé, halszálkás parkettával és tükörrel"
       },
       {
         "file": "05.jpg",
-        "alt": "332724539_1284711235756991_6422370971573588399_n"
+        "alt": "Fürdőszoba márványburkolattal, kerek tükörrel és mosdópulttal"
       },
       {
         "file": "06.jpg",
-        "alt": "332757409_5855314681255397_1775997292662134204_n"
+        "alt": "Fürdőszoba két mosdóval, világos márványfelületekkel"
       },
       {
         "file": "07.jpg",
-        "alt": "332774463_509411991406376_8318197446405052028_n"
+        "alt": "Apartman nappalija zöld függönyökkel és ívlámpával, mögötte az étkező"
       },
       {
         "file": "08.jpg",
-        "alt": "332862483_746760843513676_6326920290454964503_n"
+        "alt": "Reggeliző részlet: sötétzöld fal, kárpitozott pad és terített asztalok"
       },
       {
         "file": "09.jpg",
-        "alt": "332881051_1206330440020608_584867018627112210_n"
+        "alt": "Recepciótér burkolt tömbbel és bordázott zöld térelválasztóval"
       },
       {
         "file": "10.jpg",
-        "alt": "332908383_602967717942316_7012678094548995149_n"
+        "alt": "Nappali kanapéval, kerek asztallal és zöld függönyökkel"
       },
       {
         "file": "11.jpg",
-        "alt": "332929541_728321768891952_6851597394257838543_n"
+        "alt": "Nyitott nappali-konyha tévéfallal és halszálkás parkettával"
       },
       {
         "file": "12.jpg",
-        "alt": "333022450_574225011313109_5002350849232984737_n"
+        "alt": "Nappali tévével, kerek asztalokkal és magas ablakokkal"
       },
       {
         "file": "13.jpg",
-        "alt": "333032708_623491206284655_5327470858812089084_n"
+        "alt": "Konyha-étkező márványfelülettel és kerek függesztett lámpával"
       },
       {
         "file": "14.jpg",
-        "alt": "333113536_1570528936764820_2795746135406859281_n"
+        "alt": "Konyhapult a sarokban, nyitott ajtóval a sötétzöld szoba felé"
       },
       {
         "file": "15.jpg",
-        "alt": "333481373_232797785858902_8477199301502779618_n"
+        "alt": "Világos konyha-étkező fa székekkel és beépített szekrénysorral"
       },
       {
         "file": "16.jpg",
-        "alt": "333516611_6873650259317886_308071647313146365_n"
+        "alt": "Teakonyha beépített szekrényekkel, mustársárga ülőkével és íves tükörrel"
       },
       {
         "file": "17.jpg",
-        "alt": "333636646_3533398830385148_5000530724554839478_n"
+        "alt": "Reggeliző fa lécvázas térelválasztóval és terített asztalokkal"
       },
       {
         "file": "18.jpg",
-        "alt": "334290815_121904867363945_2112004490983650498_n"
+        "alt": "Szoba kanapéval és kerek asztalokkal, két ablak között"
       },
       {
         "file": "19.jpg",
-        "alt": "334469299_242443634933179_507208904047291201_n"
+        "alt": "Reggeliző terített asztalokkal, lécvázas fallal és zöld felülettel"
       },
       {
         "file": "20.jpg",
-        "alt": "334473556_1418199295383371_3708426444482368400_n"
+        "alt": "Reggeliző teljes nézete lécvázas térelválasztókkal és átjáróval"
       }
     ]
   },
@@ -354,49 +354,49 @@
     "cim": "Bodajki Vadászkastély",
     "kategoria": "kastely",
     "link": null,
-    "leiras": "",
+    "leiras": "Vadászkastély kiállítóterei: trófeaterem sötét faburkolattal és világító tárlókkal, szavannatermek preparált állatokkal és ívelt tereplépcsővel, repedezett talajt formázó padlóinstalláció, vizes élőhely tárlója, és egy zöld fénnyel megvilágított bambuszerdő. A tíz fénykép a kész kiállítást mutatja, látogatók nélkül. A tárlók és az installációk készítéséről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "galeria_kep_21"
+        "alt": "Kiállítóterem türkiz falakkal, bőrfotelekkel és preparált állatokkal"
       },
       {
         "file": "02.jpg",
-        "alt": "galeria_kep_23"
+        "alt": "Sötét faburkolatú terem trófeákkal és világító tárlókkal"
       },
       {
         "file": "03.jpg",
-        "alt": "galeria_kep_19"
+        "alt": "Vadászfegyver-gyűjtemény üvegtárlóban, mellette karosszék"
       },
       {
         "file": "04.jpg",
-        "alt": "galeria_kep_12"
+        "alt": "Szavannatárló antiloppal és gnúval, fűszálakat idéző installációban"
       },
       {
         "file": "05.jpg",
-        "alt": "galeria_kep_13"
+        "alt": "Melegen világított szavannaterem leopárddal és érintőképernyős tablóval"
       },
       {
         "file": "06.jpg",
-        "alt": "galeria_kep_18"
+        "alt": "Szavannaterem zebrával és antilopokkal, ívelt tereplépcsőn"
       },
       {
         "file": "07.jpg",
-        "alt": "galeria_kep_14"
+        "alt": "Repedezett talajt formázó padlóinstalláció közelről"
       },
       {
         "file": "08.jpg",
-        "alt": "galeria_kep_20"
+        "alt": "Vizes élőhely tárlója vízilóval és krokodillal"
       },
       {
         "file": "09.jpg",
-        "alt": "galeria_kep_15"
+        "alt": "Oroszláncsoport világos, sötét mennyezetű teremben"
       },
       {
         "file": "10.jpg",
-        "alt": "galeria_kep_17"
+        "alt": "Zöld fénnyel megvilágított bambuszerdő-installáció állatokkal"
       }
     ]
   },
@@ -405,49 +405,49 @@
     "cim": "Zirci Apátság",
     "kategoria": "szakralis",
     "link": null,
-    "leiras": "",
+    "leiras": "Apátsági irodák belsőépítészeti terve. A tíz kép látványterv, nem fénykép: boltozatos termekben álló íróasztalok, tárgyalóterem körbeülhető asztallal, fogadótér falfestménnyel, világító fakereszt a falon, és egy plasztikus, pálcikákból álló faldíszítés a boltív alatt. A képek négyzetes vágásban, vízjellel maradtak fenn. Arról nincs adat, hogy a terv megépült-e.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-001"
+        "alt": "Látványterv: boltozatos iroda világító fakereszttel, alatta fa tálalópult, előtte fotelcsoport"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-002"
+        "alt": "Látványterv: íróasztal két ablak között, boltozatos, sötét falfülkékkel"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-003"
+        "alt": "Látványterv: fogadótér nagyméretű falfestménnyel és feliratos üvegfallal"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-004"
+        "alt": "Látványterv: a világító kereszt a falon, alatta hosszú fa tálalópult"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-005"
+        "alt": "Látványterv: kétszemélyes íróasztal az ablak mellett, mellette feliratos üvegfal"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-006"
+        "alt": "Látványterv: iroda íróasztallal, mögötte magasfényű szekrénysor és fali kereszt"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-007"
+        "alt": "Látványterv: íróasztal képernyővel, mögötte feliratos üvegfal és boltozatos falfülke"
       },
       {
         "file": "08.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-008"
+        "alt": "Látványterv: tárgyalóterem körbeülhető asztallal és sorolt függesztett lámpákkal"
       },
       {
         "file": "09.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-009"
+        "alt": "Látványterv: titkárság íves pulttal, mögötte kanapé és boltíves ajtó"
       },
       {
         "file": "10.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-zirci-apatsag-referencia-010"
+        "alt": "Látványterv: boltíves fal plasztikus, pálcikákból álló faldíszítéssel, előtte két kanapé"
       }
     ]
   },
@@ -456,49 +456,49 @@
     "cim": "Kristály Étterem",
     "kategoria": "etterem",
     "link": null,
-    "leiras": "",
+    "leiras": "Étterem belsőépítészeti terve. A tíz kép látványterv, nem fénykép: a lépcsős bejárat a világító CRYSTAL felirattal, a ferde lécekkel tagolt fal, a bárpult üvegpolcos italfala, az étterem terített asztalokkal és körlámpákkal, és a boros helyiség üvegajtós hűtőkkel. Arról nincs adat, hogy a terv megépült-e.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-001"
+        "alt": "Látványterv: lépcsős bejárat a világító CRYSTAL felirattal, jobbra üveges korlát"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-002"
+        "alt": "Látványterv: a ferde lécekkel tagolt fal a CRYSTAL felirattal, a háttérben a bár"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-003"
+        "alt": "Látványterv: az előtér a bejárati üvegfallal és a lépcső korlátjával"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-004"
+        "alt": "Látványterv: bárpult magas székekkel, mögötte világító üvegpolc borosüvegekkel"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-005"
+        "alt": "Látványterv: a bárpult teljes hosszában, a zöld üvegfal előtt"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-006"
+        "alt": "Látványterv: étterem terített asztalokkal, függönyös ablaksorral és sötét fa mennyezettel"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-007"
+        "alt": "Látványterv: az étterem körlámpákkal, terítékkel és mintás padlószőnyeggel"
       },
       {
         "file": "08.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-008"
+        "alt": "Látványterv: étkezőrész üveg térelválasztóval és terített asztalokkal"
       },
       {
         "file": "09.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-009"
+        "alt": "Látványterv: boros helyiség bárasztallal és magas székekkel, a háttérben tárlós hűtő"
       },
       {
         "file": "10.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-kristaly-etterem-referencia-010"
+        "alt": "Látványterv: a boros helyiség négy üvegajtós borhűtővel és kerek asztallal"
       }
     ]
   },
@@ -507,29 +507,29 @@
     "cim": "Domus Pellegrini Hotel – Apartmanok",
     "kategoria": "hotel",
     "link": null,
-    "leiras": "",
+    "leiras": "Apartmanszálló berendezése: recepciópult a szálló jelével egy boltozatos térben, és négy vendégszoba ágyakkal, beépített szekrénnyel, konzolpolccal és fogassal. Az öt fénykép a kész, használatra kész szobákat mutatja. A bútorok készítéséről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-001"
+        "alt": "Recepciópult boltozatos térben, a szálló nevével és jelével, mögötte kulcstartó rekeszsor"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-002"
+        "alt": "Vendégszoba két ággyal, fali televízióval, konzolpolccal és nyitott gardróbbal"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-003"
+        "alt": "Vendégszoba két ággyal, kétajtós szekrénnyel és fa fejtámlafallal"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-004"
+        "alt": "Vendégszoba az ablak felől: két ágy, szekrény és íróasztal laptoppal"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Domus-Pellegrini-Apartman-referencia-006"
+        "alt": "Háromágyas szoba asztallal és két székkel az ablak mellett"
       }
     ]
   },
@@ -538,89 +538,89 @@
     "cim": "Fúzió a tájjal",
     "kategoria": "lakoingatlan",
     "link": null,
-    "leiras": "",
+    "leiras": "Ház belsőépítészete, a telek végében tóval. A húsz fénykép a kész állapotot mutatja: felülvilágítós dolgozósarok mintás faburkolattal, előtér, konyha-étkező fa keretbe foglalt szigettel és lécezett térelválasztóval, nappali kandallóval, folyosók a belső udvarra néző üvegfallal, három vizes helyiség, két gyerekszoba falfestéssel, hálószoba, végül a kerti szauna és a fedett terasz. A kivitelezésről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-001"
+        "alt": "Dolgozósarok felülvilágító alatt: fehér polcrendszer sárga fiókokkal, szemközt mintás faburkolatú fal"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-002"
+        "alt": "Előtér fehér tálalószekrénnyel, sötét faldal és nagy cserepes növényekkel"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-004"
+        "alt": "Étkezőasztal a nappali felé, mögötte lécezett térelválasztó, kandalló és sötétvörös faburkolat"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-005"
+        "alt": "Folyosó a belső udvarra néző üvegfallal, jobbra faburkolatú ajtóval"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-006"
+        "alt": "Ugyanaz a folyosó a másik irányból, a belső udvar kavicságyásával"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-010"
+        "alt": "Fürdőszoba kétmedencés mosdópulttal, mögötte lécezett mennyezet és kád"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-011"
+        "alt": "Fürdőszoba hosszú mosdópulttal, sárga fiókokkal, tükrös fallal és fésülködőasztallal"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-012"
+        "alt": "Mosdó türkiz csempével, fa mosdószekrénnyel és falra szerelt wc-vel"
       },
       {
         "file": "09.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-013"
+        "alt": "Gyerekszoba geometrikus falfestéssel, beépített ággyal, íróasztallal és polcokkal"
       },
       {
         "file": "10.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-014"
+        "alt": "Ugyanaz a gyerekszoba a lépcsős játszóemelvénnyel és a televíziós szekrénysorral"
       },
       {
         "file": "11.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-015"
+        "alt": "Babaszoba hegyeket és állatokat ábrázoló falfestéssel, kiságyal és pelenkázószekrénnyel"
       },
       {
         "file": "12.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-016"
+        "alt": "Hálószoba fa fejtámlafallal, fölötte könyvespolccal és beépített szekrénysorral"
       },
       {
         "file": "13.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-017"
+        "alt": "Zuhanyzó fa ráccsal a padlón, türkiz csempével és törölközőszárítóval"
       },
       {
         "file": "14.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-019"
+        "alt": "Lécezett térelválasztó közelről, előtte fehér tálalópolc növényekkel"
       },
       {
         "file": "15.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-020"
+        "alt": "A konyha az étkezőasztal felől: fa keretbe foglalt konyhasziget, függesztett lámpasor"
       },
       {
         "file": "16.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-021"
+        "alt": "A konyha és az étkező egy térben, a kertre és a medencére nyíló üvegfallal"
       },
       {
         "file": "17.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-022"
+        "alt": "Nappali kanapéval és kandallóval, mögötte sötétvörös faburkolatú fal és lécezés"
       },
       {
         "file": "18.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-023"
+        "alt": "Az étkezőasztal a nappali felé nézve, két gyűrűlámpával és a fa keretes átjáróval"
       },
       {
         "file": "19.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-024"
+        "alt": "Terasz deszkaburkolattal és üvegfalú szaunával, mögötte a kert és a tó naplementében"
       },
       {
         "file": "20.jpg",
-        "alt": "dunaenterior-referencia-fuzio-a-tajjal-025"
+        "alt": "Fedett terasz ülőgarnitúrával, hosszú étkezőasztallal és lécezett, futtatott árnyékolóval"
       }
     ]
   },
@@ -629,65 +629,65 @@
     "cim": "Családi ház",
     "kategoria": "lakoingatlan",
     "link": null,
-    "leiras": "",
+    "leiras": "Családi ház belsőépítészeti terve. A tizennégy kép látványterv, nem fénykép — mindegyiken ott a beégetett felirat, hogy a megjelenített termékek nem minden esetben egyeznek a költségvetésben szereplőkkel. A sorozat végigmegy az előszobán, a lépcső melletti nappalin kandallóval, a konyhán szigettel, a hálószobákon és két fürdőszobán. Arról nincs adat, hogy a terv megépült-e.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-001"
+        "alt": "Látványterv: világító polcfal figurákkal és tálakkal, mellette magas fehér szekrénysor, a háttérben az étkező"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-002"
+        "alt": "Látványterv: előszoba beépített szekrénnyel, fogassorral és fiókos ülőpaddal"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-003"
+        "alt": "Látványterv: nappali a lépcső mellett, faburkolatú fal televízióval és vonalkandallóval"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-004"
+        "alt": "Látványterv: sarokkanapé kerek dohányzóasztallal, mögötte a lécezett korlátú lépcső"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-005"
+        "alt": "Látványterv: a nappali a bejárat felől, körlámpával és a lépcső alatti faburkolattal"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-006"
+        "alt": "Látványterv: étkezőasztal hat székkel, mögötte a konyhasziget páraelszívóval"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-007"
+        "alt": "Látványterv: konyhasziget bárszékekkel, sötétzöld fallal és beépített sütősorral"
       },
       {
         "file": "08.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-008"
+        "alt": "Látványterv: a konyhasziget főzőlappal, a háttérben az étkező és a nappali"
       },
       {
         "file": "09.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-009"
+        "alt": "Látványterv: hálószoba kárpitozott fejtámlafallal, sötétkék falfelülettel és fa polcokkal"
       },
       {
         "file": "10.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-010"
+        "alt": "Látványterv: ugyanaz a hálószoba szemből, két függesztett gömblámpával"
       },
       {
         "file": "11.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-011"
+        "alt": "Látványterv: hálószoba televízióval a sötét falon, alatta fa konzolpolc"
       },
       {
         "file": "12.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-012"
+        "alt": "Látványterv: fürdőszoba fa mosdószekrénnyel, törölközőszárítóval és sarokkáddal"
       },
       {
         "file": "13.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-013"
+        "alt": "Látványterv: fürdőszoba hosszú kétmedencés mosdópulttal, tükörrel és kaviccsal szegett növénysávval"
       },
       {
         "file": "14.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-csaladi-haz-referencia-014"
+        "alt": "Látványterv: ugyanaz a fürdőszoba a zuhanyzóval és az esőztető zuhanyfejjel"
       }
     ]
   },
@@ -696,57 +696,57 @@
     "cim": "Budai ház",
     "kategoria": "lakoingatlan",
     "link": null,
-    "leiras": "",
+    "leiras": "Ház belsőépítészeti terve. A tizenkét kép látványterv, nem fénykép: kétszintes belső padlótól mennyezetig érő könyvespolcfallal és beépített akváriummal, konyhasziget kőpulttal, panorámaablakok, hálószoba fa fejtámlafallal, és egy üvegfalú dolgozószoba négy munkaállomással. Arról nincs adat, hogy a terv megépült-e.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-001"
+        "alt": "Látványterv: étkezőasztal a nappaliban, mellette padlótól mennyezetig érő könyvespolcfal és panorámaablakok"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-002"
+        "alt": "Látványterv: az étkező a konyha felé nézve, jobbra tolóajtós szekrény és tálalóasztal"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-003"
+        "alt": "Látványterv: konyhasziget bárszékekkel, mögötte beépített sütősor és üvegajtós kamra"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-004"
+        "alt": "Látványterv: a konyhapult főzőlappal, szemben a könyvespolcfal és a lépcső"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-005"
+        "alt": "Látványterv: nappali sarokkanapéval és alacsony dohányzóasztallal, tolóüvegfallal a terasz felé"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-006"
+        "alt": "Látványterv: a könyvespolcfal beépített akváriummal, előtte karosszék és a kanapé"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-007"
+        "alt": "Látványterv: a konyhapult a főzőlappal, mögötte a lépcső és a könyvespolcfal"
       },
       {
         "file": "08.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-008"
+        "alt": "Látványterv: a polcfal középső mezője televízióval, hangfalakkal és lemezjátszóval"
       },
       {
         "file": "09.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-009"
+        "alt": "Látványterv: előtér tálalószekrénnyel, fölötte fali lámpatest, mellette az üvegkorlátos lépcső"
       },
       {
         "file": "10.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-010"
+        "alt": "Látványterv: hálószoba fa fejtámlafallal, két olvasólámpával és nagyméretű festménnyel"
       },
       {
         "file": "11.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-011"
+        "alt": "Látványterv: üvegfalú dolgozószoba a folyosó felől"
       },
       {
         "file": "12.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-termeszet-osszhang-referencia-012"
+        "alt": "Látványterv: a dolgozószoba négy munkaállomással, beépített szekrénysorral és keretezett rajzokkal"
       }
     ]
   },
@@ -755,69 +755,69 @@
     "cim": "Belvárosban – nyugalomban",
     "kategoria": "lakoingatlan",
     "link": null,
-    "leiras": "",
+    "leiras": "Lakás belsőépítészete. A tizenöt fénykép a kész, berendezett állapotot mutatja: biliárdasztalos játszószoba világító bárszekrénnyel, nappali sarokkanapéval, két különböző konyha-étkező, belső lépcső, három hálószoba és egy fürdőszoba. A beépített bútorok készítéséről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-001"
+        "alt": "Biliárdasztal a játszószobában, mögötte világított bárpolc üvegekkel és sötét fa fiókos szekrénysor"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-002"
+        "alt": "A nappali hosszában: sarokkanapé, dohányzóasztal és két puff, a háttérben a biliárdasztal"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-003"
+        "alt": "A bárszekrény tolóajtós üvegfal mögött: világított italpolc, alatta sötét fa fiókok"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-004"
+        "alt": "Étkező hosszú világos asztallal és nyolc kárpitozott székkel, mögötte a konyhasor"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-005"
+        "alt": "Konyhasziget bárszékekkel, a nyitott téren túl a nappali"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-006"
+        "alt": "Belső lépcső sötét fa fokokkal, a falon süllyesztett lámpatesttel"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-007"
+        "alt": "Étkezőasztal hat székkel, mögötte a konyhasziget, jobbra függőleges lécezésű térelválasztó"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-008"
+        "alt": "A konyhapult hátoldala a nappali felől: függőleges lécezés, fölötte fa fedlap"
       },
       {
         "file": "09.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-009"
+        "alt": "Konyhasor magasfényű fehér felső szekrényekkel, sötét fa alsó frontokkal és beépített sütővel"
       },
       {
         "file": "10.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-010"
+        "alt": "Nappali sarokkanapéval és ülőpaddal, a televízió mögött falra szerelt fa panel"
       },
       {
         "file": "11.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-011"
+        "alt": "Hálószoba beépített szekrénysorral, az ágy mögött nagyvárosi fotótapétával"
       },
       {
         "file": "12.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-012"
+        "alt": "Fürdőszoba mosdószekrénnyel, világító tükörrel, kádparavánnal és mintás falburkolattal"
       },
       {
         "file": "13.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-013"
+        "alt": "Hálószoba franciaággyal, két éjjeliszekrénnyel, ágyvégi paddal és fali polccal"
       },
       {
         "file": "14.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-014"
+        "alt": "Éjjeliszekrény és ágyfej közelről: kétszínű fiókfront, asztali lámpa, fölötte fali polc"
       },
       {
         "file": "15.jpg",
-        "alt": "dunaenterior-referencia-belvarosban-nyugalomban-0101-015"
+        "alt": "Gyerekszoba beépített bútorral: könyvespolc, televíziós panel és hosszú fiókos szekrény"
       }
     ]
   },
@@ -826,49 +826,49 @@
     "cim": "Fafaragások",
     "kategoria": "egyedi",
     "link": null,
-    "leiras": "",
+    "leiras": "Faragott famunkák több helyszínről: tálalószekrény figurákkal és levélsorral, áttört galériakorlát, íves lépcsőkorlát volutákkal, akantuszdíszes szekrényajtók, szárnyas fejet ábrázoló medalion. Két felvétel nyers, csiszolatlan állapotban mutatja a faragványt, a többi a beépített, felületkezelt darabokat. Maga a faragás közben nem készült fénykép.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Faragások 1"
+        "alt": "Sötét tölgy tálalószekrény faragott figurákkal és levélsorral, közelről"
       },
       {
         "file": "02.jpg",
-        "alt": "Faragások 2"
+        "alt": "Faragott, áttört korlát egy galéria peremén, alatta halszálka mintás parketta"
       },
       {
         "file": "03.jpg",
-        "alt": "Faragások 3"
+        "alt": "Faragott lépcsőkorlát felülről, mögötte fa falburkolat és a lefelé vezető fokok"
       },
       {
         "file": "04.jpg",
-        "alt": "Faragások 4"
+        "alt": "Világosra pácolt szekrényajtók faragott akantuszdíszekkel"
       },
       {
         "file": "05.jpg",
-        "alt": "Faragások 5"
+        "alt": "Faragott levélkoszorú a szekrény felső íve alatt, közelről"
       },
       {
         "file": "06.jpg",
-        "alt": "Faragások 6"
+        "alt": "Vörös szőnyeges lépcső faragott, íves korláttal és fa falburkolattal"
       },
       {
         "file": "07.jpg",
-        "alt": "Faragások7"
+        "alt": "Ugyanaz a lépcső szemből, a korlát volutáival és a nyitott ajtóval"
       },
       {
         "file": "08.jpg",
-        "alt": "Faragások8"
+        "alt": "Nyers, csiszolatlan faragvány: virágcsokor és voluták, a műhelyben"
       },
       {
         "file": "09.jpg",
-        "alt": "Faragások9"
+        "alt": "Szárnyas fejet ábrázoló faragott medalion nyers fapanelen"
       },
       {
         "file": "10.jpg",
-        "alt": "Faragások10"
+        "alt": "Festett, faragott ágyvég és kárpitozott székek sora a győri üzemben"
       }
     ]
   },
@@ -877,101 +877,101 @@
     "cim": "Duna Cruises HABLEÁNY",
     "kategoria": "hajo",
     "link": "https://dunacruises.com/",
-    "leiras": "",
+    "leiras": "Sétahajó belsőépítészete: nyitott fedélzeti szalon körbefutó ablaksorral és deszkázott mennyezettel, zárt szalon, felső fedélzet padsorokkal. A huszonhárom fénykép ugyanazt a néhány teret járja körbe nappal és éjjel — a Dunán menet közben, a kikötőben, és vendégekkel a terített asztaloknál. Az építésről és a beépítésről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "NORMÁL hajó instára"
+        "alt": "A HABLEÁNY menet közben a Dunán, lapátkerekes oldalával"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Nyitott felső fedélzet asztallal és feljáróval, mögötte a folyó"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Zárt fedélzeti szalon a pult felé, faoszlopokkal és deszkázott mennyezettel"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "A hajó felépítménye kívülről, üvegezett ajtókkal, kikötőben"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Fedélzeti szalon asztalokkal, a korláton túl kikötött hajókkal"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Fedélzeti szalon hosszában, körbefutó ablaksorral és faburkolatú padlóval"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Felső fedélzet padsorokkal, háttérben a budai part és egy híd"
       },
       {
         "file": "08.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Ablakkeret és tetőél közelről, mögötte a folyó és a part"
       },
       {
         "file": "09.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Fedélzeti szalon sarka hajólámpával és koszorúval"
       },
       {
         "file": "10.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Fedélzeti szalon a tat felé, az üvegen át a városi parttal"
       },
       {
         "file": "11.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Asztal két székkel a fedélzeten, mellette a korlát és a víz"
       },
       {
         "file": "12.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Pad összehajtott takarókkal, az ablakon át a folyóval és a híddal"
       },
       {
         "file": "13.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Üvegezett átjáróajtó a fedélzeti szalon és a felépítmény között"
       },
       {
         "file": "14.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Ablak a Dunára, a túlparton híddal és a budai dombokkal"
       },
       {
         "file": "15.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Felső ablaksáv és tetőél, kinyitva az ég felé"
       },
       {
         "file": "16.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "A HABLEÁNY a Dunán, mögötte a budai vár és a Halászbástya"
       },
       {
         "file": "17.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "A HABLEÁNY éjjel, a kivilágított pesti rakpart előtt"
       },
       {
         "file": "18.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "A szalon éjjel, vendégekkel a terített asztaloknál"
       },
       {
         "file": "19.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Fedélzet éjjel, háttérben kivilágított híddal"
       },
       {
         "file": "20.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "A zárt szalon éjjel, megvilágított deszkázott mennyezettel"
       },
       {
         "file": "21.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Éjszakai szalonbelső, az ablakon túl a vízen tükröződő fényekkel"
       },
       {
         "file": "22.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Terített asztal gyertyával, az ablakon át a kivilágított budai parttal"
       },
       {
         "file": "23.jpg",
-        "alt": "Duna Cruises HABLEÁNY"
+        "alt": "Fedélzet éjjel, szemben a kivilágított Országházzal"
       }
     ]
   },
@@ -980,53 +980,53 @@
     "cim": "Duna Hajók 6.1 KADÉT",
     "kategoria": "hajo",
     "link": "https://dunahajok.hu/",
-    "leiras": "",
+    "leiras": "Nyitott motorcsónak tikfa fedélzettel, fa kormánykerékkel és kerek műszerekkel. A tizenegy fénykép a kész hajót mutatja a vízen, utánfutón egy márkakereskedés előtt és egy szabadtéri kiállításon; a kormányállásról és az utastérről közeli felvételek is vannak. Az építés folyamata nincs dokumentálva.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Kadét9"
+        "alt": "A KADÉT a vízen, világos testtel és tikfa fedélzettel, part mentén"
       },
       {
         "file": "02.jpg",
-        "alt": "Kadét11"
+        "alt": "A tikfa fedélzet és az orr menet közben, alatta a felkavart víz"
       },
       {
         "file": "03.jpg",
-        "alt": "Kadét10"
+        "alt": "A test oldala menet közben, a KADÉT felirattal és a hullámmal"
       },
       {
         "file": "04.jpg",
-        "alt": "Kadét1"
+        "alt": "A hajó utánfutón egy Suzuki Marine márkakereskedés előtt"
       },
       {
         "file": "05.jpg",
-        "alt": "Kadét2"
+        "alt": "A kormányállás: fa kormánykerék és kerek műszerek, közelről"
       },
       {
         "file": "06.jpg",
-        "alt": "Kadét3"
+        "alt": "A műszerfal és a szélvédő teljes szélességben, tikfa burkolattal"
       },
       {
         "file": "07.jpg",
-        "alt": "Kadét4"
+        "alt": "A hajó utánfutón egy szabadtéri kiállításon"
       },
       {
         "file": "08.jpg",
-        "alt": "Kadét5"
+        "alt": "Ugyanaz a hajó szemből a kiállításon, vitorlások mellett"
       },
       {
         "file": "09.jpg",
-        "alt": "Kadét6"
+        "alt": "A tat és a Suzuki külmotor a kiállítási standon"
       },
       {
         "file": "10.jpg",
-        "alt": "Kadét7"
+        "alt": "Az utastér felülről: tikfa fedélzet, világos ülőpárnák, fa kormánykerék"
       },
       {
         "file": "11.jpg",
-        "alt": "Kadét8"
+        "alt": "Két nézet: a hajó szemből az utánfutón, és az utastér felülről"
       }
     ]
   },
@@ -1035,113 +1035,113 @@
     "cim": "Duna Hajók 6.1 Cabin",
     "kategoria": "hajo",
     "link": "https://dunahajok.hu/",
-    "leiras": "",
+    "leiras": "Kabinos motorcsónak tikfa fedélzettel, összecsukható asztallal, kabinbeli fekhellyel és beépített mosdóval. A huszonhat fénykép a kész hajót mutatja menet közben, a stégnél, utánfutón, és stúdióháttér előtt is, állványon. Az építés folyamata nincs dokumentálva.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "CABIN-2048"
+        "alt": "A 6.1 Cabin a vízen, felállított napellenzővel, a kikötő mellett"
       },
       {
         "file": "02.jpg",
-        "alt": "belső3"
+        "alt": "A 6.1 Cabin kormányállása: fa kormánykerék és műszerfal, előtte a víz"
       },
       {
         "file": "03.jpg",
-        "alt": "0627c"
+        "alt": "A hajó menet közben a vízen, háttérben templomtoronnyal"
       },
       {
         "file": "04.jpg",
-        "alt": "0627a"
+        "alt": "A hajó menet közben szemből, felkavart vízzel"
       },
       {
         "file": "05.jpg",
-        "alt": "0627b"
+        "alt": "A hajó menet közben egy parti sétány előtt"
       },
       {
         "file": "06.jpg",
-        "alt": "CBN003 (9)"
+        "alt": "A hajó a stégnél, lehúzott napellenzővel és hátsó feljáróval"
       },
       {
         "file": "07.jpg",
-        "alt": "CBN003 (6)"
+        "alt": "A kabin előtti ülőrész: tikfa padló, világos kárpit, asztal"
       },
       {
         "file": "08.jpg",
-        "alt": "CBN003 (7)"
+        "alt": "Az orrfedélzet és a tetőnyílás felülről, a kikötőben"
       },
       {
         "file": "09.jpg",
-        "alt": "CBN003 (10b1920"
+        "alt": "A hajó a kikötőben oldalról, mögötte darupálya"
       },
       {
         "file": "10.jpg",
-        "alt": "CBN003 (8)"
+        "alt": "Az orrfedélzet és a tetőnyílás közelről, a víz tükröződésével"
       },
       {
         "file": "11.jpg",
-        "alt": "CBN003 (5)"
+        "alt": "A tat tikfa fürdőplatója, korláttal és zászlóval"
       },
       {
         "file": "12.jpg",
-        "alt": "CBN003 (11)b"
+        "alt": "A kormányállás oldalról: fa kormánykerék, kijelző, tikfa burkolat"
       },
       {
         "file": "13.jpg",
-        "alt": "CBN003 (1)"
+        "alt": "Az utastér: tikfa padló, világos ülések, összecsukható asztal"
       },
       {
         "file": "14.jpg",
-        "alt": "CBN003 (2)"
+        "alt": "A kormányállás szemből, kijelzővel és fa kormánykerékkel"
       },
       {
         "file": "15.jpg",
-        "alt": "CBN003 (3)"
+        "alt": "A kabin fekhelye két párnával, világos kárpitozással"
       },
       {
         "file": "16.jpg",
-        "alt": "CBN003 (4)"
+        "alt": "Beépített rozsdamentes mosdókagyló a kabinban"
       },
       {
         "file": "17.jpg",
-        "alt": "Duna Hajók 6.1 Cabin"
+        "alt": "A 6.1 Cabin a stégnél, tikfa fedélzettel"
       },
       {
         "file": "18.jpg",
-        "alt": "Duna Hajók 6.1 Cabin"
+        "alt": "A hajó a stégnél, utassal a fedélzeten, part menti fákkal"
       },
       {
         "file": "19.jpg",
-        "alt": "Duna Hajók 6.1 Cabin"
+        "alt": "A hajó oldala és a stég deszkázata közelről"
       },
       {
         "file": "20.jpg",
-        "alt": "Duna Hajók 6.1 Cabin"
+        "alt": "A tat fürdőplatója a stég felől, asztallal és korláttal"
       },
       {
         "file": "21.jpg",
-        "alt": "Duna Hajók 6.1 Cabin"
+        "alt": "A hajó utánfutón a parton, mögötte a kikötő"
       },
       {
         "file": "22.jpg",
-        "alt": "S1D effk"
+        "alt": "A 6.1 Cabin oldalnézetben, állványon, stúdióháttér előtt"
       },
       {
         "file": "23.jpg",
-        "alt": "S5"
+        "alt": "A 6.1 Cabin hajóorra szemből, állványon, stúdióháttér előtt"
       },
       {
         "file": "24.jpg",
-        "alt": "S2j"
+        "alt": "A 6.1 Cabin fekete-fehér hajótesttel, oldalról, stúdióban"
       },
       {
         "file": "25.jpg",
-        "alt": "Duna Hajók 6.1 Cabin"
+        "alt": "Az utastér felülről: asztal, világos ülések, tikfa padló"
       },
       {
         "file": "26.jpg",
-        "alt": "S3"
+        "alt": "A kormányállás a pilótaülés felől, kormánykerékkel és kijelzővel"
       }
     ]
   },
@@ -1150,21 +1150,21 @@
     "cim": "Bojan – Harcos",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Klinkerezett palánkozású fa vitorlás kabinfelépítménnyel. Három fénykép maradt róla, mindhárom ugyanott: utánfutón, egy füves telken. Sem az építésről, sem a hajóról a vízen nincs felvétel. A flottában azért szerepel, mert valódi DUNA-hajó — a kihagyása a szebb index kedvéért volna a torzítás.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Bojan – Harcos"
+        "alt": "A klinkerezett fa hajó utánfutón, füves telken, oldalnézetben"
       },
       {
         "file": "02.jpg",
-        "alt": "Bojan – Harcos"
+        "alt": "Ugyanaz közelebbről: a kabinfelépítmény és a lakkozott palánkok"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Bojan-Harcos-referencia-003"
+        "alt": "A hajó szemből az utánfutón, az orrtőkével és az árbóccal"
       }
     ]
   },
@@ -1173,85 +1173,85 @@
     "cim": "Boesch 640 De Luxe",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Mahagóni motorcsónak teljes felújítása. A tizenkilenc fénykép a legteljesebb folyamatdokumentáció az archívumban: a fedélzeti palánkozás bontása, a szabadon álló bordázat, a két rétegben ragasztott új palánkok tucatnyi szorítóval, a felépítmény váza, a csiszolt nyers felület, a fényezőfülke, a beépítés előtti motor, végül a kész csónak. A felvételek az üzem archívumából valók, kis felbontásban.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-001"
+        "alt": "A régi hajótest bakon a műhelyben, a fedélzeti palánkozás bontása közben"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-002"
+        "alt": "A lecsupaszított test oldalról, a fedélzet és a palánkok nagy része eltávolítva"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-003"
+        "alt": "Az orr alulnézetből, szabadon álló bordákkal és a régi palánkok maradékával"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-004"
+        "alt": "Frissen ragasztott palánkok tucatnyi szorítóval leszorítva, a test alulnézetéből"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-005"
+        "alt": "Új bordák és palánkok az orrnál, szorítókkal és kitámasztásokkal rögzítve"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-006"
+        "alt": "A bordázat oldalról, a hosszmerevítőkkel, a műhely letakart hátterével"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-007"
+        "alt": "Az orr új palánkolása közelről, ferde kitámasztó rudakkal"
       },
       {
         "file": "08.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-008"
+        "alt": "A test szemből, kész bordázattal, a műhely munkapadjai előtt"
       },
       {
         "file": "09.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-009"
+        "alt": "A test oldalára fordítva: a keresztbordák és a hosszgerendák szerkezete"
       },
       {
         "file": "10.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "Palánkillesztés közelről: két rétegben ragasztott, nyers mahagóni él"
       },
       {
         "file": "11.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A felépítmény váza és a szélvédőkeret a fedélzetre illesztve"
       },
       {
         "file": "12.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A hajóorr csiszolt, még lakkozatlan mahagóni felülete közelről"
       },
       {
         "file": "13.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A kilakkozott mahagóni test fehér vízvonallal, a fényezőfülkében"
       },
       {
         "file": "14.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A kész test a fényezőben, a mahagóni felület csillogásával"
       },
       {
         "file": "15.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "Volvo Penta motor a beépítés előtt, állványon"
       },
       {
         "file": "16.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A kész csónak felülnézetből: fehér kárpit, léces mahagóni fedélzet, króm szerelvények"
       },
       {
         "file": "17.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A kész test orra oldalról, lakkozott mahagóni és fehér vízvonal"
       },
       {
         "file": "18.jpg",
-        "alt": "Boesch 640 De Luxe"
+        "alt": "A kész csónak oldalnézetben a műhelyben, mögötte egy sárga hajótest"
       },
       {
         "file": "19.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Boesch-640-De-Luxe-referencia-019"
+        "alt": "Tat felőli nézet: kárpitozott ülés, léces fedélzet, króm korlát"
       }
     ]
   },
@@ -1260,81 +1260,81 @@
     "cim": "Boesch 580",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Mahagóni motorcsónak felújítása. A tizennyolc fénykép végigköveti a csupasz test csiszolását, a rétegelt palánkozás illesztéseit, az alapozott, majd a lakkozott felületet, a fedélzeti nyílás és a kormányállás kivágását, végül a kész csónakot a műhelyben és a tavon. Egy felvételen szakember dolgozik a testen kézi géppel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-001"
+        "alt": "Kormányállás felülről: fa kormánykerék, kerek műszerek, mahagóni fedélzet, a vízen"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-002"
+        "alt": "A csónak oldalról a tavon, mögötte hegyoldal"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-003"
+        "alt": "A mahagóni fedélzet és a plexi szélvédő közelről, kikötött állapotban"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-004"
+        "alt": "A csónak orra szemből a víz felől, háttérben fás part"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-005"
+        "alt": "A tat króm kikötőbakkal és a fedélzeti lécezéssel, közelről"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-006"
+        "alt": "A kész csónak utánfutón, a műhelyben, oldalnézetben"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-007"
+        "alt": "Ugyanaz a csónak a műhelyben, ferdén hátulról"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-008"
+        "alt": "A hajóorr lakkozott mahagóni oldala, mögötte a műhely munkapadja"
       },
       {
         "file": "09.jpg",
-        "alt": "Boesch 580"
+        "alt": "A csupasz fa test bakokon, csiszolás közben"
       },
       {
         "file": "10.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch580-010"
+        "alt": "A lakkozott test, mellette dolgozó szakember kézi géppel"
       },
       {
         "file": "11.jpg",
-        "alt": "Boesch 580"
+        "alt": "A test orra felülről, a rétegelt palánkozás illesztéseivel"
       },
       {
         "file": "12.jpg",
-        "alt": "Boesch 580"
+        "alt": "A test szemből, nyers fa felülettel, a műhelyben"
       },
       {
         "file": "13.jpg",
-        "alt": "Boesch 580"
+        "alt": "A test oldalról, bakokon, nyers fa állapotban"
       },
       {
         "file": "14.jpg",
-        "alt": "Boesch 580"
+        "alt": "A hajóorr szemből, alapozott felülettel és a kikötőnyílással"
       },
       {
         "file": "15.jpg",
-        "alt": "Boesch 580"
+        "alt": "A fedélzeti nyílás és a kormányállás kivágása a nyers testben"
       },
       {
         "file": "16.jpg",
-        "alt": "Boesch 580"
+        "alt": "A tat felől: kész fedélzeti lécezés, még kárpitozatlan belső tér"
       },
       {
         "file": "17.jpg",
-        "alt": "Boesch 580"
+        "alt": "A kész, mélyvörös mahagóni test utánfutón a műhelyben"
       },
       {
         "file": "18.jpg",
-        "alt": "Boesch 580"
+        "alt": "A hajóorr nyers fa felülete, mögötte a műhely állványzata"
       }
     ]
   },
@@ -1343,49 +1343,49 @@
     "cim": "Jolle 25",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Lakkozott fa vitorlás kabinfelépítménnyel és kerek ablakokkal. A tíz fénykép a kész hajót mutatja utánfutón, épület előtt, majd a vízen, teljes vitorlázattal — az utolsó felvételen egy másik fa vitorlás mellett. Az építésről nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-001"
+        "alt": "A lakkozott fa vitorlás utánfutón, füves parti úton"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-002"
+        "alt": "A hajó oldalról az utánfutón, a fűben"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-003"
+        "alt": "Közelebbről: a mahagóni test, a kabinfelépítmény és a kerek ablakok"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-004"
+        "alt": "A hajó szemből az utánfutón, az orrtőke vonalával"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-005"
+        "alt": "Oldalnézet az utánfutón, a fedélzeti nyílásokkal és az árbóctővel"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-006"
+        "alt": "A hajó egy épület előtt, utánfutón, oldalnézetben"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-007"
+        "alt": "Ugyanaz ferdén hátulról, az épület mellett"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-008"
+        "alt": "A hajó a vízen, tükröződéssel, háttérben a kikötő épülete"
       },
       {
         "file": "09.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-009"
+        "alt": "A vitorlás menet közben, kifeszített vitorlákkal, nyílt vízen"
       },
       {
         "file": "10.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu- Jolle-25-010"
+        "alt": "Két fa vitorlás egymás mellett a vízen, teljes vitorlázattal"
       }
     ]
   },
@@ -1394,61 +1394,61 @@
     "cim": "Arcangeli Super Jolly",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Motorcsónak felújítása. A tizenhárom fénykép sorrendben mutatja a csupasz fa testet bordákkal és hosszmerevítőkkel, az alapozást, a piros lakkozást, a még kárpitozatlan belsőt, végül a kész csónakot a műhelyben és egy hajókiállításon. Két felvételen a háttérben ember dolgozik.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-001"
+        "alt": "A csupasz fa test felülnézetből, bordákkal és hosszmerevítőkkel, felújítás közben"
       },
       {
         "file": "02.jpg",
-        "alt": "Arcangeli Super Jolly"
+        "alt": "Az alapozott test a műhelyben, bakokon, csiszolás után"
       },
       {
         "file": "03.jpg",
-        "alt": "Arcangeli Super Jolly"
+        "alt": "Ugyanaz a test szemből, egyenletes alapozó réteggel"
       },
       {
         "file": "04.jpg",
-        "alt": "Arcangeli Super Jolly"
+        "alt": "A piros lakkozású test a műhelyben, még kárpitozatlan belsővel"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-005"
+        "alt": "A tat felől: piros oldal, léces mahagóni fedélzet, króm szegély"
       },
       {
         "file": "06.jpg",
-        "alt": "Arcangeli Super Jolly"
+        "alt": "A kész csónak belseje elölről, mahagóni burkolattal és fa kormánykerékkel"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-007"
+        "alt": "Az utastér felülről: fehér kárpit, léces fedélzet, króm korlát"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-008"
+        "alt": "A kész csónak utánfutón egy hajókiállításon, Volvo Penta tábla előtt"
       },
       {
         "file": "09.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-009"
+        "alt": "A fedélzet és az orr közelről a kiállításon, látogatókkal a háttérben"
       },
       {
         "file": "10.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-010"
+        "alt": "Műszerfal fa kormánykerékkel a kiállítási standon"
       },
       {
         "file": "11.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Arcangeli-Super-Jolly-011"
+        "alt": "A csónak oldalról a kiállítási standon, utánfutón"
       },
       {
         "file": "12.jpg",
-        "alt": "Arcangeli Super Jolly"
+        "alt": "A piros test a műhelyben, bakokon, oldalnézetben"
       },
       {
         "file": "13.jpg",
-        "alt": "Arcangeli Super Jolly"
+        "alt": "A kész csónak a műhelyben, mögötte dolgozó ember"
       }
     ]
   },
@@ -1457,77 +1457,77 @@
     "cim": "Boesch 560 De Luxe",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Klinkerezett fa motorcsónak felújítása. A tizenhét fénykép a bontástól a kész csónakig tart: a régi test bakon, mellette az előkészített palánkanyag, az új palánkolás, a világos tömítésű léces mahagóni fedélzet, a fehér kárpitozású belső, a fa kormánykerekes műszerfal. Végül a csónak utánfutón, a műhely előtt.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-001"
+        "alt": "A régi, klinkerezett fa test bakon a műhelyben, felújítás előtt"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-002"
+        "alt": "Ugyanaz a test a bontás után, előtte az előkészített palánkanyag"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-003"
+        "alt": "A kész test oldalról, lakkozott mahagóni és fehér vízvonal"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-004"
+        "alt": "A test belseje felülről: régi bordázat és a kibontott fedélzet"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-005"
+        "alt": "A test szemből, új palánkolással, a műhely padlóján"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-006"
+        "alt": "Fedélzeti lécezés közelről: mahagóni lécek világos tömítéssel"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-007"
+        "alt": "A kész test orr-részlete: vörös lakk, léces fedélzet, fehér szegély"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-008"
+        "alt": "A fedélzet és a szélvédő szemből, króm kikötőbakkal"
       },
       {
         "file": "09.jpg",
-        "alt": "Boesch 560 De Luxe"
+        "alt": "A belső tér: fehér kárpit, mahagóni burkolat, léces motorfedél"
       },
       {
         "file": "10.jpg",
-        "alt": "Boesch 560 De Luxe"
+        "alt": "A kormányállás és az utastér felülről, világos üléskárpittal"
       },
       {
         "file": "11.jpg",
-        "alt": "Boesch 560 De Luxe"
+        "alt": "A hátsó ülőpad fehér kárpitja, mahagóni kerettel"
       },
       {
         "file": "12.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-012"
+        "alt": "Króm kikötőbak közelről a léces mahagóni fedélzeten"
       },
       {
         "file": "13.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-013"
+        "alt": "Műszerfal fa kormánykerékkel, kerek műszerekkel, króm kapcsolókkal"
       },
       {
         "file": "14.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-014"
+        "alt": "Az utastér hátulról: kárpitozott ülések és a léces motorfedél"
       },
       {
         "file": "15.jpg",
-        "alt": "Boesch 560 De Luxe"
+        "alt": "A műszerfal és a szélvédő oldalról, a világos kárpit mellett"
       },
       {
         "file": "16.jpg",
-        "alt": "Boesch 560 De Luxe"
+        "alt": "A kész csónak utánfutón egy épület előtt, mellette személyautó"
       },
       {
         "file": "17.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Boesch-580-017"
+        "alt": "A kész csónak utánfutón a műhelyben, ferdén elölről"
       }
     ]
   },
@@ -1536,41 +1536,41 @@
     "cim": "Rivális vitorlás hajó",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Vitorlás hajó kabinnal: szalon kárpitozott ülőpaddal és asztallal, kétszemélyes fekhely tetőablakkal, mahagóni burkolatú mosdófülke. A nyolc fénykép egy szabadtéri kiállításon készült, ahol a hajó emelvényen állt. Az építésről és a hajóról a vízen nincs felvétel.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-001"
+        "alt": "A RIVÁLIS vitorlás kiállítási emelvényen, szabadtéri rendezvényen"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-002"
+        "alt": "Ugyanaz a hajó szemből, előtte látogatókkal"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-003"
+        "alt": "A fedélzet elölről: kabintető, ablakok és az összetekert vitorla"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-004"
+        "alt": "A tat és a pilótafülke, a DUNA felirattal"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-005"
+        "alt": "A szalon: kárpitozott ülőpad, asztal és faburkolat"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-006"
+        "alt": "A kabin kétszemélyes fekhelye párnákkal, tetőablakkal és kerek lámpákkal"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-007"
+        "alt": "A mosdófülke nyitott mahagóni ajtaja, mögötte a beépített berendezés"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Rivalis-008"
+        "alt": "A mosdófülke belseje: hordozható wc, polcok, mahagóni burkolat"
       }
     ]
   },
@@ -1579,41 +1579,41 @@
     "cim": "Veterán motorcsónak",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Hosszanti lécezésű, lakkozott fa csónak evezőkkel és bordás belső szerkezettel. A nyolc fénykép a kész csónakot mutatja szállítókocsin az üzem udvarán, illetve egy kiállítási standon, kék szőnyegen. A felújítás vagy az építés nincs dokumentálva.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Veterán motorcsónak"
+        "alt": "A lakkozott, hosszanti lécezésű fa csónak szállítókocsin, az udvaron"
       },
       {
         "file": "02.jpg",
-        "alt": "Veterán motorcsónak"
+        "alt": "A test oldala közelről: keskeny lécek, tükröződő lakkozás"
       },
       {
         "file": "03.jpg",
-        "alt": "Veterán motorcsónak"
+        "alt": "A csónak szemből a szállítókocsin, a kormánykerékkel és a hátsó táblával"
       },
       {
         "file": "04.jpg",
-        "alt": "Veterán motorcsónak"
+        "alt": "A csónak ferdén hátulról, a műhely bejárata előtt"
       },
       {
         "file": "05.jpg",
-        "alt": "Veterán motorcsónak"
+        "alt": "A perem és a króm kikötőbak közelről, a lécezett oldalon"
       },
       {
         "file": "06.jpg",
-        "alt": "Veterán motorcsónak"
+        "alt": "A belső tér: bordák, léces padlódeszkázat és evezők"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Veteran-motorcsonak-007"
+        "alt": "A csónak kiállítási standon, kék szőnyegen, látogatókkal"
       },
       {
         "file": "08.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Veteran-motorcsonak-008"
+        "alt": "A belső tér a kiállításon: padok, evezők és egy eladási tábla"
       }
     ]
   },
@@ -1622,57 +1622,57 @@
     "cim": "Volvo Penta motorcsónak",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Motorcsónak felújítása. A tizenkét fénykép a gazos udvaron álló, fehér-piros testtel indul, majd a lecsupaszított testet, a nyers lemezburkolatú belsőt, a kész, mahagóni burkolatú kormányállást, végül a csónakot a stégnél mutatja, a folyón.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-001"
+        "alt": "A csónak a felújítás előtt: fehér-piros test, gazos udvaron"
       },
       {
         "file": "02.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-002"
+        "alt": "A lecsupaszított test és egy fehér felépítményelem a műhelyben"
       },
       {
         "file": "03.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-003"
+        "alt": "A belső tér felújítás közben: nyers lemezburkolat és két ülés"
       },
       {
         "file": "04.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-004"
+        "alt": "A kész test a műhelyben: sötét oldal, világos fenék, plexi szélvédő"
       },
       {
         "file": "05.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-005"
+        "alt": "A kormányállás: fa műszerfal, két fehér ülés, mahagóni burkolat"
       },
       {
         "file": "06.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-006"
+        "alt": "A kész csónak szemből a műhelyben, a szélvédővel és a korláttal"
       },
       {
         "file": "07.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-007"
+        "alt": "A kész csónak ferdén elölről, a műhelyben"
       },
       {
         "file": "08.jpg",
-        "alt": "Volvo Penta motorcsónak"
+        "alt": "A csónak a stégnél, a folyón, magyar zászlóval"
       },
       {
         "file": "09.jpg",
-        "alt": "Volvo Penta motorcsónak"
+        "alt": "A csónak a stég mellől: mahagóni belső, fehér ülések, króm korlát"
       },
       {
         "file": "10.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-010"
+        "alt": "A fedélzet és a műszerfal közelről, a műhely előtt"
       },
       {
         "file": "11.jpg",
-        "alt": "Duna-Enterior-Asztalos-es-Hajoepito-uzem-Volvo-Penta-motorcsonak-referencia-011"
+        "alt": "A belső tér felülről: mahagóni burkolat, fa kormánykerék, kék padló"
       },
       {
         "file": "12.jpg",
-        "alt": "Volvo Penta motorcsónak"
+        "alt": "A csónak a stégnél, a víz és a túlpart felé fordulva"
       }
     ]
   },
@@ -1681,37 +1681,37 @@
     "cim": "Jégvitorlás",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Jégvitorlás építése. A hét fénykép a munkapadon leszorított fenyő palánkokkal kezdődik, végigmegy a váz összeállításán — kereszttartók, ferde kitámasztások, összeszorított orr-élek —, és a kész, vörösre lakkozott hajóval zárul a műhelyben, a kereszttartóval és a futótalpakkal.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "Jégvitorlás"
+        "alt": "Fenyő palánkok leszorítva a munkapadon, a test összeállításának elején"
       },
       {
         "file": "02.jpg",
-        "alt": "Jégvitorlás"
+        "alt": "A test váza, szorítókkal rögzített kereszttartókkal"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-003"
+        "alt": "A váz szemből, ferde kitámasztásokkal és szorítókkal"
       },
       {
         "file": "04.jpg",
-        "alt": "Jégvitorlás"
+        "alt": "Az orr összeszorított élei közelről"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-005"
+        "alt": "A test felülnézetből: bordák, kereszttartók és szorítók"
       },
       {
         "file": "06.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-006"
+        "alt": "A kész, vörösre lakkozott jégvitorlás a műhelyben, a kereszttartóval"
       },
       {
         "file": "07.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Jegvitorlas-007"
+        "alt": "Ugyanaz oldalról: a test, a kereszttartó és a futótalpak"
       }
     ]
   },
@@ -1720,57 +1720,57 @@
     "cim": "Meyer motorcsónak 1.",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Motorcsónak világos testtel és léces mahagóni fedélzettel. A tizenkét fénykép a kész csónakot mutatja: a műhelyben, utánfutón az üzem udvarán, közelről a fedélzeti lécezést, a króm szerelvényeket és a fa kormánykerekes műszerfalat. Több felvétel esti megvilágításban készült.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-001"
+        "alt": "A kész csónak a műhelyben, világos testtel és mahagóni fedélzettel"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-002"
+        "alt": "A csónak hátulról, utánfutón, a műhely kapujában"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-003"
+        "alt": "A csónak felülnézetből az utánfutón, murvás udvaron"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-004"
+        "alt": "A csónak utánfutón egy épület előtt, mellette kisbusz"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-005"
+        "alt": "Ugyanaz távolabbról, fák között, az üzem udvarán"
       },
       {
         "file": "06.jpg",
-        "alt": "Meyer motorcsónak 1."
+        "alt": "A fedélzet és a szélvédő ferdén elölről, a lécezett mahagóni felülettel"
       },
       {
         "file": "07.jpg",
-        "alt": "Meyer motorcsónak 1."
+        "alt": "A fedélzeti lécezés és a króm szerelvények közelről"
       },
       {
         "file": "08.jpg",
-        "alt": "Meyer motorcsónak 1."
+        "alt": "A műszerfal fa kormánykerékkel, mögötte a mahagóni fedélzet"
       },
       {
         "file": "09.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-009"
+        "alt": "A test orra a műhelyben, félhomályban"
       },
       {
         "file": "10.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-010"
+        "alt": "A test oldala és a kárpitozott belső, esti megvilágításban"
       },
       {
         "file": "11.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-011"
+        "alt": "A fedélzet és az orr éjjel, a műhely előtt"
       },
       {
         "file": "12.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_1-012"
+        "alt": "A belső tér: fehér kárpitozott ülés és a mahagóni oldalburkolat"
       }
     ]
   },
@@ -1779,37 +1779,37 @@
     "cim": "Meyer motorcsónak 2.",
     "kategoria": "hajo",
     "link": null,
-    "leiras": "",
+    "leiras": "Motorcsónak felújítása. Hét fénykép: a bontás után elkorhadt kereszttartók és bordák, a sérült tat, az új nyers fedélzetlap, végül a kész, piros csónak az udvaron. Az ötödik felvétel az archívum egyetlen olyan képe, amely magát a műhelyteret mutatja, nem egy benne álló hajót — több hajóval és egy csónakmotorral.",
     "kiemelt": "01.jpg",
     "allapot": "publikalt",
     "kepek": [
       {
         "file": "01.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-001"
+        "alt": "A fedélzet bontása után: elkorhadt kereszttartók és bordák"
       },
       {
         "file": "02.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-002"
+        "alt": "A tat sérült, korhadt szerkezete közelről"
       },
       {
         "file": "03.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-003"
+        "alt": "A piros test új, nyers fedélzetlappal"
       },
       {
         "file": "04.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-004"
+        "alt": "Egy kész, sötét mahagóni csónak a műhelyben, világos kárpitozott belsővel"
       },
       {
         "file": "05.jpg",
-        "alt": "dunaenterior-hu-dunahajok-hu-Meyer_2-005"
+        "alt": "A műhely belseje több hajóval és csónakmotorral"
       },
       {
         "file": "06.jpg",
-        "alt": "Meyer motorcsónak 2."
+        "alt": "A kész, piros csónak utánfutón, az üzem fala előtt"
       },
       {
         "file": "07.jpg",
-        "alt": "Meyer motorcsónak 2."
+        "alt": "Ugyanaz a csónak ferdén hátulról, külmotorral, az udvaron"
       }
     ]
   }

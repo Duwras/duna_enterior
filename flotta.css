@@ -1,0 +1,407 @@
+/* ============================================================
+   DUNA — THE LIVING INTERIOR
+   flotta.css — A FLOTTA
+
+   Csak a /flotta.html tölti be. Három szakaszt ír le:
+
+     A NYITÁS   — hat képkocka, ragadós színpad. A mélységet, a
+                  küszöböt és a térbeli felületet a ter.css adja;
+                  itt csak a szedés és a tempó van. A szedés a JOBB
+                  oldalon áll — a főoldalon a balon. Ennyi a jelzés,
+                  hogy más fejezetben vagyunk.
+
+     A VÍZVONAL — tizenöt hajó egy vonalon. Papír alapon, mint az
+                  alaprajz: index, nem hangulat. Egy hajszálvonal fut
+                  végig, és minden hajó a saját koordinátáján ül rajta.
+
+     A VISSZA   — tinta alapon, három valódi kivezetés.
+
+   A .jelenet / .jelenet-belul osztályok itt saját definíciót kapnak,
+   nem a fooldal.css-ből jönnek: a két lap soha nem tölti be egyszerre
+   a másik stíluslapját, és így a főoldal átszabása nem tudja
+   véletlenül elrontani a flottát.
+   ============================================================ */
+
+/* ============================================================
+   A NYITÁS
+   ============================================================ */
+
+.flotta-nyitas { position: relative; }
+
+/* Fátyolsáv a JOBB oldalon — a főoldalé tükrözve, ugyanabból az
+   okból: a kontraszt nem múlhat azon, mi van épp a képen.
+
+   A rámpa itt MEREDEKEBB, mint a főoldalon, és ennek mért oka van: a
+   flotta nyitóképkockái világosabbak (lakkozott mahagóni, nyers fenyő,
+   fehér műhelyfal), a főoldalé pedig sötét belső terek. Ugyanaz a
+   .66/.40/.12 ramp a szedés alatt csak 0,25-ig jutott — kevés. A kép
+   bal harmada érintetlen marad: ott áll a hajó. */
+.flotta-nyitas .szinpad::before {
+  content: ""; position: absolute; inset: 0; z-index: 2;
+  pointer-events: none;
+  background:
+    /* A felső sáv megerősítése. A ter.css sávja (0,58 → 0,22 12%-nál)
+       sötét belső terekre készült; itt viszont nyers fenyő és fehér
+       műhelyfal van a képkocka tetején, és a felirat felső szeme
+       (tölgyszínű, apró verzál) pont a 0,2-es zónába esne. */
+    linear-gradient(to bottom,
+      rgba(14, 11, 7, .60) 0%,
+      rgba(14, 11, 7, .34) 15%,
+      transparent 32%),
+    linear-gradient(to left,
+      rgba(14, 11, 7, .74) 0%,
+      rgba(14, 11, 7, .56) 20%,
+      rgba(14, 11, 7, .34) 38%,
+      rgba(14, 11, 7, .10) 56%,
+      transparent 70%);
+}
+@media (max-width: 720px) {
+  /* Telefonon a szedés a képen BELÜL áll, nem mellette: egyenletes
+     halkítás, alul erősebben, ahol a vezérlők vannak. */
+  .flotta-nyitas .szinpad::before {
+    background: linear-gradient(to bottom,
+      rgba(14, 11, 7, .46) 0%,
+      rgba(14, 11, 7, .30) 28%,
+      rgba(14, 11, 7, .40) 62%,
+      rgba(14, 11, 7, .80) 100%);
+  }
+}
+
+/* A szedés a képkocka fölött gördül, negatív felső margóval ülve rá a
+   ragadós színpadra. A szakasz teljes magasságát így a SZÖVEG szabja:
+   a tempót a mondat hossza adja, nem egy kitalált szám. */
+.flotta-szoveg {
+  position: relative; z-index: 3;
+  margin-top: -100svh;
+  pointer-events: none;
+}
+.flotta-nyitas .felulet { z-index: 4; }
+
+/* A JELENET közös szedése a rendszer.css „A JELENET” szakaszában áll
+   (6. fázis). Itt CSAK a flotta eltérése van: a szedés JOBBRA áll —
+   ez különbözteti meg a fejezetet a főoldaltól és a készüléstől —,
+   plusz a .tipo-adat halkítása és a nyitás összegzősora. */
+.jelenet { justify-content: flex-end; }
+.jelenet-belul .tipo-adat { color: var(--ejjel-halk); }
+.jelenet-nyito .flotta-osszeg {
+  padding-top: var(--space-4); border-top: 1px solid rgba(232, 223, 209, .22);
+  /* fotón ez a sor nem lehet --ejjel-halk: 4,6:1 papíron elég, egy
+     lakkozott mahagóni felület fölött nem az */
+  color: var(--ejjel-szov2);
+}
+/* A kifelé vezető hivatkozás a lábsávban — ugyanaz a jel, mint a
+   főoldalon: egy vonal, ami hosszabb lesz. */
+.ter-projekt {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  color: var(--ejjel-szov); text-decoration: none;
+}
+.ter-projekt .nyil {
+  display: inline-block; width: 34px; height: 1px; background: currentColor;
+  transition: width var(--motion-normal) var(--ease-water);
+}
+.ter-projekt:hover .nyil { width: 52px; }
+
+/* A felirat a bal felső peremen marad — a szedés a jobb oldalon van,
+   tehát nem ütik egymást, és a képkocka neve végig olvasható. */
+.flotta-nyitas .ter-felirat { justify-self: start; }
+.flotta-nyitas .ter-felirat .nev { font-size: clamp(1.2rem, 2.2vw, 1.8rem); }
+
+/* Ez a szakasz jobbra szed, tehát MINDEN, ami a színpadhoz tartozik, a
+   bal oldalra megy — nem csak a felirat. Az alaprajz-gomb alapból a
+   jobb felső sarokban áll, a lábsáv kifelé vezető hivatkozása a jobb
+   alsóban: mindkettő a szedés hasábjában, és görgetés közben mindkettő
+   ráírt a mondatra. A gomb a bal hasáb aljára, közvetlenül a lábsáv
+   fölé kerül; a lábsáv két eleme egymás mellé, balra.
+
+   A határ 721 px — a ter.css ott rakja egy hasábba a színpadot, tehát
+   eddig van „szemközti oldal”. */
+@media (min-width: 721px) {
+  .flotta-nyitas .ter-vezerlok {
+    grid-column: 1; grid-row: 2;
+    align-self: end; justify-self: start;
+  }
+  .flotta-nyitas .ter-lab { justify-content: flex-start; }
+}
+
+/* ============================================================
+   A VÍZVONAL
+   ============================================================ */
+
+.vizvonal {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink-2);
+  padding: var(--ritmus) 0;
+  /* ugyanaz a szerkesztői raszter, mint az alaprajzon — itt halkan */
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+.vizvonal-fej {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--koz); align-items: end;
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--line);
+}
+.vizvonal-fej h2 em { font-style: italic; }
+
+.vizvonal-szuro {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+.flotta-gombok { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.flotta-gomb {
+  background: transparent; border: 1px solid var(--line); color: var(--ink-2);
+  padding: 0 14px; height: 36px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color var(--motion-gyors) linear, color var(--motion-gyors) linear;
+}
+.flotta-gomb .szam { color: var(--smoke); font-variant-numeric: tabular-nums; }
+.flotta-gomb:hover { border-color: var(--brass); color: var(--brass); }
+.flotta-gomb[aria-pressed="true"] { border-color: var(--brass); color: var(--brass); }
+.flotta-gomb[aria-pressed="true"] .szam { color: var(--brass); }
+
+/* ---------- a sorok ----------
+   Nem kártyák: sorok egy vonalon. Nincs árnyék, nincs keret, nincs
+   sarokkerekítés — a hajszálvonal viszi az egészet. */
+
+.hajok { list-style: none; margin: 0; padding: 0; }
+
+.hajo { border-bottom: 1px solid var(--line); }
+.hajo[hidden] { display: none; }
+
+.hajo > a {
+  display: grid;
+  grid-template-columns: 168px 4.4rem minmax(0, 1fr) 11.5rem 7.5rem;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "kep jel nev   allomas rang"
+    "kep jel tipus allomas rang";
+  align-items: center;
+  gap: 2px var(--koz);
+  padding: var(--space-4) 0;
+  text-decoration: none; color: inherit;
+}
+.hajo-kep        { grid-area: kep; }
+.hajo-jel        { grid-area: jel; }
+.hajo-nev        { grid-area: nev;     align-self: end; }
+.hajo-tipus      { grid-area: tipus;   align-self: start; }
+.hajo-allomasok  { grid-area: allomas; }
+.hajo-rang       { grid-area: rang; }
+
+.hajo-kep {
+  display: block; overflow: hidden;
+  aspect-ratio: 3 / 2; background: var(--paper-2);
+}
+.hajo-kep img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  /* Az archívum 0,27–0,96 MP-es. Nem nagyítjuk fel: kis méretben
+     állnak, és ott erősek. A halk telítettség a régi papírképek
+     eltérő színhőmérsékletét fogja egy sorba. */
+  filter: saturate(.92);
+  transition: transform var(--motion-terv) var(--ease-water);
+}
+.hajo > a:hover .hajo-kep img,
+.hajo > a:focus-visible .hajo-kep img { transform: scale(1.04); }
+
+.hajo-jel { color: var(--brass); }
+
+.hajo-nev {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.2;
+  color: var(--ink);
+  background-image: linear-gradient(var(--brass), var(--brass));
+  background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px;
+  transition: background-size var(--motion-normal) var(--ease-water);
+}
+.hajo > a:hover .hajo-nev,
+.hajo > a:focus-visible .hajo-nev { background-size: 100% 1px; }
+
+/* ---------- az öt állomásjel ----------
+   Egy hajszálvonal, rajta öt hely. Ami megvan, az kitöltött; ami
+   nincs, az üres — de OTT VAN, különben nem látszana, mi hiányzik. */
+.hajo-allomasok {
+  position: relative;
+  /* max-content, hogy a hajszálvonal PONTOSAN az öt jel alatt fusson —
+     különben a hasáb széléig nyúlna, és lógó vonalnak látszana */
+  width: max-content;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0;
+}
+.hajo-allomasok::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 1px; background: var(--line);
+}
+.allomas-jel {
+  position: relative; z-index: 1;
+  width: 11px; height: 11px; flex: none;
+  border: 1px solid var(--line); background: var(--paper);
+  transition: background-color var(--motion-gyors) linear,
+              border-color var(--motion-gyors) linear;
+}
+.allomas-jel[data-van] { border-color: var(--brass); background: var(--brass); }
+.hajo[data-rang="zaszlohajo"] .allomas-jel[data-van] { border-color: var(--ink); background: var(--ink); }
+
+.hajo-rang { text-align: right; color: var(--smoke); }
+.hajo[data-rang="zaszlohajo"] .hajo-rang,
+.hajo[data-rang="zaszlohajo"] .hajo-jel { color: var(--ink); }
+
+/* ---------- jelmagyarázat ---------- */
+
+.vizvonal-jelmagyarazat {
+  display: grid; gap: var(--space-2);
+  padding-top: var(--space-6);
+}
+.vizvonal-jelmagyarazat p { display: flex; align-items: center; gap: var(--space-3); margin: 0; }
+.vizvonal-jelmagyarazat b { color: var(--ink); font-weight: 500; }
+.vizvonal-jelmagyarazat .halk { color: var(--smoke); padding-top: var(--space-3); }
+.vizvonal-jelmagyarazat .halk::before { content: none; }
+
+/* ============================================================
+   VISSZA A BELSŐ TÉRBE
+   ============================================================ */
+
+/* JAVÍTÁS (5. fázis). A .belul csak `max-width: --max; margin: 0 auto`
+   — oldalsó belső margója NINCS. 1440 px-en ezt a `margin: auto`
+   véletlenül elfedi (1440 − 1360 = 2 × 40 px), de 1360 px alatt a
+   szedés hozzáér a képernyő széléhez. A többi szakasz a `--gut`-ot a
+   saját padding-jében hozza; ez a kettő kimaradt. */
+.vizvonal .belul,
+.flotta-vissza .belul { padding-inline: var(--margo); }
+
+.flotta-vissza {
+  background: var(--ejjel);
+  color: var(--ejjel-szov);
+  padding: var(--space-10) 0;
+}
+.flotta-vissza h2 { color: var(--ejjel-szov); }
+.flotta-vissza h2 em { font-style: italic; }
+
+.flotta-kijaratok {
+  list-style: none; margin: var(--space-8) 0 0; padding: var(--space-6) 0 0;
+  border-top: 1px solid var(--ejjel-vonal);
+  /* négy kivezetés — a negyedik a készülés fejezete */
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-7);
+}
+.flotta-kijaratok li { display: grid; gap: var(--space-3); align-content: start; }
+.flotta-kijaratok .tipo-muszaki { color: var(--oak); }
+.flotta-kijaratok .tipo-folyo { color: var(--ejjel-szov2); }
+.flotta-kijaratok .link-nyil {
+  font-family: var(--display); font-weight: 400; font-size: 1.3rem;
+  color: var(--ejjel-szov); text-decoration: none;
+  justify-self: start;
+}
+.flotta-kijaratok .link-nyil:hover { color: var(--oak); }
+
+/* ============================================================
+   MOBIL — nem kicsinyített asztali nézet
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .vizvonal-fej { grid-template-columns: 1fr; align-items: start; gap: var(--space-4); }
+
+  /* A sor telefonon két hasáb: kép balra, minden más jobbra, egymás
+     alatt. A rang kimarad — a jelsor amúgy is elmondja. */
+  .hajo > a {
+    grid-template-columns: 34vw minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "kep jel"
+      "kep nev"
+      "kep tipus"
+      "kep allomas";
+    gap: var(--space-2) var(--space-4);
+    align-items: start;
+  }
+  .hajo-nev   { align-self: start; }
+  .hajo-tipus { align-self: start; }
+  .hajo-allomasok { padding: 10px 0 0; }
+  .hajo-allomasok::before { top: calc(50% + 5px); }
+  .hajo-rang { display: none; }
+
+  .flotta-kijaratok { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+
+@media (max-width: 720px) {
+  /* A szedés a hüvelykujj fölött, a kép alsó harmadában — a színpad
+     MÉRT alsó sávja fölött. A korábbi állandó (96 + 8 px) kevés volt:
+     a lábsáv itt két sorba törik, tehát 113 px magas, és a mondat
+     utolsó sora ráült a műszaki adatra. A mérés a script.js
+     „9/b. A SZÍNPAD MŰSZAKI SÁVJAI” szakaszában van. */
+  .jelenet {
+    align-items: flex-end; justify-content: flex-start;
+    padding-bottom: calc(var(--szinpad-lab, 7rem) + var(--space-4));
+  }
+  body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * .82svh); }
+
+  /* A nyitó szedés is ALULRA kerül, a főoldallal ellentétben. Ok: a
+     flotta jelzősávja telefonon vízszintes, közvetlenül a cím alatt —
+     a képmező közepén álló nyitóblokk pontosan belelógott. */
+
+  /* A felirat felső szeme (projekt · hely) telefonon elmarad: ugyanaz
+     a szöveg ott áll a lábsáv kivezető hivatkozásában, és három sorba
+     tördelve kétszer elvette a képkocka tetejét. */
+  .flotta-nyitas .ter-felirat .honnan { display: none; }
+  /* A név rövidítése a ter.css „érintőcél” szakaszában van, mind a
+     három fejezetnek — és a hasábhoz mérve, nem a képmezőhöz. */
+
+  .jelenet-nyito { gap: var(--space-4); }
+  .jelenet-nyito h1 { font-size: clamp(2rem, 9.2vw, 2.9rem); }
+  .jelenet-nyito .eloszo { font-size: 1rem; }
+
+  /* A vezérlők a hüvelykujj sávjában: bal oldalt a kivezető
+     hivatkozás, jobb oldalt az alaprajz. A műszaki sáv marad — itt,
+     a főoldallal ellentétben, tényleg hordoz információt: melyik
+     állomáson állunk a hatból. */
+  /* minmax(0, 1fr), nem 1fr: az `1fr` alapból nem megy a saját
+     min-content mérete alá, így a bal oszlop (állomásadat +
+     kivezető hivatkozás) 218 px-en megállt, a jobb oszlop pedig
+     kilökte az ALAPRAJZ gombot a képmezőből — 375 px-en 15 px-nyi
+     levágott gomb. Mérve a 8. fázisban. */
+  .flotta-nyitas .felulet { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto 1fr auto; }
+  /* Nyújtva: a jelsor a képmező szélességét osztja fel (ter.css,
+     8. fázis). Tartalomra méretezve minden jel 20 px széles maradt,
+     a 24 px-es minimum alatt. */
+  .flotta-nyitas .ter-jelzo { grid-row: 2; grid-column: 1 / -1; justify-self: stretch; }
+  .flotta-nyitas .ter-lab { grid-column: 1; grid-row: 4; align-self: end; }
+  .flotta-nyitas .ter-vezerlok {
+    grid-column: 2; grid-row: 4; align-self: end; justify-self: end; display: flex;
+  }
+  .flotta-nyitas .ter-adat { font-size: .68rem; }
+
+  /* érintőcél — ugyanaz a 44px, ami az alaprajz szűrőjén is */
+  .flotta-gomb { height: 44px; }
+
+  .flotta-vissza { padding: var(--space-9) 0; }
+
+  /* JAVÍTÁS (5. fázis). A .link-nyil 27 px magas volt — a szedés
+     magassága, nem célpontméret. A 4. fázis a ter.css vezérlőit
+     vitte 44 px-re; ez a hivatkozásforma kimaradt. */
+  .link-nyil { min-height: 44px; padding-top: 12px; padding-bottom: 12px; }
+}
+
+@media (max-width: 560px) {
+  .hajo > a { grid-template-columns: 40vw minmax(0, 1fr); }
+  .hajo-nev { font-size: 1.12rem; }
+}
+
+/* ============================================================
+   CSÖKKENTETT MOZGÁS
+   ============================================================
+   A történet nem esik szét: a hat állomás, a teljes szedés, a
+   vízvonal és a szűrő ugyanaz marad. Ami elmarad, az a kameramozgás
+   (azt a kuszob.js rövidíti 200 ms-os áttűnésre) és a léptékváltás. */
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * .8svh); }
+  .jelenet-belul { transition: none; }
+  .hajo-kep img { transition: none; }
+  .hajo > a:hover .hajo-kep img,
+  .hajo > a:focus-visible .hajo-kep img { transform: none; }
+  .hajo-nev { transition: none; }
+}

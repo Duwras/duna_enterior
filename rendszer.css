@@ -1,0 +1,420 @@
+/* ============================================================
+   DUNA — THE LIVING INTERIOR
+   rendszer.css — a jelrendszer közös alapja (tervezői jelkészlet)
+
+   Ez a fájl NEM stílusokat ad, hanem MÉRTÉKEKET. Minden szín, betűfok,
+   térköz, időzítés és görbe innen jön; a style.css és a ter.css csak
+   használja őket. Egy érték egy helyen él.
+
+   A style.css :root blokkja marad az alappaletta (paper, ink, brass…) —
+   azt itt nem másoljuk le, hanem hivatkozunk rá. Ami itt új:
+
+     1. két „regiszter” — nappal és éjjel (a koncepció szerint a belső
+        térnek árnyéka is van; a HABLEÁNY éjjel az egyik legjobb anyagunk)
+     2. tipográfiai szerepek — DISPLAY / EDITORIAL / BODY / TECHNICAL / UI
+     3. térköz-skála
+     4. mozgás: idők és görbék („vízgörbe”)
+     5. mélység: a rétegek alapértékei
+
+   Betöltési sorrend:  fonts.css → rendszer.css → style.css → ter.css
+   ============================================================ */
+
+:root {
+
+  /* ---------- 1. REGISZTER: nappal (alapállapot) ----------
+
+     Szemantikus nevek, hogy ugyanaz a komponens éjjel is működjön.
+     A nyers színek a style.css-ben vannak; ezek csak szerepek. */
+
+  --alap:        var(--paper);     /* lapszín */
+  --alap-2:      var(--paper-2);   /* váltakozó felület */
+  --szoveg:      var(--ink);       /* cím, erős szöveg */
+  --szoveg-2:    var(--ink-2);     /* folyószöveg */
+  --halk:        var(--smoke);     /* másodlagos felirat — csak ≥16 px */
+  --vonal:       var(--line);      /* hajszálvonal, raszter */
+  --akcent:      var(--brass);     /* funkcionális kiemelés */
+  --fokusz:      var(--brass);     /* fókuszgyűrű */
+
+  /* Az anyag-akcent: a terek a SAJÁT domináns anyagukból kapják.
+     Alapértéke az akcent — ha egy térhez nincs anyag megadva, semmi
+     nem törik el. A terek.json anyagok[] mezője állítja. */
+  --anyag:       var(--akcent);
+
+  /* Fotó fölé kerülő szöveg alá mindig kerül árnyalás — a kontraszt
+     soha nem múlhat azon, mi van épp a képen. */
+  --fatyol-eros: rgba(14, 11, 7, .62);
+  --fatyol-lagy: rgba(14, 11, 7, .34);
+
+  /* éjszakai nyersanyagok — csak itt vannak megadva, sehol máshol */
+  --ejjel:       #0e0b07;
+  --ejjel-2:     #171208;
+  --ejjel-szov:  #e8dfd1;   /* 14.4:1 az --ejjel-en */
+  --ejjel-szov2: #b9ab97;   /*  8.1:1 */
+  --ejjel-halk:  #8a7c6a;   /*  4.6:1 — épp megfelel folyószövegre is */
+  --ejjel-vonal: rgba(232, 223, 209, .16);
+
+
+  /* ---------- 2. TIPOGRÁFIA ----------
+
+     Öt szerep, két betűcsalád. Új betű nem jöhet: a készlet ma is a
+     legnagyobb tétel az első betöltésben. */
+
+  --font-display:   var(--display);   /* Cormorant Garamond 300 */
+  --font-editorial: var(--display);   /* Cormorant Garamond 400 */
+  --font-body:      var(--sans);      /* Archivo 400 */
+  --font-technical: var(--sans);      /* Archivo 500 */
+  --font-ui:        var(--sans);      /* Archivo 500 */
+
+  /* fok / sorköz / betűköz — hármasával, hogy ne kelljen keresgélni */
+  --fok-display:    clamp(2.5rem, 6vw, 5.1rem);
+  --sork-display:   1.04;
+  --betuk-display:  -.012em;
+
+  --fok-display-2:  clamp(1.85rem, 3.9vw, 3.1rem);
+  --sork-display-2: 1.1;
+
+  --fok-display-3:  clamp(1.25rem, 2vw, 1.6rem);
+  --sork-display-3: 1.25;
+
+  --fok-editorial:  clamp(1.12rem, 1.7vw, 1.42rem);
+  --sork-editorial: 1.62;
+
+  --fok-body:       1rem;
+  --sork-body:      1.7;
+
+  --fok-body-kis:   .875rem;
+  --sork-body-kis:  1.6;
+
+  --fok-technical:  .69rem;
+  --sork-technical: 1.35;
+  --betuk-technical: .24em;
+
+  /* számokhoz, koordinátákhoz: nem verzál, egyenletes szélességű
+     számjegyek, hogy a mérőszámok ne ugráljanak */
+  --fok-adat:       .72rem;
+  --betuk-adat:     .04em;
+
+  --fok-ui:         .74rem;
+  --betuk-ui:       .16em;
+
+  /* sorhossz */
+  --hossz-szoveg:   68ch;
+  --hossz-vezeto:   46ch;
+
+  /* Hozzáférhetőségi korlát, nem stílus: a Cormorant 300 vékony
+     vonala 24 px alatt gyenge kijelzőn elveszik. */
+  --display-min:    24px;
+
+
+  /* ---------- 3. TÉRKÖZ ----------
+
+     Fix skála a részletekhez, rugalmas mértékek a lapszerkezethez. */
+
+  --space-1:  .25rem;   /*  4 */
+  --space-2:  .5rem;    /*  8 */
+  --space-3:  .75rem;   /* 12 */
+  --space-4:  1rem;     /* 16 */
+  --space-5:  1.5rem;   /* 24 */
+  --space-6:  2rem;     /* 32 */
+  --space-7:  3rem;     /* 48 */
+  --space-8:  4rem;     /* 64 */
+  --space-9:  6rem;     /* 96 */
+  --space-10: 9rem;     /* 144 */
+
+  /* a lap szerkezete — a meglévő értékek, névvel */
+  --margo:    var(--gut);     /* oldalsó margó */
+  --ritmus:   var(--blokk);   /* szekciók közti levegő */
+  --szeles:   var(--max);     /* tartalom legnagyobb szélessége */
+
+  /* a térbeli felület pereme: a feliratok ennyivel ülnek beljebb a
+     kép szélétől. Kisebb, mint a lapmargó — a felirat a KÉPHEZ
+     tartozik, nem a laphoz. */
+  --keret:    clamp(14px, 2.4vw, 34px);
+
+  /* rácsköz */
+  --koz:      clamp(14px, 2vw, 28px);
+
+
+  /* ---------- 4. MOZGÁS ----------
+
+     „Vízgörbe”: minden lassulva áll meg, semmi nem pattan vissza.
+     Az idők nem tetszőlegesek — a leglassabb mozgás a legfontosabb. */
+
+  --motion-gyors:   120ms;   /* hover, fókusz, apró állapot */
+  --motion-normal:  240ms;   /* áttűnés */
+  --motion-tipus:   520ms;   /* szedés feltárása (40 ms lépcsővel) */
+  --motion-vissza:  480ms;   /* visszafelé — az ismerős út gyorsabb */
+  --motion-terv:    620ms;   /* alaprajz → tér */
+  --motion-kuszob:  900ms;   /* A KÜSZÖB — a lap leglassabb mozdulata */
+
+  --ease-water:     cubic-bezier(.16, .84, .24, 1);   /* küszöb, kameramozgás */
+  --ease-lagy:      cubic-bezier(.4, 0, .2, 1);       /* áttűnés */
+  --ease-tipus:     cubic-bezier(.2, .7, .2, 1);      /* szedés */
+
+  /* Nincs rugó, nincs túllövés, nincs elasztikus görbe. Ha valaha
+     kell egy hatodik idő, annak ki kell szorítania egy meglévőt. */
+
+
+  /* ---------- 5. MÉLYSÉG ----------
+
+     A fotó három rétegre bomlik: KÖZELI (ami a kamera mellett megy el),
+     KÖZÉP, TÁVOLI (amit a nyíláson át látunk). A rétegek alapnagyítása
+     azért kell, hogy elmozduláskor se villanjon ki a kép széle. */
+
+  /* A tartalék NEM lehet nulla. A réteg alapnagyítása pontosan azért
+     van, hogy a mutatókövetés elmozdulásán se villanjon ki a kép széle.
+     A szükséges minimum kétszerese az elmozdulásnak (mindkét oldalon
+     kell tartalék): 1 + 2 × 0.9% = 1.018. A 1.04 ezen fölött tartalék —
+     a küszöb első képkockáin a réteg még alig nagyobb ennél, és tört
+     DPR-en is maradjon takarás.
+
+     MIND A HÁROM UGYANANNYI — és ez a lényeg.
+
+     Korábban 1.008 / 1.025 / 1.055 állt itt, rétegenként más. A három
+     réteg viszont UGYANAZ A FÉNYKÉP, és a maszkjuk lágy: a nyílás
+     pereme körül két réteg egyszerre látszik. Két azonos kép, 4,7%
+     léptékkülönbséggel egymáson — egy 1880 px-es képmezőn 44 px
+     eltolás a képmező szélén. Az ajtótok, a fogasok, a tükör kerete
+     mind KÉTSZER látszott, kicsit elcsúszva. Nem életlenség és nem
+     mélységélesség: szellemkép, végig, minden színpadon, nyugalomban
+     is. Ez volt az, amitől „duplán lát" a néző.
+
+     Azonos alapnagyítással a három réteg nyugalomban képpontra fedi
+     egymást — egy fénykép, egy él. A mélység ott keletkezik, ahol
+     keletkeznie kell: a KÜSZÖBNÉL, ahol a kuszob.js a saját
+     kameragörbéje szerint nagyítja szét őket. A mutatókövetés
+     mindhármat egyformán mozdítja (lásd --reteg-mozog): ott ugyanez a
+     szétválasztás csak a szellemképet hozta vissza, mozgás közben. */
+  --reteg-tav-nagy:    1.04;
+  --reteg-koz-nagy:    1.04;
+  --reteg-kozel-nagy:  1.04;
+
+  /* mennyit mozdul a kép a mutató teljes kitérésére.
+
+     EGY érték mind a három rétegre. Rétegenként külön mérték volt itt,
+     és pontosan ugyanazt a szellemképet csinálta mozgás közben, amit az
+     eltérő alapnagyítás nyugalomban: ugyanaz az él kétszer, elcsúszva.
+     A rétegek egyetlen fénykép másolatai — eltolva nem mélységet adnak,
+     hanem duplázást. A miértje bővebben a ter.css-ben, a
+     .ter-reteg img szabálynál. */
+  --reteg-mozog:       0.9%;
+
+  /* a maszkok lágyulása — ettől nem lesz vágott éle a rétegnek */
+  --maszk-lagy:        26%;
+}
+
+
+/* ---------- REGISZTERVÁLTÁS ----------
+
+   Nem „sötét mód” és nem kapcsoló: a látogató nem választja, hanem
+   ÁTMEGY rajta. Egy szülőelemre kerül, és onnantól minden komponens
+   éjszakai értékeket kap — külön éjszakai stíluslap nélkül. */
+
+[data-hangulat="ejjel"] {
+  --alap:     var(--ejjel);
+  --alap-2:   var(--ejjel-2);
+  --szoveg:   var(--ejjel-szov);
+  --szoveg-2: var(--ejjel-szov2);
+  --halk:     var(--ejjel-halk);
+  --vonal:    var(--ejjel-vonal);
+  --akcent:   var(--oak);      /* sárgaréz helyett tölgy: sötéten ez olvasható */
+  --fokusz:   var(--oak);
+  --fatyol-eros: rgba(0, 0, 0, .66);
+  --fatyol-lagy: rgba(0, 0, 0, .38);
+}
+
+
+/* ---------- <picture> ----------
+
+   A <picture> csak burok az AVIF/WebP/JPEG választáshoz — elrendezési
+   szerepe nincs. display: contents nélkül beékelődne minden meglévő
+   szabály közé, amelyik a képet a szülőjéhez méretezi (kártyakeret,
+   rétegek, galéria), és a képek elveszítenék a magasságukat. */
+picture { display: contents; }
+
+
+/* ---------- TIPOGRÁFIAI SZEREPEK, OSZTÁLYKÉNT ----------
+
+   Hogy a szerep ne csak dokumentáció legyen. Ezek nem „utility”
+   osztályok: pontosan öt van belőlük, ahány szerep. */
+
+.tipo-cim {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--fok-display); line-height: var(--sork-display);
+  letter-spacing: var(--betuk-display);
+  color: var(--szoveg); text-wrap: balance; margin: 0;
+}
+.tipo-cim-2 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--fok-display-2); line-height: var(--sork-display-2);
+  letter-spacing: var(--betuk-display); color: var(--szoveg);
+  text-wrap: balance; margin: 0;
+}
+.tipo-vezeto {
+  font-family: var(--font-editorial); font-weight: 400;
+  font-size: var(--fok-editorial); line-height: var(--sork-editorial);
+  color: var(--szoveg-2); max-width: var(--hossz-vezeto); margin: 0;
+}
+.tipo-folyo {
+  font-family: var(--font-body); font-weight: 400;
+  font-size: var(--fok-body); line-height: var(--sork-body);
+  color: var(--szoveg-2); max-width: var(--hossz-szoveg); margin: 0;
+}
+/* Verzál CSAK itt: műszaki adat, felirat, kategória. Máshol nem. */
+.tipo-muszaki {
+  font-family: var(--font-technical); font-weight: 500;
+  font-size: var(--fok-technical); line-height: var(--sork-technical);
+  letter-spacing: var(--betuk-technical); text-transform: uppercase;
+  color: var(--halk); margin: 0;
+}
+/* mérőszám, koordináta, sorszám — nem verzál, egyenletes számjegyek */
+.tipo-adat {
+  font-family: var(--font-technical); font-weight: 400;
+  font-size: var(--fok-adat); letter-spacing: var(--betuk-adat);
+  font-variant-numeric: tabular-nums; color: var(--halk); margin: 0;
+}
+.tipo-ui {
+  font-family: var(--font-ui); font-weight: 500;
+  font-size: var(--fok-ui); letter-spacing: var(--betuk-ui);
+  text-transform: uppercase; line-height: 1;
+}
+
+
+/* ---------- A JELENET ----------
+
+   Fotó fölötti szedés. A főoldal, a flotta és a készülés ugyanígy
+   csinálja; a 6. fázisig mindhárom külön másolatot vitt. Három közül
+   a harmadik már biztosan lemarad, ezért az egyező rész ide került.
+
+   Miért ide és nem egy negyedik stíluslapba: az új stíluslap egy új,
+   renderelést blokkoló kérés volna pont a három legfontosabb lapon.
+   Ez viszont NEM nyereség bájtban: a tizenegy archívlap ~0,6 KB-tal
+   többet tölt (tömörítve), a három jelenetes ~0,25 KB-tal. Nincs
+   olyan hely, ami pontosan azt a hármat éri el. Karbantartási
+   döntés, nem teljesítményi — és így is írjuk le.
+
+   A justify-content NINCS itt: a flotta jobbra szed, a másik kettő
+   balra, és ez megkülönböztetés, nem elírás. Ami a fejezetekben
+   marad, az felülírja az ittenit — később töltődnek. */
+
+.jelenet {
+  min-height: 100svh;
+  display: flex; align-items: center;
+  padding: 0 var(--margo);
+}
+body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * 1svh); }
+
+.jelenet-belul {
+  pointer-events: auto;
+  max-width: 34rem;
+  display: grid; gap: var(--space-4);
+  color: var(--ejjel-szov);
+  text-shadow: 0 1px 18px rgba(0, 0, 0, .6);
+  transition: opacity var(--motion-normal) var(--ease-lagy);
+}
+.jelenet-belul .felcim { color: var(--oak); }
+.jelenet-belul h1,
+.jelenet-belul h2 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--fok-display-2); line-height: var(--sork-display-2);
+  letter-spacing: var(--betuk-display);
+  color: var(--ejjel-szov); margin: 0;
+}
+.jelenet-belul h1 { font-size: var(--fok-display); line-height: var(--sork-display); }
+.jelenet-belul em { font-style: italic; }
+.jelenet-belul .tipo-folyo,
+.jelenet-belul .tipo-vezeto,
+.jelenet-belul .eloszo { color: var(--ejjel-szov2); }
+.jelenet-belul .link-nyil { color: var(--ejjel-szov); }
+/* A .tipo-muszaki (főoldal) és a .tipo-adat (flotta, készülés) NEM
+   került ide, pedig kézenfekvő volna: nem mind a három fejezet
+   használja őket a jelenetszedésben, és egy „kézenfekvő” egységesítés
+   némán átszínezne egy sort ott, ahol ma alapszínű. Maradnak a saját
+   fájljukban. */
+
+.jelenet-nyito { max-width: 38rem; gap: var(--space-5); }
+.jelenet-nyito .eloszo { max-width: 27rem; color: var(--ejjel-szov); }
+.jelenet-nyito .gorgetes-jel { color: var(--ejjel-szov2); }
+.jelenet-nyito .gorgetes-jel .vonal { background: var(--ejjel-szov2); }
+
+.jelenet-mondat { max-width: 40rem; }
+.jelenet-mondat h2 { font-size: var(--fok-display); line-height: var(--sork-display); }
+
+/* ---------- A NYITÓJELENET HELYE, TELEFONON ----------
+
+   Telefonon a jelenetek szedése a saját cikkük ALJÁHOZ igazodik (a
+   hüvelykzónába), és a cikk rövidebb egy képernyőnél. A többi
+   jelenetnél ez rendben van: azok gördülnek, és a halkítás dönti el,
+   mikor szólalnak meg (script.js, „9/c. EGYSZERRE EGY MONDAT”).
+
+   A NYITÓ viszont nem gördül sehonnan — az a lap első képe, tehát a
+   betöltés pillanatában a helyén kell állnia. Az alsó igazítás ott
+   pont a képmező TETEJÉRE tette, a felirat és a jelzősor alá: a
+   készülésen a nyitócím a jelzősoron ült, és a halkítás — helyesen —
+   nullára vitte. Ezért a nyitójelenet teljes képernyő magas, és a
+   szedés a színpad két MÉRT sávja közé igazodik.
+
+   Egy helyen, mert mind a három fejezet ugyanez. */
+@media (max-width: 720px) {
+  .jelenet:first-child {
+    align-items: center;
+    padding-top: calc(var(--szinpad-fej, 0px) + var(--space-4));
+    padding-bottom: calc(var(--szinpad-lab, 0px) + var(--space-4));
+  }
+  body[data-mozgas] .jelenet:first-child { min-height: 100svh; }
+
+  /* A görgetésjel telefonon fölösleges: az ujj úgyis görget. A főoldal
+     és a flotta ezt külön-külön már így csinálta, a készülés nem —
+     ezért volt ott a nyitószedés két sorral hosszabb, mint amennyi a
+     színpad két sávja közé befér. Egy helyen, mind a háromnak. */
+  .jelenet-nyito .gorgetes-jel { display: none; }
+}
+
+
+/* ---------- CSÖKKENTETT MOZGÁS ----------
+
+   Nem kikapcsolás: rövidítés. Ami információt hordoz (hogy VÁLTOTTUNK
+   teret), az megmarad — csak nem mozdul, hanem áttűnik. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-gyors:  1ms;
+    --motion-normal: 200ms;
+    --motion-tipus:  200ms;
+    --motion-vissza: 200ms;
+    --motion-terv:   200ms;
+    --motion-kuszob: 200ms;
+
+    --reteg-mozog:   0%;
+  }
+}
+
+
+/* ---------- SZKRIPT NÉLKÜLI TARTALÉK A SZÍNPADOKHOZ ----------
+
+   A ragadós színpad egy képkockát mutat, a többit a ter.js lépteti.
+   Szkript nélkül a build egy <noscript> listát is kitesz (build.mjs
+   nojsKeretek) — ez az a lista. A böngésző ezt a szabálycsoportot
+   szkript mellett SOHA nem alkalmazza, mert az elemek nem is jönnek
+   létre; a kód azért él itt, mert ide tartozik. */
+
+.nojs-lista {
+  list-style: none;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+}
+.nojs-lista > li { margin: 0; }
+.nojs-lista figure { margin: 0; }
+.nojs-lista img {
+  width: 100%; height: auto; display: block;
+  border-radius: 2px;
+}
+.nojs-lista figcaption {
+  margin-top: var(--space-2);
+  display: flex; flex-wrap: wrap; gap: .35em .8em;
+  align-items: baseline;
+}
+.nojs-lista figcaption a { white-space: nowrap; }

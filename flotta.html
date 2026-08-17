@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A flotta — Duna Belsőépítészet Kft.</title>
+<meta name="description" content="Tizenöt hajó a győri asztalos- és hajóépítő üzemből: bordától a felületen át a beépített belsőig. A DUNA hajós munkái egy lapon, a készülés állomásaival.">
+<link rel="canonical" href="https://{{domain}}/flotta.html">
+<link rel="icon" href="img/brand/favicon.png">
+<!-- A hajtás fölött ténylegesen használt két betűváltozat előre kérve. -->
+<link rel="preload" href="fonts/cormorant-garamond-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="rendszer.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ter.css">
+<link rel="stylesheet" href="terv.css">
+<link rel="stylesheet" href="flotta.css">
+</head>
+<body class="ter-oldal flotta-oldal">
+
+<!--FEJLEC:flotta-->
+
+<main id="tartalom">
+
+  <!-- ============================================================
+       A NYITÁS — hat állomás
+
+       Ugyanaz a szerkezet, mint egy szobában vagy a főoldal
+       enfiládján: ragadós színpad, valódi magasságú görgetőszakasz,
+       a szöveg fölötte gördül. Ezért ugyanaz a ter.js vezényli, és
+       ezért nincs itt egyetlen új mozgás sem.
+
+       Egyetlen dolog más, és az jelent valamit: itt MINDEN küszöb
+       ABLAK. Az ajtó másik szobába vezet; az ablak valamihez, ami
+       mozog. Egy flotta ezért ablakok sora.
+
+       A szedés a JOBB oldalon áll — a főoldalon a balon. Ennyi a
+       jelzés, hogy más fejezetben vagyunk.
+       ============================================================ -->
+  <section class="enfilad flotta-nyitas" id="flottaNyitas" data-horgony="nem"
+           aria-label="A flotta — hat állomás a bordától a mozgásig">
+
+    <div class="szinpad" id="szinpad" data-hangulat="nappal">
+
+      <!--FLOTTA-KERETEK-->
+
+      <div class="felulet">
+        <nav class="ter-jelzo" aria-label="Állomások">
+          <!--FLOTTA-JELZO-->
+        </nav>
+
+        <div class="ter-felirat">
+          <p class="honnan tipo-muszaki"><span>Duna Cruises HABLEÁNY · a folyón</span></p>
+          <p class="nev">A HABLEÁNY a Dunán, menet közben</p>
+        </div>
+
+        <div class="ter-vezerlok">
+          <button type="button" class="ter-terv tipo-ui" data-terv="nyit">
+            Alaprajz <kbd>Esc</kbd>
+          </button>
+        </div>
+
+        <div class="ter-lab">
+          <dl class="ter-adat tipo-adat">
+            <div><dt>Állomás</dt><dd data-mezo="sorszam">01 / 06</dd></div>
+            <div><dt>Idő</dt><dd data-mezo="hangulat">Nappal</dd></div>
+            <div><dt>Szakasz</dt><dd data-mezo="anyag">A hajó</dd></div>
+          </dl>
+
+          <a class="ter-projekt tipo-ui" href="referenciak/duna-cruises-hableany/">
+            <span class="cel">Duna Cruises HABLEÁNY</span>
+            <span class="nyil" aria-hidden="true"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flotta-szoveg">
+
+      <!-- ---------- 01. A HAJÓ ----------
+           Onnan indulunk, ahol a főoldal abbahagyta: a HABLEÁNY
+           kívülről, éjjel, a Dunán. A látogató ezt a képkockát már
+           látta — ez a híd a két fejezet között. -->
+      <article class="jelenet" data-keret="1" style="--h: 108">
+        <div class="jelenet-belul jelenet-nyito">
+          <p class="felcim">A flotta</p>
+          <h1>Tizenöt tér,<br><em>ami elindult.</em></h1>
+          <p class="eloszo">Harminc munkából tizenöt hajó. Nem külön szakág: ugyanaz a műhely, ugyanaz a gépsor, ugyanaz a felületkezelő részleg — csak a padló alatt víz van.</p>
+          <p class="flotta-osszeg tipo-adat"><!--FLOTTA-OSSZEG--></p>
+          <p class="gorgetes-jel" aria-hidden="true"><span class="vonal"></span> Görgessen</p>
+        </div>
+      </article>
+
+      <!-- ---------- 02. A BORDA ---------- -->
+      <article class="jelenet" data-keret="2" style="--h: 74">
+        <div class="jelenet-belul">
+          <p class="felcim">A borda</p>
+          <h2>Előbb viszont<br><em>bordákból áll.</em></h2>
+          <p class="tipo-folyo">Egy fahajó teste ugyanúgy készül, mint egy íves bútor: sablon, hajlított borda, ragasztott palánk — és annyi szorító, amennyi a műhelyben van.</p>
+          <a class="link-nyil" href="referenciak/boesch-640-de-luxe/">Boesch 640 De Luxe <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- ---------- 03. A VÁZ ---------- -->
+      <article class="jelenet" data-keret="3" style="--h: 66">
+        <div class="jelenet-belul">
+          <p class="felcim">A váz</p>
+          <p class="tipo-vezeto">Eddig minden hajó ugyanaz. Itt válik el, hogy vitorla kerül rá, motor — vagy ennél az egynél futótalp.</p>
+          <a class="link-nyil" href="referenciak/jegvitorlas/">Jégvitorlás <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- ---------- 04. A FELÜLET ----------
+           Ugyanaz a hajótest, ami a 02. képkockán bordákból állt.
+           Az archívum egyetlen teljes elejétől-végéig lánca. -->
+      <article class="jelenet" data-keret="4" style="--h: 62">
+        <div class="jelenet-belul">
+          <p class="felcim">A felület</p>
+          <p class="tipo-vezeto">A fa akkor lesz kész, amikor a felülete is. Ugyanaz a pácolás és lakkozás, ami a szállodai bútoron — és ugyanaz a test, ami két képkockával korábban bordákból állt.</p>
+        </div>
+      </article>
+
+      <!-- ---------- 05. A SZOBA ----------
+           A fordulat: a hajótesten belül szoba van. Ez az egyetlen
+           képkocka a nyitásban, aminek valódi mélysége is van. -->
+      <article class="jelenet" data-keret="5" style="--h: 78">
+        <div class="jelenet-belul">
+          <p class="felcim">A szoba</p>
+          <h2>És ekkor<br><em>bemegyünk.</em></h2>
+          <p class="tipo-folyo">Fekhely, asztal, ülőpad, mosdó, mahagóni burkolat. Innentől ez belsőépítészet — csak a fal mögött nem a szomszéd van, hanem a víz.</p>
+          <a class="link-nyil" href="referenciak/rivalis-vitorlas-hajo/">Rivális vitorlás hajó <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <!-- ---------- 06. A MOZGÁS ---------- -->
+      <article class="jelenet" data-keret="6" style="--h: 82">
+        <div class="jelenet-belul jelenet-mondat">
+          <p class="felcim">A mozgás</p>
+          <h2>Aztán a szoba<br><em>elindul.</em></h2>
+          <p class="tipo-folyo">Ennyi a különbség egy szálloda és egy hajó között. A tervezés, a gyártás és a szerelés ugyanaz.</p>
+          <a class="link-nyil" href="#vizvonal">A teljes flotta <span aria-hidden="true">↓</span></a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!--FLOTTA-NOJS-->
+
+  <!-- A képernyőolvasó ebből tudja meg, hogy állomást váltottunk. -->
+  <p class="rejtett" id="terElo" aria-live="polite" aria-atomic="true"></p>
+
+  <!-- ============================================================
+       A VÍZVONAL — tizenöt hajó egy vonalon
+
+       Nem kártyarács: index. Egy hajszálvonal fut végig a listán, és
+       minden hajó a saját koordinátáján ül rajta — ugyanazon a
+       HA·NN-en, amit az alaprajz is ad neki. A cím és a bejárási
+       sorrend két külön dolog; egy valódi alaprajzon is így van.
+
+       Az öt jel azt mondja meg, MIT ŐRZ az archívum az adott hajóról.
+       Ami hiányzik, arról nincs fénykép — nem az, hogy nem történt meg.
+       ============================================================ -->
+  <section class="vizvonal" id="vizvonal" aria-labelledby="vizvonalCim">
+    <div class="belul">
+
+      <header class="vizvonal-fej">
+        <div>
+          <p class="felcim">A vízvonal</p>
+          <h2 id="vizvonalCim" class="tipo-cim-2">Tizenöt hajó,<br><em>egy vonalon.</em></h2>
+        </div>
+        <p class="tipo-vezeto">A sorrendet nem ízlés adja: elöl az áll, amiről a legtöbb anyag van — a bejárható tér, utána a ma is gyártott típusok, majd az archívum aszerint, hogy a készülés hány állomását őrzi.</p>
+      </header>
+
+      <nav class="vizvonal-szuro" aria-label="Szűrés arra, mit őriz az archívum">
+        <div role="group" class="flotta-gombok">
+          <button type="button" class="flotta-gomb tipo-ui" data-flotta-allomas="mind" aria-pressed="true">Mind</button>
+          <!--FLOTTA-SZURO-->
+        </div>
+        <p class="flotta-allas tipo-adat" aria-live="polite"></p>
+      </nav>
+
+      <ol class="hajok">
+        <!--FLOTTA-SOROK-->
+      </ol>
+
+      <footer class="vizvonal-jelmagyarazat tipo-adat">
+        <p><i class="allomas-jel" data-allomas="vaz" data-van aria-hidden="true"></i> <b>Váz</b> — látszik a bordázat vagy a szerkezet.</p>
+        <p><i class="allomas-jel" data-allomas="felulet" data-van aria-hidden="true"></i> <b>Felület</b> — csiszolás, lakkozás, palánkrészlet.</p>
+        <p><i class="allomas-jel" data-allomas="belso" data-van aria-hidden="true"></i> <b>Belső</b> — a hajó belső tere mint tér.</p>
+        <p><i class="allomas-jel" data-allomas="vizen" data-van aria-hidden="true"></i> <b>Vízen</b> — a hajó a vízen.</p>
+        <p><i class="allomas-jel" data-allomas="studio" data-van aria-hidden="true"></i> <b>Stúdió</b> — semleges háttér előtt, tárgyként.</p>
+        <p class="halk">A jel azt mondja meg, mit őriz az archívum — nem azt, mi történt a műhelyben. Ahol nincs jel, ott fénykép nincs.</p>
+      </footer>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VISSZA A BELSŐ TÉRBE
+
+       A flotta nem külön kis oldal: ugyanannak a világnak a része.
+       Három valódi kivezetés, és a mondat, amivel a főoldal
+       idehozta a látogatót.
+       ============================================================ -->
+  <section class="flotta-vissza" aria-labelledby="visszaCim">
+    <div class="belul">
+      <h2 id="visszaCim" class="tipo-cim-2">Tereket építünk.<br><em>Néhány közülük elindul.</em></h2>
+
+      <ul class="flotta-kijaratok">
+        <li>
+          <p class="tipo-muszaki">A bejárható hajó</p>
+          <a class="link-nyil" href="referenciak/duna-cruises-hableany/">A HABLEÁNY szalonja <span aria-hidden="true">→</span></a>
+          <p class="tipo-folyo">Öt kameraállás, nappal és éjjel, a Dunával az ablakban.</p>
+        </li>
+        <!--KESZ-KIJARAT-->
+        <li>
+          <p class="tipo-muszaki">A teljes munka</p>
+          <a class="link-nyil" href="alaprajz.html#hajo">Az alaprajz hajószárnya <span aria-hidden="true">→</span></a>
+          <p class="tipo-folyo">Ugyanez a tizenöt hajó a harminc projekt szerkezeti rajzán.</p>
+        </li>
+        <li>
+          <p class="tipo-muszaki">Hajóértékesítés</p>
+          <a class="link-nyil" href="https://dunahajok.hu/" target="_blank" rel="noopener">dunahajok.hu <span aria-hidden="true">↗</span></a>
+          <p class="tipo-folyo">A ma is gyártott típusok — 6.1 Cabin és 6.1 KADÉT — kereskedelmi oldala.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- AZ ALAPRAJZ — a szerkezet, ami az élmény alatt van. Innen is
+     egy Esc, és ugyanaz a lap. -->
+<aside class="alaprajz" id="alaprajz" data-hely="fedo" aria-label="Alaprajz — minden projekt" hidden>
+  <!--ALAPRAJZ-->
+</aside>
+
+<!--LABLEC-->
+
+<script src="script.js"></script>
+<script src="kuszob.js"></script>
+<script src="terv.js"></script>
+<script src="ter.js"></script>
+<script src="flotta.js"></script>
+</body>
+</html>

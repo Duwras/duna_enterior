@@ -22,6 +22,9 @@
         <ul>
           <li><a href="rolunk.html">Rólunk</a></li>
           <li><a href="referenciak.html">Referenciák</a></li>
+          <li><a href="alaprajz.html">Alaprajz</a></li>
+          <li><a href="flotta.html">Flotta</a></li>
+          <li><a href="keszules.html">Készülés</a></li>
           <li><a href="design-manufaktura.html">Design manufaktúra</a></li>
           <li><a href="https://dunahajok.hu/" target="_blank" rel="noopener">Duna Hajók ↗</a></li>
           <li><a href="kapcsolat.html">Kapcsolat</a></li>
@@ -37,9 +40,18 @@
     <!-- Kötelező tájékoztatási elem (KTK 2020) — az infoblokk és a
          nyertes pályázatok listája minden oldal alján megjelenik. -->
     <div class="eu-blokk">
-      <img src="img/brand/eu-infoblokk-erfa.png"
-           alt="Széchenyi 2020 — Európai Regionális Fejlesztési Alap infoblokk"
-           width="232" height="160" loading="lazy">
+      <!-- A srcset-et a build mélységjavítója NEM írja át (csak a src-t
+           és a href-et), ezért gyökérből indul: így az aloldalakon is
+           ugyanoda mutat. A -232 / -464 változatot a build készíti. -->
+      <picture>
+        <source type="image/avif" sizes="232px"
+                srcset="/img/brand/eu-infoblokk-erfa-232.avif 232w, /img/brand/eu-infoblokk-erfa-464.avif 464w">
+        <source type="image/webp" sizes="232px"
+                srcset="/img/brand/eu-infoblokk-erfa-232.webp 232w, /img/brand/eu-infoblokk-erfa-464.webp 464w">
+        <img src="img/brand/eu-infoblokk-erfa.png"
+             alt="Széchenyi 2020 — Európai Regionális Fejlesztési Alap infoblokk"
+             width="232" height="160" loading="lazy" decoding="async">
+      </picture>
       <div class="lista">
         <strong>Nyertes pályázataink</strong>
         <span>A pályázati azonosítóra kattintva tekintheti meg a részleteket.</span>
