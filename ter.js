@@ -388,9 +388,7 @@
           if (szobak[i].getAttribute('data-nezopont') === id) { gorgessOda(i); return; }
         }
       }
-      /* {{alap}} a kiszolgálási útvonal előtagja — gyökérből kiszolgálva
-         üres, GitHub Pages alkönyvtárból '/duna_enterior'. A build tölti ki. */
-      if (cel.indexOf('projekt:') === 0) location.href = '{{alap}}/referenciak/' + cel.slice(8) + '/';
+      if (cel.indexOf('projekt:') === 0) location.href = '/referenciak/' + cel.slice(8) + '/';
     });
 
     document.addEventListener('keydown', function (e) {

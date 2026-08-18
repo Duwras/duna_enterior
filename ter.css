@@ -118,6 +118,34 @@
 .ter[data-lapos] .ter-reteg.koz,
 .ter[data-lapos] .ter-reteg.kozel { display: none; }
 
+/* ---------- TELEFONON EGY RÉTEG ----------
+
+   Ugyanaz a laposítás, csak nem a fénykép, hanem a KÉSZÜLÉK miatt.
+
+   A rétegek elválása két dologból jöhet: a körülnézésből és a
+   küszöbátmenetből. A körülnézés (`--mx`/`--my`) a ter.js-ben
+   `if (finom)` alatt van — `(hover: hover) and (pointer: fine)` —,
+   tehát érintésre SOHA nem fut. Marad a küszöb 700 ms-a. Nyugalomban
+   pedig, ahol a látogató az idejét tölti, a három réteg ugyanannak a
+   fényképnek a másolata 1,000 / 1,025 / 1,055 léptéken, kettőn
+   radial-gradient maszkkal — ugyanaz a kép háromszor, mélység nélkül.
+
+   Mérve a főoldalon, 390 px-es képmezőn: 13 jelenet × 3 réteg = 39
+   teljes képmezős képréteg, ebből 26 maszkos. Telefonon 13 marad,
+   maszk nélkül. A hálózat nem érintett (a három réteg ugyanazt az egy
+   fájlt kéri le), a FESTÉS az: minden maszkos réteg saját kompozit
+   síkot kap, és teljes képmezőben raszterizálódik.
+
+   A küszöb nem törik el: a kuszob.js mindhárom réteget `if (kozel)` /
+   `if (koz)` mögül animálja, tehát a hiányukat kezeli — pontosan úgy,
+   ahogy a fenti lapos tartaléknál is. Ami elmarad: a közeli réteg nem
+   megy el a kamera mellett. A nyílás, a belépő tér ülepedése és a
+   kilépő tér elfogyása változatlan. */
+@media (max-width: 720px) {
+  .ter-reteg.koz,
+  .ter-reteg.kozel { display: none; }
+}
+
 /* A NYÍLÁS: a küszöb ezen keresztül tárja fel a következő teret.
    A wrapper nagyítása tágítja a maszkot; a benne lévő .ter ezzel
    pontosan ellentétesen skálázódik, így a KÉP áll, csak a LYUK nő. */

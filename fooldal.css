@@ -334,7 +334,24 @@ body[data-lemezek] .metszet-jelolok { padding-bottom: 45svh; }
    ============================================================ */
 
 @media (max-width: 900px) {
-  .metszet-ragad {
+  /* A `body[data-lemezek]` NEM díszítés a bal oldalon.
+
+     Az alapállapotot két szabály írja: a `.metszet-ragad` (egy hasáb,
+     szkript nélküli lista) és a `body[data-lemezek] .metszet-ragad`
+     (ragadós színpad, `minmax(15rem, 26%) 1fr`). A második
+     specificitása 0-2-1, ezé itt 0-1-0 volt — a médiakérdés pedig nem
+     ad specificitást. Vagyis szkript mellett a mobil felülírás
+     VESZÍTETT, és a színpad telefonon is kéthasábos maradt.
+
+     Mérve, 390 px-es képmezőn: a 15rem-es (240 px) fejhasáb után a
+     lemeznek 81 px maradt — az aktív lemez 81 × 75 px-es bélyegként
+     állt a jobb szélen, a felirata a képmezőn kívülre vágva. Ez volt
+     az, amiért a fejezet telefonon használhatatlanul festett.
+
+     Mindkét állapotot fel kell sorolni: a szkript nélküli listának is
+     egy hasáb kell. */
+  .metszet-ragad,
+  body[data-lemezek] .metszet-ragad {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     gap: var(--space-4);

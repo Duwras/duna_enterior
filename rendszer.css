@@ -368,6 +368,76 @@ body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * 1svh); }
      ezért volt ott a nyitószedés két sorral hosszabb, mint amennyi a
      színpad két sávja közé befér. Egy helyen, mind a háromnak. */
   .jelenet-nyito .gorgetes-jel { display: none; }
+
+  /* ---------- HELYI FÁTYOL A SZEDÉS ALATT ----------
+
+     A színpad fátyla a KÉPMEZŐT halkítja, sávokban (ter.css, és
+     telefonon a fooldal.css felülírja egyenletesre). Az a fátyol
+     viszont a képhez van szabva, nem a szöveghez — és a szöveg
+     telefonon nem ott áll, ahol a sávok a legerősebbek.
+
+     Mérve, 390 px-es képmezőn, a 02. kereten (trófeás vitrin: világos
+     szarvasfej, csillogó fém, világos tölgy). A hátteret a szedés
+     elrejtésével készült felvételen — ugyanazon a felvételen mérve a
+     „legvilágosabb folt” magukat a betűket adja vissza:
+
+                              medián    legvilágosabb háttér   kell
+       16 px folyószöveg      3.36:1    1.39:1   ← bukik       4.5:1
+       11 px felcím (--oak)   4.75:1    2.75:1   ← bukik       4.5:1
+       30 px cím              9.90:1    6.72:1                 3.0:1
+
+     Vagyis nem a fátyol erőssége hibás általában, hanem az, hogy
+     FÉNYKÉPFÜGGŐ: sötét kereten ugyanez a szedés 8:1 fölött van. Egy
+     erősebb egyenletes fátyol az egész fotót megölné, márpedig a
+     fejezet arról szól, hogy a fénykép látszik.
+
+     A helyi fátyollal, ugyanott: 7.46 / 4.80, 5.91 / 5.20, 13.47 /
+     12.34 — mind a három megvan AA-ra. Az ellenőrzés újrafuttatható:
+     kontraszt-teszt.mjs, a szedés elrejtve.
+
+     Ezért a fátyol a SZEDÉSHEZ tartozik, nem a képhez: elliptikus,
+     a bal peremtől indul, és láthatatlanul fut ki. Nincs éle, tehát
+     nem doboz a fotón — pontosan az, amit a .jelenet-nyito
+     tényhasábjainál is elkerültünk.
+
+     A `z-index: -1` az `isolation: isolate` miatt biztonságos: a
+     fátyol a szedés MÖGÉ kerül, de nem a fénykép mögé. */
+  .jelenet-belul { position: relative; isolation: isolate; }
+  .jelenet-belul::before {
+    content: "";
+    position: absolute; z-index: -1;
+    inset: calc(var(--space-5) * -1) calc(var(--margo) * -1);
+    pointer-events: none;
+    background: radial-gradient(125% 105% at 0% 50%,
+      rgba(14, 11, 7, .88) 0%,
+      rgba(14, 11, 7, .74) 44%,
+      rgba(14, 11, 7, .34) 74%,
+      transparent 100%);
+  }
+
+  /* A tág, lágy vetőárnyék a világos foltokon szétkenődik, nem fog.
+     Kap mellé egy szűk, sűrű árnyékot: az a betű SZÁRÁHOZ tartozik,
+     tehát akkor is elválasztja a háttértől, ha az világos. */
+  .jelenet-belul {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .9), 0 1px 18px rgba(0, 0, 0, .6);
+  }
+}
+
+
+/* ---------- BILLENTYŰJEL CSAK OTT, AHOL VAN BILLENTYŰ ----------
+
+   A vezérlők kiírják a gyorsbillentyűjüket: „Alaprajz Esc”,
+   „Bezár Esc”. Érintőképernyőn ez egy értelmezhetetlen szó a gombon —
+   a látogató nem tudja, mit kezdjen vele, a gomb pedig szélesebb lesz
+   nála. A főoldal 390 px-es lábsávjában ez pont az a hely, ami a
+   kivezető projektnév elől hiányzott (az kapta a hármaspontot).
+
+   `hover: none`, mert ugyanezt a feltételt használja a ter.css a
+   kapufeliratokra: ahol nincs lebegés, ott nincs billentyű sem. A
+   gyorsbillentyű MŰKÖDIK továbbra is — csak nincs kiírva. */
+@media (hover: none) {
+  .ter-terv kbd,
+  .alaprajz-zar kbd { display: none; }
 }
 
 

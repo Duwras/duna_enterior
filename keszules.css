@@ -457,6 +457,15 @@ body[data-lemezek] .metszet-jelolok { padding-bottom: 45svh; }
 }
 
 @media (max-width: 720px) {
+  /* A keretnév mobil mérete ITT kell, nem a ter.css-ben.
+
+     A ter.css 720 px alatt `clamp(1.4rem, 6vw, 2rem)`-et ad a
+     `.ter-felirat .nev`-nek (0-2-0), a fenti `.keszules-nyitas
+     .ter-felirat .nev` viszont 0-3-0 — a médiakérdés pedig nem ad
+     specificitást, tehát a mobil szabály sosem érvényesült. Ugyanaz a
+     csapda, mint a flottán és a főoldal metszeténél. */
+  .keszules-nyitas .ter-felirat .nev { font-size: clamp(1.4rem, 6vw, 2rem); }
+
   /* JAVÍTÁS (5. fázis). A .link-nyil a style.css-ben 27 px magas — a
      szedés magassága, nem egy célpont mérete. A 4. fázis a ter.css
      térbeli vezérlőit vitte 44 px-re, de ez a hivatkozásforma

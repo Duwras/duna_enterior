@@ -21,39 +21,6 @@ import { szerepekSzamit, ALAP_MESTER } from './scripts/forras-modell.mjs';
 
 const OUT = 'deploy';
 
-/* ---------- ALAP: a kiszolgálási útvonal előtagja ----------
-
-   A lapok gyökér-abszolút hivatkozásokat használnak (`/img/…`,
-   `/referenciak/…`). Ez akkor helyes, ha az oldal a tartomány
-   GYÖKERÉBEN áll — így megy a Cloudflare Pages-en és így megy majd a
-   dunaenterior.hu-n is.
-
-   A GitHub Pages projektoldala viszont alkönyvtárból szolgál ki:
-   a Duwras.github.io felhasználói oldalhoz saját domain van kötve,
-   ezért a duna_enterior repó az ertekpontpenzugyek.hu/duna_enterior/
-   cím alatt látszik. Ott minden `/`-sel kezdődő hivatkozás a
-   pénzügyes oldal gyökerére mutatna — törött kép, törött menü.
-
-   Ezért a build végén EGY helyen elé kerül az előtag. Alapból üres,
-   tehát gyökérből kiszolgálva minden bájtra ugyanaz marad, mint eddig.
-   Beállítás: ALAP_UT=/duna_enterior npm run build */
-const ALAP = (process.env.ALAP_UT || '').replace(/\/+$/, '');
-if (ALAP && !ALAP.startsWith('/')) {
-  console.error(`\n!! HIBA — az ALAP_UT perjellel kezdődjön: "${ALAP}" helyett "/${ALAP}".\n`);
-  process.exit(1);
-}
-
-/* Attribútumonként kell átírni, nem vakon minden `/`-re: a srcset
-   vesszővel elválasztott listát tartalmaz, a szövegben pedig
-   előfordulhat perjel, aminek nincs dolga az útvonallal. */
-function alapoz(html) {
-  if (!ALAP) return html;
-  return html
-    .replace(/\b(data-srcset|srcset)="([^"]*)"/g,
-      (_, attr, ertek) => `${attr}="${ertek.replace(/(^|,\s*)\//g, `$1${ALAP}/`)}"`)
-    .replace(/\b(href|src|data-src|data-projekt|action|poster)="\//g, `$1="${ALAP}/`);
-}
-
 const CEG = JSON.parse(readFileSync('data/ceg-adatok.json', 'utf8'));
 const PROJEKTEK = JSON.parse(readFileSync('data/projektek.json', 'utf8'));
 const PALYAZATOK = JSON.parse(readFileSync('data/palyazatok.json', 'utf8'));
@@ -2133,9 +2100,7 @@ const SZAMOK = {
   ev: String(new Date().getFullYear())
 };
 
-/* Az `alap` a szkriptekben is kell: a ter.js futásidőben állít elő
-   projekt-hivatkozást, azt a HTML-átírás nem éri el. */
-const ERTEKEK = { ...CEG, ...SZAMOK, alap: ALAP };
+const ERTEKEK = { ...CEG, ...SZAMOK };
 
 function behelyettesit(szoveg) {
   for (const [kulcs, ertek] of Object.entries(ERTEKEK)) {
@@ -2330,10 +2295,6 @@ for (const oldal of OLDALAK) {
   if (melyseg > 0) {
     html = html.replace(/(href|src)="(?!https?:|mailto:|tel:|#|\/|\.\.\/)/g, `$1="${gyoker}`);
   }
-
-  /* Legutolsó lépés: a gyökér-abszolút hivatkozások elé kerül a
-     kiszolgálási előtag. ALAP nélkül ez azonosságművelet. */
-  html = alapoz(html);
 
   writeFileSync(oldal, html);
 }

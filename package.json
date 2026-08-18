@@ -12,7 +12,8 @@
     "tartalom": "node scripts/tartalom-matrix.mjs",
     "muhely": "node scripts/muhely-atvetel.mjs",
     "betuk": "node scripts/betuk-metszes.mjs",
-    "ellenorzes": "node scripts/ellenorzes.mjs"
+    "ellenorzes": "node scripts/ellenorzes.mjs",
+    "specificitas": "node scripts/specificitas.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.4"

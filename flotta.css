@@ -328,6 +328,15 @@
 }
 
 @media (max-width: 720px) {
+  /* A keretnév mobil mérete ITT kell, nem a ter.css-ben.
+
+     A ter.css 720 px alatt `clamp(1.4rem, 6vw, 2rem)`-et ad a
+     `.ter-felirat .nev`-nek (0-2-0), a fenti `.flotta-nyitas
+     .ter-felirat .nev` viszont 0-3-0 — a médiakérdés pedig nem ad
+     specificitást, tehát a mobil szabály sosem érvényesült. Mérve
+     390 px-en: 19,2 px szedődött a szánt 23,4 px helyett. */
+  .flotta-nyitas .ter-felirat .nev { font-size: clamp(1.4rem, 6vw, 2rem); }
+
   /* A szedés a hüvelykujj fölött, a kép alsó harmadában — a színpad
      MÉRT alsó sávja fölött. A korábbi állandó (96 + 8 px) kevés volt:
      a lábsáv itt két sorba törik, tehát 113 px magas, és a mondat

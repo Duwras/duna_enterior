@@ -3,24 +3,12 @@
 A **Duna Belsőépítészet Kft.** (Duna Enterior Asztalos és Hajóépítő Üzem, Győr)
 weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 
-**Élő címek** (mindkettő ugyanabból a pushból épül):
+**Élő cím:** <https://duna-enterior.pages.dev/>
 
-| Cím | Munkafolyamat |
-|---|---|
-| <https://duna-enterior.pages.dev/> | [deploy.yml](.github/workflows/deploy.yml) — Cloudflare Pages |
-| <https://ertekpontpenzugyek.hu/duna_enterior/> | [pages.yml](.github/workflows/pages.yml) — GitHub Pages |
-
-> Mindkettő bemutató cím a `dunaenterior.hu` élesítéséig. A kanonikus cím
-> minden lapon az éles domainre mutat, ezért a két ideiglenes cím nem lesz
-> duplikált tartalom. A Cloudflare-en ezen felül `_headers` fájl is tiltja az
-> indexelést (`X-Robots-Tag: noindex, nofollow`) — a GitHub Pages a `_headers`
-> fájlt nem értelmezi, ott a kanonikus cím dolgozik egyedül.
->
-> A GitHub Pages cím azért NEM `duwras.github.io/duna_enterior/`: a
-> `Duwras.github.io` felhasználói Pages-oldalhoz az `ertekpontpenzugyek.hu`
-> saját domain van kötve, és a projektoldalak ezt öröklik — a `github.io` cím
-> 301-gyel odairányít. Amíg a `dunaenterior.hu` DNS-e nincs bekötve, ezen nincs
-> mit tenni.
+> Ez a bemutató cím a `dunaenterior.hu` élesítéséig. Kereső nem indexeli: amíg
+> a `sajatDomainEl` `false`, a build kiír egy `_headers` fájlt
+> `X-Robots-Tag: noindex, nofollow` fejléccel, így az ideiglenes cím nem lesz
+> duplikált tartalom az éles domain mellett.
 
 ## Mi hol van
 
@@ -76,26 +64,6 @@ némán elmaradó közzététel rosszabb lenne. Addig kézzel is élesíthető:
 npm run kozzetetel
 ```
 
-### GitHub Pages — alkönyvtárból
-
-A [pages.yml](.github/workflows/pages.yml) ugyanerre a pushra a GitHub Pages-re
-is kirakja az oldalt. Titok nem kell hozzá, de **egyszer, kézzel** be kell
-kapcsolni: *Settings* → *Pages* → *Build and deployment* → *Source*:
-**GitHub Actions**.
-
-A lapok gyökér-abszolút hivatkozásokat használnak (`/img/…`,
-`/referenciak/…`), a projektoldal viszont alkönyvtárból szolgál ki. Ezért a
-build `ALAP_UT` előtaggal fut; a munkafolyamat ezt a `configure-pages`
-lépéstől kapja, tehát ha később saját domain kerül a repóra, az előtag magától
-üresre vált. Helyben így nézhető meg ugyanez:
-
-```bash
-ALAP_UT=/duna_enterior npm run build
-```
-
-`ALAP_UT` nélkül a kimenet bájtra ugyanaz, mint eddig — a Cloudflare-re menő
-build változatlan.
-
 Helyi ellenőrzés:
 
 ```bash
@@ -105,6 +73,33 @@ npm run build
 ```bash
 npm run elonezet
 ```
+
+```bash
+npm run ellenorzes
+```
+
+## Mobil ellenőrzés
+
+Két olyan hiba fordult elő, amit szemre nem lehet megfogni, mérve viszont
+egyértelmű. Mindkettőhöz van eszköz.
+
+**Néma felülírás.** A médiakérdés nem ad specificitást, tehát egy nagyobb
+specificitású alapszabály legyőzheti a mobil felülírást — a szabály ott van a
+fájlban, olvasva helyesnek látszik, és soha nem érvényesül. A főoldal
+metszeténél ez 390 px-en 81 × 75 px-es bélyeggé zsugorította a színpad aktív
+lemezét. A vizsgálat lapokra bontva fut (a `fooldal.css` és a `keszules.css`
+soha nincs egy lapon), és csak akkor jelez, ha az érték tényleg különbözik:
+
+```bash
+npm run specificitas
+```
+
+**Fényképen álló szedés kontrasztja.** A színpad fátyla a KÉPMEZŐT halkítja,
+tehát a kontraszt fényképfüggő: ugyanaz a 16 px-es szöveg sötét kereten 8:1
+fölött van, világoson 1,39:1-en. A `scripts/kontraszt.mjs` a hátteret a szedés
+elrejtésével készült felvételen méri — ugyanazon a felvételen mérve a
+„legvilágosabb folt” magukat a betűket adná vissza. Használat és a mérendő
+dobozok formája a fájl fejében.
 
 ## Referenciák szerkesztése
 
@@ -154,13 +149,17 @@ beállítva, nem tesz úgy, mintha elküldte volna az üzenetet.
 4. `worker/src/index.js` — az `ENGEDETT` listából a `duna-enterior.pages.dev`
    sor törlendő, utána `npx wrangler deploy` a `worker/` mappában.
 
-## A régi GitHub Pages cím
+## Miért nem GitHub Pages
 
-Megszűnt. A repó Pages-oldala le lett kapcsolva, így az
-`ertekpontpenzugyek.hu/duna_enterior/` és a `duwras.github.io/duna_enterior/`
-is 404 — az `ertekpontpenzugyek.hu` alatt csak a saját oldal marad. Ha valaha
-mégis kellene, a repó *Settings* → *Pages* alatt visszakapcsolható, de a
-munkafolyamat már nem oda tölt fel.
+Kétszer is fel volt vetve, kétszer is elbukott ugyanazon. A `Duwras.github.io`
+felhasználói Pages-oldalhoz az `ertekpontpenzugyek.hu` saját domain van kötve,
+és a projektoldalak ezt **öröklik**: a `duwras.github.io/duna_enterior/`
+301-gyel az `ertekpontpenzugyek.hu/duna_enterior/`-ra megy. Vagyis az ügyfél
+oldala idegen, pénzügyes domain alkönyvtárában látszana — ráadásul a lapok
+gyökér-abszolút hivatkozásait (`/img/…`) is át kellene írni hozzá.
+
+Amíg a `dunaenterior.hu` DNS-e nincs bekötve, a Cloudflare Pages a jó válasz:
+gyökérből szolgál ki, saját aldomainen.
 
 ## Tartalommegőrzés
 
