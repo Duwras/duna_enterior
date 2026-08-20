@@ -2149,7 +2149,18 @@ const BELYEGZETT = ['style.css', 'admin.css', 'fonts.css', 'rendszer.css', 'ter.
    FIGYELEM: a kanonikus cím akkor is a saját domainre mutat, amikor
    a sajatDomainEl még false. Ez szándékos és helyes — pontosan ez
    akadályozza meg, hogy az ideiglenes pages.dev cím indexelődjön. A
-   _headers noindex ettől függetlenül él. */
+   _headers noindex ettől függetlenül él.
+
+   A MEGOSZTÁSI fejlécek (og:url, og:image) viszont NEM követik ezt:
+   amíg a saját domain a régi oldalt szolgálja ki, a dunaenterior.hu
+   alatti kép útja 301-gyel a főoldalra megy, tehát a megosztott link
+   előnézete kép nélkül maradna. Ezért ezek az ideiglenes címre
+   mutatnak, amíg a sajatDomainEl false. */
+
+/* A megosztási fejlécek töve. Élesítés után magától a saját domain. */
+const MEGOSZTAS_TO = CEG.sajatDomainEl
+  ? `https://${CEG.domain}`
+  : `https://${CEG.ideiglenesDomain}`;
 
 const MEGOSZTHATATLAN = new Set(['admin.html', '404.html']);
 
@@ -2208,7 +2219,9 @@ function fejMeta(oldal, html) {
 
   const cim = (html.match(/<title>([\s\S]*?)<\/title>/i) || [, ''])[1].trim();
   const leiras = (html.match(/<meta\s+name="description"\s+content="([^"]*)"/i) || [, ''])[1].trim();
-  const url = `https://{{domain}}/${oldalCime(oldal)}`;
+  const ut = oldalCime(oldal);
+  const url = `https://{{domain}}/${ut}`;
+  const megosztasUrl = `${MEGOSZTAS_TO}/${ut}`;
 
   const sorok = [];
   if (!/rel="canonical"/i.test(html)) sorok.push(`<link rel="canonical" href="${url}">`);
@@ -2220,12 +2233,12 @@ function fejMeta(oldal, html) {
     `<meta property="og:type" content="website">`,
     `<meta property="og:site_name" content="{{cegNev}}">`,
     `<meta property="og:locale" content="hu_HU">`,
-    `<meta property="og:url" content="${url}">`,
+    `<meta property="og:url" content="${megosztasUrl}">`,
     `<meta property="og:title" content="${esc(cim)}">`);
   if (leiras) sorok.push(`<meta property="og:description" content="${esc(leiras)}">`);
   if (KOZOSSEGI) {
     sorok.push(
-      `<meta property="og:image" content="https://{{domain}}/${KOZOSSEGI.fajl}">`,
+      `<meta property="og:image" content="${MEGOSZTAS_TO}/${KOZOSSEGI.fajl}">`,
       `<meta property="og:image:width" content="${KOZOSSEGI.szeles}">`,
       `<meta property="og:image:height" content="${KOZOSSEGI.magas}">`,
       `<meta property="og:image:alt" content="${esc(KOZOSSEGI.alt)}">`,

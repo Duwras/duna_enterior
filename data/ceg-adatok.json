@@ -8,6 +8,9 @@
   "_sajatDomainEl": "Addig maradjon false, amíg a dunaenterior.hu DNS-e nem mutat a Cloudflare Pages-re. Amíg false, a build kiírja a _headers fájlt noindex fejléccel, hogy az ideiglenes duna-enterior.pages.dev címet ne indexelje a kereső. True esetén a noindex elmarad (és CNAME fájl készül a GitHub Pages öröksége miatt).",
   "sajatDomainEl": false,
 
+  "_ideiglenesDomain": "Amíg a sajatDomainEl false, az oldal ezen a címen nézhető. A megosztási fejlécek (og:url, og:image) erre mutatnak, mert a dunaenterior.hu még a RÉGI oldalt szolgálja ki — az og:image útja ott 301-gyel a főoldalra megy, így a megosztott link előnézete kép nélkül maradna. A canonical ettől függetlenül a saját domainen marad.",
+  "ideiglenesDomain": "duna-enterior.pages.dev",
+
   "_szekhely": "FIGYELEM: a régi oldal két címet közöl. Az impresszum és az adatkezelési tájékoztató 'Ikrényi út 2.', a kapcsolat és a többi oldal 'Ikrényi út 14.' — az új oldal mindkettőt a régi helyén hozza, változtatás nélkül (megrendelői döntés).",
   "szekhely": "9025 Győr, Ikrényi út 2.",
   "telephely": "9025 Győr, Ikrényi út 14.",
