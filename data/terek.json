@@ -47,14 +47,14 @@
         "jelenet": "03", "slug": "fafaragasok", "kep": "10.jpg",
         "nev": "Faragott ágyvég a győri üzemben", "hol": "Egyedi bútor · műhely",
         "szak": "Bútor",
-        "hangulat": "nappal", "nyilas": [0.68, 0.28, 0.15, 0.15],
+        "hangulat": "nappal", "nyilas": [0.88, 0.24, 0.09, 0.15],
         "kuszob": { "fajta": "ajto", "el": "faragott ágyvég" }
       },
       {
         "jelenet": "03", "slug": "bodajki-vadaszkastely", "kep": "02.jpg",
         "nev": "Trófeaterem, tárlókkal", "hol": "Bodajki Vadászkastély",
         "szak": "Belsőépítészet",
-        "hangulat": "nappal", "nyilas": [0.42, 0.54, 0.16, 0.16],
+        "hangulat": "nappal", "nyilas": [0.41, 0.55, 0.11, 0.12],
         "kuszob": { "fajta": "ajto", "el": "sötét faoszlop" }
       },
       {
@@ -85,7 +85,7 @@
       {
         "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "05.jpg",
         "nev": "Fedélzeti szalon, orr felől", "hol": "Duna Cruises HABLEÁNY",
-        "hangulat": "nappal", "nyilas": [0.66, 0.42, 0.19, 0.25],
+        "hangulat": "nappal", "nyilas": [0.78, 0.36, 0.07, 0.08],
         "kuszob": { "fajta": "ajto", "el": "mahagóni oszlop" }
       },
       {
@@ -103,7 +103,7 @@
       {
         "jelenet": "06", "slug": "duna-cruises-hableany", "kep": "17.jpg",
         "nev": "A HABLEÁNY éjjel, a rakparton", "hol": "Duna Cruises HABLEÁNY · a folyón",
-        "hangulat": "ejjel", "lapos": true, "nyilas": [0.55, 0.62, 0.18, 0.16],
+        "hangulat": "ejjel", "lapos": true, "nyilas": [0.47, 0.57, 0.09, 0.05],
         "kuszob": { "fajta": "kapu", "el": null }
       },
       {
@@ -155,7 +155,7 @@
             "nev": "Fedélzeti szalon, orr felől",
             "kep": "05.jpg",
             "hangulat": "nappal",
-            "nyilas": [0.66, 0.42, 0.19, 0.25],
+            "nyilas": [0.78, 0.36, 0.07, 0.08],
             "kuszob": { "fajta": "ajto", "el": "mahagóni oszlop" },
             "kapuk": [
               { "cimke": "Adatlap", "pozicio": [0.19, 0.74], "cel": "adatlap" }
@@ -336,7 +336,7 @@
             "nev": "Trófeaterem, tárlókkal",
             "kep": "02.jpg",
             "hangulat": "nappal",
-            "nyilas": [0.42, 0.54, 0.16, 0.16],
+            "nyilas": [0.41, 0.55, 0.11, 0.12],
             "kuszob": { "fajta": "kapu", "el": "sötét faoszlop" },
             "kapuk": [
               { "cimke": "Adatlap", "pozicio": [0.18, 0.80], "cel": "adatlap" }

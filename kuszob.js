@@ -163,6 +163,113 @@
     return keszit(burok);
   }
 
+  /* ============================================================
+     A NYÍLÁS ÁTSZÁMÍTÁSA — kép-koordinátából képmező-koordinátába
+     ============================================================
+
+     A nyílás négy száma (data/terek.json) a FÉNYKÉPRE van felvéve:
+     ott áll az ajtó a képen. A rétegmaszk és a vágódoboz viszont a
+     KÉPMEZŐ százalékában dolgozik — a kép pedig `object-fit: cover`,
+     tehát ha az oldalaránya nem egyezik a képmezőével, csak egy sávja
+     látszik. Eddig a két koordináta ugyanaz a szám volt.
+
+     Mennyi ez: 16:9 képmezőn egy 3:2 fénykép magasságának 15%-a marad
+     ki (kis csúszás), egy 4:3-asnak a negyede — a főoldal 13 keretéből
+     ötnek 4:3 vagy 1.9:1 az aránya. Álló telefonon (390 × 844) egy 3:2
+     fénykép SZÉLESSÉGÉNEK 69%-a marad ki: a 0.86-os nyílás a képmező
+     1.67-es helyére esne, vagyis a képernyőn kívülre. Ott a küszöb egy
+     üres falból nyílt ki.
+
+     Amit ez a függvény csinál:
+       1. átszámolja a nyílás helyét és sugarát a képmező arányaira,
+       2. és ha a vágás miatt a nyílás a szélére csúszna, a KÉPET tolja
+          odébb (object-position) — pont annyival, hogy a nyílás a
+          középső sávban maradjon. Amíg belefér, a kép középre vágva
+          marad, tehát a kompozíció nem ugrál kijelzőről kijelzőre.
+
+     A kép-koordinátás eredeti a data-ny attribútumba kerül: az inline
+     stílust felülírjuk, tehát a forrást máshonnan kell vennünk. */
+
+  var SAV_LO = 0.16, SAV_HI = 0.84;   /* ebben a sávban maradjon a nyílás */
+
+  function nyilasForras(ter) {
+    if (!ter.getAttribute('data-ny')) {
+      ter.setAttribute('data-ny', [
+        szazalek(ter, '--nyx', 50), szazalek(ter, '--nyy', 50),
+        szazalek(ter, '--nyrx', 20), szazalek(ter, '--nyry', 22)
+      ].join(' '));
+    }
+    var d = ter.getAttribute('data-ny').split(' ');
+    return { x: +d[0] / 100, y: +d[1] / 100, rx: +d[2] / 100, ry: +d[3] / 100 };
+  }
+
+  function hatar(v, tol, ig) { return v < tol ? tol : (v > ig ? ig : v); }
+
+  /* Hova essen a vágás közepe (0–1), hogy a nyílás a sávban maradjon?
+     f — a képnek ez a hányada látszik ezen a tengelyen. Középen
+     kezdünk, és csak annyit mozdulunk, amennyit muszáj. */
+  function vagasKozep(p, f) {
+    if (f >= 0.999) return 0.5;
+    var also  = (p - SAV_HI * f) / (1 - f);
+    var felso = (p - SAV_LO * f) / (1 - f);
+    return hatar(hatar(0.5, also, felso), 0, 1);
+  }
+
+  function igazit(ter) {
+    if (!ter) return;
+    var im = ter.querySelector('img');
+    if (!im || !im.naturalWidth || !im.naturalHeight) return;
+    var kw = ter.clientWidth, kh = ter.clientHeight;
+    if (!kw || !kh) return;                 /* rejtett képkocka: majd ha látszik */
+
+    var n = nyilasForras(ter);
+    var kepAR = im.naturalWidth / im.naturalHeight, mezoAR = kw / kh;
+    var fx = 1, fy = 1;
+    if (kepAR > mezoAR) fx = mezoAR / kepAR;   /* szélesebb kép: oldalt vágódik */
+    else                fy = kepAR / mezoAR;   /* magasabb kép: alul-fölül vágódik */
+
+    var px = vagasKozep(n.x, fx), py = vagasKozep(n.y, fy);
+    var ex = fx >= 0.999 ? n.x : (n.x - px * (1 - fx)) / fx;
+    var ey = fy >= 0.999 ? n.y : (n.y - py * (1 - fy)) / fy;
+
+    ter.style.setProperty('--objx', (px * 100).toFixed(1) + '%');
+    ter.style.setProperty('--objy', (py * 100).toFixed(1) + '%');
+    ter.style.setProperty('--nyx', (hatar(ex, 0, 1) * 100).toFixed(1) + '%');
+    ter.style.setProperty('--nyy', (hatar(ey, 0, 1) * 100).toFixed(1) + '%');
+    ter.style.setProperty('--nyrx', (hatar(n.rx / fx, 0.02, 0.5) * 100).toFixed(1) + '%');
+    ter.style.setProperty('--nyry', (hatar(n.ry / fy, 0.02, 0.5) * 100).toFixed(1) + '%');
+  }
+
+  function igazitMind() {
+    var lista = document.querySelectorAll('.ter');
+    for (var i = 0; i < lista.length; i++) igazit(lista[i]);
+  }
+
+  var igazitasVar = null;
+  function igazitKesobb() {
+    if (igazitasVar) clearTimeout(igazitasVar);
+    igazitasVar = setTimeout(igazitMind, 120);
+  }
+
+  window.addEventListener('resize', igazitKesobb);
+  window.addEventListener('orientationchange', igazitKesobb);
+
+  /* A `load` nem buborékol: befogó fázisban hallgatjuk. Egy képkocka
+     képe a görgetés közben érkezik meg — az átszámításhoz viszont
+     kell a valódi képméret. */
+  document.addEventListener('load', function (e) {
+    var t = e.target;
+    if (!t || t.tagName !== 'IMG' || !t.closest) return;
+    var ter = t.closest('.ter');
+    if (ter) igazit(ter);
+  }, true);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', igazitMind);
+  } else {
+    igazitMind();
+  }
+
   /* ---------- kompozitálási jelzés, csak a mozdulat idejére ----------
 
      Lásd ter.css: állandó `will-change: transform` mellett a réteg
@@ -354,6 +461,13 @@
 
     cel.parentNode.hidden = false;
 
+    /* A nyílás mind a két oldalon a MOSTANI képmezőre átszámolva kell:
+       a kifelé menőé viszi a vágódobozt, a befelé jövőé a maszkjait —
+       és a belépő képkocka csak most került elrendezésbe, tehát eddig
+       nem is lehetett átszámolni. */
+    igazit(kifele);
+    igazit(befele);
+
     /* --- csökkentett mozgás: rövid áttűnés, semmi kamera --- */
     if (lassit || !tudAnimalni) {
       return egyszeru(ter, cel);
@@ -498,6 +612,7 @@
       takarit(befBurok, befele);
       cel.parentNode.hidden = false;
       ter.parentNode.hidden = true;
+      igazit(befele);            /* mostantól ez a látott képkocka */
       return true;
     });
   }
@@ -709,6 +824,7 @@
 
   window.Kuszob = {
     at: at,
+    igazit: igazit,
     siettet: siettet,
     feltarul: feltarul,
     keszit: keszit,

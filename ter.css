@@ -63,6 +63,14 @@
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+
+  /* A VÁGÁS KÖZEPE. Alapból középre vágunk, ahogy eddig — a kuszob.js
+     csak akkor tolja el, ha a nyílás (az ajtó a fényképen) különben
+     kifutna a képmezőből. Álló telefonon egy fekvő fényképnek a
+     kétharmada kimarad: középre vágva a nyílás simán a vágott sávba
+     eshet, és akkor a küszöb olyan helyen nyílna ki, ahol a képen
+     nincs semmi. Lásd kuszob.js, „A NYÍLÁS ÁTSZÁMÍTÁSA”. */
+  object-position: var(--objx, 50%) var(--objy, 50%);
 }
 
 /* Körülnézés: a KÉP mozdul, nem a réteg — a réteg saját nagyítását a

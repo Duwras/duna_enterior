@@ -131,3 +131,65 @@ teljes képmezős kompozitsíkkal kevesebb van.
 - A nyílások helye (`--nyx/--nyy`) adat, nem kód: ahol a nyílás nem
   valódi ajtón áll, ott a mozdulat most jobban látszik — és jobban
   látszik az is, ha az adat pontatlan.
+
+---
+
+## 6. A NYÍLÁS KOORDINÁTÁJA — KÉP VAGY KÉPMEZŐ?
+
+A visszajelzés az volt, hogy az első két átmenet szép, a többi nem. A
+mérés szerint nem a mozdulattal volt baj, hanem azzal, hogy HOL nyílt
+ki.
+
+A nyílás négy száma (`data/terek.json`, `nyilas: [x, y, rx, ry]`) a
+FÉNYKÉPRE van felvéve: ott áll az ajtó a képen. A rétegmaszk és a
+vágódoboz viszont a KÉPMEZŐ százalékában dolgozik — a kép pedig
+`object-fit: cover`. A kettő csak akkor ugyanaz a szám, ha a fénykép
+oldalaránya egyezik a képmezőével. Eddig ugyanaz a szám volt.
+
+Mekkora a csúszás, 16:9 képmezőn:
+
+| kép aránya | mennyi marad ki | mit jelent |
+|---|---|---|
+| 3:2 (1.50) | a magasság 15%-a | pár százalék csúszás — ez a főoldal első két kerete |
+| 4:3 (1.33) | a magasság 25%-a | a 0.28-as nyílás a képmező 0.21-ére kerül |
+| 1.9:1 | a szélesség 8%-a | oldalirányú csúszás |
+
+Álló telefonon (390 × 844) egy 3:2 fénykép SZÉLESSÉGÉNEK 69%-a marad
+ki. A főoldal 6. keretén a nyílás `x = 0.86`; a képmezőn ez az 1.67-es
+helyre esett volna, vagyis a képernyőn kívülre. Ott a küszöb egy üres
+falból nyílt ki.
+
+Ezért az első két átmenet volt szép: annak a két keretnek 3:2 a képe,
+és a nyílásuk a képmező közepe körül áll — pont ott, ahol a vágás
+nem mozdít.
+
+**Amit a `kuszob.js` most csinál** (`igazit`, „A NYÍLÁS ÁTSZÁMÍTÁSA”):
+
+1. Átszámolja a nyílás helyét és sugarát a képmező arányaira. A
+   forrás — a kép-koordinátás négy szám — a `data-ny` attribútumba
+   kerül, mert az inline stílust felülírjuk.
+2. Ha a vágás miatt a nyílás a szélére csúszna, a KÉPET tolja odébb
+   (`object-position`, `--objx/--objy`) — pont annyival, hogy a
+   nyílás a 16–84%-os sávban maradjon. Amíg belefér, a kép középre
+   vágva marad: a kompozíció nem ugrál kijelzőről kijelzőre.
+
+Újraszámol a mozdulat előtt (mindkét oldalra), a mozdulat után (a
+belépő képkockára), képérkezéskor, átméretezéskor és
+elforgatáskor. A `terv.js` ugyanezt az adatot veszi át az alaprajz
+kapujához, tehát az is a helyére került.
+
+## 7. NÉGY NYÍLÁS, AMI NEM AJTÓN ÁLLT
+
+A mértan után maradt az adat. Négy keret nyílása olyan helyen volt,
+ahol a fényképen nincs mélység — ezeknél a mozdulat wipe-nak
+látszott, nem áthaladásnak:
+
+| keret | volt | lett | miért |
+|---|---|---|---|
+| Faragott ágyvég | 0.68, 0.28 — a faragáson | 0.88, 0.24 | az üzem tere az ágyvég mellett jobbra; ott van mögötte valami |
+| Trófeaterem | 0.42, 0.54 · r 0.16 | 0.41, 0.55 · r 0.11/0.12 | a világító tárló mérete, nem nagyobb |
+| Fedélzeti szalon | 0.66, 0.42 — a tábla fölött | 0.78, 0.36 · r 0.07/0.08 | a két mahagóni oszlop közti ablakmező |
+| HABLEÁNY éjjel | 0.55, 0.62 — a rakpart kövén | 0.47, 0.57 · r 0.09/0.05 | a Bálna világító árkádja |
+
+A HABLEÁNY és a Bodajki projektlapján ugyanaz a fénykép ugyanazt a
+nyílást kapta — egy fényképnek egy nyílása van.
