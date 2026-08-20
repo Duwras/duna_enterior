@@ -559,6 +559,25 @@ main { overflow-x: clip; }
   transition: color .2s;
 }
 .nagyito button:hover { color: var(--oak); }
+
+/* A lapozás feltáró rétege: kör alakú VÁGÓDOBOZ. A galeria.js
+   méretezi és nagyítja (transform), a benne álló lap pedig pontosan
+   ellentétesen kicsinyül — a kép áll, a lyuk nő, és az egész a
+   kompozitoron marad. A gombok és a számláló FÖLÖTTE vannak: a réteg
+   alattuk nyílik, nem takarja el a kezelőfelületet. */
+.nagyito-uj {
+  position: fixed; inset: 0; z-index: 1;
+  border-radius: 50%; overflow: hidden;
+  pointer-events: none;
+}
+.nagyito-uj[hidden] { display: none; }
+/* a doboz belseje: pontosan a képmező, a galeria.js méretezi */
+.nagyito-lap {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  background: rgba(13, 10, 7, .95);
+}
+.nagyito button, .nagyito-szam { z-index: 2; }
 .nagyito-zar { top: 8px; right: 12px; font-size: 1.4rem; }
 .nagyito-lep.elozo { left: 4px; top: 50%; transform: translateY(-50%); }
 .nagyito-lep.kovetkezo { right: 4px; top: 50%; transform: translateY(-50%); }

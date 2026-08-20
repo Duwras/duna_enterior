@@ -147,53 +147,20 @@
 }
 
 /* A NYÍLÁS: a küszöb ezen keresztül tárja fel a következő teret.
-   A wrapper nagyítása tágítja a maszkot; a benne lévő .ter ezzel
-   pontosan ellentétesen skálázódik, így a KÉP áll, csak a LYUK nő. */
-/* A lágyulás szándékosan szűk (78–100%): a nyílásnak ÉLE van. Ha
-   szélesre lágyítjuk, a következő tér nem egy nyíláson át jelenik meg,
-   hanem szétdereng — és pontosan azt az áttűnést kapjuk vissza, amit
-   ez az egész el akar kerülni. */
+
+   Itt nincs maszk. A lyukat a kuszob.js vágja, clip-path ellipszissel,
+   a mozdulat idejére — a képmező koordinátáiban, tehát ÉLES peremmel
+   akkor is, amikor a lyuk már az egész képernyő. A nyílás helyét és
+   méretét a --nyx / --nyy / --nyrx / --nyry viszi (a build írja ki
+   képkockánként); a rétegek maszkja (lentebb, .ter-reteg) ugyanezekből
+   dolgozik.
+
+   Volt itt korábban egy radial-gradient maszk, amit a burok nagyítása
+   tágított. Az a lágy peremet is nagyította, és a következő tér a fél
+   képmezőn átderengett — áttűnésnek látszott, nem ajtónak. */
 .nyilas {
   position: absolute; inset: 0;
-  -webkit-mask-image: radial-gradient(ellipse var(--nyrx) var(--nyry) at var(--nyx) var(--nyy), #000 0%, #000 78%, transparent 100%);
-          mask-image: radial-gradient(ellipse var(--nyrx) var(--nyry) at var(--nyx) var(--nyy), #000 0%, #000 78%, transparent 100%);
 }
-/* nyílás nélkül (csökkentett mozgás, tartalék) a maszk teljes */
-.nyilas[data-maszk="nincs"] {
-  -webkit-mask-image: none;
-          mask-image: none;
-}
-
-/* ---------- AZ ALAPLAP: ami sose engedi ki alóla a hátteret ----------
-
-   Mérve (VISUAL-CLARITY, 2. rész): a küszöb feltáró maszkja a BELÉPŐ
-   burkon ül, és a burok a saját DOBOZKÖZEPE körül nagyítódik. Ha a
-   nyílás nem a képmező közepén van — márpedig szinte soha nincs ott —,
-   az ellipszis középpontja a nagyítással kifelé sodródik, és a maszk a
-   képmezőt SOHA nem tudja befedni. A főoldal első küszöbén (nyílás
-   66% / 46%) a t=820 ms-nál készült felvételen a bal oldali 35% csupasz
-   --ejjel volt. Nem látszott folyton feketének csak azért, mert a
-   kilépő kép még ott halványodott alatta 0.144-en — a 846. ms után
-   viszont az is elfogyott.
-
-   A geometriát nem lehet ráhangolni: a fedéshez az ajtónál 4,75-szörös
-   nagyítás kellene, a fizika 3,42-t ad. A maszk sugarát képkockánként
-   újrarajzolni teljes képmezőn drága. Marad a szerkezeti megoldás — és
-   ez az, amit a feladat is leír: a belépő kép MÁR OTT VAN a maszk
-   alatt. Egy maszk nélküli, nyugalmi helyzetű másolata a legalsó
-   síkon áll, ugyanabból a dekódolt bitképből (nincs új kérés), és a
-   küszöb végén nyomtalanul eltűnik. Amit a maszk nem fed, azt ez fedi.
-
-   Nem effekt és nem áttűnés: nem mozdul, nem halványodik, csak van. */
-.nyilas[data-alap] {
-  z-index: 0;
-  -webkit-mask-image: none;
-          mask-image: none;
-  transform: none;
-  opacity: 1;
-  pointer-events: none;
-}
-
 
 /* ============================================================
    B) TÉRBELI FELÜLET

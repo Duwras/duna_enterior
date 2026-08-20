@@ -1480,7 +1480,7 @@ function terJeloles(p, ter) {
             <span class="jel" aria-hidden="true"></span><span class="cimke tipo-muszaki">${esc(k.cimke)}</span>
           </button>`).join('');
 
-    return `<div class="nyilas" data-maszk="nincs" data-nezopont="${esc(n.id)}"${i ? ' hidden' : ''}>
+    return `<div class="nyilas" data-nezopont="${esc(n.id)}"${i ? ' hidden' : ''}>
         <div class="ter"${n.lapos ? ' data-lapos' : ''}
              style="--nyx:${(x * 100).toFixed(1)}%; --nyy:${(y * 100).toFixed(1)}%; --nyrx:${(rx * 100).toFixed(1)}%; --nyry:${(ry * 100).toFixed(1)}%${melysegStilus()}"
              data-nev="${esc(n.nev)}"
@@ -1607,7 +1607,7 @@ const FLOTTA_HAJOK = !FLOTTA ? [] : (FLOTTA.hajok || [])
 /* --- a nyitó enfilád: pontosan az a jelölés, amit a ter.js ismer --- */
 const flottaKeretek = !FLOTTA ? '' : (FLOTTA.nyitas?.keretek || []).map((k, i) => {
   const [x, y, rx, ry] = k.nyilas;
-  return `<div class="nyilas" data-maszk="nincs" data-nezopont="f${i + 1}"${i ? ' hidden' : ''}>
+  return `<div class="nyilas" data-nezopont="f${i + 1}"${i ? ' hidden' : ''}>
         <div class="ter"${k.lapos ? ' data-lapos' : ''}
              style="--nyx:${(x * 100).toFixed(1)}%; --nyy:${(y * 100).toFixed(1)}%; --nyrx:${(rx * 100).toFixed(1)}%; --nyry:${(ry * 100).toFixed(1)}%"
              data-nev="${esc(k.nev)}"
@@ -1823,7 +1823,7 @@ for (const p of ELO) {
 const jelenetKeretek = !FOOLDAL ? '' : (FOOLDAL.keretek || []).map((k, i) => {
   const [x, y, rx, ry] = k.nyilas;
   const pr = ELO.find((z) => z.slug === k.slug);
-  return `<div class="nyilas" data-maszk="nincs" data-nezopont="j${i + 1}" data-jelenet="${esc(k.jelenet)}"${i ? ' hidden' : ''}>
+  return `<div class="nyilas" data-nezopont="j${i + 1}" data-jelenet="${esc(k.jelenet)}"${i ? ' hidden' : ''}>
         <div class="ter"${k.lapos ? ' data-lapos' : ''}
              style="--nyx:${(x * 100).toFixed(1)}%; --nyy:${(y * 100).toFixed(1)}%; --nyrx:${(rx * 100).toFixed(1)}%; --nyry:${(ry * 100).toFixed(1)}%"
              data-nev="${esc(k.nev)}"
@@ -1911,7 +1911,7 @@ const metszetHtml = !FOOLDAL ? '' :
 
 const keszNyitasKeretek = !KESZULES ? '' : (KESZULES.nyitas?.keretek || []).map((k, i) => {
   const [x, y, rx, ry] = k.nyilas;
-  return `<div class="nyilas" data-maszk="nincs" data-nezopont="k${i + 1}"${i ? ' hidden' : ''}>
+  return `<div class="nyilas" data-nezopont="k${i + 1}"${i ? ' hidden' : ''}>
         <div class="ter"${k.lapos ? ' data-lapos' : ''}
              style="--nyx:${(x * 100).toFixed(1)}%; --nyy:${(y * 100).toFixed(1)}%; --nyrx:${(rx * 100).toFixed(1)}%; --nyry:${(ry * 100).toFixed(1)}%"
              data-nev="${esc(k.nev)}"

@@ -188,25 +188,16 @@
    tárul fel — ugyanaz a mozdulat, mint minden más helyváltás,
    csak a cél nem egy másik tér, hanem a szerkezet maga.
 
-   A nyílás helyét a terv.js veszi át az éppen látott képkockától,
-   és a --terv-* változókba írja. A maszkot vivő elem nő; a benne
-   lévő lap ellentétesen kicsinyül, tehát a LAP áll, a LYUK tágul. */
+   A kapu helyét a terv.js veszi át az éppen látott képkockától, és a
+   --terv-* változókba írja. A lyukat a kuszob.js vágja clip-path
+   ellipszissel, a mozdulat idejére — ugyanaz a vágás, mint a
+   színpadon, éles peremmel. Nyugalomban a lapon nincs vágás. */
 
 .alaprajz[data-hely="fedo"] {
   position: fixed; inset: 0; z-index: 80;
   overflow-y: auto; overscroll-behavior: contain;
-  -webkit-mask-image: radial-gradient(ellipse var(--terv-rx, 20%) var(--terv-ry, 22%)
-                       at var(--terv-x, 50%) var(--terv-y, 50%),
-                       #000 0%, #000 78%, transparent 100%);
-          mask-image: radial-gradient(ellipse var(--terv-rx, 20%) var(--terv-ry, 22%)
-                       at var(--terv-x, 50%) var(--terv-y, 50%),
-                       #000 0%, #000 78%, transparent 100%);
 }
 .alaprajz[data-hely="fedo"][hidden] { display: none; }
-/* nyitás után (és csökkentett mozgásnál) nincs maszk: teljes lap */
-.alaprajz[data-hely="fedo"][data-maszk="nincs"] {
-  -webkit-mask-image: none; mask-image: none;
-}
 .alaprajz-belso { min-height: 100%; }
 
 /* Nyitott fedőréteg alatt a fejléc NEM látszik.

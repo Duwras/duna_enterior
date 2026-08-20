@@ -13,23 +13,31 @@
    és onnan terjed kifelé. A nyílás az előző kép saját nyílása. Ez a
    különbség a „rajta át” és a „fölötte” között.
 
-   Fizika, egyszer:                       900 ms
-     0–260 ms  közeledés — a közeli réteg nőni kezd
-     260–620   áthaladás — a közeli réteg elmegy a kamera mellett,
-               a nyílás tágul, a következő tér benne jelenik meg
-     620–900   megülepedés — a következő tér 1.0-ra áll, nem lő túl
+   Fizika, egyszer:                       760 ms
+     0–220 ms  közeledés — a közeli réteg nőni kezd, a lyuk résnyi
+     220–520   áthaladás — a közeli réteg elmegy a kamera mellett,
+               a lyuk kinyílik, és elnyeli a képmezőt
+     520–760   megülepedés — a következő tér 1.0-ra áll, nem lő túl
 
    Három fajta, ugyanaz a fizika:
      AJTÓ   másik szoba          — belső terek között
      ABLAK  ami mozog            — ki a hajóra, vissza a térbe
      KAPU   fejezetváltás        — más idő, más rész, más regiszter
 
-   Technika: a maszkot nem képkockánként rajzoljuk újra (az minden
-   képkockán újrafestés lenne), hanem a maszkot VIVŐ elemet nagyítjuk,
-   és a benne lévő képet pontosan ellentétesen kicsinyítjük. Így a kép
-   áll, csak a lyuk nő — és az egész a kompozitoron marad.
-   Az ellentétes skálát mintavételezett kulcsképekkel adjuk meg, mert
-   két kulcskép között az 1/x nem a x lineáris interpoláltja.
+   Technika: a lyukat a belépő burok clip-path ellipszise adja, a
+   KÉPMEZŐ koordinátáiban. Ezért marad az éle éles akkor is, amikor a
+   lyuk már az egész képernyő — és ezért nem kell a képet ellentétesen
+   kicsinyíteni. Az alapalakzatos clip-path animációja a kompozitoron
+   marad; a lyuk a nyílás mélységéből tágul, mintavételezett
+   kulcsképekkel (a perspektíva 1/x-e nem lineáris).
+
+   Ami eddig itt volt és MIÉRT NEM VÁLT BE: a maszkot vivő elemet
+   nagyítottuk, és a képet ellentétesen kicsinyítettük. A nagyítás a
+   maszk LÁGY PEREMÉT is nagyította (3,4-szeresére), a belépő tér pedig
+   halványan úszott be — a kettő együtt a teljes képmezőn átderengő
+   kettős kép lett. A néző ezt áttűnésnek látta, nem ajtónak. A maszkot
+   már nem nagyítjuk, a belépő kép nem halványodik: ami feltárul, az
+   azonnal teljes fedettséggel ott van.
    ============================================================ */
 (function () {
   'use strict';
@@ -155,40 +163,6 @@
     return keszit(burok);
   }
 
-  /* ---------- az alaplap ----------
-
-     A belépő képkocka maszk nélküli, nyugalmi helyzetű másolata, a
-     legalsó síkon. Ugyanaz a src, tehát ugyanaz a már dekódolt bitkép:
-     nincs új hálózati kérés. Amit a feltáró maszk geometriája nem tud
-     befedni (lásd ter.css, „AZ ALAPLAP”), azt ez fedi — a képmezőben
-     így soha nincs csupasz háttér. */
-  function alaplap(burok) {
-    var m = burok.cloneNode(true);
-    m.setAttribute('data-alap', '');
-    m.setAttribute('data-maszk', 'nincs');
-    m.setAttribute('aria-hidden', 'true');
-    m.removeAttribute('data-nezopont');
-    m.hidden = false;
-    m.style.visibility = '';
-
-    /* A másolat nem vezérlő és nem tartalom: se gomb, se hivatkozás,
-       se azonosító nem maradhat benne kétszer. */
-    var ki = m.querySelectorAll('button, a[href]');
-    for (var i = 0; i < ki.length; i++) ki[i].parentNode.removeChild(ki[i]);
-    var azon = m.querySelectorAll('[id]');
-    for (var j = 0; j < azon.length; j++) azon[j].removeAttribute('id');
-
-    var t = m.querySelector('.ter');
-    if (t) { t.style.transform = 'none'; t.style.opacity = '1'; }
-
-    burok.parentNode.insertBefore(m, burok.parentNode.firstChild);
-    return m;
-  }
-
-  function alaplapEl(m) {
-    if (m && m.parentNode) m.parentNode.removeChild(m);
-  }
-
   /* ---------- kompozitálási jelzés, csak a mozdulat idejére ----------
 
      Lásd ter.css: állandó `will-change: transform` mellett a réteg
@@ -233,7 +207,15 @@
     kapu:  { ut: 1.55, el: [0.34, 0.66], ules: 0.930, oldal: 0.0 }
   };
 
-  var IDO = { elore: 900, vissza: 480 };
+  var IDO = { elore: 760, vissza: 420 };
+
+  /* A feltárás mértanának két száma:
+     KEZDET — ekkora hányadról indul a lyuk (a nyílás sugarához mérve).
+              Résnyire nyitott ajtó, nem folt.
+     SAROK  — a végén ennyivel nyúlik túl a legtávolabbi képsarkon.
+              1,415 a matematikai minimum; a maradék a kerekítésé. */
+  var KEZDET = 0.30;
+  var SAROK  = 1.45;
 
   function bez(t, p1, p2) {
     var u = 1 - t;
@@ -258,7 +240,22 @@
   /* a megülepedéshez a rendszer saját vízgörbéje */
   function viz(x) { return gorbe(x, 0.16, 0.24, 0.84, 1); }
 
-  var MINTA = 17;   /* ennyi kulcskép — az ellenskála hibája így <0,3% */
+  /* Ennyi kulcskép. A böngésző két kulcskép KÖZÖTT lineárisan
+     interpolál, a doboz nagyítása és a benne álló kép ellenskálája
+     viszont egymás pontos fordítottja — a szorzatuk csak a
+     kulcsképeken 1,000. Ami közte marad, az méretlüktetés a belépő
+     képen, és pont úgy néz ki, mintha a lap ejtené a képkockákat.
+
+     Mérve (főoldal, 1. keret, 1440 px, ajtó), a legnagyobb eltérés:
+       17 kulcskép … 5,48%   (48 ms-onként egy)
+       33 ………………… 1,36%
+       49 ………………… 0,62%
+       81 ………………… 0,22%   (10 ms-onként egy)
+
+     A régi, maszkos megoldásnál 17 elég volt, mert ott a nagyítás
+     3,4-szeres volt. A vágódoboz 16-szorosra nő, és a hiba a
+     nagyítási tartománnyal együtt nő. */
+  var MINTA = 81;
 
   function minták(fn) {
     var ki = [];
@@ -272,11 +269,34 @@
   /* nagyítás egy adott mélységű rétegre, adott kameraútnál */
   function nagy(z, ut) { return z / Math.max(0.08, z - ut); }
 
+  /* A lyuk tágulása 0-tól 1-ig, ugyanabból a perspektívából, amiből a
+     rétegek nagyítása: nem lineáris, hanem a küszöbön áthaladó kameráé. */
+  function tagulas(fajta, ut) {
+    var veg = nagy(Z.nyilas, fajta.ut);
+    return (nagy(Z.nyilas, fajta.ut * ut) - 1) / (veg - 1);
+  }
+
   /* szakasz: 0 marad tól-ig, aztán fut 1-ig */
   function sav(x, tol, ig) {
     if (x <= tol) return 0;
     if (x >= ig) return 1;
     return (x - tol) / (ig - tol);
+  }
+
+  /* ---------- a futó mozdulat ----------
+
+     Egyszerre egy küszöb fut. Ha a látogató közben TOVÁBB kér (gyors
+     görgetés, nyomva tartott nyíl), nem sorakozik föl mögé egy második
+     mozdulat: a futót SIETTETJÜK. Így a színpad nem marad le a görgetés
+     mögött, és nem is torlódik — ugyanaz a mozdulat pereg gyorsabban. */
+  var futoMenet = null;
+
+  function siettet(k) {
+    if (!futoMenet) return;
+    k = Math.max(1, Math.min(3, k || 2));
+    for (var i = 0; i < futoMenet.futok.length; i++) {
+      futoMenet.futok[i].playbackRate = futoMenet.alap * k;
+    }
   }
 
   /* ---------- egy réteg animálása ---------- */
@@ -339,24 +359,63 @@
       return egyszeru(ter, cel);
     }
 
-    /* AZ ALAPLAP. A belépő képkocka maszk nélküli mása a legalsó síkon:
-       ez a garancia, hogy a feltárás alól semmilyen fázisban nem
-       látszik ki a háttér. Előre menet ez a CÉL (a maszk azt nem tudja
-       befedni), visszafelé az AKTUÁLIS tér (a visszajátszás első
-       képkockáján a kilépő burok fedettsége még nulla). Mindkét
-       esetben ugyanaz az elem: a `befele` burka. */
-    var alap = alaplap(befBurok);
+    /* A NYÍLÁS HELYE. Mindig a KIFELÉ menő kép saját nyílása — azon
+       látunk át. Százalékban, a képmezőhöz mérve. */
+    var nyx  = szazalek(kifele, '--nyx', 50);
+    var nyy  = szazalek(kifele, '--nyy', 50);
+    var nyrx = szazalek(kifele, '--nyrx', 20);
+    var nyry = szazalek(kifele, '--nyry', 22);
 
-    /* A feltárás nyílása mindig a KIFELÉ menő kép saját nyílása —
-       ott van a lyuk, amin átlátunk. */
-    befBurok.style.setProperty('--nyx',  kifele.style.getPropertyValue('--nyx')  || '50%');
-    befBurok.style.setProperty('--nyy',  kifele.style.getPropertyValue('--nyy')  || '50%');
-    befBurok.style.setProperty('--nyrx', kifele.style.getPropertyValue('--nyrx') || '20%');
-    befBurok.style.setProperty('--nyry', kifele.style.getPropertyValue('--nyry') || '22%');
-    befBurok.removeAttribute('data-maszk');
+    /* A FELTÁRÁS MÉRTANA — A VÁGÓDOBOZ.
+
+       A lyuk a nyílás harmadáról indul — akkora, mint egy résnyire
+       nyitott ajtó —, és addig tágul, amíg a képmező legtávolabbi
+       SARKÁT is elnyeli. Ezért nincs a végén áttűnés: a kilépő képet
+       nem elhalványítjuk, hanem BEFEDJÜK.
+
+       A lyukat nem clip-path rajzolja képkockánként, és nem is lágy
+       maszk: a belépő burokból ellipszis alakú VÁGÓDOBOZ lesz
+       (border-radius: 50% + overflow: hidden), és ezt a dobozt
+       NAGYÍTJUK. A benne álló képkocka pontosan ellentétesen kicsinyül,
+       a nyílás pontja körül — tehát a KÉP ÁLL, csak a lyuk nő.
+
+       Miért így: a doboz nagyítása transform, ami a kompozitoron marad,
+       a mozdulat alatt nincs festés. A clip-path sugarát viszont a
+       böngésző képkockánként újrarajzolja, teljes képmezőn, három
+       képréteggel — ez a lapon másodpercenként egy-két képkockára esett
+       vissza. Ugyanaz a mértan, csak most a kompozitor viszi.
+
+       A doboz kerek kivágású doboz (rounded rect), nem lágy maszk: a
+       pereme akkor is ÉL, amikor a lyuk már az egész képernyő. */
+    var mezo = befBurok.getBoundingClientRect();
+    var kw = mezo.width || window.innerWidth || 1;
+    var kh = mezo.height || window.innerHeight || 1;
+
+    var px = nyx / 100 * kw, py = nyy / 100 * kh;      /* a nyílás pontja */
+    var felW = SAROK * Math.max(px, kw - px);          /* a doboz fél szélessége */
+    var felH = SAROK * Math.max(py, kh - py);
+    var bal = px - felW, fent = py - felH;
+
+    /* Ahonnan indul: a nyílás saját mérete, annak is a harmada. */
+    var sx0 = Math.max(0.004, KEZDET * (nyrx / 100 * kw) / felW);
+    var sy0 = Math.max(0.004, KEZDET * (nyry / 100 * kh) / felH);
+
+    function lepteknel(g) {
+      return { x: sx0 + (1 - sx0) * g, y: sy0 + (1 - sy0) * g };
+    }
+
+    dobozBe(befBurok, befele, bal, fent, felW * 2, felH * 2, kw, kh, nyx, nyy);
 
     kifBurok.style.zIndex = '1';
     befBurok.style.zIndex = '2';
+
+    /* A belépő oldal MÉLYSÉGRÉTEGEI a mozdulat alatt nem kellenek: a kép
+       áll, a két maszkos másolat viszont két teljes képmezős kompozitsík.
+       A távoli réteg maga a teljes fénykép. */
+    var beKoz = befele.querySelector('.ter-reteg.koz');
+    var beKozel = befele.querySelector('.ter-reteg.kozel');
+    if (beKoz) beKoz.style.display = 'none';
+    if (beKozel) beKozel.style.display = 'none';
 
     var kozel = kifele.querySelector('.ter-reteg.kozel');
     var koz   = kifele.querySelector('.ter-reteg.koz');
@@ -369,29 +428,24 @@
     var ms = IDO.elore;
     var futok = [];
 
-    /* 1. A NYÍLÁS. A maszkot vivő burok nő; a benne lévő kép pontosan
-          ellentétesen kicsinyül, tehát nem a fotó nagyobbodik, hanem a
-          LYUK tágul. A nyílás a saját mélységéből nő — ezért marad
-          sokáig kicsi, és ezért nyílik ki hirtelen, amikor átérünk. */
+    /* 1. A LYUK. Nem lineárisan tágul: a saját mélységéből — sokáig alig
+          változik, aztán a küszöbön áthaladva hirtelen kinyílik. */
     futok.push(animal(befBurok, minták(function (x, ut) {
-      return { transform: 'scale(' + nagy(Z.nyilas, fajta.ut * ut) + ')' };
+      var l = lepteknel(tagulas(fajta, ut));
+      return { transform: 'scale(' + l.x + ',' + l.y + ')' };
     }), ms));
 
-    /* 2. A BELÉPŐ TÉR. Az ellenskála mellett kap egy hosszú, lassuló
-          megülepedést is: 0,94-ről áll 1,00-ra, és nem lő túl. */
+    /* 2. A BELÉPŐ TÉR. Az ellenskála tartja állva a képet; a megülepedés
+          0,94-ről ülteti 1,00-ra, lassulva, túllövés nélkül. A kép a lyuk
+          mögött VÉGIG teljes fedettségű — nem halványodik be. Ami
+          feltárul, az azonnal ott van. */
     futok.push(animal(befele, minták(function (x, ut) {
-      var nyilas = nagy(Z.nyilas, fajta.ut * ut);
-      var ules = fajta.ules + (1 - fajta.ules) * viz(sav(x, 0.30, 1));
-      return { transform: 'scale(' + (ules / nyilas) + ')' };
+      var l = lepteknel(tagulas(fajta, ut));
+      var ules = fajta.ules + (1 - fajta.ules) * viz(sav(x, 0.06, 1));
+      return { transform: 'scale(' + (ules / l.x) + ',' + (ules / l.y) + ')' };
     }), ms));
 
-    /* 3. Láthatóság: akkor kapcsol be, amikor a nyílás még KICSI.
-          Ez a lényeg — a következő tér előbb látszik a lyukban, mint
-          bárhol máshol a képen. */
-    futok.push(animal(befele,
-      minták(function (x) { return { opacity: sav(x, 0.16, 0.34) }; }), ms));
-
-    /* 4. A KÖZELI RÉTEG elmegy a kamera mellett. Ez az egyetlen elem,
+    /* 3. A KÖZELI RÉTEG elmegy a kamera mellett. Ez az egyetlen elem,
           ami gyorsul: karnyújtásnyira van, tehát a perspektíva kidobja
           a képmezőből. Mire kifutna a felbontásából, már nem látszik. */
     if (kozel) {
@@ -414,35 +468,36 @@
       }), ms));
     }
 
-    /* 5. A kilépő tér maradéka a legvégén fogy el. Korábban nem: akkor
-          a kettő egymásba úszna, és pontosan azt az áttűnést kapnánk,
-          amit ez az egész el akar kerülni. */
+    /* 4. A kilépő kép a legvégén tűnik el — amikor a lyuk már úgyis
+          befedte. Nem átmenet, hanem biztosíték: a kerekítésen múló
+          egy-két képpontnyi perem se villanhasson föl. */
     futok.push(animal(kifBurok, minták(function (x) {
-      return { opacity: 1 - sav(x, 0.74, 0.94) };
+      return { opacity: 1 - sav(x, 0.90, 1) };
     }), ms));
 
     /* visszafelé: ugyanez a szalag, hátrafelé, gyorsabban */
+    var alapUtem = 1;
     if (vissza) {
-      var arany = IDO.elore / IDO.vissza;
+      alapUtem = -(IDO.elore / IDO.vissza);
       for (var i = 0; i < futok.length; i++) {
         futok[i].currentTime = ms;
-        futok[i].playbackRate = -arany;
+        futok[i].playbackRate = alapUtem;
       }
     }
+    futoMenet = { futok: futok, alap: alapUtem };
 
     /* A kompozitálási jelzés csak most, és csak a mozdulat idejére */
-    jelez([befBurok, kifBurok, kozel, koz, tav], 'transform');
+    jelez([kifBurok, befBurok, befele, kozel, koz, tav], 'transform');
 
     /* Bármelyik irányba mentünk, a végén a CÉL marad a képernyőn. A
        záró lépések egyetlen feladatban futnak le, tehát a böngésző
-       egyetlen képkockában véglegesíti őket: nincs olyan festés,
-       amelyikben a maszk már nincs, de az alaplap még ott van. */
+       egyetlen képkockában véglegesíti őket. */
     return varas(futok).then(function () {
+      futoMenet = null;
       takarit(kifBurok, kifele);
       takarit(befBurok, befele);
       cel.parentNode.hidden = false;
       ter.parentNode.hidden = true;
-      alaplapEl(alap);
       return true;
     });
   }
@@ -454,7 +509,6 @@
      kilépő kép áll teljes fedettséggel, amíg a belépő rá nem ült. */
   function egyszeru(ter, cel) {
     var celBurok = cel.parentNode;
-    celBurok.setAttribute('data-maszk', 'nincs');
     celBurok.hidden = false;
     celBurok.style.zIndex = '2';
     ter.parentNode.style.zIndex = '1';
@@ -479,18 +533,59 @@
     return isNaN(v) ? alap : v;
   }
 
+  /* Ugyanaz, csak százalékban írt értékre — a nyílás helyét és sugarát
+     a build százalékban írja ki (--nyx: 66.0%). */
+  function szazalek(elem, kulcs, alap) {
+    var v = parseFloat(elem.style.getPropertyValue(kulcs));
+    if (isNaN(v)) v = parseFloat(getComputedStyle(elem).getPropertyValue(kulcs));
+    return isNaN(v) ? alap : v;
+  }
+
   function allj(elem) {
     if (!elem || !elem.getAnimations) return;
     var lista = elem.getAnimations();
     for (var i = 0; i < lista.length; i++) lista[i].cancel();
   }
 
+  /* A VÁGÓDOBOZ. A burokból ellipszis alakú lyuk lesz, a benne álló
+     képkocka pedig ott marad, ahol a képmezőben áll. Csak a mozdulat
+     idejére — a takarit mindent visszabont. */
+  function dobozBe(burok, ter, bal, fent, szel, mag, kw, kh, nyx, nyy) {
+    burok.style.left = bal + 'px';
+    burok.style.top = fent + 'px';
+    burok.style.right = 'auto';
+    burok.style.bottom = 'auto';
+    burok.style.width = szel + 'px';
+    burok.style.height = mag + 'px';
+    burok.style.borderRadius = '50%';
+    burok.style.overflow = 'hidden';
+    burok.style.transformOrigin = '50% 50%';
+
+    /* A képkocka a dobozon BELÜL is a képmező helyén áll, és a nyílás
+       pontja körül skálázódik — ezt oltja ki a doboz nagyítása. */
+    ter.style.position = 'absolute';
+    ter.style.left = (-bal) + 'px';
+    ter.style.top = (-fent) + 'px';
+    ter.style.width = kw + 'px';
+    ter.style.height = kh + 'px';
+    ter.style.transformOrigin = nyx + '% ' + nyy + '%';
+  }
+
+  function dobozKi(burok, ter) {
+    var b = burok.style, t = ter.style;
+    b.left = b.top = b.right = b.bottom = b.width = b.height = '';
+    b.borderRadius = b.overflow = b.transformOrigin = '';
+    t.position = t.left = t.top = t.width = t.height = t.transformOrigin = '';
+    var lista = ter.querySelectorAll('.ter-reteg');
+    for (var i = 0; i < lista.length; i++) lista[i].style.display = '';
+  }
+
   function takarit(burok, ter) {
     allj(burok);
     allj(ter);
+    dobozKi(burok, ter);
     var retegek = ter.querySelectorAll('.ter-reteg');
     for (var i = 0; i < retegek.length; i++) { allj(retegek[i]); retegek[i].style.willChange = ''; }
-    burok.setAttribute('data-maszk', 'nincs');
     burok.style.zIndex = '';
     burok.style.opacity = '';
     burok.style.transform = '';
@@ -513,13 +608,13 @@
      látogató helye tényleg megváltozik — és mert ha másképp jönne,
      az egy MÁSODIK átmenet volna, amiből ezen az oldalon nincs.
 
-     Amit itt használunk, az a küszöb 1–3. lépése (a belépő oldal),
-     ugyanazokkal a mintákkal és ugyanazzal a kameragörbével. Nincs új
-     fizika, nincs új görbe, nincs új időzítés — csak az út rövidebb,
-     mert az ismerős mozdulat gyorsabb (--motion-terv, 620 ms).
+     Amit itt használunk, az a küszöb belépő oldala: ugyanaz a vágás,
+     ugyanaz a kameragörbe. Nincs új fizika, nincs új görbe, nincs új
+     időzítés — csak az út rövidebb, mert az ismerős mozdulat gyorsabb
+     (--motion-terv, 620 ms).
 
-     burok — a maszkot vivő elem (a nyílás)
-     belso — ami benne áll, és amit ellentétesen kicsinyítünk
+     burok — a vágást vivő elem (a kapu)
+     belso — ami benne áll (a lap), és ami a végén helyre ül
      vissza — igaz: ugyanez visszafelé lejátszva */
   function feltarul(burok, belso, be) {
     be = be || {};
@@ -554,17 +649,42 @@
       return varas([f]).then(function () { burok.style.opacity = ''; });
     }
 
+    /* A kapu helye — a terv.js az éppen látott képkockáról veszi át. */
+    var kx  = szazalek(burok, '--terv-x', 50);
+    var ky  = szazalek(burok, '--terv-y', 50);
+    var krx = szazalek(burok, '--terv-rx', 20);
+    var kry = szazalek(burok, '--terv-ry', 22);
+
+    /* Ugyanaz a vágódoboz, mint a színpadon. A lap a doboz alatt áll;
+       a görgetés a mozdulat idejére nem kell (most nyílt ki), utána
+       mindent visszabontunk. */
+    var mezo = burok.getBoundingClientRect();
+    var kw = mezo.width || window.innerWidth || 1;
+    var kh = mezo.height || window.innerHeight || 1;
+
+    var px = kx / 100 * kw, py = ky / 100 * kh;
+    var felW = SAROK * Math.max(px, kw - px);
+    var felH = SAROK * Math.max(py, kh - py);
+    var bal = px - felW, fent = py - felH;
+
+    var sx0 = Math.max(0.004, KEZDET * (krx / 100 * kw) / felW);
+    var sy0 = Math.max(0.004, KEZDET * (kry / 100 * kh) / felH);
+
+    var voltGorgetes = burok.style.overflowY;
+    burok.style.overflowY = 'hidden';
+    dobozBe(burok, belso, bal, fent, felW * 2, felH * 2, kw, kh, kx, ky);
+
     var futok = [
       animal(burok, minták(function (x, ut) {
-        return { transform: 'scale(' + nagy(Z.nyilas, fajta.ut * ut) + ')' };
+        var g = tagulas(fajta, ut);
+        return { transform: 'scale(' + (sx0 + (1 - sx0) * g) + ',' +
+                                       (sy0 + (1 - sy0) * g) + ')' };
       }), ms),
       animal(belso, minták(function (x, ut) {
-        var ny = nagy(Z.nyilas, fajta.ut * ut);
-        var ules = fajta.ules + (1 - fajta.ules) * viz(sav(x, 0.30, 1));
-        return { transform: 'scale(' + (ules / ny) + ')' };
-      }), ms),
-      animal(burok, minták(function (x) {
-        return { opacity: sav(x, 0.16, 0.34) };
+        var g = tagulas(fajta, ut);
+        var lx = sx0 + (1 - sx0) * g, ly = sy0 + (1 - sy0) * g;
+        var ules = fajta.ules + (1 - fajta.ules) * viz(sav(x, 0.06, 1));
+        return { transform: 'scale(' + (ules / lx) + ',' + (ules / ly) + ')' };
       }), ms)
     ];
 
@@ -579,6 +699,8 @@
 
     return varas(futok).then(function () {
       allj(burok); allj(belso);
+      dobozKi(burok, belso);
+      burok.style.overflowY = voltGorgetes;
       burok.style.transform = ''; burok.style.opacity = '';
       burok.style.willChange = ''; belso.style.willChange = '';
       belso.style.transform = '';
@@ -587,6 +709,7 @@
 
   window.Kuszob = {
     at: at,
+    siettet: siettet,
     feltarul: feltarul,
     keszit: keszit,
     melegit: melegit,

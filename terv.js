@@ -148,7 +148,6 @@
       terv.setAttribute('data-hely', 'fedo');
     }
     nyilasAtvesz();
-    terv.removeAttribute('data-maszk');
     terv.hidden = false;
     document.documentElement.setAttribute('data-terv', '');
     hatterKi(true);
@@ -174,7 +173,6 @@
       : Promise.resolve();
 
     kesz.then(function () {
-      terv.setAttribute('data-maszk', 'nincs');
       dolgozik = false;
     });
   }
@@ -185,13 +183,11 @@
 
     /* Visszafelé ugyanaz a mozdulat, gyorsabban — a látogató ugyanazon
        a kapun lép vissza, amin bejött. */
-    terv.removeAttribute('data-maszk');
     var kesz = (window.Kuszob && belso && !lassit)
       ? window.Kuszob.feltarul(terv, belso, { fajta: 'kapu', ms: 620, vissza: true })
       : Promise.resolve();
 
     kesz.then(function () {
-      terv.setAttribute('data-maszk', 'nincs');
       nyitva = false;
       dolgozik = false;
       hatterKi(false);
@@ -252,7 +248,6 @@
   /* Mély hivatkozás: /referenciak/<slug>/#alaprajz azonnal a
      szerkezetet nyitja, a megfelelő cellán állva. */
   if (location.hash === '#alaprajz') {
-    terv.setAttribute('data-maszk', 'nincs');
     nyit(false);
   }
 

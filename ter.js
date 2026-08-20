@@ -222,7 +222,18 @@
     function menj(cel, szandekos) {
       cel = Math.max(0, Math.min(szobak.length - 1, cel));
       if (cel === hol) return;
-      if (dolgozik) { varakozo = cel; return; }
+
+      /* Már fut egy mozdulat. Nem sorakoztatunk: eltesszük a legutolsó
+         kérést, és SIETTETJÜK a futót. Minél messzebb kéri a látogató
+         magát, annál gyorsabban pereg a küszöb — a színpad így nem
+         marad le a görgetés mögött, és nem torlódik föl belőle sor. */
+      if (dolgozik) {
+        varakozo = cel;
+        if (window.Kuszob.siettet) {
+          window.Kuszob.siettet(1 + Math.min(2, Math.abs(cel - hol) * 0.7));
+        }
+        return;
+      }
       dolgozik = true;
 
       var sajat = ++jegy;
@@ -294,8 +305,11 @@
           if (szobak[k] && szobak[k].hidden) window.Kuszob.melegit(szobak[k]);
         });
       };
-      if (window.requestIdleCallback) window.requestIdleCallback(munka, { timeout: 3000 });
-      else setTimeout(munka, 1200);
+      /* A határidő rövid: aki görget, MOST fog továbblépni. Ha a
+         következő képkocka nincs kint, a küszöb megvárja — és a
+         várakozás az, amit a látogató akadásnak lát. */
+      if (window.requestIdleCallback) window.requestIdleCallback(munka, { timeout: 700 });
+      else setTimeout(munka, 300);
     }
 
     /* ---------- 5. görgetés: a görgő adja a helyzetet ---------- */

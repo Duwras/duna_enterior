@@ -304,6 +304,32 @@ picture { display: contents; }
 }
 body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * 1svh); }
 
+/* ---------- AZ UTOLSÓ KERET NYUGALMA ----------
+
+   A keretváltást a szedés helye vezényli (ter.js): egy keret akkor lép
+   be, amikor a saját blokkja a képmező FELÉHEZ ér. Minden keretnek így
+   a saját blokknyi ideje van — az utolsónak viszont nincs: ott a
+   szakasz véget ér, a ragadós színpad kigördül alóla, és a maradék
+   csak a blokk hátralévő fele.
+
+   Mérve a főoldalon (13 keret, az utolsó 64svh): a 13/13 megjelenése
+   után 14svh görgetés maradt, telefonon 3 — vagyis a keret ugyanazzal
+   a mozdulattal jelent meg és tűnt el. Aki odaért, vissza kellett
+   görgetnie, hogy egyáltalán lássa. A flottán (6/6) és a készülésen
+   (3/3) ugyanez a hiba, csak kevésbé feltűnően.
+
+   A tartalék ezt a fél képernyőt adja vissza, a szakasz aljára: nem
+   új keret és nem új szedés, csak üres görgetőút, ami alatt a színpad
+   ragadva marad. Így az utolsó keret ugyanannyit áll, mint a többi.
+
+   Miért 56 és nem 50: a ter.js az innerHeight felénél vált, ami
+   telefonon — behúzott címsávnál — nagyobb a small viewportnál. A
+   ráhagyás ezt a különbséget fedi. */
+:root { --zaro-nyugalom: 56svh; }
+.aktus-szoveg,
+.flotta-szoveg,
+.keszules-szoveg { padding-bottom: var(--zaro-nyugalom); }
+
 .jelenet-belul {
   pointer-events: auto;
   max-width: 34rem;
