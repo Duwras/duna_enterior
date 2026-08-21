@@ -520,8 +520,21 @@
 
     dobozBe(befBurok, befele, bal, fent, felW * 2, felH * 2, kw, kh, nyx, nyy);
 
-    kifBurok.style.zIndex = '1';
-    befBurok.style.zIndex = '2';
+    /* A két burok a FÁTYOL ALATT rendeződik el (a .szinpad::before és
+       ::after z-indexe 2). Korábban a belépő burok kapta a 2-t, és mert
+       a pszeudoelemnél hátrébb áll a festési sorrendben, a nyílásban
+       megjelenő tér fátyol NÉLKÜL tárult fel — a mozdulat végén pedig,
+       amikor a takarit visszaadta a z-indexet, a sötétítés egy
+       képkocka alatt ráugrott a képre. Ez volt az egyetlen pont, ahol
+       az oldal láthatóan kapcsolt.
+
+       A fátyol nem a fényképé, hanem a SZEDÉSÉ (rendszer.css): a
+       képmezőhöz tartozik, nem ahhoz, ami épp benne áll. Tehát végig
+       ott a helye — a nyílásban is, az első képkockától. 0 és 1: a két
+       burok egymáshoz képesti sorrendje ugyanaz, csak mindkettő a
+       fátyol alatt marad. */
+    kifBurok.style.zIndex = '0';
+    befBurok.style.zIndex = '1';
 
     /* A belépő oldal MÉLYSÉGRÉTEGEI a mozdulat alatt nem kellenek: a kép
        áll, a két maszkos másolat viszont két teljes képmezős kompozitsík.
@@ -625,8 +638,11 @@
   function egyszeru(ter, cel) {
     var celBurok = cel.parentNode;
     celBurok.hidden = false;
-    celBurok.style.zIndex = '2';
-    ter.parentNode.style.zIndex = '1';
+    /* Ugyanaz a szabály, mint a küszöbnél: a fátyol alatt. Csökkentett
+       mozgásnál ez még fontosabb — ott a 200 ms-os áttűnés alatt
+       villanna föl a sötétítés nélküli kép. */
+    celBurok.style.zIndex = '1';
+    ter.parentNode.style.zIndex = '0';
 
     if (!tudAnimalni) {
       ter.parentNode.hidden = true;
