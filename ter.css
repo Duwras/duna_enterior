@@ -271,9 +271,47 @@ body[data-terben] .fejlec .halado { opacity: .5; }
       rgba(14, 11, 7, .74) 100%);
 }
 
-/* ---------- felirat: a tér neve, a bal felső peremen ---------- */
+/* ---------- felirat: a tér neve, a bal felső peremen ----------
 
-.ter-felirat { grid-column: 1; grid-row: 1; align-self: start; }
+   HELYI FÁTYOL. A színpad fátyla (fentebb) a felső sávban .58 — a
+   HABLEÁNY fedélzeti szalonjában viszont a felirat mögött fehér
+   mennyezet és világos vászontető van, és ott a tér neve a mérés
+   szerint 1.35:1-re esett: a cím eltűnt. A sávos fátyol erősítése nem
+   megoldás, mert az MINDEN képkockát sötétítene.
+
+   Ugyanaz a válasz, mint a jelenetszedésnél (rendszer.css): a fátyol a
+   SZEDÉSHEZ tartozik, nem a képhez. Elliptikus, a bal felső saroktól
+   indul, éle nincs, és `farthest-side` sugárral pontosan a doboz
+   peremén ér az átlátszóig.
+
+   Ehhez a felirat a TARTALMÁRA szűkül (`justify-self: start`) —
+   különben a rácsoszlop teljes szélességét megkapná, és a fátyol a
+   képmező feléig kinyúlna egy háromszavas cím mögött. */
+
+.ter-felirat {
+  grid-column: 1; grid-row: 1; align-self: start; justify-self: start;
+  max-width: min(42rem, 66%);
+  position: relative; isolation: isolate;
+}
+.ter-felirat::before {
+  content: "";
+  position: absolute; z-index: -1;
+  top: calc(var(--keret) * -1);
+  bottom: calc(var(--keret) * -1);
+  left: calc(var(--keret) * -1);
+  /* Jobbra TÚLNYÚLIK a feliraton. A fátyol az ellipszis közepén a
+     legerősebb és a doboz peremén ér az átlátszóig — ha a doboz pont a
+     szöveg széléig tartana, a cím UTOLSÓ szava már a kifutó, halvány
+     szakaszon állna. Mérve a HABLEÁNY fedélzeti szalonján: doboz a
+     szöveg széléig 1.74:1, 80%-os túlnyúlással 4.3:1. */
+  right: -80%;
+  pointer-events: none;
+  background: radial-gradient(farthest-side ellipse at 0% 50%,
+    rgba(14, 11, 7, .82) 0%,
+    rgba(14, 11, 7, .66) 44%,
+    rgba(14, 11, 7, .3) 74%,
+    transparent 100%);
+}
 .ter-felirat .nev {
   font-family: var(--font-display); font-weight: 300;
   font-size: clamp(1.5rem, 3.2vw, 2.6rem); line-height: 1.1;

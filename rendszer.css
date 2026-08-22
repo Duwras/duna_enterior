@@ -352,6 +352,106 @@ body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * 1svh); }
 .jelenet-belul .tipo-vezeto,
 .jelenet-belul .eloszo { color: var(--ejjel-szov2); }
 .jelenet-belul .link-nyil { color: var(--ejjel-szov); }
+
+/* ---------- HELYI FÁTYOL A SZEDÉS ALATT ----------
+
+   A színpad fátyla (ter.css) a KÉPMEZŐT halkítja, sávokban: erős a
+   felső és az alsó peremen, a kép közepén szándékosan érintetlen. Az a
+   fátyol a KÉPHEZ van szabva, nem a szöveghez — a jelenetszedés viszont
+   pont a középső, érintetlen sávban áll.
+
+   Ez sokáig csak telefonon volt kijavítva. Asztali méreten ugyanaz a
+   hiba: a 03. keret („Hajó és hajóbelső”) egy fehér falon és világos
+   tölgyön ül, és a krém cím ott gyakorlatilag eltűnik. A fénykép
+   világossága keretenként változik — vagyis a szedés olvashatósága ma
+   attól függ, épp melyik fotó van alatta. Ez nem lehet.
+
+   Mérve, 390 px-es képmezőn, a 02. kereten (trófeás vitrin: világos
+   szarvasfej, csillogó fém, világos tölgy). A hátteret a szedés
+   elrejtésével készült felvételen — ugyanazon a felvételen mérve a
+   „legvilágosabb folt” magukat a betűket adja vissza:
+
+                            medián    legvilágosabb háttér   kell
+     16 px folyószöveg      3.36:1    1.39:1   ← bukik       4.5:1
+     11 px felcím (--oak)   4.75:1    2.75:1   ← bukik       4.5:1
+     30 px cím              9.90:1    6.72:1                 3.0:1
+
+   Vagyis nem a fátyol erőssége hibás általában, hanem az, hogy
+   FÉNYKÉPFÜGGŐ: sötét kereten ugyanez a szedés 8:1 fölött van. Egy
+   erősebb egyenletes fátyol az egész fotót megölné, márpedig a fejezet
+   arról szól, hogy a fénykép látszik.
+
+   A helyi fátyollal, ugyanott: 7.46 / 4.80, 5.91 / 5.20, 13.47 /
+   12.34 — mind a három megvan AA-ra. Az ellenőrzés újrafuttatható:
+   scripts/kontraszt.mjs, a szedés elrejtve.
+
+   Ezért a fátyol a SZEDÉSHEZ tartozik, nem a képhez: elliptikus, a bal
+   peremtől indul, és láthatatlanul fut ki. Nincs éle, tehát nem doboz a
+   fotón — pontosan az, amit a .jelenet-nyito tényhasábjainál is
+   elkerültünk. A szedés blokkja legfeljebb 38 rem, a fátyol ennek a
+   148%-áig ér: 1440 px-en a képmezőnek legalább a fele érintetlen.
+
+   Asztali méreten újramérve, a 03. kereten (a legvilágosabb keret: teak
+   korlát és világos víz), a legvilágosabb háttérfolton:
+
+     50 px cím             8.24:1   kell 3     megvan
+     16 px folyószöveg     5.72:1   kell 4.5   megvan
+     12 px hivatkozás      5.26:1   kell 4.5   megvan
+     11 px felcím (--oak)  2.93:1   kell 4.5   NYITOTT
+
+   A felcím ugyanaz a régi, tudott tétel, mint a fenti táblázatban: ez a
+   szín ezen a méreten a legvilágosabb fényképeken nem éri el az AA-t.
+   Javult (fátyol nélkül 1.54 volt), de nem elég, és nem is a fátyol
+   fogja megoldani — a felcím a szedés ELSŐ sora, tehát az ellipszis
+   magján kívül esik; a magba húzásához akkora fátyol kellene, ami az
+   egész fényképet elviszi. A megoldása a felcím SZÍNE.
+
+   A `z-index: -1` az `isolation: isolate` miatt biztonságos: a fátyol a
+   szedés MÖGÉ kerül, de nem a fénykép mögé. */
+.jelenet-belul { position: relative; isolation: isolate; }
+.jelenet-belul::before {
+  content: "";
+  position: absolute; z-index: -1;
+  /* A doboz minden irányban TÚLNYÚLIK a szedésen, és a fátyol KÖZÉPRE
+     igazodik, nem a bal peremhez.
+
+     Két oka van. Egy: az ellipszis a közepén a legerősebb és a doboz
+     peremén ér az átlátszóig — ha a doboz pont a szedés széléig
+     tartana, az ELSŐ sor (a felcím) és az UTOLSÓ (a kivezető
+     hivatkozás) a kifutó, halvány szakaszon állna. Mérve a 03.
+     kereten: túlnyúlás nélkül a 16 px-es folyószöveg 4.14:1, a 12
+     px-es hivatkozás 3.69:1 — mindkettő a küszöb alatt.
+
+     Kettő: a szedés NEM mindig a bal peremen áll. A flottán a
+     jelenetszöveg a képmező jobb oldalára kerül, és ott a bal
+     peremhez kötött fátyolnak látszott a bal széle — függőleges
+     vágás a fényképen, pont az a doboz, amit kerülünk. A középre
+     igazított ellipszis mind a két elrendezésben ugyanúgy fut ki. */
+  top: -28%; bottom: -28%; left: -24%; right: -24%;
+  pointer-events: none;
+  /* `farthest-side`, nem 125% 105%: a százalékos sugár a doboznál
+     NAGYOBB ellipszist rajzol, tehát a színátmenet nem ér el az
+     átlátszóig — a doboz széle vágja el, és ott éles perem marad. Egy
+     soros szedésnél (a rövid mondatoknál) ez láthatóan DOBOZ lett a
+     fényképen, pont az, amit el akartunk kerülni.
+
+     A `farthest-side` a sugarat a legtávolabbi oldalhoz köti: középre
+     igazított ellipszisnél ez a doboz fél szélessége és fél magassága.
+     Így az átmenet PONTOSAN a doboz peremén ér az átlátszóig, mind a
+     négy irányban. */
+  background: radial-gradient(farthest-side ellipse at 50% 50%,
+    rgba(14, 11, 7, .88) 0%,
+    rgba(14, 11, 7, .74) 44%,
+    rgba(14, 11, 7, .34) 74%,
+    transparent 100%);
+}
+
+/* A tág, lágy vetőárnyék a világos foltokon szétkenődik, nem fog. Kap
+   mellé egy szűk, sűrű árnyékot: az a betű SZÁRÁHOZ tartozik, tehát
+   akkor is elválasztja a háttértől, ha az világos. */
+.jelenet-belul {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .9), 0 1px 18px rgba(0, 0, 0, .6);
+}
 /* A .tipo-muszaki (főoldal) és a .tipo-adat (flotta, készülés) NEM
    került ide, pedig kézenfekvő volna: nem mind a három fejezet
    használja őket a jelenetszedésben, és egy „kézenfekvő” egységesítés
@@ -395,58 +495,6 @@ body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * 1svh); }
      színpad két sávja közé befér. Egy helyen, mind a háromnak. */
   .jelenet-nyito .gorgetes-jel { display: none; }
 
-  /* ---------- HELYI FÁTYOL A SZEDÉS ALATT ----------
-
-     A színpad fátyla a KÉPMEZŐT halkítja, sávokban (ter.css, és
-     telefonon a fooldal.css felülírja egyenletesre). Az a fátyol
-     viszont a képhez van szabva, nem a szöveghez — és a szöveg
-     telefonon nem ott áll, ahol a sávok a legerősebbek.
-
-     Mérve, 390 px-es képmezőn, a 02. kereten (trófeás vitrin: világos
-     szarvasfej, csillogó fém, világos tölgy). A hátteret a szedés
-     elrejtésével készült felvételen — ugyanazon a felvételen mérve a
-     „legvilágosabb folt” magukat a betűket adja vissza:
-
-                              medián    legvilágosabb háttér   kell
-       16 px folyószöveg      3.36:1    1.39:1   ← bukik       4.5:1
-       11 px felcím (--oak)   4.75:1    2.75:1   ← bukik       4.5:1
-       30 px cím              9.90:1    6.72:1                 3.0:1
-
-     Vagyis nem a fátyol erőssége hibás általában, hanem az, hogy
-     FÉNYKÉPFÜGGŐ: sötét kereten ugyanez a szedés 8:1 fölött van. Egy
-     erősebb egyenletes fátyol az egész fotót megölné, márpedig a
-     fejezet arról szól, hogy a fénykép látszik.
-
-     A helyi fátyollal, ugyanott: 7.46 / 4.80, 5.91 / 5.20, 13.47 /
-     12.34 — mind a három megvan AA-ra. Az ellenőrzés újrafuttatható:
-     kontraszt-teszt.mjs, a szedés elrejtve.
-
-     Ezért a fátyol a SZEDÉSHEZ tartozik, nem a képhez: elliptikus,
-     a bal peremtől indul, és láthatatlanul fut ki. Nincs éle, tehát
-     nem doboz a fotón — pontosan az, amit a .jelenet-nyito
-     tényhasábjainál is elkerültünk.
-
-     A `z-index: -1` az `isolation: isolate` miatt biztonságos: a
-     fátyol a szedés MÖGÉ kerül, de nem a fénykép mögé. */
-  .jelenet-belul { position: relative; isolation: isolate; }
-  .jelenet-belul::before {
-    content: "";
-    position: absolute; z-index: -1;
-    inset: calc(var(--space-5) * -1) calc(var(--margo) * -1);
-    pointer-events: none;
-    background: radial-gradient(125% 105% at 0% 50%,
-      rgba(14, 11, 7, .88) 0%,
-      rgba(14, 11, 7, .74) 44%,
-      rgba(14, 11, 7, .34) 74%,
-      transparent 100%);
-  }
-
-  /* A tág, lágy vetőárnyék a világos foltokon szétkenődik, nem fog.
-     Kap mellé egy szűk, sűrű árnyékot: az a betű SZÁRÁHOZ tartozik,
-     tehát akkor is elválasztja a háttértől, ha az világos. */
-  .jelenet-belul {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .9), 0 1px 18px rgba(0, 0, 0, .6);
-  }
 }
 
 
