@@ -404,7 +404,25 @@ body[data-terben] .fejlec .halado { opacity: .5; }
 .ter-kapu:focus-visible .jel { border-color: var(--oak); transform: rotate(45deg); }
 
 /* ---------- mutató: műszer, nem dísz ----------
-   Csak egérrel, csak a színpadon belül. */
+   Csak egérrel, csak a színpadon belül.
+
+   NEGATÍV. A mutató krémszínű volt, egy fix árnyalat egy olyan
+   képmezőn, ami keretenként világosból sötétbe vált: a HABLEÁNY fehér
+   mennyezetén és a világos tölgy padlón egyszerűen eltűnt. Egy
+   „világoson sötét, sötéten világos” kapcsoló sem elég — a mutató
+   gyakran FÉLIG áll egy sötét ajtókereten és félig a mögötte lévő
+   világos falon; egyetlen döntés az egyik felét mindig elveszejti.
+
+   Ezért nem döntünk: a keret FEHÉREN rajzolódik, `mix-blend-mode:
+   difference` móddal. A különbségképzés képpontonként történik, tehát
+   a mutató minden egyes képpontja a MAGA háttere ellentettje lesz —
+   ugyanaz a keret fut át a sötét és a világos folton, félúton is.
+
+   Ebből következik, hogy az állapotszín elmarad: tölgyszínű keret a
+   különbségben megfordítva kékeszöld lenne. Az állapotot a MÉRET és a
+   45°-os elfordulás hordozza, ahogy eddig is — a szín csak megerősítés
+   volt. A `rejt` állapot az opacitáson át megy, az a keverést is
+   visszaveszi: nem marad utána szellemkép. */
 
 @media (hover: hover) and (pointer: fine) {
   .szinpad[data-mutato] { cursor: none; }
@@ -416,16 +434,16 @@ body[data-terben] .fejlec .halado { opacity: .5; }
   .mutato {
     position: fixed; top: 0; left: 0; z-index: 60;
     width: 16px; height: 16px; translate: -50% -50%;
-    border: 1px solid rgba(232, 223, 209, .85);
+    border: 1px solid #fff;
+    mix-blend-mode: difference;
     pointer-events: none;
     transition: width var(--motion-normal) var(--ease-water),
                 height var(--motion-normal) var(--ease-water),
-                border-color var(--motion-gyors) linear,
                 rotate var(--motion-normal) var(--ease-water),
                 opacity var(--motion-normal) linear;
   }
-  .mutato[data-allapot="kapu"]  { width: 26px; height: 26px; border-color: var(--oak); rotate: 45deg; }
-  .mutato[data-allapot="tovabb"]{ width: 30px; height: 30px; border-color: var(--oak); }
+  .mutato[data-allapot="kapu"]  { width: 26px; height: 26px; rotate: 45deg; }
+  .mutato[data-allapot="tovabb"]{ width: 30px; height: 30px; }
   .mutato[data-allapot="rejt"]  { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
