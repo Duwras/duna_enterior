@@ -59,14 +59,20 @@
     <p class="uzenet" id="kapuUzenet" role="status" aria-live="polite"></p>
 
     <p class="kapu-sugo">
-      Nincs kulcsa, vagy lejárt?
-      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Új kulcs a GitHubon ↗</a><br>
-      <b>Expiration</b> → No expiration (különben 30 nap múlva újra kell csinálni) ·
+      <b>Nincs kulcsa, vagy lejárt?</b> A gyors út — a lap már ki van töltve,
+      három dolga van vele:<br>
+      <a href="https://github.com/settings/tokens/new?scopes=public_repo&amp;description=Duna%20Enterior%20admin"
+         target="_blank" rel="noopener">Kulcs készítése a GitHubon ↗</a> →
+      <b>Expiration</b> → <b>No expiration</b> → lent <b>Generate token</b>.
+      A kapott <code>ghp_…</code> kulcsot másolja ide, és pipálja be a
+      „Jegyezze meg ezen a gépen” jelölőt — így többé nem kell belépnie.
+      (A repó nyilvános, ezért elég a <code>public_repo</code> jog, ami már
+      be van pipálva a linken.)<br>
+      <span class="halk">Finomhangolt kulcs is jó, ha úgy szokta:
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">itt ↗</a> —
       <b>Resource owner</b> → Duwras · <b>Repository access</b> →
       Only select repositories → <b>duna_enterior</b> ·
-      <b>Permissions</b> → Metadata: Read-only és Contents: Read and write.<br>
-      Utána pipálja be a „Jegyezze meg ezen a gépen” jelölőt — így többé
-      nem kell belépnie.
+      <b>Permissions</b> → Metadata: Read-only és Contents: Read and write.</span>
     </p>
   </form>
 </section>
