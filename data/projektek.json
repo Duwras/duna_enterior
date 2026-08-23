@@ -1812,5 +1812,44 @@
         "alt": "Ugyanaz a csónak ferdén hátulról, külmotorral, az udvaron"
       }
     ]
+  },
+  {
+    "slug": "test",
+    "cim": "TEST",
+    "kategoria": "egyedi",
+    "link": null,
+    "leiras": "ndnkdjndkjn",
+    "kiemelt": "01.jpg",
+    "allapot": "vazlat",
+    "kepek": [
+      {
+        "file": "01.jpg",
+        "alt": "TEST"
+      },
+      {
+        "file": "02.jpg",
+        "alt": "TEST"
+      },
+      {
+        "file": "03.jpg",
+        "alt": "TEST"
+      },
+      {
+        "file": "04.jpg",
+        "alt": "TEST"
+      },
+      {
+        "file": "05.jpg",
+        "alt": "TEST"
+      },
+      {
+        "file": "06.jpg",
+        "alt": "TEST"
+      },
+      {
+        "file": "07.jpg",
+        "alt": "TEST"
+      }
+    ]
   }
 ]
