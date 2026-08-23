@@ -233,6 +233,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 300; color: var(--ink); m
 .ures-allapot { display: grid; place-items: center; padding: 60px 24px; color: var(--smoke); }
 
 @media (max-width: 860px) {
+  /* Telefonon a fejléc négy eleme egy sorban nem fér ki: a „Weboldal” és
+     a „Kilépés” kilógott a képernyőről, és az egész lap oldalra
+     görgethetővé vált. Törhet, az állapotsor pedig külön sorba megy. */
+  .admin-fejlec { flex-wrap: wrap; gap: 8px 14px; padding: 10px 14px; }
+  .admin-fejlec > img { height: 26px; width: auto; }
+  .allapot { margin-left: auto; order: 4; flex-basis: 100%; }
+
   .admin-torzs { grid-template-columns: 1fr; }
   .oldalsav { border-right: 0; border-bottom: 1px solid var(--line); }
   .projekt-lista { max-height: 40vh; overflow-y: auto; }
