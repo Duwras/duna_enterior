@@ -1014,6 +1014,14 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
+/* Az anyagnevek a JSON-ban kisbetűvel állnak — ott adatok, szótárkulcsok.
+   A lapon viszont önálló megnevezésként jelennek meg, ezért nagy
+   kezdőbetűvel. Csak az első betű: a „lakkozott fa” nem „Lakkozott Fa”. */
+const anyagNev = (s) => {
+  const t = String(s || '').trim();
+  return t ? t.charAt(0).toLocaleUpperCase('hu-HU') + t.slice(1) : t;
+};
+
 const kep = (slug, file, meret) =>
   `img/projektek/${slug}/${file.replace(/\.[^.]+$/, '')}${meret}.jpg`;
 
@@ -1488,7 +1496,7 @@ function terJeloles(p, ter) {
              data-hangulat="${esc(n.hangulat || ter.hangulat?.alap || 'nappal')}"
              data-kuszob="${esc(n.kuszob?.fajta || 'ajto')}"
              data-el="${esc(n.kuszob?.el || '')}"
-             data-anyag="${esc((ter.anyagok || [])[0] || '')}"
+             data-anyag="${esc(anyagNev((ter.anyagok || [])[0] || ''))}"
              data-anyagszin="${esc(ter.anyagszin || '')}">
           ${reteg(n, 'tav', i === 0)}
           ${reteg(n, 'koz', i === 0)}
@@ -1543,7 +1551,7 @@ function terJeloles(p, ter) {
 
       <p class="tipo-muszaki">Anyagok</p>
       <ul class="anyagok tipo-adat">
-        ${(ter.anyagok || []).map((a) => `<li>${esc(a)}</li>`).join('\n        ')}
+        ${(ter.anyagok || []).map((a) => `<li>${esc(anyagNev(a))}</li>`).join('\n        ')}
       </ul>
 
       <p class="tipo-muszaki" style="margin-top:var(--space-6)">Küszöbök</p>
@@ -1777,7 +1785,7 @@ for (const p of ELO) {
       .split('{{terNev}}').join(esc(elso.nev))
       .split('{{terHonnan}}').join(esc(p.cim + ' · ' + elso.szoba.nev))
       .split('{{terHangulat}}').join(esc(elso.hangulat || ter.hangulat?.alap || 'nappal'))
-      .split('{{terAnyag}}').join(esc((ter.anyagok || [])[0] || '—'))
+      .split('{{terAnyag}}').join(esc(anyagNev((ter.anyagok || [])[0] || '—')))
       .split('{{terFajta}}').join(fajtaNev)
       .split('{{terKovetkezo}}').join(esc(j.pontok[1] ? j.pontok[1].nev : 'Vissza az első térbe'))
       .replace('<!--TER-SZOBAK-->', j.szobakHtml)
@@ -1962,7 +1970,7 @@ const keszSorozatok = !KESZULES ? '' : (KESZULES.sorozatok || []).map((s) => {
   const jelolok = (s.allomasok || [])
     .map((_, i) => `<div class="metszet-jelolo" data-lemez="${i + 1}"></div>`).join('\n      ');
   const anyagok = (s.anyagok || [])
-    .map((a) => `<li>${esc(a)}</li>`).join('');
+    .map((a) => `<li>${esc(anyagNev(a))}</li>`).join('');
 
   return `<section class="metszet keszules-sorozat" id="${esc(s.id)}" data-sorozat
            aria-labelledby="cim-${esc(s.id)}">
@@ -2031,7 +2039,7 @@ const keszAnyagok = !KESZULES ? '' : (() => {
     }
   }
   return [...terkep.entries()].map(([anyag, hol]) =>
-    `<li><b>${esc(anyag)}</b> <span class="tipo-adat">${esc(hol.join(' · '))}</span></li>`
+    `<li><b>${esc(anyagNev(anyag))}</b> <span class="tipo-adat">${esc(hol.join(' · '))}</span></li>`
   ).join('\n          ');
 })();
 
