@@ -152,7 +152,7 @@
       "allapot": "READY"
     },
 
-    "boesch-640-de-luxe":      { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "megjegyzes": "0.31-0.85 MP. A hajóépítés legjobb folyamatdokumentációja, és a leggyengébb felbontása.", "allapot": "NEEDS_MASTER" },
+    "boesch-640-de-luxe":      { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "megjegyzes": "0.31-0.85 MP, az 05 és a 13 felskálázva (1.36 és 2.43 MP). A hajóépítés legjobb folyamatdokumentációja, és a leggyengébb felbontása.", "allapot": "NEEDS_MASTER" },
     "boesch-580":              { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
     "boesch-560-de-luxe":      { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "datumbelyeg": "'03 4 23", "allapot": "NEEDS_MASTER" },
     "meyer-motorcsonak-1":     { "jogok": "sajat-archivum", "vizjel": "Duna HAJÓK", "allapot": "NEEDS_MASTER" },
@@ -191,32 +191,11 @@
   "kepek": {
     "_megjegyzes": "Névre szóló felmentések. MINDEGYIK egy le nem fényképezett dolog helye. Ha egy sor eltűnik innen, az azt jelenti, hogy megjött a jobb mester — nem azt, hogy elnézőbbek lettünk.",
 
-    "jegvitorlas/05.jpg": {
-      "mentesseg": {
-        "ok": "0.48 MP, a minimum harmada. A flotta nyitásának 2. képkockája: bordák a sólyán. Az archívumban NINCS jobb felbontású kép hajóépítésről — a teljes hajós anyag 0.31-0.85 MP között van (PHASE-4 §19).",
-        "allapot": "NEEDS_MASTER",
-        "feloldja": "Két épülő hajótest újrafotózása, 3000 px, vízjel nélkül (PHASE-5 §15.2, 8. felvétel)."
-      }
-    },
-    "rivalis-vitorlas-hajo/06.jpg": {
-      "mentesseg": {
-        "ok": "0.54 MP, teljes szélességben látványosan lágy. A flotta nyitásának fordulópontja, és az EGYETLEN archív kép, ami egy hajóbelsőt szobaként mutat a HABLEÁNY és a 6.1 Cabin mellett (PHASE-4 §19.4).",
-        "allapot": "NEEDS_MASTER",
-        "feloldja": "Bármelyik másik hajóbelső újrafotózása, 2400 px."
-      }
-    },
     "boesch-640-de-luxe/05.jpg": {
       "mentesseg": {
-        "ok": "0.79 MP. A flotta nyitásának egyik képkockája.",
+        "ok": "1.36 MP / 1346 px — felskálázás után is a küszöb alatt, mert az eredeti 1024 px volt. A flotta nyitásának egyik képkockája.",
         "allapot": "NEEDS_MASTER",
         "feloldja": "A befejező üzem újrafotózása munka közben (PHASE-5 §14.1)."
-      }
-    },
-    "boesch-640-de-luxe/13.jpg": {
-      "mentesseg": {
-        "ok": "0.85 MP, ráadásul a 'Duna HAJÓK' vízjel a sötét lakkon jól látszik (PHASE-4 §5). A flotta nyitásának festőkabinos képkockája.",
-        "allapot": "NEEDS_MASTER",
-        "feloldja": "Ugyanaz — a befejező üzem munka közben."
       }
     },
     "meyer-motorcsonak-2/05.jpg": {
