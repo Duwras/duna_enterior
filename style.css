@@ -15,7 +15,14 @@
   --paper-2: #f4efe6;   /* váltakozó szekció */
   --ink:     #1a150f;   /* szöveg, sötét felület */
   --ink-2:   #4c4238;   /* folyószöveg */
-  --smoke:   #857a6c;   /* másodlagos, feliratok */
+  --smoke:   #857a6c;   /* másodlagos, feliratok — VILÁGOS alapon */
+
+  /* Ugyanaz a szerep SÖTÉT alapon. A --smoke az --ink-en 4,31:1-et ad,
+     a WCAG AA apró szedésre 4,5:1-et kér — a Lighthouse a lábléc négy
+     beosztását, a jogi sort és a belépés gombját mind elbuktatta rajta.
+     Ez a fokozat 5,0:1. Nem külön szín: ugyanaz a füst, egy lépéssel
+     világosabb, hogy a sötét lábléc ne egye meg. */
+  --fust-sotetben: #918576;
   --line:    #ded3c3;   /* hajszálvonal, raszter */
   --brass:   #7e5f35;   /* akcent, sötét */
   --oak:     #c2884a;   /* akcent, világos felületen is olvasható */
@@ -133,9 +140,24 @@ p { margin: 0; }
   background: rgba(251, 248, 243, .92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
-  transition: border-color .3s ease, background .3s ease;
 }
-.fejlec.uszik { border-bottom-color: var(--line); }
+
+/* A záróvonal nem a keret színén tűnik elő, hanem egy saját rétegen.
+
+   Ok: a `border-bottom-color` áttűnése nem kompozit tulajdonság — a
+   böngésző minden képkockán újrafesti tőle a fejlécet, és a Lighthouse
+   jogosan panaszolta („nem kompozit animáció”). Egy külön réteg
+   `opacity`-je viszont a kompozitoron fut, a fő szál érintése nélkül.
+
+   A keret HELYE marad, hogy a fejléc magassága ne ugorjon egy pixelt;
+   a réteg pontosan azt az egy pixelt fedi le. */
+.fejlec::after {
+  content: ''; position: absolute; inset: auto 0 -1px 0; height: 1px;
+  background: var(--line);
+  opacity: 0; transition: opacity .3s ease;
+  pointer-events: none;
+}
+.fejlec.uszik::after { opacity: 1; }
 .fejlec .sav {
   max-width: var(--max); margin: 0 auto;
   padding: 14px var(--gut);
@@ -377,7 +399,7 @@ p { margin: 0; }
 }
 .lablec .szemely { display: grid; gap: 2px; margin-bottom: 16px; font-size: .9rem; }
 .lablec .szemely b { color: var(--paper); font-weight: 500; }
-.lablec .szemely span { color: var(--smoke); font-size: .78rem; }
+.lablec .szemely span { color: var(--fust-sotetben); font-size: .78rem; }
 
 /* kötelező pályázati blokk */
 .eu-blokk {
@@ -390,14 +412,14 @@ p { margin: 0; }
 
 .zaro {
   display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-  padding-top: 26px; font-size: .78rem; color: var(--smoke);
+  padding-top: 26px; font-size: .78rem; color: var(--fust-sotetben);
 }
 .zaro nav { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
 
 /* A belépés a lábléc jogi sorába kerül, de nem versenyez vele: halkabb,
    és a keret elválasztja a látogatónak szóló hivatkozásoktól. */
 .admin-belepes {
-  color: var(--smoke) !important;
+  color: var(--fust-sotetben) !important;
   border: 1px solid rgba(251,248,243,.16);
   padding: 3px 11px;
   font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
@@ -868,8 +890,7 @@ main { overflow-x: clip; }
 /* ---------- fejléc: haladásjelző és elrejtés ---------- */
 
 .fejlec {
-  transition: border-color .3s ease, background .3s ease,
-              transform .42s cubic-bezier(.4, 0, .2, 1);
+  transition: transform .42s cubic-bezier(.4, 0, .2, 1);
 }
 /* lefelé görgetve elhúzódik az útból, felfelé azonnal visszajön */
 .fejlec.bujik { transform: translateY(-101%); }

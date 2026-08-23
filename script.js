@@ -147,6 +147,15 @@
 
     var elozoFejY = window.pageYOffset;
 
+    var gorgoHossz = 0;
+    var hosszMeres = function () {
+      gorgoHossz = doc.scrollHeight - window.innerHeight;
+    };
+    hosszMeres();
+    window.addEventListener('resize', hosszMeres, { passive: true });
+    window.addEventListener('load', hosszMeres);
+    if (window.ResizeObserver) new ResizeObserver(hosszMeres).observe(document.body);
+
     gorgetesre(function (y) {
       fejlec.classList.toggle('uszik', y > 8);
 
@@ -157,7 +166,18 @@
       else if (y < elozoFejY - 4 || y <= 260) fejlec.classList.remove('bujik');
       elozoFejY = y;
 
-      var teljes = doc.scrollHeight - window.innerHeight;
+      /* A görgethető hossz NEM itt olvasódik ki.
+
+         A hívás fölött három osztályírás áll. Egy `scrollHeight`
+         közvetlenül utánuk arra kényszeríti a böngészőt, hogy a fél
+         lapot azonnal újraszámolja — és ez minden görgetett képkockán
+         megismétlődik. A Lighthouse „kényszerített újraszámítás”
+         tétele pontosan ezt mérte.
+
+         A hossz csak akkor változik, ha a lap átméreteződik vagy nő:
+         mérjük ott, ne itt. A ResizeObserver az elrendezés UTÁN fut le,
+         tehát a mérése ingyen van. */
+      var teljes = gorgoHossz;
       halado.style.transform =
         'scaleX(' + (teljes > 0 ? Math.min(y / teljes, 1).toFixed(4) : 0) + ')';
     });

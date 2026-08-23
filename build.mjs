@@ -16,6 +16,7 @@ import {
   cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync, statSync
 } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { transformSync } from 'esbuild';
 import sharp from 'sharp';
 import { szerepekSzamit, ALAP_MESTER } from './scripts/forras-modell.mjs';
 
@@ -155,6 +156,23 @@ fejlecek.push(mindenLap.join('\n'));
 /* A labor fejlesztői útvonal: akkor sem indexelhető, ha az éles domain
    már be van kötve. A lapon is ott a robots meta — ez a második zár. */
 fejlecek.push('/lab/*\n  X-Robots-Tag: noindex, nofollow');
+
+/* Gyorsítótár. A CSS és a JS neve mögött tartalomból számolt ?v= bélyeg
+   áll (a köteg nevében maga a bélyeg), a betűfájlok pedig soha nem
+   változnak észrevétlenül — ezek egy évig eltehetők, és a visszatérő
+   látogatónak nulla kérésbe kerülnek. Ha a tartalom változik, változik
+   a cím is, tehát a régi példány nem ragadhat bent.
+
+   A KÉPEK NEM kapnak `immutable`-t, és csak egy hetet: a fájlnevük
+   stabil, de a tartalmuk nem — az ügyfél az adminból bármikor cserélhet
+   fotót ugyanazon a néven. Egy hét a kompromisszum a sávszélesség és
+   a között, hogy a csere ne két év múlva látszódjon.
+
+   A LAPOK kimaradnak: azok mindig frissen kellenek. */
+fejlecek.push('/*.css\n  Cache-Control: public, max-age=31536000, immutable');
+fejlecek.push('/*.js\n  Cache-Control: public, max-age=31536000, immutable');
+fejlecek.push('/fonts/*\n  Cache-Control: public, max-age=31536000, immutable');
+fejlecek.push('/img/*\n  Cache-Control: public, max-age=604800');
 
 writeFileSync(`${OUT}/_headers`, fejlecek.join('\n\n') + '\n');
 
@@ -2129,6 +2147,49 @@ for (const f of SZKRIPTEK) {
   writeFileSync(ut, behelyettesit(readFileSync(ut, 'utf8')));
 }
 
+/* ---------- 5/c. TÖMÖRÍTÉS ----------
+
+   A Lighthouse mérése (Lassú 4G, Moto G Power): hat stíluslap 52,2 KiB
+   nyersen, 3760 ms együttes letöltéssel — és ebből 26,8 KiB puszta
+   behúzás és megjegyzés. A megjegyzések a FORRÁSNAK szólnak, nem a
+   böngészőnek: itt maradnak a repóban, csak a kimenetből esnek ki.
+
+   esbuild, `minify` — nem alakít át semmit, csak elhagyja azt, ami
+   nem számít: szóköz, sortörés, megjegyzés, JS-ben a helyi nevek.
+   Szándékosan NINCS `target`: célverzió nélkül az esbuild nem ír át
+   modern nyelvi elemet régire, tehát a kimenet bájtban kisebb, de
+   jelentésben ugyanaz.
+
+   AZ ADMIN KIMARAD. Az `ellenorzes.mjs` 3. pontja bájtra egyezést vár
+   az admin három fájljára a forrással — ez nem szeszély, hanem a
+   szabály, hogy amit az ügyfél ma használ, az ne mozduljon. */
+const NEM_TOMORIT = new Set(['admin.html', 'admin.js', 'admin.css']);
+
+let tomoritEsBejegyez = 0;
+for (const f of ASSETS) {
+  if (NEM_TOMORIT.has(f) || !/\.(css|js)$/.test(f)) continue;
+  const ut = `${OUT}/${f}`;
+  if (!existsSync(ut)) continue;
+  const elotte = readFileSync(ut, 'utf8');
+  let utana;
+  try {
+    utana = transformSync(elotte, {
+      loader: f.endsWith('.css') ? 'css' : 'js',
+      minify: true,
+      legalComments: 'none'
+    }).code;
+  } catch (hiba) {
+    console.error(`
+!! HIBA — a tömörítés elakadt ezen: ${f}
+  ${hiba.message}
+`);
+    process.exit(1);
+  }
+  tomoritEsBejegyez += elotte.length - utana.length;
+  writeFileSync(ut, utana);
+}
+console.log(`  tömörítés: -${(tomoritEsBejegyez / 1024).toFixed(1)} KiB CSS+JS`);
+
 /* Gyorsítótár-törés: a GitHub Pages fejléceit nem tudjuk átírni, ezért a
    fájl tartalmából számolt bélyeg kerül a hivatkozás mögé. Ha a fájl
    változik, változik az URL is — a visszatérő látogató biztosan újat tölt. */
@@ -2258,6 +2319,134 @@ function fejMeta(oldal, html) {
   return html.replace(/<\/head>/i, sorok.join('\n') + '\n</head>');
 }
 
+/* ---------- 6/a2. STÍLUS A LAPBAN ----------
+
+   A lapok hat külön stíluslapot kértek le, és a böngésző MINDET
+   megvárja az első festés előtt. Lassú 4G-n ez hat egymásra torlódó
+   kérés: a mérés szerint 3760 ms, miközben az utolsó fájl 900 ms-ot
+   várt sorára. Kötegelve is maradt egy teljes körfordulás — a lap
+   megérkezik, és utána KEZD el stílust kérni.
+
+   Ezért a lap saját stílusa a fejbe kerül, egyetlen <style> blokkban.
+   A körfordulás elesik: amikor a HTML utolsó bájtja megjött, már minden
+   ott van a festéshez.
+
+   AMIT CSERÉBE ADUNK: a stílus lapról lapra újratöltődik, mert nincs
+   külön fájl, amit a gyorsítótár megtarthatna. Tömörítve ~11 KiB
+   laponként. Ez tudatos csere: a látogatók túlnyomó része keresőből
+   érkezik EGY lapra, és az első benyomás ott dől el.
+
+   AZ ÚTVONALAK: a stíluslapok a gyökérben álltak, tehát a bennük lévő
+   `url(fonts/…)` a gyökérhez képest értendő. A lapba emelve viszont a
+   LAP címéhez képest oldódna fel — a /referenciak/x/ alatt
+   /referenciak/x/fonts/… lenne belőle, azaz 404 és tartalék betű.
+   Ezért gyökérből induló útvonalra írjuk át őket.
+
+   AZ ADMIN KIMARAD — lásd az 5/c. lépés indoklását. */
+const CSS_LINK = /[ \t]*<link rel="stylesheet" href="([A-Za-z0-9._-]+\.css)">[ \t]*\r?\n?/g;
+
+const CSS_GYORSITO = new Map();
+
+function stilusBlokk(fajlok) {
+  const kulcs = fajlok.join('|');
+  if (CSS_GYORSITO.has(kulcs)) return CSS_GYORSITO.get(kulcs);
+  const tartalom = fajlok
+    .map((f) => readFileSync(`${OUT}/${f}`, 'utf8'))
+    .join('\n')
+    .replace(/url\((['"]?)(?!https?:|data:|\/|#)/g, 'url($1/');
+  const blokk = `<style>${tartalom}</style>`;
+  CSS_GYORSITO.set(kulcs, blokk);
+  return blokk;
+}
+
+function stiluskoteg(html) {
+  const lista = [...html.matchAll(CSS_LINK)].map((m) => m[1]);
+  if (!lista.length) return html;
+
+  /* A sorrend a lapé marad: a fejezet stíluslapja írja felül a magot,
+     nem fordítva. */
+  const blokk = stilusBlokk(lista) + '\n';
+
+  let elso = true;
+  return html.replace(CSS_LINK, () => {
+    if (!elso) return '';
+    elso = false;
+    return blokk;
+  });
+}
+
+/* ---------- 6/a3. BETŰELŐKÉRÉS ----------
+
+   A lapok fejében két előkérés állt: a Cormorant és az Archivo
+   `latin` szelete. Csakhogy a magyar szöveg ő-t és ű-t is tartalmaz
+   (U+0151, U+0171), azok pedig a `latin-ext` szeletben vannak — amit
+   a böngésző csak a fonts.css feldolgozása UTÁN fedez fel. A mérés
+   szerint 690 ms-nál indult a letöltése, és a szedés addig tartalék
+   betűvel állt: ez az LCP „elem renderelési késése” tétel.
+
+   A két hiányzó szelet 2,0 és 2,2 KiB — az előkérésük ára gyakorlatilag
+   nulla, a haszna egy teljes körfordulónyi késés a hajtás fölött.
+
+   A DŐLT változat csak ott kerül be, ahol tényleg van dőlt szedés: az
+   álló `latin` szelete 16 KiB, előkérni olyan lapon, ahol egy <em>
+   sincs, tiszta veszteség (a böngésző fel is panaszolja). */
+const BETU_ELOKERES = [
+  'fonts/cormorant-garamond-300-latin.woff2',
+  'fonts/cormorant-garamond-300-latin-ext.woff2',
+  'fonts/cormorant-garamond-300-italic-latin.woff2',
+  'fonts/cormorant-garamond-300-italic-latin-ext.woff2',
+  'fonts/archivo-400-latin.woff2',
+  'fonts/archivo-400-latin-ext.woff2'
+];
+
+const ELOKERES_SOR = /[ \t]*<link rel="preload" href="fonts\/[^"]+" as="font"[^>]*>[ \t]*\r?\n?/g;
+
+function betuElokeres(html) {
+  if (!ELOKERES_SOR.test(html)) return html;
+  ELOKERES_SOR.lastIndex = 0;
+
+  const dolt = /<em[\s>]/.test(html);
+  const fajlok = BETU_ELOKERES.filter((f) => dolt || !f.includes('italic'));
+  const sorok = fajlok
+    .filter((f) => existsSync(`${OUT}/${f}`))
+    /* Gyökérből induló útvonal, mert a lapba emelt @font-face is az
+       (6/a2.) — így a két hivatkozás bájtra ugyanarra a címre mutat, és
+       az aloldalak relatív átírása sem nyúl hozzá. */
+    .map((f) => `<link rel="preload" href="/${f}" as="font" type="font/woff2" crossorigin>`)
+    .join('\n') + '\n';
+
+  let elso = true;
+  return html.replace(ELOKERES_SOR, () => {
+    if (!elso) return '';
+    elso = false;
+    return sorok;
+  });
+}
+
+/* ---------- 6/a4. SZKRIPTHALASZTÁS ----------
+
+   A szkriptek a törzs végén állnak, tehát a szedést nem tartják fel —
+   a LETÖLTÉSÜK viszont igen. A mérés szerint a hat fájl ugyanabban a
+   sávban versengett a két stíluslappal, és a kritikus útvonal 2768
+   ms-ra nyúlt tőlük: a böngésző addig nem tekintette késznek a lapot.
+
+   A `defer` ezt oldja fel. A fájl a háttérben, alacsonyabb
+   elsőbbséggel töltődik, a végrehajtás pedig a dokumentum
+   feldolgozása UTÁN, de a DOMContentLoaded ELŐTT történik — sorrendben,
+   ahogy a lapon állnak. Ez pontosan az a pillanat, amikor eddig is
+   lefutottak (a törzs végén), csak most nem előzik meg a festést.
+
+   A sorrend azért számít, és azért marad: a ter.js a kuszob.js-ben
+   létrejövő window.Kuszob-ot használja. A `defer` a HTML szerinti
+   sorrendet tartja, az `async` nem — ezért nem az.
+
+   Egyetlen lapon sincs beágyazott <script>, tehát nincs olyan kód,
+   ami a halasztott fájlok elé kerülne és a globálisaikat keresné. */
+function szkriptHalaszt(html) {
+  return html.replace(/<script src="([^"]+\.js)"><\/script>/g,
+    (_, ut) => `<script src="${ut}" defer></script>`);
+}
+
 for (const oldal of OLDALAK) {
   let html = readFileSync(oldal, 'utf8');
   const melyseg = oldal.slice(OUT.length + 1).split('/').length - 1;
@@ -2308,6 +2497,12 @@ for (const oldal of OLDALAK) {
   }
   html = behelyettesit(html);
 
+  /* a hat stíluslapból kettő, a hajtás fölötti betűszeletek előkérése,
+     és a szkriptek halasztása — az admin egyikbe sem kerül bele */
+  if (oldal.slice(OUT.length + 1) !== 'admin.html') {
+    html = szkriptHalaszt(betuElokeres(stiluskoteg(html)));
+  }
+
   for (const [fajl, b] of BELYEGZETT) {
     html = html.split(`"${fajl}"`).join(`"${gyoker}${fajl}?v=${b}"`);
   }
@@ -2318,6 +2513,18 @@ for (const oldal of OLDALAK) {
   }
 
   writeFileSync(oldal, html);
+}
+
+/* ---------- 6/a5. A LAPBA EMELT STÍLUSLAPOK TAKARÍTÁSA ----------
+
+   A 6/a2. lépés után egyetlen publikus lap sem hivatkozik rájuk: a
+   tartalmuk a lapok fejében van. Kimenni nincs okuk.
+
+   A fonts.css és az admin.css MARAD: az admin.html bájtra változatlan,
+   és ez a kettő az, amit kér. */
+for (const f of ['rendszer.css', 'style.css', 'ter.css', 'terv.css',
+                 'fooldal.css', 'flotta.css', 'keszules.css']) {
+  rmSync(`${OUT}/${f}`, { force: true });
 }
 
 /* ---------- 6/b. maradt-e behelyettesítetlen hely ---------- */

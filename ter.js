@@ -339,11 +339,19 @@
         var arany = Math.min(0.999, Math.max(0, -doboz.top / teljes));
         uj = Math.floor(arany * szobak.length);
       }
+      /* A fejléc regisztere: amíg a színpad tölti ki a képmezőt,
+         sötét felületen áll. Egy attribútum, semmi több.
+
+         A MÉRÉS ELŐBB VAN, MINT A KERETVÁLTÁS. Fordítva a `menj()`
+         DOM-írásai után jönne egy getBoundingClientRect, ami azonnali
+         újraszámolásra kényszeríti a böngészőt — minden görgetett
+         képkockán. A színpad helyét a keretváltás úgysem mozdítja el,
+         tehát a sorrend cseréje semmit nem változtat azon, amit
+         mérünk; csak a kényszerített újraszámítás esik ki. */
+      var sz = szinpad.getBoundingClientRect();
+
       if (uj !== hol) { celzott = uj; menj(uj, false); }
 
-      /* A fejléc regisztere: amíg a színpad tölti ki a képmezőt,
-         sötét felületen áll. Egy attribútum, semmi több. */
-      var sz = szinpad.getBoundingClientRect();
       var bent = sz.top < window.innerHeight * 0.35 && sz.bottom > window.innerHeight * 0.65;
       if (bent !== terbenVolt) {
         terbenVolt = bent;

@@ -16,6 +16,7 @@
     "specificitas": "node scripts/specificitas.mjs"
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
     "sharp": "^0.34.4"
   }
 }
