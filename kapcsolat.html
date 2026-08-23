@@ -106,25 +106,35 @@
 
   <!-- ---------- térkép ----------
 
-       A jelölő 47.68631, 17.58554 volt: a Bécsi úttól ÉSZAKRA, egy
-       szántóföld szélén, több mint egy kilométerrel a telephely fölött.
-       Aki ide navigált, rossz helyre ért.
+       A jelölő kétszer is mellément. Először 47.68631, 17.58554: a Bécsi
+       úttól ÉSZAKRA, szántóföld szélén, egy kilométerrel a telephely
+       fölött. Utána 47.67672, 17.58216: a helyes telepnél, de annak
+       északi kerítésén kívül, üres földön — kb. 110 méterrel az udvar
+       fölött.
 
-       A mai koordináta a cég saját, korábbi oldalának Google-beágyazásából
-       jön (dunahajok.hu, „Duna Hajók” hely): 47.67672, 17.58216. Ez az
-       Ikrényi út nyugati oldalán álló üzemi telep — ugyanaz, amit a
-       „tsz-major” buszmegálló és a telepi épületek is jeleznek a
-       térképen. Az Ikrényi út maga a 47.6751–47.6781 sávban fut, tehát
-       a pont a címhez tartozó utcán VAN, nem mellette.
+       A mai koordináta 47.67578, 17.58252. Ez a cég Google-helyadata
+       (a Waze élő térképe ugyanezt a pontot adja vissza a
+       „Duna Belsőépítészet Kft.” helyre: 47.6757778, 17.5825158), és
+       egybeesik azzal, amit az OpenStreetMap is mutat: a 656993178
+       kerítéssel körbevett majorudvarral és a benne álló épületekkel
+       (47.6755–47.6761, 17.5822–17.5831). Két független forrás ugyanarra
+       az udvarra mutat, tehát a pont az épületeken ÁLL, nem mellettük.
 
-       A kivágat is szűkebb: ~1,4 × 0,9 km helyett ~600 × 400 m, hogy a
-       telephely és a bekötő út egyszerre látszódjon. -->
+       A kivágat a jelölőre van középre állítva (±400 m kelet-nyugat,
+       ±200 m észak-dél), így a telep és az Ikrényi út bekötése együtt
+       látszik, és széles képernyőn sem csúszik ki a pont a képből.
+
+       A térkép nem fogad egérrel/ujjal érkező eseményt (pointer-events:
+       none a style.css-ben). Enélkül a beágyazott OSM elnyelte a
+       kétujjas görgetést: aki a térkép fölött húzta lefelé az ujját, nem
+       a lábléc felé jutott, hanem a térképet tolta el. Nagyítani a
+       „Megnyitás a Google Térképen” hivatkozáson lehet. -->
   <section class="terkep-blokk">
     <h2 class="rejtett">Térkép</h2>
     <iframe
       title="A Duna Belsőépítészet Kft. telephelye a térképen — 9025 Győr, Ikrényi út 14."
-      src="https://www.openstreetmap.org/export/embed.html?bbox=17.5781%2C47.6749%2C17.5862%2C47.6786&amp;layer=mapnik&amp;marker=47.67672%2C17.58216"
-      loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      src="https://www.openstreetmap.org/export/embed.html?bbox=17.5785%2C47.6740%2C17.5865%2C47.6776&amp;layer=mapnik&amp;marker=47.67578%2C17.58252"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
     <a class="terkep-link" href="https://www.google.com/maps/search/?api=1&amp;query=9025+Gy%C5%91r%2C+Ikr%C3%A9nyi+%C3%BAt+14"
        target="_blank" rel="noopener">Megnyitás a Google Térképen ↗</a>
   </section>

@@ -735,6 +735,12 @@ main { overflow-x: clip; }
 .terkep-blokk iframe {
   width: 100%; height: clamp(320px, 46vh, 480px); border: 0; display: block;
   filter: grayscale(.25);
+  /* A beágyazott OSM saját görgetés-kezelője elnyelte a kétujjas
+     lapozást: a térkép fölött húzva a térkép tolódott el, az oldal
+     állva maradt, és úgy tűnt, a lábléchez nem lehet lejutni.
+     Eseményt nem kap, így minden görgetés az oldalé; a nagyítás a
+     .terkep-link hivatkozáson át érhető el. */
+  pointer-events: none;
 }
 .terkep-link {
   position: absolute; left: var(--gut); bottom: 22px;
