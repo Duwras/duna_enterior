@@ -492,7 +492,13 @@
     lista.innerHTML = '';
 
     projektek
-      .filter(function (p) { return !szuro || p.cim.toLowerCase().indexOf(szuro) !== -1; })
+      /* Névre és kategóriára is keresünk: a „hotel” szóra a hotelek is
+         jöjjenek, ne csak azok, amelyeknek a nevében benne van. */
+      .filter(function (p) {
+        if (!szuro) return true;
+        var kat = (KATEGORIAK[p.kategoria] || p.kategoria || '').toLowerCase();
+        return p.cim.toLowerCase().indexOf(szuro) !== -1 || kat.indexOf(szuro) !== -1;
+      })
       .forEach(function (p) {
         var li = document.createElement('li');
         li.className = 'projekt-sor' + (aktiv && aktiv.slug === p.slug ? ' aktiv' : '');
@@ -541,6 +547,12 @@
   function projektNyit(p) {
     if (piszkos && !confirm('Van mentetlen változás. Eldobja?')) return;
 
+    /* A „+ Új projekt” azonnal beteszi az újat a listába, hogy látszódjon.
+       Ha a tulajdonos mégis továbblép mentés nélkül, az üres váz ne
+       maradjon ott: a következő mentéssel bekerülne a projektek.json-be
+       is, képek nélküli vázlatként. */
+    elhagyottUjatEldob(p);
+
     aktiv = JSON.parse(JSON.stringify(p));   /* másolaton dolgozunk, hogy a Mégse működjön */
     piszkos = false;
 
@@ -559,6 +571,14 @@
     listaRajzol();
   }
 
+  /* Csak a még soha nem mentett, kép nélkül maradt vázat dobjuk el —
+       a mentett, szándékosan kép nélküli vázlathoz nem nyúlunk. */
+  function elhagyottUjatEldob(kiveve) {
+    if (!aktiv || !aktiv._uj || (kiveve && kiveve.slug === aktiv.slug)) return;
+    var hely = projektek.findIndex(function (p) { return p.slug === aktiv.slug; });
+    if (hely !== -1 && !projektek[hely].kepek.length) projektek.splice(hely, 1);
+  }
+
   ['mCim', 'mKategoria', 'mAllapot', 'mLink', 'mLeiras'].forEach(function (id) {
     document.getElementById(id).addEventListener('input', function () {
       if (!aktiv) return;
@@ -567,6 +587,8 @@
       aktiv.allapot = $('#mAllapot').value;
       aktiv.link = $('#mLink').value.trim() || null;
       aktiv.leiras = $('#mLeiras').value;
+      /* A szerkesztő fejléce a projekt neve — átnevezéskor kövesse. */
+      $('#szerkesztoCim').textContent = aktiv.cim.trim() || 'Projekt';
       piszkos = true;
     });
   });
@@ -599,7 +621,8 @@
       leiras: '',
       kiemelt: null,
       allapot: 'vazlat',     /* amíg nincs kép, ne kerüljön ki a weboldalra */
-      kepek: []
+      kepek: [],
+      _uj: true              /* még soha nem mentett váz — lásd elhagyottUjatEldob */
     };
 
     projektek.push(uj);
@@ -672,10 +695,14 @@
       racs.appendChild(li);
     });
 
-    huzasBekot(racs);
   }
 
-  /* ---------- sorrend húzással ---------- */
+  /* ---------- sorrend húzással ----------
+
+     A kötés EGYSZER fut le, indulásnál. Korábban minden újrarajzoláskor
+     újra bekötöttük ugyanarra a listára — a kezelők halmozódtak, és egy
+     húzás annyiszor mozgatta a képet, ahányszor a lista addig
+     újrarajzolódott. A képsorrend látszólag magától kavarodott össze. */
 
   function huzasBekot(racs) {
     var fogott = null;
@@ -698,7 +725,7 @@
     racs.addEventListener('drop', function (e) {
       e.preventDefault();
       var li = e.target.closest('.kep-elem');
-      if (!li || fogott === null) return;
+      if (!li || fogott === null || !aktiv) return;
       var ide = +li.dataset.hely;
       if (ide === fogott) return;
 
@@ -755,7 +782,11 @@
 
         return new Promise(function (kesz) {
           vaszon.toBlob(function (blob) {
-            kesz(!blob || blob.size >= fajl.size ? fajl : blob);
+            /* Az eredetit csak akkor tartjuk meg, ha az is JPEG és
+               kisebb — a fájl .jpg néven megy fel, tehát PNG-t vagy
+               HEIC-et nem hagyhatunk benne. */
+            var eredetiJo = fajl.type === 'image/jpeg' && blob && blob.size >= fajl.size;
+            kesz(!blob ? fajl : (eredetiJo ? fajl : blob));
           }, 'image/jpeg', MINOSEG);
         });
       })
@@ -791,6 +822,14 @@
 
     Promise.all(fajlok.map(function (f, i) {
       return kicsinyit(f).then(function (kicsi) {
+        /* A kicsinyítés JPEG-et ad vissza. Ha nem sikerült dekódolni —
+           tipikusan iPhone-os HEIC asztali böngészőben —, az EREDETI
+           fájl jön vissza. Azt .jpg néven feltölteni néma hiba: a
+           weboldalon törött kép lenne, a build meg elszállna rajta.
+           Inkább itt mondjuk meg, melyik fájllal van baj. */
+        if (!/^image\/(jpeg|png|webp|gif)$/.test(kicsi.type || '')) {
+          return { rossz: f.name };
+        }
         return b64Blob(kicsi).then(function (b64) {
           return {
             file: pad(sorszam + i) + '.jpg',
@@ -801,11 +840,24 @@
         });
       });
     }))
-      .then(function (kesz) {
+      .then(function (mind) {
+        var rosszak = mind.filter(function (k) { return k.rossz; })
+          .map(function (k) { return k.rossz; });
+        var kesz = mind.filter(function (k) { return !k.rossz; });
+
         kesz.forEach(function (k) { aktiv.kepek.push(k); });
         if (!aktiv.kiemelt && aktiv.kepek.length) aktiv.kiemelt = aktiv.kepek[0].file;
         piszkos = true;
         kepekRajzol();
+
+        if (rosszak.length) {
+          uzen($('#szerkesztoUzenet'),
+            (kesz.length ? kesz.length + ' kép hozzáadva. ' : '') +
+            'Ezt a böngésző nem tudta képként megnyitni: ' + rosszak.join(', ') +
+            '. Ha iPhone-os HEIC felvétel, mentse JPEG-ként, és úgy töltse fel.',
+            kesz.length ? 'info' : 'hiba');
+          return;
+        }
         uzen($('#szerkesztoUzenet'),
           kesz.length + ' kép hozzáadva. A Mentés gombbal kerül fel a weboldalra.', 'ok');
       })
@@ -901,6 +953,7 @@
     lanc
       .then(function () {
         projektek = uj;
+        delete aktiv._uj;    /* innentől mentett projekt */
         aktiv.kepek.forEach(function (k) {
           if (k.ujAdatUrl) URL.revokeObjectURL(k.ujAdatUrl);
           delete k.base64;
@@ -964,6 +1017,7 @@
 
   /* ---------- indulás ---------- */
   (function start() {
+    huzasBekot($('#kepRacs'));
     ghGombKeszit();
 
     /* Ha most jöttünk vissza a GitHubtól, a kulcs ezzel kerül a helyére —
