@@ -88,7 +88,15 @@
   var lokesIdo = 0;
   var utolsoY = window.pageYOffset;
 
+  /* Görgetési irány: 1 = lefelé, -1 = felfelé. A belépő mozdulatoknak
+     kell — egy elem alulról ússzon be, ha lefelé haladunk, és felülről,
+     ha visszafelé. A 2 px-es holtsáv a rugózó (bounce) görgetés és az
+     egérgörgő apró remegése ellen véd. */
+  var irany = 1;
+
   gorgetesre(function (y) {
+    if (y > utolsoY + 2) irany = 1;
+    else if (y < utolsoY - 2) irany = -1;
     lokesEro = Math.max(-60, Math.min(60, lokesEro + (y - utolsoY)));
     lokesIdo = performance.now();
     utolsoY = y;
@@ -233,9 +241,26 @@
   if (lassit || !('IntersectionObserver' in window)) {
     feltarando.forEach(function (el) { el.classList.add('itt'); });
   } else {
+    /* A feltárás iránykövető. Alapesetben a tartalom alulról érkezik —
+       ez lefelé görgetve helyes, mert a szem is arról jön. Az oldal
+       aljáról visszatekerve viszont minden elem a nézőablak TETEJÉN
+       bukkan elő, és ha ilyenkor is alulról úszna be, a mozdulat
+       szembemegy a görgetéssel: az elem lefelé húz, miközben a lap
+       fölfelé. Ezt látta a látogató „nem jó átmenetnek”.
+
+       A `felulrol` osztály tükrözi a mozdulatot: a doboz felülről ereszkedik,
+       a cím szavai fentről fordulnak a sorba, a kártya képe alulról
+       nyílik ki. Az osztály az `itt` ELŐTT kerül fel, hogy a kiinduló
+       állapot már a helyes irányban álljon, amikor az átmenet indul. */
     var figyelo = new IntersectionObserver(function (bejegyzesek) {
       bejegyzesek.forEach(function (b) {
         if (!b.isIntersecting) return;
+        /* Csak az irány dönt, geometria nem. Egy egérgörgő-kattanás
+           100 px körül visz: egy 55 px magas cím ennyi alatt teljesen
+           beér a nézőablakba, tehát mire a figyelő jelez, a teteje már
+           a felső perem ALATT van. Ha ezt is megkövetelnénk, épp a
+           rövid címek maradnának ki — mérve, nyolcból kettő. */
+        if (irany < 0) b.target.classList.add('felulrol');
         b.target.classList.add('itt');
         figyelo.unobserve(b.target);
       });

@@ -448,6 +448,17 @@ p { margin: 0; }
 main { overflow-x: clip; }
 
 .jon { opacity: 0; transform: translateY(18px); }
+
+/* Felfelé görgetve az elem a nézőablak tetején nyílik ki, tehát onnan is
+   ereszkedjen: a mozdulat a görgetéssel tartson, ne szembe. A `felulrol`
+   osztályt a script.js teszi fel, közvetlenül az `itt` előtt.
+
+   Sorrend, nem specificitás dönt: ez a szabály és az alatta álló
+   `.jon.itt` is 0,2,0 — az `itt` később jön, tehát a feltárt elem
+   `transform: none`-ja marad felül. Ugyanezért nem kell `.jon.bal`-t
+   védeni: az oldalirányú belépő is lejjebb áll, és felülírja ezt. */
+.jon.felulrol { transform: translateY(-18px); }
+
 .jon.itt {
   opacity: 1; transform: none;
   transition: opacity .8s cubic-bezier(.2,.75,.3,1), transform .8s cubic-bezier(.2,.75,.3,1);
@@ -467,7 +478,7 @@ main { overflow-x: clip; }
 
 @media (prefers-reduced-motion: reduce) {
   .jon { opacity: 1; transform: none; }
-  .jon.bal, .jon.jobb { transform: none; }
+  .jon.bal, .jon.jobb, .jon.felulrol { transform: none; }
   .kartya .keret img, .gomb, .menu a::after { transition: none; }
 }
 
@@ -912,6 +923,8 @@ main { overflow-x: clip; }
   padding: 0 .06em .14em; margin: 0 -.06em -.14em;
 }
 .szo-b { display: inline-block; transform: translateY(115%); }
+/* visszafelé görgetve fentről fordul a sorba, nem alulról */
+.tordelt.felulrol .szo-b { transform: translateY(-115%); }
 .tordelt.itt .szo-b {
   transform: none;
   transition: transform .9s cubic-bezier(.16, .84, .34, 1);
@@ -1044,6 +1057,19 @@ main { overflow-x: clip; }
               filter .5s ease;
 }
 .kartya.jon .keret img { clip-path: inset(0 0 100% 0); transform: scale(1.12); }
+/* Felfelé görgetve a kép alulról nyílik ki — a takarás onnan fogy el,
+   amerről a kártya a képbe érkezett.
+
+   A `transition: none` nem elhagyható. Az átmenet a base szabályban ül,
+   tehát a feltáratlan képre is érvényes: a `felulrol` felkerülésekor a
+   maszk 1,1 s alatt ÁTKÚSZOTT volna a másik oldalra, és mivel a szkript
+   ugyanabban a képkockában teszi fel az `itt`-et is, az egész csak
+   annyit ért volna, hogy a nyitás a régi irányból indul. Az elemet
+   nézve mérhető volt: a `felulrol` után a számított érték még mindig
+   `inset(0% 0 100%)`. Ugrás kell, nem átmenet — a kiinduló állást
+   senki sem nézi. */
+.kartya.jon:not(.itt) .keret img { transition: none; }
+.kartya.jon.felulrol .keret img { clip-path: inset(100% 0 0 0); }
 .kartya.jon.itt .keret img { clip-path: inset(0 0 0 0); transform: none; }
 .kartya.jon.itt:hover .keret img,
 .kartya.jon.itt:focus-visible .keret img { transform: scale(1.045); }
