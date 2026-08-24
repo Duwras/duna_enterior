@@ -449,15 +449,22 @@ main { overflow-x: clip; }
 
 .jon { opacity: 0; transform: translateY(18px); }
 
-/* Felfelé görgetve az elem a nézőablak tetején nyílik ki, tehát onnan is
-   ereszkedjen: a mozdulat a görgetéssel tartson, ne szembe. A `felulrol`
-   osztályt a script.js teszi fel, közvetlenül az `itt` előtt.
+/* Felfelé görgetve az elem a nézőablak TETEJÉN nyílik ki, tehát onnan is
+   ereszkedjen: a mozdulat a görgetéssel tartson, ne szembe.
 
-   Sorrend, nem specificitás dönt: ez a szabály és az alatta álló
-   `.jon.itt` is 0,2,0 — az `itt` később jön, tehát a feltárt elem
-   `transform: none`-ja marad felül. Ugyanezért nem kell `.jon.bal`-t
-   védeni: az oldalirányú belépő is lejjebb áll, és felülírja ezt. */
-.jon.felulrol { transform: translateY(-18px); }
+   Az irány a gyökéren ül, és a szabály csak a még FELTÁRATLAN elemre néz.
+   Így az irányváltás pillanatában minden váró elem átugrik a jó kiinduló
+   állásba — átmenet nélkül, hiszen azt csak az `itt` kapcsolja be —, és
+   mire feltárul, ez az állás már rég festve van. Ez nem stílus kérdése:
+   a CSS-átmenet a kiinduló értéket az utoljára FELOLDOTT stílusból veszi,
+   tehát az elemre magára írt irányosztály (ha az `itt`-tel egy körben
+   kerül fel) semmit nem ér — a régi irányból indulna a mozdulat.
+
+   A `:not(.bal):not(.jobb)` az oldalirányú belépőket hagyja békén: azok
+   vízszintesen jönnek, nekik a görgetés iránya közömbös. */
+:root[data-irany="fel"] .jon:not(.itt):not(.bal):not(.jobb) {
+  transform: translateY(-18px);
+}
 
 .jon.itt {
   opacity: 1; transform: none;
@@ -476,9 +483,18 @@ main { overflow-x: clip; }
 .jon.kesik-2.itt { transition-delay: .16s; }
 .jon.kesik-3.itt { transition-delay: .24s; }
 
+/* Aki száguld, annak nincs belépő. A mozdulat 0,8–1,1 s, egy elem viszont
+   gyors görgetésnél fél másodperc alatt átszalad a képernyőn: a látogató
+   végig félig felhúzott maszkokat és félig áttetsző dobozokat lát. Az
+   `azonnal`-t a script.js teszi fel, ha a görgetés 35 px/képkocka fölött
+   jár, és két képkocka múlva le is veszi — akkorra a végállapot ki van
+   festve, tehát a levétel nem indít mozdulatot, a lebegtetés pedig
+   visszakapja a saját átmenetét. */
+.azonnal, .azonnal * { transition: none !important; }
+
 @media (prefers-reduced-motion: reduce) {
   .jon { opacity: 1; transform: none; }
-  .jon.bal, .jon.jobb, .jon.felulrol { transform: none; }
+  .jon.bal, .jon.jobb { transform: none; }
   .kartya .keret img, .gomb, .menu a::after { transition: none; }
 }
 
@@ -924,7 +940,7 @@ main { overflow-x: clip; }
 }
 .szo-b { display: inline-block; transform: translateY(115%); }
 /* visszafelé görgetve fentről fordul a sorba, nem alulról */
-.tordelt.felulrol .szo-b { transform: translateY(-115%); }
+:root[data-irany="fel"] .tordelt:not(.itt) .szo-b { transform: translateY(-115%); }
 .tordelt.itt .szo-b {
   transform: none;
   transition: transform .9s cubic-bezier(.16, .84, .34, 1);
@@ -1069,7 +1085,9 @@ main { overflow-x: clip; }
    `inset(0% 0 100%)`. Ugrás kell, nem átmenet — a kiinduló állást
    senki sem nézi. */
 .kartya.jon:not(.itt) .keret img { transition: none; }
-.kartya.jon.felulrol .keret img { clip-path: inset(100% 0 0 0); }
+:root[data-irany="fel"] .kartya.jon:not(.itt) .keret img {
+  clip-path: inset(100% 0 0 0);
+}
 .kartya.jon.itt .keret img { clip-path: inset(0 0 0 0); transform: none; }
 .kartya.jon.itt:hover .keret img,
 .kartya.jon.itt:focus-visible .keret img { transform: scale(1.045); }

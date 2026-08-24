@@ -88,19 +88,44 @@
   var lokesIdo = 0;
   var utolsoY = window.pageYOffset;
 
-  /* Görgetési irány: 1 = lefelé, -1 = felfelé. A belépő mozdulatoknak
-     kell — egy elem alulról ússzon be, ha lefelé haladunk, és felülről,
-     ha visszafelé. A 2 px-es holtsáv a rugózó (bounce) görgetés és az
-     egérgörgő apró remegése ellen véd. */
-  var irany = 1;
+  /* Görgetési irány és sebesség.
+
+     Az irány a GYÖKÉRRE kerül, nem a feltáruló elemre. Ennek oka van, és
+     drágán tanultuk meg: a CSS-átmenet a kiinduló értéket abból a
+     stílusból veszi, amit a böngésző UTOLJÁRA feloldott. Ha az
+     irányosztály és a feltáró osztály ugyanabban a JS-körben kerül fel,
+     köztük nincs stílusfeloldás — a kiinduló állás sosem létezett,
+     tehát az átmenet a RÉGI irányból indul. Az elemre írt osztály
+     pontosan ennyit ért: a mérés szerint a maszk `felulrol` mellett is
+     `inset(0 0 100%) → inset(0)` maradt, vagyis lefelé nyílt.
+
+     A gyökéren ülő attribútum ezt megkerüli: az irány váltásakor MINDEN
+     még feltáratlan elem azonnal a jó kiinduló állásba ugrik (átmenet
+     nélkül, hiszen az csak az `itt`-tel jár), és mire bármelyik feltárul,
+     ez az állás már rég festve van. Elemenkénti osztály így nem is kell:
+     feltárás után a végállapot iránytól független.
+
+     A 2 px-es holtsáv a rugózó görgetés és az egérgörgő remegése ellen
+     véd. A sebesség (px/képkocka) a feltárásnak kell: aki száguld, annak
+     nem belépőt kell mutatni, hanem kész tartalmat. */
+  var irany = 0;
+  var sebesseg = 0;
 
   gorgetesre(function (y) {
-    if (y > utolsoY + 2) irany = 1;
-    else if (y < utolsoY - 2) irany = -1;
-    lokesEro = Math.max(-60, Math.min(60, lokesEro + (y - utolsoY)));
+    var d = y - utolsoY;
+    sebesseg = Math.abs(d);
+    if (d > 2 && irany !== 1) { irany = 1; doc.setAttribute('data-irany', 'le'); }
+    else if (d < -2 && irany !== -1) { irany = -1; doc.setAttribute('data-irany', 'fel'); }
+    lokesEro = Math.max(-60, Math.min(60, lokesEro + d));
     lokesIdo = performance.now();
     utolsoY = y;
   });
+
+  /* A sebesség csak akkor él, ha épp most görgettünk: görgetés-esemény
+     hiányában nem érkezik nulla, magától kell elhalnia. */
+  function gorgetesSebesseg() {
+    return (performance.now() - lokesIdo) > 50 ? 0 : sebesseg;
+  }
 
   function lendulet() {
     var kepkockak = (performance.now() - lokesIdo) / 16.667;
@@ -241,30 +266,46 @@
   if (lassit || !('IntersectionObserver' in window)) {
     feltarando.forEach(function (el) { el.classList.add('itt'); });
   } else {
-    /* A feltárás iránykövető. Alapesetben a tartalom alulról érkezik —
-       ez lefelé görgetve helyes, mert a szem is arról jön. Az oldal
-       aljáról visszatekerve viszont minden elem a nézőablak TETEJÉN
-       bukkan elő, és ha ilyenkor is alulról úszna be, a mozdulat
-       szembemegy a görgetéssel: az elem lefelé húz, miközben a lap
-       fölfelé. Ezt látta a látogató „nem jó átmenetnek”.
+    /* A feltárás iránya a gyökéren ül (lásd fent), itt már csak azt
+       kell eldönteni, hogy egyáltalán mutassunk-e belépőt.
 
-       A `felulrol` osztály tükrözi a mozdulatot: a doboz felülről ereszkedik,
-       a cím szavai fentről fordulnak a sorba, a kártya képe alulról
-       nyílik ki. Az osztály az `itt` ELŐTT kerül fel, hogy a kiinduló
-       állapot már a helyes irányban álljon, amikor az átmenet indul. */
+       Aki gyorsan görget, azt kiszolgálni nem lehet: a belépő 0,8–1,1 s,
+       egy elem viszont fél másodperc alatt átszalad a képernyőn. Ilyenkor
+       a látogató végig FÉLKÉSZ dolgokat lát — félig felhúzott maszkokat,
+       félig áttetsző dobozokat —, és ez nem elegáns, hanem akadozó. Ezért
+       35 px/képkocka (kb. 2100 px/s) fölött nincs mozdulat: a tartalom
+       egyszerűen ott van.
+
+       Az `azonnal` osztály némítja az átmenetet. Ez az EGYETLEN dolog,
+       ami ugyanabban a képkockában is hat: az átmenet hosszát a böngésző
+       a módosítás UTÁNI stílusból olvassa ki. Két képkocka múlva levesszük,
+       hogy a lebegtetés visszakapja a saját átmenetét — addigra a
+       végállapot ki van festve, tehát a levétel nem indít mozdulatot.
+
+       A felső -10 %: a mozdulat ne a ragadós fejléc alatt induljon.
+       Felfelé görgetve az elem a felső peremen bukkan elő, és ha ott
+       azonnal indul a maszk, a sor félig a fejléc mögött animál —
+       félkész csíkokat mutat. A 10 % annyi levegő, hogy előbb kiérjen
+       a fejléc alól. Az alsó -12 % a régi, lefelé mért érték.
+
+       Feljebb nem vihető: a fejléc 69 px magas és folyamban ül, tehát
+       nulla görgetésnél nincs tartalom a felső 69 px-ben — a -10 % egy
+       800 px-es ablakon 80 px, épp a fejléc mögé esik. Nagyobb érték
+       mellett egy rövid, lap tetején álló cím sosem tárulna fel. */
     var figyelo = new IntersectionObserver(function (bejegyzesek) {
       bejegyzesek.forEach(function (b) {
         if (!b.isIntersecting) return;
-        /* Csak az irány dönt, geometria nem. Egy egérgörgő-kattanás
-           100 px körül visz: egy 55 px magas cím ennyi alatt teljesen
-           beér a nézőablakba, tehát mire a figyelő jelez, a teteje már
-           a felső perem ALATT van. Ha ezt is megkövetelnénk, épp a
-           rövid címek maradnának ki — mérve, nyolcból kettő. */
-        if (irany < 0) b.target.classList.add('felulrol');
-        b.target.classList.add('itt');
-        figyelo.unobserve(b.target);
+        var el = b.target;
+        if (gorgetesSebesseg() > 35) {
+          el.classList.add('azonnal');
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { el.classList.remove('azonnal'); });
+          });
+        }
+        el.classList.add('itt');
+        figyelo.unobserve(el);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    }, { rootMargin: '-10% 0px -12% 0px', threshold: 0.08 });
 
     feltarando.forEach(function (el) { figyelo.observe(el); });
   }
