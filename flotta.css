@@ -242,7 +242,8 @@
   width: 11px; height: 11px; flex: none;
   border: 1px solid var(--line); background: var(--paper);
   transition: background-color var(--motion-gyors) linear,
-              border-color var(--motion-gyors) linear;
+              border-color var(--motion-gyors) linear,
+              opacity var(--motion-gyors) linear;
 }
 /* A rang SZÍNT kap, nem csak feliratot.
    Három rang, három érték — és ugyanaz a szín viszi a koordinátát, a
@@ -258,6 +259,16 @@
   border-color: var(--rang-szin, var(--brass));
   background: var(--rang-szin, var(--brass));
 }
+
+/* Kiemelés: amíg egy állomásra szűrünk (vagy a gombja fölött áll az
+   egér), MINDEN sorban az az egy hely marad hangsúlyos. Ez köti össze
+   a gomb feliratát az oszlop helyével — a szűrő maga a jelmagyarázat. */
+.hajok[data-kiemelt] .allomas-jel { opacity: .22; }
+.hajok[data-kiemelt="vaz"]     .allomas-jel[data-allomas="vaz"],
+.hajok[data-kiemelt="felulet"] .allomas-jel[data-allomas="felulet"],
+.hajok[data-kiemelt="belso"]   .allomas-jel[data-allomas="belso"],
+.hajok[data-kiemelt="vizen"]   .allomas-jel[data-allomas="vizen"],
+.hajok[data-kiemelt="studio"]  .allomas-jel[data-allomas="studio"] { opacity: 1; }
 
 .hajo-rang {
   display: flex; align-items: center; justify-content: flex-end; gap: 8px;
@@ -283,6 +294,13 @@
 .jelcsoport p { align-items: baseline; }
 .jelcsoport .allomas-jel,
 .jelcsoport .rang-jel { position: relative; top: 1px; }
+
+/* A jelmagyarázat nem EGY jelet mutat, hanem az ÖT HELYET —
+   mindegyik sorban ugyanaz az öt négyzet áll, és csak az van
+   kitöltve, amelyikről a mondat szól. Így a HELY tanítja meg a
+   jelentést: az első négyzet a váz, az utolsó a stúdió. Egyetlen
+   kitöltött jel ezt nem tudta elmondani. */
+.jelsor { display: inline-flex; align-items: center; gap: 6px; flex: none; }
 .jelcsoport-cim { color: var(--smoke); letter-spacing: .1em; text-transform: uppercase; }
 /* A jelmagyarázat állomásjelei semlegesek: ott a KITÖLTÉS a mondanivaló,
    nem a szín — a szín a soron a rangot viszi. */

@@ -80,6 +80,7 @@
 
   var gombok = [].slice.call(lap.querySelectorAll('.flotta-gomb'));
   var sorok  = [].slice.call(lap.querySelectorAll('.hajo'));
+  var lista  = lap.querySelector('.hajok');
   var allas  = lap.querySelector('.flotta-allas');
   var mind   = lap.querySelector('.flotta-gomb[data-flotta-allomas="mind"]');
   if (!gombok.length || !mind) return;
@@ -90,6 +91,23 @@
         return g.dataset.flottaAllomas !== 'mind' && g.getAttribute('aria-pressed') === 'true';
       })
       .map(function (g) { return g.dataset.flottaAllomas; });
+  }
+
+  /* ---------- melyik négyzet melyik ----------
+
+     Az öt jel HELYE hordozza a jelentést, és a hely önmagában néma.
+     A jelmagyarázat megtanítja (ott mind az öt hely látszik), ez a
+     kiemelés pedig visszakeresi: amíg a „Váz” gomb fölött áll az
+     egér — vagy amíg arra szűrünk —, minden sorban az első négyzet
+     marad hangsúlyos, a többi elhalkul. Így a gomb felirata és az
+     oszlop helye egyszer és jól összeér. */
+
+  var rogzitett = '';
+
+  function kiemel(kulcs) {
+    if (!lista) return;
+    if (kulcs) lista.setAttribute('data-kiemelt', kulcs);
+    else lista.removeAttribute('data-kiemelt');
   }
 
   function frissit() {
@@ -108,6 +126,11 @@
       if (mutat) latszik++;
     });
 
+    /* Egy állomás: kiemelhető. Kettő vagy több: nincs egyetlen hely,
+       amit ki lehetne emelni — akkor a jelsor marad, ahogy van. */
+    rogzitett = kivalasztva.length === 1 ? kivalasztva[0] : '';
+    kiemel(rogzitett);
+
     if (allas) {
       allas.textContent = szures
         ? latszik + ' hajó · ' + kivalasztva.length + ' állomás együtt'
@@ -116,6 +139,17 @@
   }
 
   gombok.forEach(function (g) {
+    var kulcs = g.dataset.flottaAllomas;
+
+    if (kulcs !== 'mind') {
+      var ra   = function () { kiemel(kulcs); };
+      var role = function () { kiemel(rogzitett); };
+      g.addEventListener('mouseenter', ra);
+      g.addEventListener('mouseleave', role);
+      g.addEventListener('focus', ra);
+      g.addEventListener('blur', role);
+    }
+
     g.addEventListener('click', function () {
       if (g.dataset.flottaAllomas === 'mind') {
         gombok.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
@@ -124,6 +158,13 @@
       }
       frissit();
     });
+  });
+
+  /* A jelmagyarázat sorai ugyanezt teszik: rájuk mutatva a vízvonalon
+     is az a hely gyullad ki, amiről a mondat szól. */
+  [].slice.call(lap.querySelectorAll('.jelcsoport p[data-allomas]')).forEach(function (p) {
+    p.addEventListener('mouseenter', function () { kiemel(p.dataset.allomas); });
+    p.addEventListener('mouseleave', function () { kiemel(rogzitett); });
   });
 
   frissit();
