@@ -1691,7 +1691,7 @@ const flottaSorok = FLOTTA_HAJOK.map((h, i) => {
               ${jelek}
               <span class="rejtett">${esc(olvasva)}</span>
             </span>
-            <span class="hajo-rang tipo-adat">${esc(RANG_NEV[h.rang])}</span>
+            <span class="hajo-rang tipo-adat"><i class="rang-jel" aria-hidden="true"></i>${esc(RANG_NEV[h.rang])}</span>
           </a>
         </li>`;
 }).join('\n        ');

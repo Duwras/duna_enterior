@@ -209,7 +209,7 @@
 .hajo > a:hover .hajo-kep img,
 .hajo > a:focus-visible .hajo-kep img { transform: scale(1.04); }
 
-.hajo-jel { color: var(--brass); }
+.hajo-jel { color: var(--rang-szin, var(--brass)); }
 
 .hajo-nev {
   font-family: var(--display); font-weight: 400;
@@ -244,19 +244,50 @@
   transition: background-color var(--motion-gyors) linear,
               border-color var(--motion-gyors) linear;
 }
-.allomas-jel[data-van] { border-color: var(--brass); background: var(--brass); }
-.hajo[data-rang="zaszlohajo"] .allomas-jel[data-van] { border-color: var(--ink); background: var(--ink); }
+/* A rang SZÍNT kap, nem csak feliratot.
+   Három rang, három érték — és ugyanaz a szín viszi a koordinátát, a
+   kitöltött állomásjeleket és a rang feliratát, tehát egy sor egyetlen
+   pillantásra besorolható. A három szín világosságban is elválik
+   (tinta → sárgaréz → füst), így színtévesztéssel és szürkében is
+   olvasható; a jelmagyarázat pedig kimondja, melyik mit jelent. */
+[data-rang="zaszlohajo"] { --rang-szin: var(--ink); }
+[data-rang="sorozat"]    { --rang-szin: var(--brass); }
+[data-rang="archivum"]   { --rang-szin: var(--smoke); }
 
-.hajo-rang { text-align: right; color: var(--smoke); }
-.hajo[data-rang="zaszlohajo"] .hajo-rang,
-.hajo[data-rang="zaszlohajo"] .hajo-jel { color: var(--ink); }
+.allomas-jel[data-van] {
+  border-color: var(--rang-szin, var(--brass));
+  background: var(--rang-szin, var(--brass));
+}
+
+.hajo-rang {
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  text-align: right; color: var(--rang-szin, var(--smoke));
+}
+
+/* A rang jele: ugyanaz a 11 px-es négyzet, mint a vízvonalon — ez köti
+   össze a sort a jelmagyarázattal. */
+.rang-jel {
+  width: 11px; height: 11px; flex: none;
+  border: 1px solid var(--rang-szin, var(--line));
+  background: var(--rang-szin, var(--paper));
+}
 
 /* ---------- jelmagyarázat ---------- */
 
 .vizvonal-jelmagyarazat {
-  display: grid; gap: var(--space-2);
+  display: grid; gap: var(--space-5) var(--koz);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   padding-top: var(--space-6);
 }
+.jelcsoport { display: grid; gap: var(--space-2); align-content: start; }
+.jelcsoport p { align-items: baseline; }
+.jelcsoport .allomas-jel,
+.jelcsoport .rang-jel { position: relative; top: 1px; }
+.jelcsoport-cim { color: var(--smoke); letter-spacing: .1em; text-transform: uppercase; }
+/* A jelmagyarázat állomásjelei semlegesek: ott a KITÖLTÉS a mondanivaló,
+   nem a szín — a szín a soron a rangot viszi. */
+.jelcsoport .allomas-jel[data-van] { --rang-szin: var(--ink-2); }
+.vizvonal-jelmagyarazat > .halk { grid-column: 1 / -1; }
 .vizvonal-jelmagyarazat p { display: flex; align-items: center; gap: var(--space-3); margin: 0; }
 .vizvonal-jelmagyarazat b { color: var(--ink); font-weight: 500; }
 .vizvonal-jelmagyarazat .halk { color: var(--smoke); padding-top: var(--space-3); }
@@ -306,14 +337,16 @@
   .vizvonal-fej { grid-template-columns: 1fr; align-items: start; gap: var(--space-4); }
 
   /* A sor telefonon két hasáb: kép balra, minden más jobbra, egymás
-     alatt. A rang kimarad — a jelsor amúgy is elmondja. */
+     alatt. A rang IS ott van — a színes jel önmagában nem mondja el,
+     mit jelent, a felirat viszont igen. */
   .hajo > a {
     grid-template-columns: 34vw minmax(0, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "kep jel"
       "kep nev"
       "kep tipus"
+      "kep rang"
       "kep allomas";
     gap: var(--space-2) var(--space-4);
     align-items: start;
@@ -322,7 +355,9 @@
   .hajo-tipus { align-self: start; }
   .hajo-allomasok { padding: 10px 0 0; }
   .hajo-allomasok::before { top: calc(50% + 5px); }
-  .hajo-rang { display: none; }
+  .hajo-rang { justify-content: flex-start; text-align: left; padding-top: 4px; }
+
+  .vizvonal-jelmagyarazat { grid-template-columns: 1fr; }
 
   .flotta-kijaratok { grid-template-columns: 1fr; gap: var(--space-6); }
 }
