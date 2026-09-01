@@ -1867,7 +1867,7 @@ const jelenetKeretek = !FOOLDAL ? '' : (FOOLDAL.keretek || []).map((k, i) => {
 }).join('\n\n      ');
 
 const jelenetNojs = !FOOLDAL ? '' : nojsKeretek(FOOLDAL.keretek || [], {
-  cimke: 'A tizenhárom képkocka',
+  cimke: 'A tizenkét képkocka',
   bevezeto: 'Szkript nélkül a színpad nem tud továbblépni. Az enfilád ' +
     'képkockái itt egymás után állnak, a saját helyükkel és projektjükkel.'
 });

@@ -27,90 +27,81 @@
   },
 
   "$fooldal": {
-    "mire": "A FŐOLDAL hét jelenete — csak a képek és a geometria. A szöveg az index.html-ben él, mert az tartalom; ez itt térbeli adat.",
-    "hogyan": "A keretek egyetlen folyamatos enfiládot alkotnak: minden váltás küszöb. A jelenet mező csak azt mondja meg, melyik jelenethez tartozik a keret — a görgetés nem szakaszokra, hanem terekre bomlik.",
+    "mire": "A FŐOLDAL tizenkét jelenete — csak a képek és a geometria. A szöveg az index.html-ben él, mert az tartalom; ez itt térbeli adat.",
+    "hogyan": "A keretek egyetlen folyamatos enfiládot alkotnak: minden váltás küszöb. Egy keret egy jelenet: minden képkockához pontosan egy szövegblokk tartozik az index.html-ben, ezért a görgetés nem szakaszokra, hanem terekre bomlik.",
 
     "keretek": [
       {
-        "jelenet": "01", "slug": "hotel-domus-collis", "kep": "04.jpg",
-        "nev": "Nyitott ajtó a nappali felé", "hol": "Hotel Domus Collis · apartman",
-        "hangulat": "nappal", "nyilas": [0.66, 0.46, 0.20, 0.32],
-        "kuszob": { "fajta": "ajto", "el": "ajtószárny" }
+        "jelenet": "01", "slug": "garzon-plaza-hotel", "kep": "21.jpg",
+        "nev": "Recepció, a folyosó felé", "hol": "Garzon Pláza Hotel · előtér",
+        "hangulat": "nappal", "nyilas": [0.80, 0.42, 0.10, 0.20],
+        "kuszob": { "fajta": "kapu", "el": "recepciópult" }
       },
       {
-        "jelenet": "02", "slug": "hotel-domus-collis", "kep": "07.jpg",
-        "nev": "A nappali, az étkező felé", "hol": "Hotel Domus Collis · apartman",
-        "hangulat": "nappal", "nyilas": [0.62, 0.44, 0.15, 0.20],
-        "kuszob": { "fajta": "kapu", "el": "ívlámpa és kanapé" }
+        "jelenet": "02", "slug": "ottevenyi-kastely", "kep": "09.jpg",
+        "nev": "A pincebár, a pult mögött", "hol": "Öttevényi kastély · pincebár",
+        "hangulat": "ejjel", "nyilas": [0.44, 0.34, 0.09, 0.17],
+        "kuszob": { "fajta": "kapu", "el": "mahagóni pult" }
       },
       {
-        "jelenet": "03", "slug": "fafaragasok", "kep": "10.jpg",
-        "nev": "Faragott ágyvég a győri üzemben", "hol": "Egyedi bútor · műhely",
-        "szak": "Bútor",
-        "hangulat": "nappal", "nyilas": [0.88, 0.24, 0.09, 0.15],
-        "kuszob": { "fajta": "ajto", "el": "faragott ágyvég" }
+        "jelenet": "03", "slug": "ottevenyi-kastely", "kep": "10.jpg",
+        "nev": "Díszterem, esküvőre terítve", "hol": "Öttevényi kastély · díszterem",
+        "hangulat": "nappal", "nyilas": [0.45, 0.45, 0.06, 0.14],
+        "kuszob": { "fajta": "ajto", "el": "szárnyas ajtó" }
       },
       {
-        "jelenet": "03", "slug": "bodajki-vadaszkastely", "kep": "02.jpg",
-        "nev": "Trófeaterem, tárlókkal", "hol": "Bodajki Vadászkastély",
-        "szak": "Belsőépítészet",
-        "hangulat": "nappal", "nyilas": [0.41, 0.55, 0.11, 0.12],
-        "kuszob": { "fajta": "ajto", "el": "sötét faoszlop" }
-      },
-      {
-        "jelenet": "03", "slug": "duna-hajok-6-1-cabin", "kep": "02.jpg",
-        "nev": "A 6.1 Cabin kormányállása", "hol": "Duna Hajók · 6.1 Cabin",
-        "szak": "Hajó",
-        "hangulat": "nappal", "nyilas": [0.74, 0.24, 0.18, 0.18],
-        "kuszob": { "fajta": "kapu", "el": "kormánykerék" }
-      },
-      {
-        "jelenet": "04", "slug": "hotel-domus-collis", "kep": "14.jpg",
-        "nev": "Konyha, átjáróval a zöld szoba felé", "hol": "Hotel Domus Collis · apartman",
-        "hangulat": "nappal", "nyilas": [0.86, 0.50, 0.14, 0.32],
-        "kuszob": { "fajta": "ajto", "el": "konyhapult" }
-      },
-      {
-        "jelenet": "04", "slug": "hotel-domus-collis", "kep": "20.jpg",
-        "nev": "Reggeliző, lécvázas térelválasztókkal", "hol": "Hotel Domus Collis · földszint",
-        "hangulat": "nappal", "nyilas": [0.39, 0.51, 0.08, 0.24],
-        "kuszob": { "fajta": "ajto", "el": "lécvázas térelválasztó" }
-      },
-      {
-        "jelenet": "04", "slug": "hotel-domus-collis", "kep": "02.jpg",
-        "nev": "Emeleti folyosó", "hol": "Hotel Domus Collis · emelet",
-        "hangulat": "nappal", "nyilas": [0.17, 0.50, 0.10, 0.26],
-        "kuszob": { "fajta": "kapu", "el": "tükrös fal" }
-      },
-      {
-        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "05.jpg",
-        "nev": "Fedélzeti szalon, orr felől", "hol": "Duna Cruises HABLEÁNY",
-        "hangulat": "nappal", "nyilas": [0.78, 0.36, 0.07, 0.08],
-        "kuszob": { "fajta": "ajto", "el": "mahagóni oszlop" }
-      },
-      {
-        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "03.jpg",
-        "nev": "Zárt szalon, tat felé", "hol": "Duna Cruises HABLEÁNY",
-        "hangulat": "nappal", "nyilas": [0.47, 0.52, 0.18, 0.22],
-        "kuszob": { "fajta": "kapu", "el": "oszlop és mennyezetív" }
-      },
-      {
-        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "20.jpg",
-        "nev": "Zárt szalon, éjjel", "hol": "Duna Cruises HABLEÁNY",
-        "hangulat": "ejjel", "nyilas": [0.50, 0.50, 0.19, 0.20],
-        "kuszob": { "fajta": "ablak", "el": "ablakkeret" }
-      },
-      {
-        "jelenet": "06", "slug": "duna-cruises-hableany", "kep": "17.jpg",
-        "nev": "A HABLEÁNY éjjel, a rakparton", "hol": "Duna Cruises HABLEÁNY · a folyón",
-        "hangulat": "ejjel", "lapos": true, "nyilas": [0.47, 0.57, 0.09, 0.05],
+        "jelenet": "04", "slug": "duna-cruises-hableany", "kep": "24.jpg",
+        "nev": "A HABLEÁNY a Dunán", "hol": "Duna Cruises HABLEÁNY · a folyón", "szak": "Hajó",
+        "hangulat": "nappal", "lapos": true, "nyilas": [0.62, 0.48, 0.15, 0.16],
         "kuszob": { "fajta": "kapu", "el": null }
       },
       {
-        "jelenet": "06", "slug": "duna-hajok-6-1-cabin", "kep": "23.jpg",
-        "nev": "A 6.1 Cabin, tárgyként", "hol": "Duna Hajók · stúdió",
-        "hangulat": "nappal", "lapos": true, "nyilas": [0.50, 0.50, 0.16, 0.18],
+        "jelenet": "05", "slug": "duna-cruises-hableany", "kep": "25.jpg",
+        "nev": "A nyitott fedélzet", "hol": "Duna Cruises HABLEÁNY · fedélzet",
+        "hangulat": "nappal", "nyilas": [0.48, 0.32, 0.12, 0.16],
+        "kuszob": { "fajta": "kapu", "el": "fedélzeti oszlop" }
+      },
+      {
+        "jelenet": "06", "slug": "hotel-domus-collis", "kep": "21.jpg",
+        "nev": "Apartman, az ablak felé", "hol": "Hotel Domus Collis · apartman",
+        "hangulat": "nappal", "nyilas": [0.56, 0.25, 0.13, 0.20],
+        "kuszob": { "fajta": "ablak", "el": "függöny" }
+      },
+      {
+        "jelenet": "07", "slug": "duna-hajok-6-1-cabin", "kep": "27.jpg",
+        "nev": "A 6.1 Cabin a stégnél", "hol": "Duna Hajók · 6.1 Cabin", "szak": "Hajó",
+        "hangulat": "nappal", "lapos": true, "nyilas": [0.40, 0.50, 0.20, 0.12],
         "kuszob": { "fajta": "kapu", "el": null }
+      },
+      {
+        "jelenet": "08", "slug": "duna-hajok-6-1-cabin", "kep": "13.jpg",
+        "nev": "A 6.1 Cabin kabinja", "hol": "Duna Hajók · 6.1 Cabin",
+        "hangulat": "nappal", "nyilas": [0.44, 0.52, 0.09, 0.12],
+        "kuszob": { "fajta": "kapu", "el": "kormányállás" }
+      },
+      {
+        "jelenet": "09", "slug": "kristaly-etterem", "kep": "01.jpg",
+        "nev": "A Kristály Étterem bejárata", "hol": "Kristály Étterem · előtér",
+        "hangulat": "nappal", "nyilas": [0.66, 0.44, 0.07, 0.14],
+        "kuszob": { "fajta": "kapu", "el": "korlát" }
+      },
+      {
+        "jelenet": "10", "slug": "kristaly-etterem", "kep": "07.jpg",
+        "nev": "Az étterem, a bár felé", "hol": "Kristály Étterem · étterem",
+        "hangulat": "nappal", "nyilas": [0.36, 0.38, 0.09, 0.11],
+        "kuszob": { "fajta": "kapu", "el": "körlámpa" }
+      },
+      {
+        "jelenet": "11", "slug": "mercedes-plato", "kep": "07.jpg",
+        "nev": "A Mercedes plató", "hol": "Duna Design Manufaktúra · Mercedes plató", "szak": "Egyedi",
+        "hangulat": "nappal", "lapos": true, "nyilas": [0.42, 0.45, 0.20, 0.20],
+        "kuszob": { "fajta": "kapu", "el": null }
+      },
+      {
+        "jelenet": "12", "slug": "fuzio-a-tajjal", "kep": "21.jpg",
+        "nev": "Konyha és étkező, a medence felé", "hol": "Fúzió a tájjal · nappali",
+        "hangulat": "nappal", "nyilas": [0.78, 0.48, 0.11, 0.20],
+        "kuszob": { "fajta": "ajto", "el": "üvegfal" }
       }
     ],
 
