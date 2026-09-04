@@ -186,6 +186,40 @@ p { margin: 0; }
 }
 .logo .feher img { opacity: 0; }
 
+/* ---------- EU-infoblokk a nyitóképen ----------
+
+   KTK 2020 útmutató, 3.2.3. pont (14. o.): „Az ún. infoblokknak mindig
+   kiemelt helyen kell szerepelnie a honlapon, azaz a láthatósági
+   területen kell lennie, megnyitáskor, görgetést nem igénylő
+   pozícióban.” A láblécbeli példány ezt nem teljesíti — oda görgetni
+   kell —, ezért van ez itt is. A kettő nem duplikátum: a fenti a
+   kötelező elhelyezés, a lenti a lábléc tájékoztató sávja.
+
+   `absolute`, nem `fixed`: a szabály a MEGNYITÁSKOR látható területre
+   szól, nem arra, hogy a blokk végigkísérje a görgetést. Megnyitáskor
+   ott van, utána kigördül, és nem takar semmit.
+
+   Nincs pozicionált őse (a body statikus), tehát a kezdeti tartalmazó
+   blokkhoz igazodik: a dokumentum tetejéhez, a fejléc alá.
+
+   Méret: az arculati kézikönyv 8.5 (WEB) fejezete színes változatot és
+   legalább 150 px szélességet ír elő — itt 164, kis kijelzőn 150. */
+.eu-jelzo {
+  position: absolute; z-index: 40;
+  top: calc(var(--fejlec-h) + 14px);
+  right: clamp(12px, 2.2vw, 30px);
+  display: block; line-height: 0;
+  background: #fff; padding: 8px;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 10px rgba(26, 21, 15, .10);
+}
+.eu-jelzo img { width: 164px; height: auto; }
+
+@media (max-width: 640px) {
+  .eu-jelzo { padding: 6px; right: 12px; }
+  .eu-jelzo img { width: 150px; }
+}
+
 .menu { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }
 .menu a {
   font-size: .76rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase;

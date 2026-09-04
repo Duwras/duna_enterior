@@ -31,3 +31,26 @@
     </nav>
   </div>
 </header>
+
+<!-- KTK 2020 útmutató, 3.2.3. pont (14. o.): „Az ún. infoblokknak
+     mindig kiemelt helyen kell szerepelnie a honlapon, azaz a
+     láthatósági területen kell lennie, megnyitáskor, görgetést nem
+     igénylő pozícióban.” A lábléc önmagában tehát NEM elég — ez a
+     példány a lap tetején, a fejléc alatt ül, minden lapon.
+
+     A kép ugyanaz a forrás, mint a láblécben; a srcset gyökérből
+     indul, mert a build mélységjavítója csak a src-t és a href-et
+     írja át. Az arculati kézikönyv 8.5 (WEB) fejezete színes
+     változatot és legalább 150 px szélességet ír elő. -->
+<a class="eu-jelzo" href="palyazatok.html"
+   aria-label="Széchenyi 2020 — nyertes pályázataink">
+  <picture>
+    <source type="image/avif" sizes="164px"
+            srcset="/img/brand/eu-infoblokk-erfa-232.avif 232w, /img/brand/eu-infoblokk-erfa-464.avif 464w">
+    <source type="image/webp" sizes="164px"
+            srcset="/img/brand/eu-infoblokk-erfa-232.webp 232w, /img/brand/eu-infoblokk-erfa-464.webp 464w">
+    <img src="img/brand/eu-infoblokk-erfa.png"
+         alt="Széchenyi 2020 — Európai Regionális Fejlesztési Alap infoblokk"
+         width="164" height="113" decoding="async">
+  </picture>
+</a>
