@@ -198,7 +198,7 @@
    elemek ilyenkor kilógnának, és a téren egy vízszintes görgetősáv
    különösen hazug volna. A clip — a hiddennel ellentétben — nem
    csinál görgetődobozt, tehát a ragadós színpad marad ragadós. */
-.ter-oldal, .fooldal { --fejlec-h: 69px; overflow-x: clip; }
+.ter-oldal, .fooldal { overflow-x: clip; }
 
 /* Amíg a színpad tölti ki a képmezőt, a fejléc a sötét regiszterben
    van. Nem „sötét mód”: ugyanaz a menü, csak azon a felületen, ami
@@ -212,7 +212,10 @@ body[data-terben] .fejlec .menu a,
 body[data-terben] .fejlec .menu-gomb { color: var(--ejjel-szov); }
 body[data-terben] .fejlec .menu a[aria-current="page"] { color: var(--oak); }
 body[data-terben] .fejlec .menu-gomb { border-color: rgba(232, 223, 209, .3); }
-body[data-terben] .fejlec .logo img { filter: invert(1) brightness(1.7); }
+/* A hivatalos logó fehér VÁLTOZATA jön elő — a sötétet megfordítani
+   a barna csíkot kékre fordítaná. */
+body[data-terben] .fejlec .logo .sotet img { opacity: 0; }
+body[data-terben] .fejlec .logo .feher img { opacity: 1; }
 body[data-terben] .fejlec .halado { opacity: .5; }
 
 @media (max-width: 900px) {

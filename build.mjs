@@ -35,15 +35,38 @@ const TEREK = existsSync('data/terek.json')
   ? JSON.parse(readFileSync('data/terek.json', 'utf8'))
   : {};
 
-/* A FLOTTA ugyanezen az elven él külön fájlban. Ha nincs meg, a
-   /flotta.html egyszerűen nem épül meg, és minden más változatlan. */
-const FLOTTA = existsSync('data/flotta.json')
+/* ---------- MELYIK FEJEZET PUBLIKUS ----------
+
+   A tulajdonos menürendezése (2026. szeptember): az ALAPRAJZ és a
+   FLOTTA lekerül a lapról — a hajók a saját oldalukon élnek, oda a
+   menü kivezet —, a KÉSZÜLÉS pedig addig vár, amíg az építések
+   rendesen le vannak dokumentálva. A TÉRBEJÁRÁS a szint-1 projektek
+   teli képes bejárása; helyette mindenhol a Garzon-féle elrendezés
+   áll, ahogy kérte.
+
+   Az ADAT mind megmarad — data/flotta.json, data/keszules.json,
+   data/terek.json —, csak nem épül belőle lap, és semmi nem mutat rá.
+   Egy-egy `true` visszakapcsolja. Az egyetlen hely, ami nem innen
+   dől el, az index.html: az Alaprajz gombja és fedőrétege onnan
+   ténylegesen ki van szedve (git-ből visszahozható). */
+const FEJEZETEK = {
+  alaprajz:   false,
+  flotta:     false,
+  keszules:   false,
+  terbejaras: false
+};
+
+/* A FLOTTA ugyanezen az elven él külön fájlban. Ha nincs meg — vagy a
+   fejezet nem publikus —, a /flotta.html egyszerűen nem épül meg, és
+   minden más változatlan: a rá mutató hivatkozások mind ezen a
+   konstanson állnak. */
+const FLOTTA = FEJEZETEK.flotta && existsSync('data/flotta.json')
   ? JSON.parse(readFileSync('data/flotta.json', 'utf8'))
   : null;
 
 /* A KÉSZÜLÉS szintén. Ha nincs meg, a /keszules.html nem épül meg, és
    minden más — a főoldal metszete is — pontosan úgy marad. */
-const KESZULES = existsSync('data/keszules.json')
+const KESZULES = FEJEZETEK.keszules && existsSync('data/keszules.json')
   ? JSON.parse(readFileSync('data/keszules.json', 'utf8'))
   : null;
 
@@ -56,7 +79,7 @@ const KATEGORIAK = {
   lakoingatlan: 'Lakóingatlan',
   kastely: 'Kastély',
   szakralis: 'Szakrális',
-  egyedi: 'Egyedi',
+  egyedi: 'Manufaktúra',
   hajo: 'Hajó'
 };
 
@@ -68,14 +91,19 @@ const ASSETS = [
   'index.html', 'rolunk.html', 'referenciak.html', 'design-manufaktura.html',
   'kapcsolat.html', 'palyazatok.html', 'admin.html', '404.html',
   'impresszum.html', 'adatkezelesi-tajekoztato.html', 'sutik.html',
-  'alaprajz.html', 'flotta.html', 'keszules.html',
   'style.css', 'admin.css', 'fonts.css', 'rendszer.css', 'ter.css',
-  'terv.css', 'fooldal.css', 'flotta.css', 'keszules.css',
+  'fooldal.css',
   'script.js', 'admin.js', 'consent.js', 'szuro.js', 'galeria.js', 'urlap.js',
-  'kuszob.js', 'ter.js', 'terv.js', 'fooldal.js', 'flotta.js', 'keszules.js',
+  'kuszob.js', 'ter.js', 'fooldal.js',
   'fonts', 'img', 'data',
   'robots.txt', 'sitemap.xml'
-].filter(existsSync);
+]
+  /* A nem publikus fejezetek lapja és saját erőforrásai ki sem
+     másolódnak. A forrásfájlok a repóban maradnak. */
+  .concat(FEJEZETEK.alaprajz ? ['alaprajz.html', 'terv.css', 'terv.js'] : [])
+  .concat(FEJEZETEK.flotta ? ['flotta.html', 'flotta.css', 'flotta.js'] : [])
+  .concat(FEJEZETEK.keszules ? ['keszules.html', 'keszules.css', 'keszules.js'] : [])
+  .filter(existsSync);
 
 /* Amit szándékosan NEM viszünk ki.
 
@@ -987,7 +1015,7 @@ if (KOZOSSEGI) {
     .jpeg({ quality: 82, mozjpeg: true }).toBuffer());
 }
 
-for (const nev of ['fejlec-logo']) {
+for (const nev of ['fejlec-logo', 'fejlec-logo-feher']) {
   const be = `img/brand/${nev}.png`;
   if (!existsSync(be)) continue;
   const forras = readFileSync(be);
@@ -1253,9 +1281,11 @@ function terAdat(slug) {
 }
 
 const TERLAPOK = new Map();      /* slug → terAdat, ahol tényleg tér van */
-for (const p of ELO) {
-  const t = terAdat(p.slug);
-  if (t && t.szint === 1 && t.pontok.length >= 2) TERLAPOK.set(p.slug, t);
+if (FEJEZETEK.terbejaras) {
+  for (const p of ELO) {
+    const t = terAdat(p.slug);
+    if (t && t.szint === 1 && t.pontok.length >= 2) TERLAPOK.set(p.slug, t);
+  }
 }
 
 function mod(slug) {
@@ -2585,10 +2615,11 @@ const noindexLap = (u) => {
 };
 
 const urlek = [
-  '', 'alaprajz.html', 'rolunk.html', 'referenciak.html', 'design-manufaktura.html',
+  '', 'rolunk.html', 'referenciak.html', 'design-manufaktura.html',
   'kapcsolat.html', 'palyazatok.html', 'impresszum.html',
   'adatkezelesi-tajekoztato.html', 'sutik.html'
-].concat(FLOTTA && existsSync('flotta.html') ? ['flotta.html'] : [])
+].concat(FEJEZETEK.alaprajz ? ['alaprajz.html'] : [])
+  .concat(FLOTTA && existsSync('flotta.html') ? ['flotta.html'] : [])
   .concat(KESZULES && existsSync('keszules.html') ? ['keszules.html'] : [])
   .concat(ELO.map((p) => `referenciak/${p.slug}/`))
   .filter((u) => !noindexLap(u));

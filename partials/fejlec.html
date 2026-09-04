@@ -5,10 +5,17 @@
     <a class="logo" href="index.html" aria-label="Duna Enterior — főoldal">
       <!-- Gyökérből induló útvonal: a srcset-et az aloldalak relatív
            átírása nem érintené. Az eredeti PNG a tartalék. -->
-      <picture>
+      <picture class="sotet">
         <source type="image/avif" srcset="/img/brand/fejlec-logo-320.avif">
         <source type="image/webp" srcset="/img/brand/fejlec-logo-320.webp">
-        <img src="/img/brand/fejlec-logo.png" alt="Duna Enterior" width="160" height="40" fetchpriority="high">
+        <img src="/img/brand/fejlec-logo.png" alt="Duna Enterior" width="143" height="48" fetchpriority="high">
+      </picture>
+      <!-- Sötét felületen a fehér VÁLTOZAT jön, nem a sötét megfordítva:
+           a barna csík invertálva kék lenne. -->
+      <picture class="feher" aria-hidden="true">
+        <source type="image/avif" srcset="/img/brand/fejlec-logo-feher-320.avif">
+        <source type="image/webp" srcset="/img/brand/fejlec-logo-feher-320.webp">
+        <img src="/img/brand/fejlec-logo-feher.png" alt="" aria-hidden="true" width="143" height="48">
       </picture>
     </a>
     <button class="menu-gomb" id="menuGomb" aria-expanded="false" aria-controls="menu">Menü</button>
@@ -16,10 +23,10 @@
       <a href="index.html" data-oldal="index">Főoldal</a>
       <a href="rolunk.html" data-oldal="rolunk">Rólunk</a>
       <a href="referenciak.html" data-oldal="referenciak">Referenciák</a>
-      <a href="alaprajz.html" data-oldal="alaprajz">Alaprajz</a>
-      <a href="flotta.html" data-oldal="flotta">Flotta</a>
-      <a href="keszules.html" data-oldal="keszules">Készülés</a>
       <a href="design-manufaktura.html" data-oldal="manufaktura">Design manufaktúra</a>
+      <a href="palyazatok.html" data-oldal="palyazatok">Pályázatok</a>
+      <!-- A hajók a saját oldalukon élnek. A menü kivezet, nem lemásolja. -->
+      <a class="kulso" href="https://dunahajok.hu/" target="_blank" rel="noopener">Duna Hajók <span aria-hidden="true">↗</span></a>
       <a href="kapcsolat.html" data-oldal="kapcsolat">Kapcsolat</a>
     </nav>
   </div>
