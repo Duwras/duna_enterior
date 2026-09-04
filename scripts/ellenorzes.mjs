@@ -131,6 +131,36 @@ for (const f of LAPOK) {
     for (const t of ['og:title', 'og:url', 'og:image', 'og:type']) {
       if (!h.includes(`property="${t}"`)) E(n, `hiányzó Open Graph: ${t}`);
     }
+
+    /* --- gépi olvasatú adatok ---
+
+       Egy elgépelt mező itt nem törik el látványosan: a lap megy ki, a
+       kereső pedig csendben eldobja a jelölést. Ezért mérjük. Amit
+       nézünk: értelmezhető-e egyáltalán a JSON, benne van-e a cég a
+       kötelező mezőivel (name + address, Google előírás), és a lapé-e
+       a kanonikus cím, amire a jelölés hivatkozik. */
+    const ld = (h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [, ''])[1];
+    if (!ld) S(n, 'nincs JSON-LD jelölés');
+    else {
+      let adat = null;
+      try { adat = JSON.parse(ld); } catch (e) { S(n, `a JSON-LD nem értelmezhető: ${e.message}`); }
+      if (adat) {
+        const graf = adat['@graph'] || [adat];
+        const ceg = graf.find((x) => String(x['@type']).includes('Organization'));
+        if (!ceg) S(n, 'a JSON-LD-ből hiányzik a cég (Organization)');
+        else {
+          if (!ceg.name) S(n, 'a JSON-LD cégnél nincs name (a Google kötelezőnek veszi)');
+          if (!ceg.address?.streetAddress || !ceg.address?.addressLocality) {
+            S(n, 'a JSON-LD cégnél hiányos a cím (a Google kötelezőnek veszi)');
+          }
+        }
+        const lap = graf.find((x) => String(x['@id'] || '').endsWith('#lap'));
+        if (!lap) S(n, 'a JSON-LD-ből hiányzik a lap csomópontja');
+        else if (kanon && lap.url !== kanon) {
+          S(n, `a JSON-LD lapcíme eltér a canonicaltól: ${lap.url} ≠ ${kanon}`);
+        }
+      }
+    }
   }
 
   /* --- BIZTONSÁG --- */

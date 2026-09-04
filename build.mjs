@@ -1060,6 +1060,38 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
+/* ---------- a projektlapok címe ----------
+
+   A találati listában ~60 karakter fér ki, a projektnevek viszont hattól
+   harmincnyolc karakterig terjednek. Egy fix sablon vagy elpazarolja a
+   helyet („Fafaragások — Duna Belsőépítészet Kft."), vagy levágódik
+   („Szent László Látogatóközpont fa kapuja — Szakrális referencia —
+   Duna Enterior"). Ezért fokozatok: a leghosszabb változat megy ki, ami
+   még befér. A 65 az ellenőrzés küszöbe (scripts/ellenorzes.mjs). */
+const projektCim = (cim, kategoria) =>
+  [`${cim} — ${kategoria} referencia — Duna Enterior`,
+    `${cim} — ${kategoria} referencia`,
+    `${cim} — Duna Enterior`,
+    cim].find((c) => c.length <= 65) || cim;
+
+/* ---------- a projektlapok meta leírása ----------
+
+   Eddig mind a harminc lap ugyanazt a mondatot kapta, csak a névvel
+   behelyettesítve — a találati listában harminc egyforma sor. Pedig a
+   projektek.json MINDEN projekthez hoz saját leírást, és az az egyetlen
+   szöveg a lapon, ami tényleg csak arról a munkáról szól.
+
+   Ezért a leírás a projekt SAJÁT szövegével kezdődik, és a helyi
+   horgony zárja. A vágás szóhatáron történik, hogy ne csonkolt szó
+   álljon a találatban. */
+const projektLeiras = (leiras, kategoria, toldat = '') => {
+  const zaro = ` — ${kategoria} referencia a győri Duna Enterior munkáiból.`;
+  const hely = 158 - zaro.length - toldat.length;
+  let sz = String(leiras || '').replace(/\s+/g, ' ').trim();
+  if (sz.length > hely) sz = sz.slice(0, hely - 1).replace(/[\s,;:.–—-]+\S*$/, '') + '…';
+  return sz + zaro + toldat;
+};
+
 /* Az anyagnevek a JSON-ban kisbetűvel állnak — ott adatok, szótárkulcsok.
    A lapon viszont önálló megnevezésként jelennek meg, ezért nagy
    kezdőbetűvel. Csak az első betű: a „lakkozott fa” nem „Lakkozott Fa”. */
@@ -1821,6 +1853,10 @@ for (const p of ELO) {
     const fajtaNev = { ajto: 'Ajtó', ablak: 'Ablak', kapu: 'Kapu' }[elso.kuszob?.fajta] || 'Ajtó';
 
     writeFileSync(`${dir}/index.html`, TER_SABLON
+      .split('{{lapCim}}').join(esc(projektCim(p.cim, KATEGORIAK[p.kategoria] || p.kategoria)))
+      .split('{{lapLeiras}}').join(esc(projektLeiras(p.leiras,
+        KATEGORIAK[p.kategoria] || p.kategoria,
+        ` Bejárható tér: ${j.pontok.length} kameraállás.`)))
       .split('{{cim}}').join(esc(p.cim))
       .split('{{slug}}').join(esc(p.slug))
       .split('{{kategoria}}').join(esc(KATEGORIAK[p.kategoria] || p.kategoria))
@@ -1849,6 +1885,9 @@ for (const p of ELO) {
   }
 
   writeFileSync(`${dir}/index.html`, SABLON
+    .split('{{lapCim}}').join(esc(projektCim(p.cim, KATEGORIAK[p.kategoria] || p.kategoria)))
+    .split('{{lapLeiras}}').join(esc(projektLeiras(p.leiras,
+      KATEGORIAK[p.kategoria] || p.kategoria)))
     .split('{{cim}}').join(esc(p.cim))
     .split('{{kategoria}}').join(esc(KATEGORIAK[p.kategoria] || p.kategoria))
     .split('{{leiras}}').join(esc(p.leiras || ''))
@@ -2346,7 +2385,349 @@ function fejMeta(oldal, html) {
     sorok.push(`<meta name="twitter:card" content="summary">`);
   }
 
+  /* A böngésző felső sávja a lap alapszínét vegye fel — a paletta két
+     regisztere (nappal/éjjel) a style.css :root blokkjából. */
+  sorok.push(
+    `<meta name="theme-color" content="#fbf8f3" media="(prefers-color-scheme: light)">`,
+    `<meta name="theme-color" content="#1a150f" media="(prefers-color-scheme: dark)">`);
+
+  /* Helyjelölő fejlécek. A Google ma már a JSON-LD `geo` mezőjéből
+     dolgozik, ezek inkább a hazai katalógusoknak és a megosztásnak
+     szólnak — ezért csak azon a két lapon állnak, ahol a HELY maga a
+     tartalom: a főoldalon és a kapcsolaton. */
+  if (rel === 'index.html' || rel === 'kapcsolat.html') {
+    sorok.push(
+      `<meta name="geo.region" content="HU-GS">`,
+      `<meta name="geo.placename" content="Győr">`,
+      `<meta name="geo.position" content="${CEG.terkepLat};${CEG.terkepLng}">`,
+      `<meta name="ICBM" content="${CEG.terkepLat}, ${CEG.terkepLng}">`);
+  }
+
   return html.replace(/<\/head>/i, sorok.join('\n') + '\n</head>');
+}
+
+/* ---------- 6/a6. GÉPI OLVASATÚ ADATOK (JSON-LD) ----------
+
+   Eddig NULLA strukturált adat volt a lapokon. A keresőnek ez azt
+   jelenti, hogy a „Duna Belsőépítészet Kft." egy szó a szövegben, nem
+   egy győri cég címmel, telefonnal és szolgáltatáslistával — a helyi
+   találatokért folyó versenyben pedig pont ez dől el.
+
+   Egyetlen `@graph` megy ki laponként, `@id`-vel összekötve. Ami benne
+   van, az MIND látható is a lapon (Google strukturált-adat irányelv):
+   a cím a láblécben és a kapcsolaton, a szolgáltatások a Rólunk lap
+   listáiban, a kérdések a Rólunk lap GYIK szakaszában, a képek a
+   galériákban. Semmit nem találunk ki hozzá — ezért NINCS nyitvatartás
+   (nem tudjuk), NINCS aggregateRating (nincs értékelés a lapon) és
+   NINCS Product/ár (egyedi gyártás, ár nem szerepel sehol).
+
+   A CÍM: a székhely és a telephely eltér (lásd data/ceg-adatok.json).
+   Gépi adatba a TELEPHELY megy — oda jön a látogató, azt hozza a
+   kapcsolat lap és a lábléc, és a helyi találatban ennek kell egyeznie
+   a térképes és a katalógusbeli adattal. */
+
+const CIM_TO = `https://${CEG.domain}`;
+const AZ = { ceg: `${CIM_TO}/#szervezet`, weboldal: `${CIM_TO}/#weboldal` };
+
+/* „9025 Győr, Ikrényi út 14." → PostalAddress. Azért bontjuk és nem
+   írjuk le másodszor, hogy a cégadatok EGY helyen maradjanak. */
+function postaiCim(egyben) {
+  const m = String(egyben).match(/^(\d{4})\s+([^,]+),\s*(.+)$/);
+  if (!m) {
+    console.error(`\n!! HIBA — a cím nem bontható postai adatra: „${egyben}"\n` +
+      `   Várt alak: „9025 Győr, Ikrényi út 14." (data/ceg-adatok.json)\n`);
+    process.exit(1);
+  }
+  return {
+    '@type': 'PostalAddress',
+    postalCode: m[1],
+    addressLocality: m[2],
+    streetAddress: m[3],
+    addressRegion: 'Győr-Moson-Sopron',
+    addressCountry: 'HU'
+  };
+}
+
+/* A hívható alak („0036309397598") nemzetközi jelölésre. */
+const telSzam = (s) => String(s || '').replace(/^00/, '+').replace(/[^\d+]/g, '');
+
+/* ---------- amit a Rólunk lap MOND, azt mondja a jelölés is ----------
+
+   A szolgáltatáslista és a GYIK nem íródik le kétszer: mindkettő a
+   rolunk.html látható szedéséből olvasódik ki. Ha ott változik a
+   szöveg, itt is változik — és ha a szakasz eltűnik, a build megáll,
+   nem pedig némán elhagyja a jelölést. */
+function szakaszSzoveg(html, jelolo) {
+  const kezd = html.indexOf(jelolo);
+  if (kezd < 0) return '';
+  const veg = html.indexOf('\n  </section>', kezd);
+  return veg < 0 ? '' : html.slice(kezd, veg);
+}
+
+const ROLUNK_FORRAS = existsSync('rolunk.html') ? readFileSync('rolunk.html', 'utf8') : '';
+
+const SZOLGALTATASOK = [...szakaszSzoveg(ROLUNK_FORRAS, 'id="szolgaltatasok"')
+  .matchAll(/<li>([^<]+)<\/li>/g)].map((m) => m[1].trim());
+
+const GYIK = [...szakaszSzoveg(ROLUNK_FORRAS, 'id="kerdesek"')
+  .matchAll(/<h3>([\s\S]*?)<\/h3>\s*<p>([\s\S]*?)<\/p>/g)]
+  .map((m) => ({
+    kerdes: m[1].replace(/<[^>]+>/g, '').trim(),
+    valasz: m[2].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  }));
+
+if (ROLUNK_FORRAS && (!SZOLGALTATASOK.length || !GYIK.length)) {
+  console.error('\n!! HIBA — a rolunk.html-ből nem olvasható ki a jelöléshez való tartalom:\n' +
+    `   szolgáltatás: ${SZOLGALTATASOK.length} tétel, kérdés: ${GYIK.length} tétel.\n\n` +
+    '   A JSON-LD a LÁTHATÓ szedésből készül. Ha a szakaszok azonosítója\n' +
+    '   (id="szolgaltatasok", id="kerdesek") vagy a szerkezetük megváltozott,\n' +
+    '   itt kell utána igazítani — lásd build.mjs 6/a6. lépés.\n');
+  process.exit(1);
+}
+
+/* ---------- a cég ---------- */
+
+function szervezet(teljes) {
+  const n = {
+    '@type': ['Organization', 'HomeAndConstructionBusiness'],
+    '@id': AZ.ceg,
+    name: CEG.cegNev,
+    legalName: CEG.cegNev,
+    alternateName: ['Duna Enterior', 'Duna Enterior Asztalos és Hajóépítő Üzem'],
+    description:
+      'A Duna Belsőépítészet Kft. 1991 óta gyárt egyedi bútort, épületasztalos ' +
+      'szerkezeteket és teljes belsőépítészeti berendezést, valamint épít, javít és ' +
+      'újít fel hajókat — győri, 1200 m²-nél nagyobb saját üzemében.',
+    url: `${CIM_TO}/`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${CIM_TO}/img/brand/fejlec-logo.png`,
+      width: 1200, height: 403
+    },
+    image: KOZOSSEGI ? `${CIM_TO}/${KOZOSSEGI.fajl}` : `${CIM_TO}/img/brand/fejlec-logo.png`,
+    address: postaiCim(CEG.telephely),
+    geo: { '@type': 'GeoCoordinates', latitude: CEG.terkepLat, longitude: CEG.terkepLng },
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${CEG.terkepLat},${CEG.terkepLng}`,
+    telephone: telSzam(CEG.kapcsolatok?.[0]?.telefonHivas),
+    email: CEG.email,
+    vatID: CEG.adoszam,
+    foundingDate: CEG.alapitas,
+    founder: { '@type': 'Person', name: 'Győrffy Péter' },
+    /* A műhely Győrben van, a munkák az ország több pontján állnak
+       (Zirc, Bodajk, Buda) — a jelölés is ezt mondja, nem többet. */
+    areaServed: [
+      { '@type': 'City', name: 'Győr' },
+      { '@type': 'AdministrativeArea', name: 'Győr-Moson-Sopron vármegye' },
+      { '@type': 'Country', name: 'Magyarország' }
+    ],
+    knowsAbout: [
+      'egyedi bútor gyártása', 'bútorasztalos munkák', 'épületasztalos munkák',
+      'belsőépítészet', 'létesítményberendezés', 'hajóépítés', 'hajófelújítás',
+      'hajóbelső', 'fafaragás', 'felületkezelés', 'asztalosipari bérmunka'
+    ],
+    sameAs: ['https://dunahajok.hu/']
+  };
+
+  /* A teljes lista csak oda megy, ahol a lapon is ott áll a fedezete:
+     a főoldalra, a Rólunkra (a lista maga) és a kapcsolatra (a négy
+     megszólítható ember). Máshol elég a cég azonosítója — az `@id`
+     ugyanazt az egy entitást adja a keresőnek. */
+  if (teljes) {
+    if (SZOLGALTATASOK.length) {
+      n.hasOfferCatalog = {
+        '@type': 'OfferCatalog',
+        name: 'Asztalosipari, belsőépítészeti és hajóépítési szolgáltatások',
+        itemListElement: SZOLGALTATASOK.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: s,
+            serviceType: s,
+            provider: { '@id': AZ.ceg },
+            areaServed: { '@type': 'City', name: 'Győr' }
+          }
+        }))
+      };
+    }
+    n.contactPoint = (CEG.kapcsolatok || []).map((k) => ({
+      '@type': 'ContactPoint',
+      name: k.nev,
+      contactType: k.beosztas,
+      telephone: telSzam(k.telefonHivas),
+      email: k.email,
+      areaServed: 'HU',
+      availableLanguage: ['hu']
+    }));
+  }
+  return n;
+}
+
+/* ---------- laptípusok és morzsa ---------- */
+
+const LAPTIPUS = {
+  'index.html': 'WebPage',
+  'rolunk.html': ['AboutPage', 'FAQPage'],
+  'referenciak.html': 'CollectionPage',
+  'kapcsolat.html': 'ContactPage',
+  'alaprajz.html': 'CollectionPage',
+  'flotta.html': 'CollectionPage',
+  'keszules.html': 'WebPage',
+  'design-manufaktura.html': 'WebPage',
+  'palyazatok.html': 'WebPage',
+  'impresszum.html': 'WebPage',
+  'adatkezelesi-tajekoztato.html': 'WebPage',
+  'sutik.html': 'WebPage'
+};
+
+/* A morzsa NEVE nem a <title>: az a találati listának szól, ez a
+   navigációnak. Ugyanaz a szó, ami a menüben és a láblécben áll. */
+const MORZSANEV = {
+  'rolunk.html': 'Rólunk',
+  'referenciak.html': 'Referenciák',
+  'kapcsolat.html': 'Kapcsolat',
+  'design-manufaktura.html': 'Duna Design Manufaktúra',
+  'palyazatok.html': 'Pályázatok',
+  'alaprajz.html': 'Alaprajz',
+  'flotta.html': 'A flotta',
+  'keszules.html': 'A készülés',
+  'impresszum.html': 'Impresszum',
+  'adatkezelesi-tajekoztato.html': 'Adatkezelési tájékoztató',
+  'sutik.html': 'Sütik'
+};
+
+const morzsaLista = (id, tetelek) => ({
+  '@type': 'BreadcrumbList',
+  '@id': id,
+  itemListElement: tetelek.map((t, i) => ({
+    '@type': 'ListItem', position: i + 1, name: t.nev, item: t.cim
+  }))
+});
+
+/* A `</script>` a JSON belsejében lezárná a blokkot; a `<` elrejtése az
+   egyetlen dolog, ami a JSON.stringify után még kell. */
+const jsonBlokk = (adat) =>
+  `<script type="application/ld+json">${JSON.stringify(adat).replace(/</g, '\\u003c')}</script>`;
+
+function jsonLd(oldal, html) {
+  const rel = oldal.slice(OUT.length + 1).replace(/\\/g, '/');
+  if (MEGOSZTHATATLAN.has(rel)) return html;
+  if (!/<\/head>/i.test(html)) return html;
+
+  const ut = oldalCime(oldal);
+  const url = `${CIM_TO}/${ut}`;
+  const cim = (html.match(/<title>([\s\S]*?)<\/title>/i) || [, ''])[1].trim();
+  const leiras = (html.match(/<meta\s+name="description"\s+content="([^"]*)"/i) || [, ''])[1].trim();
+
+  const projektSlug = (rel.match(/^referenciak\/([a-z0-9-]+)\/index\.html$/) || [])[1];
+  const p = projektSlug ? ELO.find((x) => x.slug === projektSlug) : null;
+  const teljesCeg = rel === 'index.html' || rel === 'rolunk.html' || rel === 'kapcsolat.html';
+
+  const graf = [szervezet(teljesCeg), {
+    '@type': 'WebSite',
+    '@id': AZ.weboldal,
+    url: `${CIM_TO}/`,
+    name: CEG.cegNev,
+    alternateName: 'Duna Enterior',
+    publisher: { '@id': AZ.ceg },
+    inLanguage: 'hu-HU'
+  }];
+
+  const lap = {
+    '@type': p ? 'ImageGallery' : (LAPTIPUS[rel] || 'WebPage'),
+    '@id': `${url}#lap`,
+    url,
+    name: cim,
+    isPartOf: { '@id': AZ.weboldal },
+    about: { '@id': AZ.ceg },
+    inLanguage: 'hu-HU'
+  };
+  if (leiras) lap.description = leiras;
+
+  /* ---- morzsa ---- */
+  if (p) {
+    graf.push(morzsaLista(`${url}#morzsa`, [
+      { nev: 'Főoldal', cim: `${CIM_TO}/` },
+      { nev: 'Referenciák', cim: `${CIM_TO}/referenciak.html` },
+      { nev: p.cim, cim: url }
+    ]));
+    lap.breadcrumb = { '@id': `${url}#morzsa` };
+  } else if (MORZSANEV[rel]) {
+    graf.push(morzsaLista(`${url}#morzsa`, [
+      { nev: 'Főoldal', cim: `${CIM_TO}/` },
+      { nev: MORZSANEV[rel], cim: url }
+    ]));
+    lap.breadcrumb = { '@id': `${url}#morzsa` };
+  }
+
+  /* ---- a projektlap: a munka és a galéria ----
+
+     A képek listája TIZENKETTŐNÉL elvágódik. Nem korlát, hanem arány:
+     egy 35 fotós hajólapon a teljes lista több kilobájt jelölés lenne
+     ugyanazért az üzenetért — a maradék fotót a képsitemap amúgy is
+     beadja (7. lépés). */
+  if (p) {
+    const boritoFajl = p.kiemelt || p.kepek[0].file;
+    const [bw, bh] = kepMeret(p.slug, boritoFajl, '-1400');
+    const boritoUt = `${CIM_TO}/${kep(p.slug, boritoFajl, '-1400')}`;
+    graf.push({
+      '@type': 'ImageObject',
+      '@id': `${url}#borito`,
+      url: boritoUt,
+      contentUrl: boritoUt,
+      caption: p.kepek.find((k) => k.file === boritoFajl)?.alt || p.cim,
+      width: bw, height: bh
+    });
+    lap.primaryImageOfPage = { '@id': `${url}#borito` };
+    lap.image = p.kepek.slice(0, 12).map((k) => {
+      const [w, h] = kepMeret(p.slug, k.file, '-1400');
+      const u = `${CIM_TO}/${kep(p.slug, k.file, '-1400')}`;
+      return {
+        '@type': 'ImageObject', url: u, contentUrl: u,
+        caption: k.alt, width: w, height: h
+      };
+    });
+
+    const munka = {
+      '@type': 'CreativeWork',
+      '@id': `${url}#munka`,
+      name: p.cim,
+      creator: { '@id': AZ.ceg },
+      about: { '@id': AZ.ceg },
+      genre: KATEGORIAK[p.kategoria] || p.kategoria,
+      keywords: [KATEGORIAK[p.kategoria] || p.kategoria,
+        'belsőépítészet', 'egyedi bútor', 'Győr'].join(', '),
+      image: { '@id': `${url}#borito` },
+      url
+    };
+    if (p.leiras) munka.description = p.leiras;
+    graf.push(munka);
+    lap.mainEntity = { '@id': `${url}#munka` };
+  }
+
+  /* ---- a Rólunk lap kérdései ---- */
+  if (rel === 'rolunk.html' && GYIK.length) {
+    lap.mainEntity = GYIK.map((k) => ({
+      '@type': 'Question',
+      name: k.kerdes,
+      acceptedAnswer: { '@type': 'Answer', text: k.valasz }
+    }));
+  }
+
+  /* ---- a referenciák lapja: mi áll a listában ---- */
+  if (rel === 'referenciak.html') {
+    lap.mainEntity = {
+      '@type': 'ItemList',
+      numberOfItems: ELO.length,
+      itemListElement: ELO.map((x, i) => ({
+        '@type': 'ListItem', position: i + 1, name: x.cim,
+        url: `${CIM_TO}/referenciak/${x.slug}/`
+      }))
+    };
+  }
+
+  graf.push(lap);
+  return html.replace(/<\/head>/i,
+    jsonBlokk({ '@context': 'https://schema.org', '@graph': graf }) + '\n</head>');
 }
 
 /* ---------- 6/a2. STÍLUS A LAPBAN ----------
@@ -2519,6 +2900,7 @@ for (const oldal of OLDALAK) {
       ELO.filter((p) => p.kategoria === 'egyedi').slice(0, 3).map(kartya).join('\n        '));
 
   html = fejMeta(oldal, html);
+  html = jsonLd(oldal, html);
   /* Az adminhoz nem nyúlunk: bájtra ugyanaz marad, mint a forrás — az
      ellenőrzés ezt külön vizsgálja, és jogosan bukott el, amikor ez a
      blokk még oda is bekerült. Az adminban amúgy sincs színpad. */
@@ -2624,9 +3006,30 @@ const urlek = [
   .concat(ELO.map((p) => `referenciak/${p.slug}/`))
   .filter((u) => !noindexLap(u));
 
+/* A KÉPEK. A lap {{kepSzam}} fényképe a legnagyobb vagyon, ami itt van,
+   és a képkeresőnek eddig egyetlen jelzést sem adtunk róla — a
+   projektlapok galériája lusta betöltésű, tehát a felderítés sem
+   triviális. A sitemap képkiterjesztése ezt oldja meg: minden
+   projektlaphoz odaírjuk, milyen fényképek tartoznak hozzá, a
+   projektek.json alt szövegével mint címmel.
+
+   A -1400-as változat megy be: az az, amit a nagyító is nyit. A
+   kiterjesztés legfeljebb 1000 képet enged URL-enként; a legnagyobb
+   galériánk ennek a töredéke. */
+const kepSorok = (u) => {
+  const slug = (u.match(/^referenciak\/([a-z0-9-]+)\/$/) || [])[1];
+  const p = slug && ELO.find((x) => x.slug === slug);
+  if (!p) return '';
+  return '\n' + p.kepek.map((k) =>
+    `    <image:image><image:loc>https://${CEG.domain}/${kep(p.slug, k.file, '-1400')}</image:loc>` +
+    `<image:title>${esc(k.alt || p.cim)}</image:title></image:image>`).join('\n') + '\n  ';
+};
+
 writeFileSync(`${OUT}/sitemap.xml`,
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  urlek.map((u) => `  <url><loc>https://${CEG.domain}/${u}</loc><lastmod>${ma}</lastmod></url>`).join('\n') +
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"` +
+  ` xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n` +
+  urlek.map((u) => `  <url><loc>https://${CEG.domain}/${u}</loc><lastmod>${ma}</lastmod>` +
+    `${kepSorok(u)}</url>`).join('\n') +
   `\n</urlset>\n`);
 
 /* ---------- kész ---------- */

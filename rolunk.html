@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rólunk — Duna Belsőépítészet Kft.</title>
-<meta name="description" content="A Duna Belsőépítészet Kft. 1991 óta az asztalosipar, a belsőépítészet és a hajóépítés területén. Győri telephely, 1200 m²-es gyártóüzem.">
+<title>Rólunk — asztalos és hajóépítő üzem Győrben, 1991 óta</title>
+<meta name="description" content="Bútor- és épületasztalos munkák, létesítményberendezés, belsőépítészet és hajóépítés Győrben. Kiviteli terv, saját gyártás, felületkezelés, helyszíni szerelés.">
 <link rel="icon" href="img/brand/favicon.png">
 <!-- Betűelőkérés. A build (6/a3. lépés) írja felül a tényleges
      készletre: a magyar szöveghez a latin-ext szelet is kell, és
@@ -25,7 +25,7 @@
     <div class="belul">
       <p class="felcim jon">Duna Belsőépítészet</p>
       <h1 class="jon kesik-1">Közel három évtized<br>egy szakmában.</h1>
-      <p class="eloszo jon kesik-2">A Duna Belsőépítészet Kft. 1991 óta áll ügyfelei rendelkezésére az asztalosipar, a belsőépítészet és a hajóépítés területén.</p>
+      <p class="eloszo jon kesik-2">A Duna Belsőépítészet Kft. 1991 óta áll ügyfelei rendelkezésére Győrben az asztalosipar, a belsőépítészet és a hajóépítés területén.</p>
     </div>
   </section>
 
@@ -63,8 +63,12 @@
     </div>
   </section>
 
-  <!-- ---------- szolgáltatások ---------- -->
-  <section class="szekcio">
+  <!-- ---------- szolgáltatások ----------
+
+       Az azonosító nem dísz: a build ebből a szakaszból olvassa ki a
+       szolgáltatáslistát a JSON-LD OfferCatalogba (build.mjs 6/a6).
+       Ha itt változik a lista, ott is változik. -->
+  <section class="szekcio" id="szolgaltatasok">
     <div class="belul">
       <div class="szekcio-fej">
         <div>
@@ -115,6 +119,56 @@
       </div>
 
       <p class="szoveg jon" style="margin-top:2.4em">Vállalkozásunk az asztalosipar és a hajóépítés területén egyaránt komplett vagy részleges kivitelezési feladatok megvalósítását vállalja. Szolgáltatásaink az igényfelméréstől a gyártáson át egészen a helyszíni szerelésig terjednek.</p>
+    </div>
+  </section>
+
+  <!-- ---------- gyakori kérdések ----------
+
+       Nem díszítés és nem töltelék: a hat kérdés az, amit a telefonban
+       tényleg megkérdeznek, és minden válasz olyan tényből áll, ami a
+       lapon máshol is szerepel (hely, üzemméret, szolgáltatáslista,
+       folyamat). A buildbe kötött FAQPage jelölés EBBŐL a szedésből
+       készül — ha itt változik a szöveg, ott is változik. -->
+  <section class="szekcio halvany" id="kerdesek">
+    <div class="belul">
+      <div class="szekcio-fej">
+        <div>
+          <p class="felcim jon bal">Gyakori kérdések</p>
+          <h2 class="jon kesik-1">Amit telefonban kérdezni szoktak.</h2>
+        </div>
+      </div>
+
+      <div class="lista-racs" data-gyik>
+        <div class="lista-blokk jon bal">
+          <h3>Hol van a műhelyük?</h3>
+          <p>Győrben: 9025 Győr, Ikrényi út 14. Itt áll az 1200 m²-nél nagyobb gyártóüzem, ahol az egyedi bútorok és a hajóbelsők készülnek.</p>
+        </div>
+
+        <div class="lista-blokk jon jobb kesik-1">
+          <h3>Milyen munkát vállalnak?</h3>
+          <p>Bútorasztalos és épületasztalos termékek tervezését és gyártását, létesítményberendezéseket és egyedi belsőépítészeti asztalos munkákat, valamint szabadidős és sporthajók gyártását, javítását, felújítását és átalakítását.</p>
+        </div>
+
+        <div class="lista-blokk jon bal kesik-2">
+          <h3>A tervezést is önök végzik?</h3>
+          <p>Igen. Belsőépítész-tervezői háttérrel elkészítjük a teljes kiviteli tervdokumentációt, a tanulmány- és szerkezetterveket, látványtervvel együtt.</p>
+        </div>
+
+        <div class="lista-blokk jon jobb kesik-3">
+          <h3>Csak Győrben dolgoznak?</h3>
+          <p>A műhely Győrben van, a referenciáink viszont az ország több pontján állnak — szállodáktól és éttermektől kastélyokon és apátságokon át lakóingatlanokig. A szállítást és a helyszíni szerelést saját csapataink végzik.</p>
+        </div>
+
+        <div class="lista-blokk jon bal">
+          <h3>Vállalnak bérmunkát?</h3>
+          <p>Igen: asztalosipari bérmunkát, gyalulást, felületkezelést és kontaktcsiszolást, valamint asztalosipari és hajóépítési szaktanácsadást.</p>
+        </div>
+
+        <div class="lista-blokk jon jobb kesik-1">
+          <h3>Hogyan kérhetek ajánlatot?</h3>
+          <p>A <a href="kapcsolat.html">kapcsolati űrlapon</a>, e-mailben az {{email}} címre, vagy telefonon. Az igényfelméréstől a gyártáson át a helyszíni szerelésig mindent egy kézben intézünk.</p>
+        </div>
+      </div>
     </div>
   </section>
 

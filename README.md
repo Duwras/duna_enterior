@@ -20,7 +20,8 @@ weboldalának forrása. Statikus oldal, a közzététel GitHub Actionsből megy.
 | `partials/` | Fejléc, lábléc és a projekt-aloldal sablonja. Nem publikus, a build dolgozza fel. |
 | `img/projektek/<slug>/` | A projektek képei, 1800 px forrásméretben. |
 | `img/palyazat/`, `img/brand/` | Pályázati arculati képek, EU infoblokk, logók. |
-| `build.mjs` | A `deploy/` mappát állítja elő: aloldalak, képméretek, cache-törés. |
+| `build.mjs` | A `deploy/` mappát állítja elő: aloldalak, képméretek, cache-törés, kereső-jelölés. |
+| `docs/SEO.md` | Mire célzunk (Győr + a termékek), mi hol dől el, és mi vár még a megrendelőre. |
 | `worker/` | A kapcsolati űrlap végpontja (Cloudflare Worker) — lásd [worker/OLVASSEL.md](worker/OLVASSEL.md). |
 
 ## Mozgás az oldalon

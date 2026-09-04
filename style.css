@@ -679,6 +679,10 @@ main { overflow-x: clip; }
 .lista-blokk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .lista-blokk li { padding-left: 20px; position: relative; }
 .lista-blokk li::before { content: "—"; position: absolute; left: 0; color: var(--oak); }
+/* A gyakori kérdések ugyanabban a rácsban állnak, mint a szolgáltatás-
+   listák — csak felsorolás helyett folyószöveggel. */
+.lista-blokk p { color: var(--szoveg-2); max-width: 46ch; }
+.lista-blokk p a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
 
 /* ---------- idézet, ügyvezetői szó ---------- */
 
