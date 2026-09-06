@@ -1037,7 +1037,10 @@ for (const nev of ['eu-infoblokk-erfa']) {
   const be = `img/brand/${nev}.png`;
   if (!existsSync(be)) continue;
   const forras = readFileSync(be);
-  for (const sz of [232, 464]) {
+  /* A forrás 400 px széles, a `withoutEnlargement` miatt ennél nagyobb
+     változat nem is születne — a 400 a natív felbontás. A 232 a lábléc
+     kétszeres készlete, a 400 a nyitóképen ülő nagy példányé. */
+  for (const sz of [232, 400]) {
     writeFileSync(`${OUT}/img/brand/${nev}-${sz}.webp`,
       await sharp(forras).resize({ width: sz, withoutEnlargement: true }).webp({ quality: 86 }).toBuffer());
     writeFileSync(`${OUT}/img/brand/${nev}-${sz}.avif`,

@@ -845,4 +845,58 @@
 
   var ev = document.getElementById('ev');
   if (ev) ev.textContent = new Date().getFullYear();
+
+  /* ============================================================
+     12. EU-infoblokk összecsukása
+     ============================================================
+
+     A blokk kötelező tájékoztatási elem: megnyitáskor, görgetés nélkül
+     látható méretben kell megjelennie (KTK 2020, 3.2.3.). Ezért a
+     kiindulás MINDIG a teljes méret, és az összecsukás sem tünteti el:
+     150 px-re, az arculati kézikönyv 8.5 fejezetének minimumára húzza
+     össze.
+
+     A választás `sessionStorage`-ban él, nem `localStorage`-ban: egy
+     böngészési munkameneten belül ne nyaggassa a látogatót, új
+     látogatáskor viszont mindenki a teljes blokkot lássa. Ez egyben
+     azt is jelenti, hogy nem tartós tároló — a sütitájékoztatót nem
+     érinti.
+
+     Ha nincs JavaScript, a gomb `hidden` marad, a blokk pedig nyitva:
+     a kötelező állapot az alapértelmezett, nem a JS állítja elő. */
+  (function () {
+    var jelzo = document.getElementById('eu-jelzo');
+    var gomb  = document.getElementById('eu-jelzo-gomb');
+    if (!jelzo || !gomb) return;
+
+    var felirat = gomb.querySelector('.rejtett');
+
+    function olvas() {
+      try { return window.sessionStorage.getItem('eu-jelzo'); } catch (e) { return null; }
+    }
+    function ir(ertek) {
+      try { window.sessionStorage.setItem('eu-jelzo', ertek); } catch (e) { /* privát mód */ }
+    }
+
+    function allit(csukva) {
+      jelzo.setAttribute('data-csukva', csukva ? 'igen' : 'nem');
+      gomb.setAttribute('aria-expanded', csukva ? 'false' : 'true');
+      var szoveg = csukva ? 'Infoblokk kinyitása' : 'Infoblokk összecsukása';
+      if (felirat) felirat.textContent = szoveg;
+      gomb.title = szoveg;
+    }
+
+    gomb.hidden = false;
+    allit(olvas() === 'csukva');
+
+    /* A kiinduló állapot ugorjon a helyére; az áttűnés csak a
+       kattintásoknak jár. */
+    requestAnimationFrame(function () { jelzo.classList.add('mozog'); });
+
+    gomb.addEventListener('click', function () {
+      var csukva = jelzo.getAttribute('data-csukva') !== 'igen';
+      allit(csukva);
+      ir(csukva ? 'csukva' : 'nyitva');
+    });
+  })();
 })();

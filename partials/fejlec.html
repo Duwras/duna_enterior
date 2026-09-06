@@ -38,19 +38,45 @@
      igénylő pozícióban.” A lábléc önmagában tehát NEM elég — ez a
      példány a lap tetején, a fejléc alatt ül, minden lapon.
 
+     Ugyanennek az útmutatónak az általános arculati előírása (12., 14.
+     és 22. o.): ha a kedvezményezett további logót használ, „az EU-logónak
+     legalább akkora méretűnek kell lennie (magasságban, vagy
+     szélességben), mint az EU-logón kívül használt bármely legnagyobb
+     méretű logónak”. A blokkon belül az EU-zászló a teljes szélesség
+     10,5%-ának megfelelő magasságú, ezért a blokk szélessége és a
+     fejléclogó magassága együtt mozog — lásd style.css, --eu-blokk-szel
+     és --logo-mag. A méretezést a CSS végzi; a width/height itt a natív
+     forrásarány (400×276), hogy ne ugráljon a tördelés betöltés közben.
+
      A kép ugyanaz a forrás, mint a láblécben; a srcset gyökérből
      indul, mert a build mélységjavítója csak a src-t és a href-et
      írja át. Az arculati kézikönyv 8.5 (WEB) fejezete színes
-     változatot és legalább 150 px szélességet ír elő. -->
-<a class="eu-jelzo" href="palyazatok.html"
-   aria-label="Széchenyi 2020 — nyertes pályázataink">
-  <picture>
-    <source type="image/avif" sizes="164px"
-            srcset="/img/brand/eu-infoblokk-erfa-232.avif 232w, /img/brand/eu-infoblokk-erfa-464.avif 464w">
-    <source type="image/webp" sizes="164px"
-            srcset="/img/brand/eu-infoblokk-erfa-232.webp 232w, /img/brand/eu-infoblokk-erfa-464.webp 464w">
-    <img src="img/brand/eu-infoblokk-erfa.png"
-         alt="Széchenyi 2020 — Európai Regionális Fejlesztési Alap infoblokk"
-         width="164" height="113" decoding="async">
-  </picture>
-</a>
+     változatot és legalább 150 px szélességet ír elő — összecsukott
+     állapotban is ennyi marad.
+
+     Az összecsukó gomb `hidden`: JavaScript nélkül nincs mit vezérelnie,
+     és a blokk marad nyitva, azaz a kötelező méretben. -->
+<div class="eu-jelzo" id="eu-jelzo" data-csukva="nem">
+  <a class="eu-jelzo-lap" href="palyazatok.html"
+     aria-label="Széchenyi 2020 — nyertes pályázataink">
+    <picture>
+      <source type="image/avif"
+              srcset="/img/brand/eu-infoblokk-erfa-400.avif">
+      <source type="image/webp"
+              srcset="/img/brand/eu-infoblokk-erfa-400.webp">
+      <img src="img/brand/eu-infoblokk-erfa.png"
+           alt="Széchenyi 2020 — Európai Regionális Fejlesztési Alap infoblokk"
+           width="400" height="276" decoding="async">
+    </picture>
+  </a>
+  <button class="eu-jelzo-gomb" id="eu-jelzo-gomb" type="button" hidden
+          aria-expanded="true" aria-controls="eu-jelzo">
+    <span class="rejtett">Infoblokk összecsukása</span>
+    <svg class="ikon-be" aria-hidden="true" viewBox="0 0 16 16" width="12" height="12">
+      <path d="M3 3 13 13M13 3 3 13" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    <svg class="ikon-ki" aria-hidden="true" viewBox="0 0 16 16" width="12" height="12">
+      <path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+  </button>
+</div>

@@ -180,8 +180,11 @@ p { margin: 0; }
   display: grid; align-items: center; justify-items: start;
   text-decoration: none; flex: 0 0 auto;
 }
+/* A logó magassága nem szabad szám: az EU-infoblokk mérete kötve van
+   hozzá (lásd a --eu-blokk-szel melletti indoklást). A kettőt együtt
+   kell mozgatni, különben elromlik az arányossági előírás. */
 .logo img {
-  grid-area: 1 / 1; display: block; height: 48px; width: auto;
+  grid-area: 1 / 1; display: block; height: var(--logo-mag); width: auto;
   transition: opacity .3s ease;
 }
 .logo .feher img { opacity: 0; }
@@ -202,22 +205,92 @@ p { margin: 0; }
    Nincs pozicionált őse (a body statikus), tehát a kezdeti tartalmazó
    blokkhoz igazodik: a dokumentum tetejéhez, a fejléc alá.
 
-   Méret: az arculati kézikönyv 8.5 (WEB) fejezete színes változatot és
-   legalább 150 px szélességet ír elő — itt 164, kis kijelzőn 150. */
+   Méret: két előírás szorítja.
+
+   1. Arculati kézikönyv 8.5 (WEB): színes változat, legalább 150 px
+      szélesség, görgetés nélkül látható.
+
+   2. KTK útmutató általános arculati előírása (12., 14. és 22. o.): ha a
+      kedvezményezett további logót használ, „az EU-logónak legalább
+      akkora méretűnek kell lennie (magasságban, vagy szélességben),
+      mint az EU-logón kívül használt bármely legnagyobb méretű
+      logónak”. A lapon a fejléclogó a másik logó.
+
+   A blokkon belül az EU-zászló magassága a blokk szélességének 10,5%-a
+   (a 400×276-os forráson 42 px), tehát a magasság-ág akkor teljesül, ha
+
+       fejléclogó magassága  <=  0,105 × blokkszélesség
+
+   Innen a párok: 400/40, 320/32, 260/26 — mindegyik éppen teljesíti,
+   és mindegyik elfér a hozzá tartozó nézetszélességben (320 px-en a
+   260-as blokk kerettel együtt 278 px). Nagyobb blokknak nincs értelme:
+   a forrás 400 px széles, fölötte már csak nagyítás lenne.
+
+   Összecsukva 150 px marad — az arculati kézikönyv minimuma. Ilyenkor a
+   2. pont arányossága nem áll fenn, ezért ez kizárólag a látogató saját
+   kattintására történik, és `sessionStorage`-ban él: új munkamenetben
+   mindenki a teljes méretű blokkot kapja. */
+:root { --eu-blokk-szel: 400px; --logo-mag: 40px; }
+/* 1100 px alatt a nyitókép szövegoszlopa már felér a lebegő blokkig, ezért
+   ott a kisebb pár jön — így a kettő nem ér össze. */
+@media (max-width: 1100px) { :root { --eu-blokk-szel: 320px; --logo-mag: 32px; } }
+@media (max-width: 400px) { :root { --eu-blokk-szel: 260px; --logo-mag: 26px; } }
+
 .eu-jelzo {
   position: absolute; z-index: 40;
   top: calc(var(--fejlec-h) + 14px);
   right: clamp(12px, 2.2vw, 30px);
-  display: block; line-height: 0;
+  line-height: 0;
   background: #fff; padding: 8px;
   border: 1px solid var(--line);
   box-shadow: 0 1px 10px rgba(26, 21, 15, .10);
 }
-.eu-jelzo img { width: 164px; height: auto; }
+.eu-jelzo-lap { display: block; }
+.eu-jelzo img { width: var(--eu-blokk-szel); height: auto; }
+.eu-jelzo[data-csukva="igen"] img { width: 150px; }
 
-@media (max-width: 640px) {
-  .eu-jelzo { padding: 6px; right: 12px; }
-  .eu-jelzo img { width: 150px; }
+/* Az áttűnés csak az első képkocka után kapcsol be (a `mozog` osztályt
+   a script teszi rá). Enélkül a betöltés visszaállított összecsukott
+   állapota végiganimálná magát 400-ról 150-re minden lapnyitáskor. */
+.eu-jelzo.mozog img { transition: width .4s cubic-bezier(.2, .8, .3, 1); }
+
+/* A gomb a keret sarkán ül, hogy ne takarja a kötelező elemeket. */
+.eu-jelzo-gomb {
+  position: absolute; top: -11px; right: -11px;
+  width: 26px; height: 26px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: #fff; color: var(--ink-2); cursor: pointer;
+  box-shadow: 0 1px 6px rgba(26, 21, 15, .14);
+  transition: color .2s ease, border-color .2s ease;
+}
+.eu-jelzo-gomb:hover { color: var(--brass); border-color: var(--brass); }
+.eu-jelzo-gomb svg { grid-area: 1 / 1; }
+.eu-jelzo[data-csukva="nem"] .ikon-ki,
+.eu-jelzo[data-csukva="igen"] .ikon-be { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eu-jelzo.mozog img { transition: none; }
+}
+
+/* Keskeny nézetben a blokk kilép a lebegésből.
+
+   Egy hasábban a nyitókép szedése az egész képmezőt használja, tehát a
+   jobb felső sarokban lebegő blokk óhatatlanul ráírna a felcímre és a
+   címre. A blokk nem térhet ki előle (görgetés nélkül kell látszania),
+   ezért inkább a folyamba áll: a fejléc alatt, jobbra zárva, a nyitókép
+   pedig alatta kezdődik. Így soha semmit nem takar — és ha a látogató
+   összecsukja, a helyet is visszakapja. */
+@media (max-width: 900px) {
+  .eu-jelzo {
+    position: relative; top: auto; right: auto;
+    width: max-content;
+    margin: 14px clamp(12px, 3vw, 20px) 0 auto;
+    padding: 6px;
+  }
+  /* A főoldalon és a bejárható tereken a fejléc `fixed` (ter.css), tehát
+     nem foglal helyet a folyamban: a blokknak magának kell kikerülnie. */
+  .fooldal .eu-jelzo, .ter-oldal .eu-jelzo { margin-top: calc(var(--fejlec-h) + 10px); }
 }
 
 .menu { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }
