@@ -89,6 +89,19 @@
   --sork-technical: 1.35;
   --betuk-technical: .24em;
 
+  /* MIKRO — verzál címke egy-két szóból: adatnév, kategória, űrlapmező
+     neve, morzsa. Nem a TECHNICAL sávja: ott .24em a betűköz és
+     kísérőmondat a tartalom, itt egy szó nevez meg valamit a mellette
+     álló érték fölött.
+
+     Ugyanez a szerep öt különböző fokon állt a style.css-ben — .6,
+     .62, .63, .66 és .68 rem —, szabályonként külön beírva. A .66 a
+     sáv közepe: a legkisebbek egy pixelt nőnek, a legnagyobbak
+     harmadot veszítenek, és a szerepnek innentől EGY mértéke van.
+     Telefonon a padló (lásd lentebb) ezt az egy értéket emeli. */
+  --fok-mikro:      .66rem;
+  --betuk-mikro:    .18em;
+
   /* számokhoz, koordinátákhoz: nem verzál, egyenletes szélességű
      számjegyek, hogy a mérőszámok ne ugráljanak */
   --fok-adat:       .72rem;
@@ -465,6 +478,35 @@ body[data-mozgas] .jelenet { min-height: calc(var(--h, 70) * 1svh); }
 
 .jelenet-mondat { max-width: 40rem; }
 .jelenet-mondat h2 { font-size: var(--fok-display); line-height: var(--sork-display); }
+
+/* ---------- TIPOGRÁFIAI PADLÓ TELEFONON ----------
+
+   A verzál mikrofeliratok asztali gépen jók: 9,9-11 px, ritkított,
+   egy karnyújtásnyira a szemtől, és a szerepük is másodlagos — nem
+   olvasni kell őket, hanem megtalálni. Telefonon ugyanez a fok
+   ugyanaz a MÉRET, csak a kéz van közelebb és a kijelző kisebb: a
+   .62rem-es „CÉGJEGYZÉKSZÁM" verzálban 7 px-es betűtestet ad, és a
+   .18em ritkítás ezen a fokon már nem tagol, hanem szétszedi a szót.
+   Mérve: a lábléc névjegyei 11,5 px-en, a kapcsolatlap adatnevei
+   9,9 px-en álltak.
+
+   Nem az egyes szabályokat írjuk át, hanem a MÉRTÉKET emeljük: a
+   szerep ugyanaz marad, csak a fok lép egyet. Ezért kellett a MIKRO
+   szerep — enélkül a padló vagy a TECHNICAL kísérőszövegeit is
+   megemelné (ott nem kell), vagy egyenként kellene kivételezni.
+
+   A folyószöveg (--fok-body) nem szerepel itt: az 16 px, az már jó.
+
+   9. fázis. */
+@media (max-width: 720px) {
+  :root {
+    --fok-mikro:      .72rem;   /* 10,6 → 11,5 px */
+    --fok-technical:  .74rem;   /* 11,0 → 11,8 px */
+    --fok-adat:       .78rem;   /* 11,5 → 12,5 px */
+    --fok-ui:         .78rem;   /* 11,8 → 12,5 px */
+  }
+}
+
 
 /* ---------- A NYITÓJELENET HELYE, TELEFONON ----------
 

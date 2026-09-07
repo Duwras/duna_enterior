@@ -94,8 +94,8 @@ p { margin: 0; }
 
 .felcim {
   font-family: var(--sans);
-  font-size: .69rem; font-weight: 500;
-  letter-spacing: .24em; text-transform: uppercase;
+  font-size: var(--fok-technical); font-weight: 500;
+  letter-spacing: var(--betuk-technical); text-transform: uppercase;
   color: var(--brass);
   display: flex; align-items: center; gap: 14px;
 }
@@ -118,8 +118,8 @@ p { margin: 0; }
 
 .gomb {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--sans); font-size: .74rem; font-weight: 500;
-  letter-spacing: .16em; text-transform: uppercase;
+  font-family: var(--sans); font-size: var(--fok-ui); font-weight: 500;
+  letter-spacing: var(--betuk-ui); text-transform: uppercase;
   padding: 14px 26px; text-decoration: none;
   border: 1px solid var(--ink); color: var(--ink); background: transparent;
   cursor: pointer;
@@ -133,12 +133,19 @@ p { margin: 0; }
 
 .link-nyil {
   display: inline-flex; align-items: center; gap: 9px;
-  font-size: .74rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+  font-size: var(--fok-ui); font-weight: 500; letter-spacing: var(--betuk-ui); text-transform: uppercase;
   color: var(--ink); text-decoration: none;
   border-bottom: 1px solid var(--line); padding-bottom: 6px;
   transition: color .22s, border-color .22s;
 }
 .link-nyil:hover { color: var(--brass); border-color: var(--brass); }
+/* A nyilas hivatkozás minden lap kivezetője („Összes referencia →”,
+   „A manufaktúráról →”), és 27 px magas volt — szedés plusz az aláhúzás
+   térköze. A vonal a HELYÉN marad (az adja a link rajzát), a magasság a
+   fölötte lévő üres sávban nő. 9. fázis. */
+@media (pointer: coarse) {
+  .link-nyil { min-height: 44px; align-items: flex-end; }
+}
 
 /* ---------- fejléc ---------- */
 
@@ -271,6 +278,22 @@ p { margin: 0; }
 }
 .eu-jelzo-gomb:hover { color: var(--brass); border-color: var(--brass); }
 .eu-jelzo-gomb svg { grid-area: 1 / 1; }
+/* A LÁTHATÓ korong marad 26 px — az arculati blokk sarkán ül, nagyobb
+   körrel a kötelező elemekre írna. Ami nő, a megfogható terület: egy
+   44 px-es, láthatatlan mező a korong köré, középre igazítva. Éppen ez
+   a gomb az, amit telefonon meg KELL találni: a blokk a 320 px-es
+   nézet szélességének 86%-át és a képernyő negyedét foglalja, a
+   bezárása adja vissza a lapot.
+
+   A mező a korong jobb széléhez igazodik, nem a közepéhez: a gomb a
+   nézet jobb szélén ül, középre igazított 44 px-es doboz kilógna a
+   lapból. Így befelé, a blokk fölé nő — ott nem takar vezérlőt. */
+@media (pointer: coarse) {
+  .eu-jelzo-gomb::before {
+    content: ""; position: absolute; top: -9px; right: 0;
+    width: 44px; height: 44px;
+  }
+}
 .eu-jelzo[data-csukva="nem"] .ikon-ki,
 .eu-jelzo[data-csukva="igen"] .ikon-be { display: none; }
 
@@ -328,8 +351,8 @@ p { margin: 0; }
      vagyis pontosan az az elem, amit ujjal kell eltalálni. A keret
      látható mérete nem változik, csak a belső térköz igazodik. */
   min-height: 44px; align-items: center; justify-content: center;
-  padding: 10px 14px; font-family: var(--sans); font-size: .72rem;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--ink);
+  padding: 10px 14px; font-family: var(--sans); font-size: var(--fok-ui);
+  letter-spacing: var(--betuk-ui); text-transform: uppercase; color: var(--ink);
 }
 
 @media (max-width: 900px) {
@@ -385,7 +408,7 @@ p { margin: 0; }
 }
 .hero-adat > div { background: var(--paper); padding: 13px 16px; }
 .hero-adat dt {
-  font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke);
+  font-size: var(--fok-mikro); letter-spacing: var(--betuk-mikro); text-transform: uppercase; color: var(--smoke);
 }
 /* A Cormorant alapból régies (mediális) számjegyeket ad — évszámhoz és
    adathoz a vonalzós, azonos magasságú változat kell, különben a
@@ -410,7 +433,7 @@ p { margin: 0; }
   position: absolute; left: 0; bottom: 0; z-index: 2;
   background: var(--paper); color: var(--ink);
   padding: 13px 20px;
-  font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+  font-size: var(--fok-mikro); letter-spacing: .2em; text-transform: uppercase;
 }
 
 @media (max-width: 900px) {
@@ -452,7 +475,7 @@ p { margin: 0; }
    betűméret. */
 .harom article h2 { font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.25; }
 .harom .sorszam {
-  font-family: var(--mono); font-size: .7rem; color: var(--smoke);
+  font-family: var(--mono); font-size: var(--fok-adat); color: var(--smoke);
   padding-bottom: 12px; border-bottom: 1px solid var(--line);
   font-variant-numeric: tabular-nums;
 }
@@ -496,7 +519,7 @@ p { margin: 0; }
 }
 .kartya .kat { padding-top: .25em; }
 .kartya .kat {
-  font-size: .63rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke);
+  font-size: var(--fok-mikro); letter-spacing: var(--betuk-mikro); text-transform: uppercase; color: var(--smoke);
   white-space: nowrap;
 }
 .kartya .db { font-family: var(--mono); font-size: .7rem; color: var(--smoke); }
@@ -513,7 +536,7 @@ p { margin: 0; }
   padding-bottom: 40px; border-bottom: 1px solid rgba(251,248,243,.12);
 }
 .lablec .cim {
-  font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--oak);
+  font-size: var(--fok-mikro); letter-spacing: .22em; text-transform: uppercase; color: var(--oak);
   margin-bottom: 16px;
 }
 .lablec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: .93rem; }
@@ -654,12 +677,25 @@ main { overflow-x: clip; }
   padding-bottom: 22px; border-bottom: 1px solid var(--line);
 }
 .szuro-gomb {
-  font-family: var(--sans); font-size: .7rem; font-weight: 500;
+  font-family: var(--sans); font-size: var(--fok-ui); font-weight: 500;
   letter-spacing: .14em; text-transform: uppercase;
   padding: 10px 16px; cursor: pointer;
   background: transparent; color: var(--smoke);
   border: 1px solid var(--line);
   transition: color .2s, border-color .2s, background .2s;
+}
+/* A szűrő 34 px magas volt: a szedés plusz a saját térköze. A
+   referencialap egyetlen vezérlősora, és telefonon nyolc gomb áll
+   benne szorosan egymás mellett — ott a 44 px nem luxus, hanem az,
+   ami eldönti, hogy a „Hotel” vagy az „Étterem” kapja a koppintást.
+   A gombok LÁTHATÓ kerete is nő, mert itt a keret maga a célpont
+   rajza; a sorköz ezért csökken. 9. fázis. */
+@media (pointer: coarse) {
+  .szuro { gap: 10px 8px; }
+  /* A vízszintes térköz NEM nő: a nyolc gomb így is öt sorba tör
+     320 px-en, szélesebb gombokkal hatba törne — a magasság az, ami
+     célponttá teszi őket, nem a szélesség. */
+  .szuro-gomb { min-height: 44px; }
 }
 .szuro-gomb:hover { color: var(--ink); border-color: var(--brass); }
 .szuro-gomb[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
@@ -668,7 +704,7 @@ main { overflow-x: clip; }
   opacity: .6; margin-left: 4px;
 }
 .szuro-allas {
-  font-family: var(--mono); font-size: .72rem; color: var(--smoke);
+  font-family: var(--mono); font-size: var(--fok-adat); color: var(--smoke);
   margin: 18px 0 26px; font-variant-numeric: tabular-nums;
 }
 .ures { color: var(--smoke); padding: 40px 0; }
@@ -685,7 +721,7 @@ main { overflow-x: clip; }
 }
 .morzsa {
   display: flex; gap: 10px; align-items: center;
-  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke);
+  font-size: var(--fok-mikro); letter-spacing: var(--betuk-mikro); text-transform: uppercase; color: var(--smoke);
 }
 .morzsa a { color: var(--brass); text-decoration: none; }
 .morzsa a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -700,7 +736,7 @@ main { overflow-x: clip; }
   border: 1px solid var(--line); width: fit-content; margin: 0;
 }
 .projekt-adat > div { background: var(--paper); padding: 12px 20px; }
-.projekt-adat dt { font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke); }
+.projekt-adat dt { font-size: var(--fok-mikro); letter-spacing: var(--betuk-mikro); text-transform: uppercase; color: var(--smoke); }
 .projekt-adat dd {
   margin: 4px 0 0; font-family: var(--display); font-weight: 400; font-size: 1.3rem;
   color: var(--ink); font-variant-numeric: lining-nums tabular-nums;
@@ -847,7 +883,7 @@ main { overflow-x: clip; }
 .ceg-doboz { border: 1px solid var(--line); padding: 22px 24px; display: grid; gap: 16px; }
 .ceg-doboz h2, .ceg-doboz h3 { font-size: 1.4rem; }
 .ceg-doboz dl { margin: 0; display: grid; gap: 12px; }
-.ceg-doboz dt { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--smoke); }
+.ceg-doboz dt { font-size: var(--fok-mikro); letter-spacing: var(--betuk-mikro); text-transform: uppercase; color: var(--smoke); }
 .ceg-doboz dd { margin: 3px 0 0; color: var(--ink); }
 .ceg-doboz a { color: var(--brass); text-underline-offset: 3px; }
 /* Az e-mail cím a cégdobozban önálló vezérlő, nem mondat közbeni
@@ -866,7 +902,7 @@ main { overflow-x: clip; }
 }
 .szemely-kartya b { font-family: var(--display); font-weight: 400; font-size: 1.16rem; color: var(--ink); }
 .szemely-kartya .beosztas {
-  font-size: .62rem; letter-spacing: .16em; text-transform: uppercase;
+  font-size: var(--fok-mikro); letter-spacing: .16em; text-transform: uppercase;
   color: var(--smoke); margin-bottom: 6px;
 }
 .szemely-kartya a { color: var(--brass); text-decoration: none; }
@@ -879,7 +915,7 @@ main { overflow-x: clip; }
 .urlap-doboz form { display: grid; gap: 18px; }
 
 .mezo { display: grid; gap: 7px; }
-.mezo label { font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--smoke); }
+.mezo label { font-size: var(--fok-mikro); letter-spacing: .15em; text-transform: uppercase; color: var(--smoke); }
 .mezo label span { color: var(--oak); }
 .mezo input, .mezo textarea {
   font: inherit; font-size: .95rem; color: var(--ink);
@@ -888,6 +924,19 @@ main { overflow-x: clip; }
 }
 .mezo input:focus, .mezo textarea:focus { border-color: var(--brass); }
 .mezo textarea { resize: vertical; line-height: 1.6; }
+/* NEM tipográfia, hanem működés: az iOS Safari RÁNAGYÍT a lapra, ha
+   16 px-nél kisebb szedésű mezőbe koppintanak. A mezők .95rem-en,
+   vagyis 15,2 px-en álltak — 0,8 px hiányzott ahhoz, hogy az
+   ajánlatkérő űrlap kitöltése ne kezdődjön egy önkéntelen
+   nagyítással, ami után a lap szélesebb a képernyőnél, és a
+   következő mezőhöz oldalra is húzni kell. Visszafelé nincs
+   automatikus kicsinyítés: a látogató az egész űrlapot nagyítva
+   tölti ki, vagy kézzel csippent vissza minden mező után.
+
+   Egérrel nincs ilyen viselkedés, ezért csak a `coarse` ágon. 9. fázis. */
+@media (pointer: coarse) {
+  .mezo input, .mezo textarea, .mezo select { font-size: 1rem; }
+}
 
 /* Automata kitöltők csapdája: ember nem látja, robot kitölti. */
 .csapda { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -956,7 +1005,7 @@ main { overflow-x: clip; }
   gap: 1px; background: var(--line); border: 1px solid var(--line);
 }
 .palyazat-adat > div { background: var(--paper); padding: 14px 18px; }
-.palyazat-adat dt { font-size: .62rem; letter-spacing: .17em; text-transform: uppercase; color: var(--smoke); }
+.palyazat-adat dt { font-size: var(--fok-mikro); letter-spacing: .17em; text-transform: uppercase; color: var(--smoke); }
 .palyazat-adat dd { margin: 5px 0 0; color: var(--ink); font-variant-numeric: lining-nums; }
 .palyazat-szoveg { display: grid; gap: 1.1em; max-width: 78ch; }
 .palyazat-szoveg h3 { font-size: 1.25rem; }
@@ -977,10 +1026,24 @@ main { overflow-x: clip; }
   text-align: left; padding: 12px 14px; border: 1px solid var(--line); vertical-align: top;
 }
 .suti-tabla th {
-  font-size: .62rem; letter-spacing: .17em; text-transform: uppercase;
+  font-size: var(--fok-mikro); letter-spacing: .17em; text-transform: uppercase;
   color: var(--smoke); font-weight: 500; background: var(--paper-2);
 }
 .suti-tabla code { font-family: var(--mono); font-size: .86em; }
+/* A táblázat legkisebb szélességét a `duna_suti_dontes` süti neve
+   adta: tizenhét karakter monóban, törhetetlenül. 375 px-en ettől lett
+   a tábla öt pixellel szélesebb a lapnál — és mert a `main` VÁG, nem
+   gördít, a „Meddig él" oszlop egyszerűen levágódott. Nincs mit
+   görgetni, nincs jelzés: az adat eltűnt.
+
+   A süti neve törhet: műszaki azonosító, nem mondat. A cellák térköze
+   és a szedés fokozata is szűkül egyet — három hasáb keskeny nézetben
+   levegőből él, nem méretből. 9. fázis. */
+@media (max-width: 560px) {
+  .suti-tabla { font-size: .84rem; }
+  .suti-tabla th, .suti-tabla td { padding: 10px 8px; }
+  .suti-tabla code { overflow-wrap: anywhere; }
+}
 
 .suti-allas { border: 1px solid var(--line); padding: 22px 24px; display: grid; gap: 16px; }
 .suti-gombok { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -1004,6 +1067,31 @@ main { overflow-x: clip; }
 .suti-banner .gomb:hover { background: var(--oak); border-color: var(--oak); color: var(--ink); }
 .suti-banner .gomb.tolt { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .suti-banner .gomb.tolt:hover { background: var(--oak); border-color: var(--oak); }
+
+/* Telefonon a banner a képernyő harmadát vitte el, és a két gomb
+   (126 + 203 px) négy pixellel nem fért ki egy sorba a 375 px-es
+   nézet 335 px-es sávjában — tehát egymás alá tört, két teljes
+   gombmagasságnyi sávot csinálva ott, ahol a lap első képének
+   kellene lennie. Egyenlő hasábban mindkettő elfér, és a döntés így
+   egy pillantás: két egyforma gomb egymás mellett. A magasság marad
+   44 px fölött. 9. fázis. */
+@media (max-width: 560px) {
+  .suti-belul { padding: 16px var(--gut); gap: 14px; }
+  .suti-belul p { min-width: 0; }
+  /* minmax(0, 1fr), nem 1fr: az `1fr` legkisebb mérete a tartalom
+     legkisebb mérete, és a „Csak a szükséges" egy sorban szélesebb a
+     fél sávnál — a rács kilógott a nézetből. Nullára engedve a hasáb
+     szűkülhet, a felirat pedig két sorba tördel. */
+  .suti-gombok {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px; width: 100%;
+  }
+  .suti-banner .gomb {
+    justify-content: center; text-align: center;
+    padding: 12px 8px; letter-spacing: .1em; line-height: 1.3;
+    white-space: normal; min-height: 44px;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .suti-banner { transition: none; }
@@ -1100,7 +1188,7 @@ main { overflow-x: clip; }
 .hero-bal > .gorgetes-jel {
   position: absolute; left: var(--gut); bottom: clamp(18px, 3vh, 34px);
   z-index: 2; display: flex; align-items: center; gap: 14px;
-  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+  font-size: var(--fok-mikro); letter-spacing: .2em; text-transform: uppercase;
   color: var(--smoke);
 }
 .gorgetes-jel .vonal {

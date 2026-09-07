@@ -388,8 +388,25 @@ body[data-lemezek] .metszet-jelolok { padding-bottom: 45svh; }
   .jelenet-nyito { gap: var(--space-4); }
   .jelenet-nyito h1 { font-size: clamp(2.1rem, 9.6vw, 3rem); }
   .jelenet-nyito .eloszo { font-size: 1rem; }
+  /* Négy tény, négy hasáb, hajszálvonallal elválasztva — ez asztali
+     gépen egy sor. Telefonon nem fér ki négy hasáb, tehát tördelt: a
+     `flex-wrap` viszont SORKÖZT nem ad, így a második sor („Referencia”,
+     „Kép”) rátorlódott az elsőre. 320 px-en mérve: mindkét sor y=590 és
+     y=634 között, nulla köz — a „KÉP” címke a „1200” számon ült.
+     Ráadásul az elválasztó vonal az első sor VÉGÉN is ott maradt, ahol
+     már nem választ el semmit.
+
+     Két hasáb, két sor, kimondott sorközzel. A vonal így csak a
+     hasábok KÖZÖTT áll: a jobb oldali oszlopról levesszük. */
+  .jelenet-nyito .hero-adat {
+    display: grid; grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-4); row-gap: var(--space-4);
+  }
   .jelenet-nyito .hero-adat > div {
-    flex: 0 0 auto; padding-right: var(--space-4); margin-right: var(--space-4);
+    padding-right: var(--space-4); margin-right: 0;
+  }
+  .jelenet-nyito .hero-adat > div:nth-child(2n) {
+    border-right: 0; padding-right: 0;
   }
   .jelenet-nyito .hero-adat dd { font-size: 1.34rem; }
 
