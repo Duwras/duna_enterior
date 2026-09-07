@@ -226,10 +226,11 @@ p { margin: 0; }
    260-as blokk kerettel együtt 278 px). Nagyobb blokknak nincs értelme:
    a forrás 400 px széles, fölötte már csak nagyítás lenne.
 
-   Összecsukva 150 px marad — az arculati kézikönyv minimuma. Ilyenkor a
-   2. pont arányossága nem áll fenn, ezért ez kizárólag a látogató saját
-   kattintására történik, és `sessionStorage`-ban él: új munkamenetben
-   mindenki a teljes méretű blokkot kapja. */
+   A gomb teljesen elteszi a blokkot, de csak a jelenlegi lapnézetre: a
+   szabály a MEGNYITÁS pillanatára szól („megnyitáskor, görgetést nem
+   igénylő pozícióban”), ezért a döntés nem élheti túl a lapnyitást —
+   nincs mentés, minden új lap és minden frissítés a teljes blokkal
+   indul. A láblécbeli példány ettől függetlenül mindig ott van. */
 :root { --eu-blokk-szel: 400px; --logo-mag: 40px; }
 /* 1100 px alatt a nyitókép szövegoszlopa már felér a lebegő blokkig, ezért
    ott a kisebb pár jön — így a kettő nem ér össze. */
@@ -247,12 +248,16 @@ p { margin: 0; }
 }
 .eu-jelzo-lap { display: block; }
 .eu-jelzo img { width: var(--eu-blokk-szel); height: auto; }
-.eu-jelzo[data-csukva="igen"] img { width: 150px; }
 
-/* Az áttűnés csak az első képkocka után kapcsol be (a `mozog` osztályt
-   a script teszi rá). Enélkül a betöltés visszaállított összecsukott
-   állapota végiganimálná magát 400-ról 150-re minden lapnyitáskor. */
-.eu-jelzo.mozog img { transition: width .4s cubic-bezier(.2, .8, .3, 1); }
+/* Bezárva csak a gomb marad — a kerettel, háttérrel együtt eltűnik
+   minden, hogy tényleg ne zavarjon. A gomb helyben marad, tehát a
+   visszahozás ugyanott van, ahol a bezárás volt. */
+.eu-jelzo[data-csukva="igen"] {
+  width: 26px; height: 26px; min-height: 0;
+  padding: 0; border: 0; background: none; box-shadow: none;
+}
+.eu-jelzo[data-csukva="igen"] .eu-jelzo-lap { display: none; }
+.eu-jelzo[data-csukva="igen"] .eu-jelzo-gomb { top: 0; right: 0; }
 
 /* A gomb a keret sarkán ül, hogy ne takarja a kötelező elemeket. */
 .eu-jelzo-gomb {
@@ -269,9 +274,6 @@ p { margin: 0; }
 .eu-jelzo[data-csukva="nem"] .ikon-ki,
 .eu-jelzo[data-csukva="igen"] .ikon-be { display: none; }
 
-@media (prefers-reduced-motion: reduce) {
-  .eu-jelzo.mozog img { transition: none; }
-}
 
 /* Keskeny nézetben a blokk kilép a lebegésből.
 
@@ -291,6 +293,17 @@ p { margin: 0; }
   /* A főoldalon és a bejárható tereken a fejléc `fixed` (ter.css), tehát
      nem foglal helyet a folyamban: a blokknak magának kell kikerülnie. */
   .fooldal .eu-jelzo, .ter-oldal .eu-jelzo { margin-top: calc(var(--fejlec-h) + 10px); }
+
+  /* Bezárva a megmaradt gomb visszalép a lebegésbe, különben egy üres
+     sáv maradna a nyitókép fölött. Így a hely tényleg visszajár. */
+  .eu-jelzo[data-csukva="igen"],
+  .fooldal .eu-jelzo[data-csukva="igen"],
+  .ter-oldal .eu-jelzo[data-csukva="igen"] {
+    position: absolute;
+    top: calc(var(--fejlec-h) + 10px);
+    right: clamp(12px, 3vw, 20px);
+    margin: 0;
+  }
 }
 
 .menu { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }
