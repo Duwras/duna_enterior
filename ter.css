@@ -223,9 +223,20 @@ body[data-terben] .fejlec .halado { opacity: .5; }
   body[data-terben] .fejlec .menu a { border-bottom-color: rgba(232, 223, 209, .16); }
 }
 
+/* A színpad a NAGY képmező magas (lvh), nem a kicsi (svh).
+
+   Telefonon a böngésző címsora lefelé görgetéskor összecsukódik, és a
+   képmező megnő. 100svh-s színpad alatt ilyenkor egy címsornyi sáv
+   maradt üresen — a lap papírszíne, fehér csíkként a fénykép alatt,
+   végig, amíg a színpad ragadt. A lvh a csukott állapot magassága:
+   nyitott címsornál a színpad alja a címsor mögé fut, ott nincs mit
+   látni. A vezérlők ezért nem a színpadhoz, hanem a LÁTHATÓ
+   képmezőhöz (dvh) igazodnak — lásd a .felulet alatt.
+
+   A 100vh a tartalék: ahol nincs lvh, ott a vh ugyanazt jelenti. */
 .szinpad {
   position: sticky; top: 0;
-  width: 100%; height: 100svh;
+  width: 100%; height: 100vh; height: 100lvh;
   overflow: hidden;
   background: var(--ejjel);
   color: var(--ejjel-szov);
@@ -241,8 +252,13 @@ body[data-terben] .fejlec .halado { opacity: .5; }
 
 /* A felületréteg a kép fölött ül, de nem fogja el az egeret —
    csak azok az elemek, amikre tényleg kattintani lehet. */
+/* A felület a látható képmező magas (dvh), nem a színpadé: a színpad
+   nyitott címsornál a címsor mögé nyúlik, és az alsó vezérlősáv
+   különben oda kerülne. A dvh a címsorral együtt mozog; a felület
+   abszolút helyzetű, tehát a lap többi részét nem rendezi újra. */
 .felulet {
-  position: absolute; inset: 0;
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 100svh; height: 100dvh;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr auto;

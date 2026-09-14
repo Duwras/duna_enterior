@@ -54,7 +54,8 @@
    szabja — a tempót a mondat hossza adja, nem egy kitalált szám. */
 .aktus-szoveg {
   position: relative; z-index: 3;
-  margin-top: -100svh;
+  /* a színpaddal azonos egység — lásd ter.css, .szinpad */
+  margin-top: -100vh; margin-top: -100lvh;
   pointer-events: none;
 }
 .aktus .felulet { z-index: 4; }

@@ -69,7 +69,8 @@
 
 .keszules-szoveg {
   position: relative; z-index: 3;
-  margin-top: -100svh;
+  /* a színpaddal azonos egység — lásd ter.css, .szinpad */
+  margin-top: -100vh; margin-top: -100lvh;
   pointer-events: none;
 }
 .keszules-nyitas .felulet { z-index: 4; }
