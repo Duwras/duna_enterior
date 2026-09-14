@@ -298,35 +298,87 @@ p { margin: 0; }
 .eu-jelzo[data-csukva="igen"] .ikon-be { display: none; }
 
 
-/* Keskeny nézetben a blokk kilép a lebegésből.
+/* Keskeny nézetben a blokk a lap FÖLÉ kerül, lebegő kártyaként, a
+   képernyő alján.
 
    Egy hasábban a nyitókép szedése az egész képmezőt használja, tehát a
-   jobb felső sarokban lebegő blokk óhatatlanul ráírna a felcímre és a
-   címre. A blokk nem térhet ki előle (görgetés nélkül kell látszania),
-   ezért inkább a folyamba áll: a fejléc alatt, jobbra zárva, a nyitókép
-   pedig alatta kezdődik. Így soha semmit nem takar — és ha a látogató
-   összecsukja, a helyet is visszakapja. */
+   jobb felső sarokban lebegő blokk ráírna a felcímre és a címre. Eddig
+   ezért a folyamba állt, a fejléc alá — de akkor a lap egy üres,
+   papírszínű sávval kezdődött, és a nyitókép a képernyő harmadával
+   lejjebb csúszott. A tulajdonos kérése: ne külön sáv legyen, hanem a
+   lapon üljön, és könnyen el lehessen tenni.
+
+   Alul, mert telefonon ott élnek a félretehető rétegek (értesítés,
+   sütibanner, csevegőablak) — a látogató azonnal annak olvassa, ami: nem
+   a lap része, hanem egy lap fölötti közlemény. És alul van a
+   hüvelykujj is: a jobb alsó sarok az egykezes fogás legkönnyebben
+   elérhető pontja, a jobb felső a legnehezebben.
+
+   A szabály továbbra is teljesül: megnyitáskor görgetés nélkül látszik.
+   A kártya `fixed`, de nem kísér végig a lapon — a script.js lecsúsztatja,
+   amint a látogató a nyitókép felénél lejjebb görget, és visszahozza, ha
+   visszatér a lap tetejére. A sütibanner fölött áll meg (--suti-mag, a
+   consent.js méri), nem mögötte. */
 @media (max-width: 900px) {
   .eu-jelzo {
-    position: relative; top: auto; right: auto;
-    width: max-content;
-    margin: 14px clamp(12px, 3vw, 20px) 0 auto;
+    position: fixed; top: auto;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
     padding: 6px;
+    border-color: rgba(26, 21, 15, .08);
+    box-shadow: 0 2px 6px rgba(26, 21, 15, .08), 0 14px 34px rgba(26, 21, 15, .22);
+    /* Két külön transzformáció, két külön tulajdonságban: a `translate`
+       a sütibanner fölé emel, a `transform` a görgetésre elbújtat és az
+       ujjat követi. Összeadódnak, és mindkettő a kompozitoron fut. */
+    translate: 0 calc(-1 * var(--suti-mag, 0px));
+    transition: translate .34s cubic-bezier(.2, .8, .3, 1),
+                transform .38s cubic-bezier(.2, .8, .3, 1),
+                opacity .3s ease, visibility 0s;
+    animation: eu-bejon .6s cubic-bezier(.2, .8, .3, 1) .45s backwards;
+    /* Függőlegesen a lap gördül, vízszintesen a kártya: jobbra söpörve
+       eltehető, mint egy értesítés (script.js). */
+    touch-action: pan-y;
   }
-  /* A főoldalon és a bejárható tereken a fejléc `fixed` (ter.css), tehát
-     nem foglal helyet a folyamban: a blokknak magának kell kikerülnie. */
-  .fooldal .eu-jelzo, .ter-oldal .eu-jelzo { margin-top: calc(var(--fejlec-h) + 10px); }
 
-  /* Bezárva a megmaradt gomb visszalép a lebegésbe, különben egy üres
-     sáv maradna a nyitókép fölött. Így a hely tényleg visszajár. */
-  .eu-jelzo[data-csukva="igen"],
-  .fooldal .eu-jelzo[data-csukva="igen"],
-  .ter-oldal .eu-jelzo[data-csukva="igen"] {
-    position: absolute;
-    top: calc(var(--fejlec-h) + 10px);
-    right: clamp(12px, 3vw, 20px);
-    margin: 0;
+  /* Görgetésre lecsúszik a képernyőről. A `visibility` a mozgás VÉGÉN
+     vált, így a billentyűzettel sem lehet a láthatatlan kártyára lépni. */
+  .eu-jelzo[data-elgorgetve] {
+    transform: translateY(calc(100% + 40px));
+    opacity: 0; visibility: hidden;
+    transition: translate .34s cubic-bezier(.2, .8, .3, 1),
+                transform .38s cubic-bezier(.55, 0, .7, .2),
+                opacity .3s ease .08s, visibility 0s .38s;
   }
+
+  /* Bezáráskor jobbra kiúszik (arra, amerre söpörni is lehet), aztán a
+     script.js „igen”-re vált, és a blokk teljesen eltűnik. Keskeny
+     nézetben nem marad visszahozó gomb: egy magányos kör a sarokban
+     csak újabb lebegő zaj volna, a lábléc blokkja pedig mindig ott van. */
+  .eu-jelzo[data-csukva="tavozik"] {
+    transform: translateX(calc(100% + 24px)); opacity: 0;
+    transition: transform .28s cubic-bezier(.55, 0, .7, .2), opacity .28s ease;
+  }
+  .eu-jelzo[data-csukva="igen"] { display: none; }
+
+  /* A gomb telefonon egy fokkal nagyobb korong — a megfogható mező
+     (::before, 44 px) marad. A blokk jobb felső sarka a forráskép üres,
+     fehér része, tehát ekkora korong sem takar kötelező elemet.
+     A `[data-csukva]` a specificitásért áll itt: a bezárt állapot
+     asztali szabálya [0-3-0], és ezt nem írhatja felül némán. */
+  .eu-jelzo[data-csukva] .eu-jelzo-gomb { top: -12px; right: -8px; width: 30px; height: 30px; }
+  .eu-jelzo-gomb svg { width: 13px; height: 13px; }
+  .eu-jelzo-gomb::before { top: -7px; right: 0; }
+
+  .eu-jelzo[data-csukva="tavozik"] .ikon-ki { display: none; }
+}
+
+@keyframes eu-bejon {
+  from { transform: translateY(24px); opacity: 0; }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .eu-jelzo, .eu-jelzo[data-elgorgetve] { animation: none; transition: visibility 0s; }
+  .eu-jelzo[data-elgorgetve] { transform: none; }
 }
 
 .menu { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }

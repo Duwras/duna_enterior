@@ -67,7 +67,28 @@
       '</div>';
     document.body.appendChild(doboz);
     requestAnimationFrame(function () { doboz.classList.add('itt'); });
+    magKozol(doboz);
     return doboz;
+  }
+
+  /* Telefonon az EU-infoblokk lebegő kártyája a képernyő alján ül
+     (style.css, .eu-jelzo) — a banner idejére fölé kell állnia, nem
+     mögé bújnia. Ehhez a banner magassága kell, és az tördeléstől függ:
+     elforgatásra, betűméretre változik, tehát figyelni kell, nem egyszer
+     lemérni. */
+  var magFigyelo = null;
+  function magKozol(doboz) {
+    var gyoker = document.documentElement;
+    function ir() { gyoker.style.setProperty('--suti-mag', doboz.offsetHeight + 'px'); }
+    ir();
+    if ('ResizeObserver' in window) {
+      magFigyelo = new ResizeObserver(ir);
+      magFigyelo.observe(doboz);
+    }
+  }
+  function magTorol() {
+    if (magFigyelo) { magFigyelo.disconnect(); magFigyelo = null; }
+    document.documentElement.style.removeProperty('--suti-mag');
   }
 
   /* ---------- indulás ---------- */
@@ -96,6 +117,8 @@
     if (valasz === 'elfogad') meresIndul();
 
     if (banner) {
+      /* a kártya a bannerrel EGYÜTT indul lefelé, nem utána */
+      magTorol();
       banner.classList.remove('itt');
       setTimeout(function () { banner.remove(); banner = null; }, 300);
     }

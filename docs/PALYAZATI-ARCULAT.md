@@ -38,12 +38,21 @@ helyen van:
 
 | Hol | Mi | Fájl |
 |-----|----|------|
-| A lap tetején, a fejléc alatt, jobbra — minden lapon | `a.eu-jelzo`, 164 px (kis kijelzőn 150 px), színes, a Pályázatok lapra mutat | [`partials/fejlec.html`](../partials/fejlec.html), [`style.css`](../style.css) `.eu-jelzo` |
+| Asztalon: a lap tetején, a fejléc alatt, jobbra — minden lapon | `.eu-jelzo`, 400 px (1100 px alatt 320 px), színes, a Pályázatok lapra mutat | [`partials/fejlec.html`](../partials/fejlec.html), [`style.css`](../style.css) `.eu-jelzo` |
+| Telefonon (≤ 900 px): a képernyő alján, jobbra lebegő kártya — minden lapon | ugyanaz az elem, 320 px (400 px alatti kijelzőn 260 px) | ugyanott, a `max-width: 900px` ág |
 | A lábléc tájékoztató sávjában | `.eu-blokk` + a nyertes pályázatok listája | [`partials/lablec.html`](../partials/lablec.html) |
 
-A fenti példány `absolute`, nem `fixed`: a szabály a *megnyitáskor* látható
-területre szól, nem arra, hogy a blokk végigkísérje a görgetést — így
+Asztalon a fenti példány `absolute`, nem `fixed`: a szabály a *megnyitáskor*
+látható területre szól, nem arra, hogy a blokk végigkísérje a görgetést — így
 megnyitáskor ott van, utána nem takar semmit.
+
+Telefonon a nyitókép szedése a teljes szélességet használja, tehát egy
+fenti blokk vagy a címre írna, vagy külön sávként tolná le a lapot. Ezért
+ott a képernyő alján lebegő kártya: megnyitáskor görgetés nélkül látszik,
+a nyitókép felénél lejjebb görgetve lecsúszik, a lap tetején visszajön. A
+gombbal vagy jobbra söpörve eltehető, de csak az adott lapnézetre — a
+következő lapnyitás megint a teljes blokkal indul. Ha a sütibanner kint
+van, a kártya fölötte áll meg.
 
 Az adattartalom a [`data/palyazatok.json`](../data/palyazatok.json)-ban él,
 és a [`palyazatok.html`](../palyazatok.html) lapra kerül ki.

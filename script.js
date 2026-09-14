@@ -859,13 +859,22 @@
      példány pedig eleve nem elrejthető.
 
      Ha nincs JavaScript, a gomb `hidden` marad, a blokk pedig nyitva:
-     a kötelező állapot az alapértelmezett, nem a JS állítja elő. */
+     a kötelező állapot az alapértelmezett, nem a JS állítja elő.
+
+     Keskeny nézetben (≤ 900 px) a blokk a képernyő alján lebegő kártya
+     (style.css). Ott három dolog jön hozzá:
+       - bezáráskor kiúszik, és nem marad utána visszahozó gomb;
+       - jobbra söpörve is eltehető, mint egy értesítés;
+       - görgetésre lecsúszik, a lap tetején visszajön — a szabály a
+         megnyitás pillanatára szól, nem arra, hogy végigkísérje a lapot. */
   (function () {
     var jelzo = document.getElementById('eu-jelzo');
     var gomb  = document.getElementById('eu-jelzo-gomb');
     if (!jelzo || !gomb) return;
 
     var felirat = gomb.querySelector('.rejtett');
+    var keskeny = window.matchMedia('(max-width: 900px)');
+    var csend   = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function allit(csukva) {
       jelzo.setAttribute('data-csukva', csukva ? 'igen' : 'nem');
@@ -875,11 +884,81 @@
       gomb.title = szoveg;
     }
 
+    /* Keskeny nézetben a bezárás a gombot is elviszi, tehát a fókusz a
+       semmibe esne: a tartalom elejére kerül, ahová a látogató amúgy is
+       tartott. */
+    function bezar() {
+      var fokuszban = document.activeElement === gomb;
+      if (!keskeny.matches) { allit(true); return; }
+      function vege() {
+        allit(true);
+        if (fokuszban) {
+          var hova = document.getElementById('tartalom');
+          if (hova) { hova.setAttribute('tabindex', '-1'); hova.focus({ preventScroll: true }); }
+        }
+      }
+      if (csend.matches) { vege(); return; }
+      jelzo.setAttribute('data-csukva', 'tavozik');
+      setTimeout(vege, 280);
+    }
+
     gomb.hidden = false;
     allit(false);
 
     gomb.addEventListener('click', function () {
-      allit(jelzo.getAttribute('data-csukva') !== 'igen');
+      if (jelzo.getAttribute('data-csukva') === 'igen') allit(false);
+      else bezar();
     });
+
+    /* ---------- görgetésre elbújik ----------
+       A nyitókép felénél lejjebb már nem a megnyitás pillanata van. */
+    var elment = false;
+    function gorget() {
+      var kell = keskeny.matches && window.scrollY > window.innerHeight * 0.5;
+      if (kell === elment) return;
+      elment = kell;
+      jelzo.toggleAttribute('data-elgorgetve', kell);
+    }
+    window.addEventListener('scroll', gorget, { passive: true });
+    window.addEventListener('resize', gorget, { passive: true });
+    gorget();
+
+    /* ---------- jobbra söpörve eltehető ----------
+       Csak ujjal, és csak vízszintesen: a függőleges mozdulat a lapé
+       (touch-action: pan-y), ilyenkor a böngésző `pointercancel`-t küld,
+       és a kártya visszaáll. A kártya maga hivatkozás — ha az ujj
+       elmozdult, az elengedés nem nyitja meg a Pályázatok lapot. */
+    var kezd = null, eltolas = 0, huzta = false;
+
+    function vissza() {
+      jelzo.style.transform = '';
+      jelzo.style.opacity = '';
+      jelzo.style.transition = '';
+      kezd = null;
+    }
+
+    jelzo.addEventListener('pointerdown', function (e) {
+      if (!keskeny.matches || e.pointerType === 'mouse' || e.target.closest('.eu-jelzo-gomb')) return;
+      kezd = e.clientX; eltolas = 0; huzta = false;
+    });
+    jelzo.addEventListener('pointermove', function (e) {
+      if (kezd === null) return;
+      eltolas = Math.max(0, e.clientX - kezd);
+      if (eltolas > 6) huzta = true;
+      if (!huzta) return;
+      jelzo.style.transition = 'none';
+      jelzo.style.transform = 'translateX(' + eltolas + 'px)';
+      jelzo.style.opacity = String(Math.max(.25, 1 - eltolas / 260));
+    });
+    jelzo.addEventListener('pointerup', function () {
+      if (kezd === null) return;
+      var el = huzta && eltolas > 70;
+      vissza();
+      if (el) bezar();
+    });
+    jelzo.addEventListener('pointercancel', vissza);
+    jelzo.addEventListener('click', function (e) {
+      if (huzta) { e.preventDefault(); huzta = false; }
+    }, true);
   })();
 })();
